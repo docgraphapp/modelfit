@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: -apple-system, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-neutral-50 text-neutral-900 antialiased;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply bg-neutral-950 text-neutral-100;
+  }
+}
