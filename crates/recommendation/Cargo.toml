@@ -1,0 +1,9 @@
+[package]
+name = "modelfit-recommendation"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+serde.workspace = true
+modelfit-hardware = { path = "../hardware" }
+modelfit-registry = { path = "../registry" }

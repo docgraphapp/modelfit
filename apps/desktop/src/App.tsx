@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
-import type { HardwareInfo } from "./types";
+import type { Assessment, HardwareInfo, Recommendations } from "./types";
 
 const ACCEL_LABELS: Record<string, string> = {
   cpu: "CPU",
@@ -9,6 +9,52 @@ const ACCEL_LABELS: Record<string, string> = {
   rocm: "ROCm",
   vulkan: "Vulkan",
 };
+
+const FIT_WORDS: Record<Assessment["fit"], string> = {
+  comfortable: "runs comfortably",
+  tight: "runs, but tight",
+  toobig: "too big",
+};
+
+function PickCard({
+  tag,
+  a,
+  highlight,
+}: {
+  tag: string;
+  a: Assessment;
+  highlight?: boolean;
+}) {
+  return (
+    <div
+      className={`flex-1 rounded-2xl border p-5 ${
+        highlight
+          ? "border-emerald-300 bg-emerald-50/60 dark:border-emerald-800 dark:bg-emerald-950/40"
+          : "border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900"
+      }`}
+    >
+      <div className="flex items-baseline justify-between">
+        <span
+          className={`text-[11px] font-semibold uppercase tracking-wider ${
+            highlight ? "text-emerald-600 dark:text-emerald-400" : "text-neutral-400"
+          }`}
+        >
+          {tag}
+        </span>
+        <span className="text-sm font-semibold tabular-nums">{Math.round(a.score)}/100</span>
+      </div>
+      <div className="mt-2 text-[15px] font-semibold leading-snug">{a.name}</div>
+      <div className="text-xs text-neutral-400">{a.quant}</div>
+      <div className="mt-3 space-y-1 text-[13px] text-neutral-500 dark:text-neutral-400">
+        <div>{FIT_WORDS[a.fit]} · ~{a.estMemoryGb} GB</div>
+        <div>
+          ~{Math.round(a.estTokPerSec)} tok/s
+          {a.confidence === "medium" && <span className="text-neutral-400"> (est.)</span>}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function Spec({ label, value }: { label: string; value: string }) {
   return (
@@ -23,11 +69,15 @@ function Spec({ label, value }: { label: string; value: string }) {
 
 export default function App() {
   const [hw, setHw] = useState<HardwareInfo | null>(null);
+  const [recs, setRecs] = useState<Recommendations | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     invoke<HardwareInfo>("detect_hardware")
       .then(setHw)
+      .catch((e) => setError(String(e)));
+    invoke<Recommendations>("get_recommendations", { request: null })
+      .then(setRecs)
       .catch((e) => setError(String(e)));
   }, []);
 
@@ -93,9 +143,33 @@ export default function App() {
             </div>
           </section>
 
-          <section className="mt-6 rounded-2xl border border-dashed border-neutral-200 p-6 text-center text-sm text-neutral-400 dark:border-neutral-800">
-            Model recommendations arrive in the next milestone.
-          </section>
+          {recs && recs.best && (
+            <section className="mt-6">
+              <div className="mb-3 flex items-baseline justify-between">
+                <h3 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">
+                  Your machine can comfortably run
+                </h3>
+                <span className="text-xs text-neutral-400">
+                  {recs.usableMemoryGb} GB usable for models
+                </span>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <PickCard tag="Best" a={recs.best} highlight />
+                {recs.safe && recs.safe.modelId !== recs.best.modelId && (
+                  <PickCard tag="Safe" a={recs.safe} />
+                )}
+                {recs.fast &&
+                  recs.fast.modelId !== recs.best.modelId &&
+                  recs.fast.modelId !== recs.safe?.modelId && (
+                    <PickCard tag="Fast" a={recs.fast} />
+                  )}
+              </div>
+              <p className="mt-3 text-xs text-neutral-400">
+                Speeds are estimates from your chip's memory bandwidth — a real
+                benchmark arrives in a later milestone.
+              </p>
+            </section>
+          )}
         </>
       )}
     </div>

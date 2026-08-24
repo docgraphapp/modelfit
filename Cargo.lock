@@ -1873,6 +1873,8 @@ version = "0.1.0"
 dependencies = [
  "log",
  "modelfit-hardware",
+ "modelfit-recommendation",
+ "modelfit-registry",
  "serde",
  "serde_json",
  "tauri",
@@ -1887,6 +1889,23 @@ dependencies = [
  "serde",
  "serde_json",
  "sysinfo",
+]
+
+[[package]]
+name = "modelfit-recommendation"
+version = "0.1.0"
+dependencies = [
+ "modelfit-hardware",
+ "modelfit-registry",
+ "serde",
+]
+
+[[package]]
+name = "modelfit-registry"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
