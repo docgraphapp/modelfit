@@ -73,10 +73,16 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // Detect once, then feed the same hardware into the engine — preset and
+    // context changes (M3) recompute instantly without re-probing the machine.
     invoke<HardwareInfo>("detect_hardware")
-      .then(setHw)
-      .catch((e) => setError(String(e)));
-    invoke<Recommendations>("get_recommendations", { request: null })
+      .then((detected) => {
+        setHw(detected);
+        return invoke<Recommendations>("get_recommendations", {
+          hardware: detected,
+          request: null,
+        });
+      })
       .then(setRecs)
       .catch((e) => setError(String(e)));
   }, []);
@@ -142,6 +148,24 @@ export default function App() {
               ))}
             </div>
           </section>
+
+          {recs && !recs.best && (
+            <section className="mt-6 rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
+              <h3 className="text-sm font-semibold">
+                No model clears the bar for this machine and objective
+              </h3>
+              <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
+                {(() => {
+                  const closest = [...recs.all].sort(
+                    (a, b) => a.estMemoryGb - b.estMemoryGb,
+                  )[0];
+                  return closest?.excludedReason
+                    ? `Closest candidate: ${closest.name} — ${closest.excludedReason}.`
+                    : "Try a smaller context length or a different objective.";
+                })()}
+              </p>
+            </section>
+          )}
 
           {recs && recs.best && (
             <section className="mt-6">

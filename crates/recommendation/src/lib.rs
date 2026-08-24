@@ -174,6 +174,11 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
     let (bandwidth, known_chip) = estimate_bandwidth_gbps(hw);
     let (wq, ws) = weights(req.objective);
     let floor = speed_floor(req.objective);
+    // Guard against nonsense input from the UI layer.
+    let req = Request {
+        objective: req.objective,
+        context_length: req.context_length.clamp(512, 1 << 20),
+    };
 
     let mut all: Vec<Assessment> = Vec::new();
 
@@ -194,8 +199,8 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
                 chosen = Some((qname, mem));
             }
         }
-        // If nothing is comfortable, take the smallest quant that still fits
-        // with headroom (Tight); else report the smallest as TooBig.
+        // If no quant is comfortable, assess the smallest one — it either
+        // fits Tight (still recommendable) or proves the model TooBig.
         let (quant, est_memory) = chosen.unwrap_or_else(|| {
             let (qname, mem) = smallest.expect("model has at least one quant");
             (qname, mem)
@@ -283,12 +288,16 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
         .filter(included)
         .find(|a| a.fit == FitVerdict::Comfortable)
         .cloned();
-    let fast = all
-        .iter()
-        .filter(included)
-        .filter(|a| a.quality >= FAST_MIN_QUALITY)
-        .max_by(|a, b| a.est_tok_per_sec.partial_cmp(&b.est_tok_per_sec).unwrap())
-        .cloned();
+    // FAST = fastest decent model; if nothing clears the quality bar (small
+    // machines), fall back to the fastest included model rather than no pick.
+    let fastest = |min_q: f64| {
+        all.iter()
+            .filter(included)
+            .filter(|a| a.quality >= min_q)
+            .max_by(|a, b| a.est_tok_per_sec.partial_cmp(&b.est_tok_per_sec).unwrap())
+            .cloned()
+    };
+    let fast = fastest(FAST_MIN_QUALITY).or_else(|| fastest(0.0));
 
     Recommendations {
         best,
@@ -405,6 +414,32 @@ mod tests {
             if a.quality >= 7.0 {
                 assert!(fast.est_tok_per_sec >= a.est_tok_per_sec);
             }
+        }
+    }
+
+    #[test]
+    fn tiny_machine_yields_no_picks_but_full_reasons() {
+        // 4GB: nothing fits even at Q4 — best must be None (the UI shows an
+        // empty state), and every assessment still explains itself.
+        let r = rec(&apple("M1", 4.0), &Request::default());
+        assert!(r.best.is_none());
+        assert!(r.fast.is_none());
+        for a in &r.all {
+            assert!(a.excluded_reason.is_some(), "{} must carry a reason", a.model_id);
+        }
+    }
+
+    #[test]
+    fn fast_falls_back_below_quality_bar() {
+        // 8GB with a huge context: only the smallest models squeeze in; even
+        // if none clears the 7.0 quality bar, FAST must still be offered
+        // whenever anything is included.
+        let r = rec(
+            &apple("M1", 8.0),
+            &Request { objective: Objective::Overall, context_length: 16384 },
+        );
+        if r.all.iter().any(|a| a.excluded_reason.is_none()) {
+            assert!(r.fast.is_some());
         }
     }
 

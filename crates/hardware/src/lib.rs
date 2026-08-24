@@ -5,10 +5,10 @@
 //! user confirm/edit detected specs (that screen is the fallback for fuzzy
 //! cases like AMD/Intel VRAM or iGPU shared memory).
 
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use sysinfo::{Disks, System};
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HardwareInfo {
     pub os: String,
@@ -28,7 +28,7 @@ pub struct HardwareInfo {
     pub accelerations: Vec<String>,
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct GpuInfo {
     pub vendor: String,
@@ -46,8 +46,7 @@ fn round1(v: f64) -> f64 {
 }
 
 pub fn detect() -> HardwareInfo {
-    let mut sys = System::new_all();
-    sys.refresh_all();
+    let sys = System::new_all();
 
     let cpu_model = sys
         .cpus()

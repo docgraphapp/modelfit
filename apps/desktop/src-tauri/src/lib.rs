@@ -7,9 +7,15 @@ fn detect_hardware() -> HardwareInfo {
     modelfit_hardware::detect()
 }
 
+/// `hardware` lets the frontend reuse one detection (and, later, pass
+/// user-edited specs) so preset/context changes recompute instantly instead of
+/// re-probing the machine on every call.
 #[tauri::command]
-fn get_recommendations(request: Option<Request>) -> Recommendations {
-    let hw = modelfit_hardware::detect();
+fn get_recommendations(
+    hardware: Option<HardwareInfo>,
+    request: Option<Request>,
+) -> Recommendations {
+    let hw = hardware.unwrap_or_else(modelfit_hardware::detect);
     let registry = Registry::bundled();
     recommend(&hw, &registry, &request.unwrap_or_default())
 }
