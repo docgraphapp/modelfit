@@ -178,7 +178,7 @@ Sidebar: Dashboard · Hardware · Models · Benchmarks · Downloads · Settings.
 | HTTP | `reqwest` + `tokio` | Ollama API, registry fetch, GGUF header range-requests |
 | Local storage | JSON cache → `rusqlite` when needed | |
 | Inference runtime | **Ollama adapter (v1)** behind a runtime trait; llama.cpp-direct = v2 adapter | Ollama *is* llama.cpp with the GPU build matrix already solved; don't own CUDA/ROCm/Vulkan builds in v1 |
-| Model registry hosting | Static JSON on **Cloudflare Pages/R2** | Existing infra |
+| Model registry hosting | Static JSON on **Cloudflare Pages/R2** under **docgraph.app** | ModelFit is a DocGraph-family product; registry at a stable versioned URL (e.g. `modelfit.docgraph.app/registry/v1/registry.json`), same account/wrangler flow as the existing sites |
 | Registry pipeline | **Python** (server-side/CI only): `huggingface_hub` metadata, GGUF sizes, benchmark-score ingestion → emits `registry.json` | Python where its ecosystem wins; never shipped to users |
 | CI/CD | GitHub Actions | Build matrix + registry pipeline |
 
