@@ -19,3 +19,4 @@ log = "0.4"
 modelfit-hardware = { path = "../../../crates/hardware" }
 modelfit-registry = { path = "../../../crates/registry" }
 modelfit-recommendation = { path = "../../../crates/recommendation" }
+modelfit-runtime-adapters = { path = "../../../crates/runtime-adapters" }

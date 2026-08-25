@@ -1,0 +1,12 @@
+[package]
+name = "modelfit-runtime-adapters"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+serde.workspace = true
+serde_json.workspace = true
+async-trait = "0.1"
+futures-util = "0.3"
+reqwest = { version = "0.12", default-features = false, features = ["json", "stream"] }
+modelfit-registry = { path = "../registry" }

@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["crates/hardware", "crates/registry", "crates/recommendation", "apps/desktop/src-tauri"]
+members = ["crates/hardware", "crates/registry", "crates/recommendation", "crates/runtime-adapters", "apps/desktop/src-tauri"]
 
 [workspace.package]
 edition = "2021"

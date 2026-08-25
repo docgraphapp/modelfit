@@ -16,7 +16,7 @@ export interface Assessment {
   quality: number;
   score: number;
   excludedReason: string | null;
-  confidence: "high" | "medium";
+  confidence: "high" | "medium" | "measured";
 }
 
 export interface Recommendations {
@@ -27,6 +27,26 @@ export interface Recommendations {
   usableMemoryGb: number;
   bandwidthGbps: number;
   bandwidthMeasured: boolean;
+}
+
+export interface RuntimeStatus {
+  running: boolean;
+  version: string | null;
+  installedTags: string[];
+}
+
+export interface Calibration {
+  modelTag: string;
+  genTokPerSec: number;
+  promptTokPerSec: number;
+  effectiveBandwidthGbps: number;
+}
+
+export interface PullProgress {
+  tag: string;
+  status: string;
+  total: number | null;
+  completed: number | null;
 }
 
 export interface HardwareInfo {

@@ -1,6 +1,25 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
-import type { Assessment, HardwareInfo, Recommendations } from "./types";
+import { listen } from "@tauri-apps/api/event";
+import type {
+  Assessment,
+  Calibration,
+  HardwareInfo,
+  PullProgress,
+  Recommendations,
+  RuntimeStatus,
+} from "./types";
+
+const CALIBRATION_KEY = "modelfit:calibration";
+
+function loadCalibration(): Calibration | null {
+  try {
+    const raw = localStorage.getItem(CALIBRATION_KEY);
+    return raw ? (JSON.parse(raw) as Calibration) : null;
+  } catch {
+    return null;
+  }
+}
 
 type Objective = "overall" | "quality" | "speed" | "coding";
 
@@ -31,14 +50,66 @@ function fmtCtx(n: number) {
   return `${n / 1024}k`;
 }
 
+function InstallControl({
+  a,
+  runtime,
+  pulling,
+  onInstall,
+}: {
+  a: Assessment;
+  runtime: RuntimeStatus | null;
+  pulling: Record<string, PullProgress>;
+  onInstall: (tag: string) => void;
+}) {
+  if (!runtime?.running || !a.ollamaTag) return null;
+  const tag = a.ollamaTag;
+  const progress = pulling[tag];
+  if (progress) {
+    const pct =
+      progress.total && progress.completed
+        ? Math.round((progress.completed / progress.total) * 100)
+        : null;
+    return (
+      <div className="mt-3">
+        <div className="h-1.5 overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-700">
+          <div
+            className="h-full rounded-full bg-emerald-500 transition-all"
+            style={{ width: `${pct ?? 5}%` }}
+          />
+        </div>
+        <div className="mt-1 text-xs text-neutral-400">
+          {pct != null ? `${pct}%` : progress.status || "starting…"}
+        </div>
+      </div>
+    );
+  }
+  if (runtime.installedTags.includes(tag)) {
+    return (
+      <div className="mt-3 text-xs font-medium text-emerald-600 dark:text-emerald-400">
+        Installed ✓
+      </div>
+    );
+  }
+  return (
+    <button
+      onClick={() => onInstall(tag)}
+      className="mt-3 rounded-lg bg-neutral-900 px-3 py-1 text-xs font-medium text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-white"
+    >
+      Install
+    </button>
+  );
+}
+
 function PickCard({
   tag,
   a,
   highlight,
+  children,
 }: {
   tag: string;
   a: Assessment;
   highlight?: boolean;
+  children?: React.ReactNode;
 }) {
   return (
     <div
@@ -65,8 +136,12 @@ function PickCard({
         <div>
           ~{Math.round(a.estTokPerSec)} tok/s
           {a.confidence === "medium" && <span className="text-neutral-400"> (est.)</span>}
+          {a.confidence === "measured" && (
+            <span className="text-emerald-600 dark:text-emerald-500"> measured baseline</span>
+          )}
         </div>
       </div>
+      {children}
     </div>
   );
 }
@@ -96,6 +171,7 @@ function Segmented<T extends string>({
       {options.map((o) => (
         <button
           key={o.id}
+          aria-pressed={value === o.id}
           onClick={() => onChange(o.id)}
           className={`rounded-full px-3.5 py-1 text-[13px] font-medium transition-colors ${
             value === o.id
@@ -133,8 +209,14 @@ function HardwareCard({
   onEdited: (hw: HardwareInfo) => void;
 }) {
   const [editing, setEditing] = useState(false);
-  const [ram, setRam] = useState(String(hw.totalRamGb));
-  const [vram, setVram] = useState(String(hw.gpus[0]?.vramGb ?? ""));
+  const [ram, setRam] = useState("");
+  const [vram, setVram] = useState("");
+
+  const startEdit = () => {
+    setRam(String(hw.totalRamGb));
+    setVram(String(hw.gpus[0]?.vramGb ?? ""));
+    setEditing(true);
+  };
 
   const apply = () => {
     const ramGb = parseFloat(ram);
@@ -159,7 +241,7 @@ function HardwareCard({
         <div className="flex items-baseline gap-3">
           <span className="text-xs text-neutral-400">{hw.osVersion}</span>
           <button
-            onClick={() => (editing ? apply() : setEditing(true))}
+            onClick={() => (editing ? apply() : startEdit())}
             className="text-xs font-medium text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200"
           >
             {editing ? "Done" : "Edit"}
@@ -174,7 +256,10 @@ function HardwareCard({
             <input
               value={ram}
               onChange={(e) => setRam(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && apply()}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") apply();
+                if (e.key === "Escape") setEditing(false);
+              }}
               className="mt-0.5 w-24 rounded-lg border border-neutral-300 bg-transparent px-2 py-0.5 text-[15px] font-medium outline-none focus:border-neutral-500 dark:border-neutral-700"
             />
           </div>
@@ -202,7 +287,10 @@ function HardwareCard({
               <input
                 value={vram}
                 onChange={(e) => setVram(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && apply()}
+                onKeyDown={(e) => {
+                if (e.key === "Enter") apply();
+                if (e.key === "Escape") setEditing(false);
+              }}
                 className="mt-0.5 w-24 rounded-lg border border-neutral-300 bg-transparent px-2 py-0.5 text-[15px] font-medium outline-none focus:border-neutral-500 dark:border-neutral-700"
               />
             </div>
@@ -236,18 +324,33 @@ export default function App() {
   const [contextLength, setContextLength] = useState(8192);
   const [showAll, setShowAll] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [runtime, setRuntime] = useState<RuntimeStatus | null>(null);
+  const [calibration, setCalibration] = useState<Calibration | null>(loadCalibration);
+  const [benchmarking, setBenchmarking] = useState(false);
+  const [pulling, setPulling] = useState<Record<string, PullProgress>>({});
+  const calibrationRef = useRef(calibration);
+  calibrationRef.current = calibration;
 
   const recompute = useCallback(
-    (hardware: HardwareInfo, obj: Objective, ctx: number) => {
+    (hardware: HardwareInfo, obj: Objective, ctx: number, cal?: Calibration | null) => {
+      const c = cal !== undefined ? cal : calibrationRef.current;
       invoke<Recommendations>("get_recommendations", {
         hardware,
-        request: { objective: obj, contextLength: ctx },
+        request: {
+          objective: obj,
+          contextLength: ctx,
+          measuredEffectiveBandwidthGbps: c?.effectiveBandwidthGbps ?? null,
+        },
       })
         .then(setRecs)
         .catch((e) => setError(String(e)));
     },
     [],
   );
+
+  const refreshRuntime = useCallback(() => {
+    invoke<RuntimeStatus>("runtime_status").then(setRuntime).catch(() => {});
+  }, []);
 
   useEffect(() => {
     invoke<HardwareInfo>("detect_hardware")
@@ -256,7 +359,14 @@ export default function App() {
         recompute(detected, "overall", 8192);
       })
       .catch((e) => setError(String(e)));
-  }, [recompute]);
+    refreshRuntime();
+    const unlisten = listen<PullProgress>("modelfit://pull-progress", (e) => {
+      setPulling((prev) => ({ ...prev, [e.payload.tag]: e.payload }));
+    });
+    return () => {
+      unlisten.then((f) => f());
+    };
+  }, [recompute, refreshRuntime]);
 
   const update = (obj: Objective, ctx: number, hardware?: HardwareInfo) => {
     const machine = hardware ?? hw;
@@ -264,6 +374,37 @@ export default function App() {
     setContextLength(ctx);
     if (hardware) setHw(hardware);
     if (machine) recompute(machine, obj, ctx);
+  };
+
+  const install = (tag: string) => {
+    setPulling((prev) => ({
+      ...prev,
+      [tag]: { tag, status: "starting…", total: null, completed: null },
+    }));
+    invoke("install_model", { tag })
+      .catch((e) => setError(String(e)))
+      .finally(() => {
+        setPulling((prev) => {
+          const next = { ...prev };
+          delete next[tag];
+          return next;
+        });
+        refreshRuntime();
+      });
+  };
+
+  const runBenchmark = () => {
+    setBenchmarking(true);
+    setError(null);
+    invoke<Calibration>("run_calibration")
+      .then((cal) => {
+        setCalibration(cal);
+        localStorage.setItem(CALIBRATION_KEY, JSON.stringify(cal));
+        if (hw) recompute(hw, objective, contextLength, cal);
+        refreshRuntime();
+      })
+      .catch((e) => setError(String(e)))
+      .finally(() => setBenchmarking(false));
   };
 
   const picks = recs?.best
@@ -355,11 +496,64 @@ export default function App() {
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
                 {picks.map((p) => (
-                  <PickCard key={p.tag} tag={p.tag} a={p.a} highlight={p.highlight} />
+                  <PickCard key={p.tag} tag={p.tag} a={p.a} highlight={p.highlight}>
+                    <InstallControl
+                      a={p.a}
+                      runtime={runtime}
+                      pulling={pulling}
+                      onInstall={install}
+                    />
+                  </PickCard>
                 ))}
               </div>
             </section>
           )}
+
+          <section className="mt-6 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-neutral-200 bg-white px-5 py-3.5 dark:border-neutral-800 dark:bg-neutral-900">
+            <div className="text-[13px] text-neutral-500 dark:text-neutral-400">
+              {runtime?.running ? (
+                <>
+                  <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-emerald-500" />
+                  Ollama {runtime.version} · {runtime.installedTags.length} model
+                  {runtime.installedTags.length === 1 ? "" : "s"} installed
+                </>
+              ) : (
+                <>
+                  <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-neutral-300 dark:bg-neutral-600" />
+                  No runtime detected — install and benchmark need{" "}
+                  <button
+                    onClick={() =>
+                      invoke("open_external", { url: "https://ollama.com/download" })
+                    }
+                    className="font-medium text-neutral-700 underline decoration-neutral-300 hover:text-neutral-900 dark:text-neutral-200 dark:hover:text-white"
+                  >
+                    Ollama
+                  </button>
+                </>
+              )}
+            </div>
+            {runtime?.running && (
+              <div className="flex items-center gap-3 text-[13px]">
+                {calibration && !benchmarking && (
+                  <span className="text-neutral-400">
+                    measured {Math.round(calibration.effectiveBandwidthGbps)} GB/s via{" "}
+                    {calibration.modelTag}
+                  </span>
+                )}
+                <button
+                  onClick={runBenchmark}
+                  disabled={benchmarking}
+                  className="rounded-lg border border-neutral-200 px-3 py-1 font-medium text-neutral-600 hover:border-neutral-400 disabled:opacity-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500"
+                >
+                  {benchmarking
+                    ? "Benchmarking…"
+                    : calibration
+                      ? "Re-run benchmark"
+                      : "Run real benchmark"}
+                </button>
+              </div>
+            )}
+          </section>
 
           {recs && (
             <section className="mt-6">
@@ -415,8 +609,11 @@ export default function App() {
           )}
 
           <p className="mt-4 text-xs text-neutral-400">
-            Speeds are estimates from your chip's memory bandwidth — a real
-            benchmark arrives in a later milestone.
+            {recs?.bandwidthMeasured
+              ? `Speeds are extrapolated from a real benchmark on this machine (${Math.round(
+                  recs.bandwidthGbps,
+                )} GB/s effective bandwidth).`
+              : "Speeds are estimates from your chip's memory bandwidth — run the benchmark for measured numbers."}
           </p>
         </>
       )}

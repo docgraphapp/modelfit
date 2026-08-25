@@ -31,11 +31,20 @@ pub struct Request {
     pub objective: Objective,
     /// Requested context window (tokens). Drives KV-cache memory.
     pub context_length: u32,
+    /// From the calibration benchmark: the machine's measured effective
+    /// bandwidth (GB/s). When present it replaces the per-chip estimate ×
+    /// efficiency guess, and speed estimates are labeled "measured".
+    #[serde(default)]
+    pub measured_effective_bandwidth_gbps: Option<f64>,
 }
 
 impl Default for Request {
     fn default() -> Self {
-        Request { objective: Objective::Overall, context_length: 8192 }
+        Request {
+            objective: Objective::Overall,
+            context_length: 8192,
+            measured_effective_bandwidth_gbps: None,
+        }
     }
 }
 
@@ -171,13 +180,20 @@ fn round1(v: f64) -> f64 {
 
 pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recommendations {
     let usable = usable_memory_gb(hw);
-    let (bandwidth, known_chip) = estimate_bandwidth_gbps(hw);
+    let (est_bandwidth, known_chip) = estimate_bandwidth_gbps(hw);
+    // Measured effective bandwidth (calibration) beats the chip-table
+    // estimate × efficiency guess.
+    let (effective_bw, measured) = match req.measured_effective_bandwidth_gbps {
+        Some(m) if m > 1.0 => (m, true),
+        _ => (est_bandwidth * BANDWIDTH_EFFICIENCY, false),
+    };
     let (wq, ws) = weights(req.objective);
     let floor = speed_floor(req.objective);
     // Guard against nonsense input from the UI layer.
     let req = Request {
         objective: req.objective,
         context_length: req.context_length.clamp(512, 1 << 20),
+        measured_effective_bandwidth_gbps: req.measured_effective_bandwidth_gbps,
     };
 
     let mut all: Vec<Assessment> = Vec::new();
@@ -218,7 +234,7 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
         let quant_data = &model.quantizations[quant];
         let bytes_per_weight = quant_data.file_size_gb / model.parameters_b;
         let gb_per_token = model.speed_params_b() * bytes_per_weight;
-        let mut tok_s = bandwidth * BANDWIDTH_EFFICIENCY / gb_per_token;
+        let mut tok_s = effective_bw / gb_per_token;
         if model.is_moe() {
             tok_s *= MOE_EFFICIENCY;
         }
@@ -262,7 +278,15 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
             (wq * qn + ws * sn) * 100.0
         };
 
-        let confidence = if !known_chip || model.is_moe() { "medium" } else { "high" };
+        let confidence = if model.is_moe() {
+            "medium" // routing overhead varies even with a measured baseline
+        } else if measured {
+            "measured"
+        } else if known_chip {
+            "high"
+        } else {
+            "medium"
+        };
 
         all.push(Assessment {
             model_id: model.id.clone(),
@@ -305,8 +329,8 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
         fast,
         all,
         usable_memory_gb: round1(usable),
-        bandwidth_gbps: bandwidth,
-        bandwidth_measured: false,
+        bandwidth_gbps: round1(effective_bw),
+        bandwidth_measured: measured,
     }
 }
 
@@ -365,10 +389,10 @@ mod tests {
     fn context_length_flips_fit() {
         // Gemma 27B on 32GB: fits at 8k, KV cache kills it at 40k+.
         let hw = apple("M4 Pro", 32.0);
-        let at_8k = rec(&hw, &Request { objective: Objective::Overall, context_length: 8192 });
+        let at_8k = rec(&hw, &Request { objective: Objective::Overall, context_length: 8192, ..Request::default() });
         assert!(find(&at_8k, "gemma3-27b").excluded_reason.is_none());
 
-        let at_80k = rec(&hw, &Request { objective: Objective::Overall, context_length: 81920 });
+        let at_80k = rec(&hw, &Request { objective: Objective::Overall, context_length: 81920, ..Request::default() });
         let g = find(&at_80k, "gemma3-27b");
         assert!(g.excluded_reason.is_some(), "27B + 80k ctx KV cache must not fit in 22GB usable");
         assert!(g.excluded_reason.as_ref().unwrap().contains("GB"));
@@ -390,7 +414,7 @@ mod tests {
 
     #[test]
     fn coding_objective_prefers_coder_quality() {
-        let r = rec(&apple("M4 Max", 64.0), &Request { objective: Objective::Coding, context_length: 8192 });
+        let r = rec(&apple("M4 Max", 64.0), &Request { objective: Objective::Coding, context_length: 8192, ..Request::default() });
         let best = r.best.as_ref().unwrap();
         // Under the coding objective, coder-tuned or top coding models win.
         let coder = find(&r, "qwen2.5-coder-32b");
@@ -418,6 +442,27 @@ mod tests {
     }
 
     #[test]
+    fn measured_bandwidth_overrides_estimate() {
+        let hw = apple("M4 Pro", 24.0);
+        let est = rec(&hw, &Request::default());
+        let meas = rec(
+            &hw,
+            &Request {
+                measured_effective_bandwidth_gbps: Some(300.0), // 2× the estimate
+                ..Request::default()
+            },
+        );
+        assert!(meas.bandwidth_measured);
+        assert!(!est.bandwidth_measured);
+        let e = find(&est, "qwen3-14b");
+        let m = find(&meas, "qwen3-14b");
+        assert!(m.est_tok_per_sec > e.est_tok_per_sec * 1.5);
+        assert_eq!(m.confidence, "measured");
+        // MoE stays medium even with a measured baseline.
+        assert_eq!(find(&meas, "qwen3-30b-a3b").confidence, "medium");
+    }
+
+    #[test]
     fn tiny_machine_yields_no_picks_but_full_reasons() {
         // 4GB: nothing fits even at Q4 — best must be None (the UI shows an
         // empty state), and every assessment still explains itself.
@@ -436,7 +481,7 @@ mod tests {
         // whenever anything is included.
         let r = rec(
             &apple("M1", 8.0),
-            &Request { objective: Objective::Overall, context_length: 16384 },
+            &Request { objective: Objective::Overall, context_length: 16384, ..Request::default() },
         );
         if r.all.iter().any(|a| a.excluded_reason.is_none()) {
             assert!(r.fast.is_some());
