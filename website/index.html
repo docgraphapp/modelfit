@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ModelFit — Find the best AI model for your machine</title>
+<meta name="description" content="ModelFit inspects your hardware and tells you which local AI models you can actually run — at what quantization, context length and speed. Free, open source, a DocGraph product." />
+<link rel="icon" href="/img/favicon.svg" type="image/svg+xml" />
+<meta property="og:title" content="ModelFit — Find the best AI model for your machine" />
+<meta property="og:description" content="Which local AI model fits your machine? ModelFit measures your hardware and answers — with real benchmarks, not guesswork." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://modelfit.docgraph.app/" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="/" aria-label="ModelFit home">
+      <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="2.5" y="13" width="4" height="8" rx="1.2"/>
+        <rect x="10" y="8.5" width="4" height="12.5" rx="1.2"/>
+        <rect x="17.5" y="3" width="4" height="18" rx="1.2"/>
+      </svg>
+      <span>ModelFit</span>
+    </a>
+    <nav class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#status">Status</a>
+      <a href="https://github.com/docgraphapp/modelfit">GitHub</a>
+      <a href="https://docgraph.app" class="nav-family">DocGraph</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ── HERO ───────────────────────────────────────────────────── -->
+  <section class="wrap hero">
+    <div class="hero-copy">
+      <p class="eyebrow">Local AI advisor</p>
+      <h1 class="display">Find the best AI&nbsp;model for your machine.</h1>
+      <p class="lede">
+        “Can my laptop run a 32B model?” is answered today by forum threads and
+        spreadsheet calculators. ModelFit reads your actual hardware, does the
+        memory maths properly, and can measure your machine's real speed — then
+        tells you what to run, and installs it.
+      </p>
+      <div class="cta">
+        <a class="btn btn-primary" href="https://github.com/docgraphapp/modelfit">View the source</a>
+        <a class="btn btn-ghost" href="#status">Get it running</a>
+      </div>
+      <p class="cta-note">Free · MIT-licensed · macOS today, Windows &amp; Linux in progress</p>
+    </div>
+
+    <figure class="hero-shot">
+      <img src="/img/modelfit-app.png" width="1600" height="1386"
+           alt="ModelFit showing an Apple M4 Pro with 24 GB unified memory, recommending DeepSeek-R1 14B at about 28 tokens per second from a measured benchmark." />
+    </figure>
+  </section>
+
+  <!-- ── THE THREE QUESTIONS ────────────────────────────────────── -->
+  <section class="wrap band">
+    <p class="eyebrow clay">Why another calculator</p>
+    <h2 class="display h2">Most tools stop at “does it fit”.<br />That's the easy third of the question.</h2>
+    <div class="q-grid">
+      <article class="q">
+        <span class="q-n">01</span>
+        <h3>Can it run?</h3>
+        <p>
+          Weights plus KV cache plus runtime overhead, against the memory your
+          machine can actually give a model — 70&nbsp;% of a unified pool, or your
+          dedicated VRAM.
+        </p>
+      </article>
+      <article class="q">
+        <span class="q-n">02</span>
+        <h3>Will it be usable?</h3>
+        <p>
+          Fitting and being pleasant to use are different things. Generation speed
+          is estimated from memory bandwidth — the number that actually predicts
+          tokens per second — so a model that would crawl is called out, not
+          recommended.
+        </p>
+      </article>
+      <article class="q">
+        <span class="q-n">03</span>
+        <h3>Which one is best?</h3>
+        <p>
+          Quality traded against speed for what you're doing — chat, reasoning or
+          coding. You get three answers: <b>Best</b>, <b>Safe</b> and <b>Fast</b>,
+          and every model that didn't make it says why.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── HOW IT WORKS ───────────────────────────────────────────── -->
+  <section id="how" class="wrap band">
+    <p class="eyebrow clay">How it works</p>
+    <h2 class="display h2">Four steps, and only one of them needs the internet.</h2>
+
+    <ol class="steps">
+      <li>
+        <h3><span class="step-n">1</span> Read the machine</h3>
+        <p>
+          CPU, cores, memory, GPU and its cores, free disk, and which acceleration
+          backends exist — Metal, CUDA, ROCm. Apple Silicon's unified memory is
+          treated as what it is: one pool the GPU can see. Anything detection gets
+          wrong, you can correct by hand.
+        </p>
+      </li>
+      <li>
+        <h3><span class="step-n">2</span> Load the model registry</h3>
+        <p>
+          A small database of model facts — parameter counts, per-quantization file
+          sizes, KV-cache cost, capabilities — built automatically from GGUF
+          metadata and refreshed without updating the app. A copy ships inside the
+          app, so a first run works offline.
+        </p>
+      </li>
+      <li>
+        <h3><span class="step-n">3</span> Do the maths that others skip</h3>
+        <p>
+          KV cache is computed from the context length <em>you</em> ask for, because
+          the same model fits at 8k and doesn't at 64k. Mixture-of-experts models
+          are charged memory for all their parameters but speed for only the active
+          ones — get that backwards and a 30B-A3B looks slower than a 14B, which it
+          very much is not.
+        </p>
+      </li>
+      <li>
+        <h3><span class="step-n">4</span> Measure, don't guess</h3>
+        <p>
+          One click benchmarks a small model you already have — no giant download —
+          times real generation, and derives your machine's true effective memory
+          bandwidth. Every estimate on screen is then re-derived from that
+          measurement. On the M4&nbsp;Pro above, the chip's spec sheet suggested one
+          number; measuring found 234&nbsp;GB/s of real throughput and moved the top
+          pick from an estimated 17&nbsp;tok/s to a measured 28.
+        </p>
+      </li>
+    </ol>
+  </section>
+
+  <!-- ── FACTS ──────────────────────────────────────────────────── -->
+  <section class="wrap band">
+    <p class="eyebrow clay">What it is</p>
+    <div class="facts">
+      <div class="fact">
+        <h3>Nothing to install first</h3>
+        <p>
+          No runtime, no Python, no Node. The app detects and recommends on its own.
+          Ollama is only needed if you want it to measure or install a model for
+          you — and if it's missing, the app says so and carries on.
+        </p>
+      </div>
+      <div class="fact">
+        <h3>One outbound request</h3>
+        <p>
+          Fetching the model registry. That's the only thing ModelFit sends anywhere.
+          Your hardware details never leave the machine — there is no account, no
+          telemetry, no upload.
+        </p>
+      </div>
+      <div class="fact">
+        <h3>Small and native</h3>
+        <p>
+          Rust core, native detection, a webview for the interface. Tauri rather than
+          a bundled browser, so the download is measured in megabytes.
+        </p>
+      </div>
+      <div class="fact">
+        <h3>Open, and open to correction</h3>
+        <p>
+          MIT-licensed, engine and registry both. Adding a model is one entry in a
+          YAML file — the pipeline works out its sizes from the GGUF headers itself.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── STATUS / GET IT ────────────────────────────────────────── -->
+  <section id="status" class="wrap band">
+    <p class="eyebrow clay">Honest status</p>
+    <h2 class="display h2">Early, and working.</h2>
+    <p class="status-lede">
+      ModelFit is in active development in the open. There are no packaged
+      downloads yet — the first signed releases land with cross-platform builds.
+      Until then it builds and runs from source in a couple of minutes.
+    </p>
+
+    <div class="status-grid">
+      <ul class="status-list">
+        <li class="done">Hardware detection <span>macOS, Apple&nbsp;Silicon</span></li>
+        <li class="done">Recommendation engine <span>MoE- and context-aware</span></li>
+        <li class="done">Objectives, context control, full model table</li>
+        <li class="done">Ollama: status, one-click install, real benchmark</li>
+        <li class="done">Auto-updating model registry</li>
+        <li class="wip">Windows &amp; Linux GPU detection</li>
+        <li class="wip">Signed installers and auto-update</li>
+      </ul>
+
+      <div class="build">
+        <h3>Build it now</h3>
+<pre><code>git clone https://github.com/docgraphapp/modelfit
+cd modelfit/apps/desktop
+npm install
+cargo tauri dev</code></pre>
+        <p class="build-note">
+          Needs Rust, Node&nbsp;20+ and the Tauri prerequisites. Watch the repository
+          for the first release.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-inner">
+    <div>
+      <a class="brand" href="/" aria-label="ModelFit home">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="2.5" y="13" width="4" height="8" rx="1.2"/>
+          <rect x="10" y="8.5" width="4" height="12.5" rx="1.2"/>
+          <rect x="17.5" y="3" width="4" height="18" rx="1.2"/>
+        </svg>
+        <span>ModelFit</span>
+      </a>
+      <p class="foot-tag">Find the best AI model for your machine.</p>
+    </div>
+    <nav>
+      <h4>Project</h4>
+      <ul>
+        <li><a href="https://github.com/docgraphapp/modelfit">Source code</a></li>
+        <li><a href="https://github.com/docgraphapp/modelfit/blob/main/REQUIREMENTS.md">Design spec</a></li>
+        <li><a href="/registry/v1/registry.json">Model registry</a></li>
+      </ul>
+    </nav>
+    <nav>
+      <h4>Family</h4>
+      <ul>
+        <li><a href="https://docgraph.app">DocGraph</a></li>
+        <li><a href="https://docs.docgraph.app">DocGraph docs</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="wrap foot-base">
+    <span>© 2026 DocGraph · MIT-licensed · Free to use.</span>
+    <span>A DocGraph product.</span>
+  </div>
+</footer>
+
+</body>
+</html>

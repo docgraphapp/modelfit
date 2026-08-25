@@ -35,13 +35,14 @@ jobs:
             echo "registry unchanged"
           fi
 
-      - name: Deploy to Cloudflare Pages
+      # A Pages deploy REPLACES the whole site, and the website shares this
+      # project with the registry — so build-site.sh publishes both together.
+      # Deploying the registry alone would take modelfit.docgraph.app down.
+      - name: Deploy site + registry to Cloudflare Pages
         if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: a407f54bd034ac91d08e953368b3aa12
         run: |
-          mkdir -p deploy/registry/v1
-          cp registry/registry.json deploy/registry/v1/registry.json
-          printf '/registry/*\n  Cache-Control: public, max-age=300\n  Access-Control-Allow-Origin: *\n' > deploy/_headers
-          npx wrangler@4 pages deploy deploy --project-name modelfit-registry --branch main --commit-dirty=true
+          ./scripts/build-site.sh dist-site
+          npx wrangler@4 pages deploy dist-site --project-name modelfit-registry --branch main --commit-dirty=true
