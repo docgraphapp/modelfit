@@ -47,8 +47,91 @@ const FIT_WORDS: Record<Assessment["fit"], string> = {
   toobig: "too big",
 };
 
+const PICK_HINTS: Record<string, string> = {
+  Best: "Highest quality × speed for this objective",
+  Safe: "Highest-scoring model with comfortable headroom",
+  Fast: "Fastest model that still clears the quality bar",
+};
+
 function fmtCtx(n: number) {
   return `${n / 1024}k`;
+}
+
+function fmtGb(bytes: number) {
+  return (bytes / 1e9).toFixed(1);
+}
+
+const GAUGE_COLORS: Record<Assessment["fit"], string> = {
+  comfortable: "bg-emerald-500",
+  tight: "bg-amber-500",
+  toobig: "bg-red-400 dark:bg-red-500",
+};
+
+function FitGauge({
+  a,
+  usable,
+  compact,
+}: {
+  a: Assessment;
+  usable: number;
+  compact?: boolean;
+}) {
+  const pct = Math.min(100, (a.estMemoryGb / usable) * 100);
+  return (
+    <div>
+      <div
+        role="meter"
+        aria-label={`Estimated memory: ${a.estMemoryGb} of ${usable} GB usable`}
+        aria-valuenow={a.estMemoryGb}
+        aria-valuemin={0}
+        aria-valuemax={usable}
+        className={`overflow-hidden rounded-full bg-neutral-200/80 dark:bg-neutral-800 ${
+          compact ? "h-1" : "h-1.5"
+        }`}
+      >
+        <div
+          className={`h-full rounded-full transition-[width] duration-500 ease-out ${GAUGE_COLORS[a.fit]}`}
+          style={{ width: `${pct}%` }}
+        />
+      </div>
+      {!compact && (
+        <div className="mt-1.5 flex justify-between text-xs text-neutral-400 dark:text-neutral-500">
+          <span>{FIT_WORDS[a.fit]}</span>
+          <span className="tabular-nums">
+            ~{a.estMemoryGb} of {usable} GB usable
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CopyRunCommand({ tag }: { tag: string }) {
+  const [copied, setCopied] = useState(false);
+  const cmd = `ollama run ${tag}`;
+  return (
+    <button
+      onClick={() => {
+        navigator.clipboard.writeText(cmd).then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 1600);
+        });
+      }}
+      title="Copy command"
+      className="group mt-3 flex w-full items-center justify-between gap-2 rounded-lg border border-neutral-200 bg-neutral-50 px-2.5 py-1.5 text-left font-mono text-xs text-neutral-600 hover:border-neutral-300 dark:border-neutral-700/80 dark:bg-neutral-800/60 dark:text-neutral-300 dark:hover:border-neutral-600"
+    >
+      <span className="truncate">{cmd}</span>
+      <span
+        className={`shrink-0 font-sans text-[11px] font-medium ${
+          copied
+            ? "text-emerald-600 dark:text-emerald-400"
+            : "text-neutral-400 group-hover:text-neutral-600 dark:group-hover:text-neutral-300"
+        }`}
+      >
+        {copied ? "Copied ✓" : "Copy"}
+      </span>
+    </button>
+  );
 }
 
 function InstallControl({
@@ -56,13 +139,15 @@ function InstallControl({
   runtime,
   pulling,
   onInstall,
+  hero,
 }: {
   a: Assessment;
   runtime: RuntimeStatus | null;
   pulling: Record<string, PullProgress>;
   onInstall: (tag: string) => void;
+  hero?: boolean;
 }) {
-  if (!runtime?.running || !a.ollamaTag) return null;
+  if (!a.ollamaTag) return null;
   const tag = a.ollamaTag;
   const progress = pulling[tag];
   if (progress) {
@@ -71,89 +156,159 @@ function InstallControl({
         ? Math.round((progress.completed / progress.total) * 100)
         : null;
     return (
-      <div className="mt-3">
+      <div className="mt-4">
         <div className="h-1.5 overflow-hidden rounded-full bg-neutral-200 dark:bg-neutral-700">
           <div
             className="h-full rounded-full bg-emerald-500 transition-all"
             style={{ width: `${pct ?? 5}%` }}
           />
         </div>
-        <div className="mt-1 text-xs text-neutral-400">
-          {pct != null ? `${pct}%` : progress.status || "starting…"}
+        <div className="mt-1.5 flex justify-between text-xs text-neutral-400">
+          <span>{pct != null ? `Downloading… ${pct}%` : progress.status || "starting…"}</span>
+          {progress.total != null && progress.completed != null && (
+            <span className="tabular-nums">
+              {fmtGb(progress.completed)} / {fmtGb(progress.total)} GB
+            </span>
+          )}
         </div>
       </div>
     );
   }
-  if (runtime.installedTags.includes(tag)) {
+  if (runtime?.running && runtime.installedTags.includes(tag)) {
     return (
-      <div className="mt-3 text-xs font-medium text-emerald-600 dark:text-emerald-400">
-        Installed ✓
+      <div className="mt-4">
+        <div className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
+          Installed ✓
+        </div>
+        <CopyRunCommand tag={tag} />
       </div>
+    );
+  }
+  if (!runtime?.running) {
+    return (
+      <button
+        disabled
+        title="Install Ollama to enable one-click install"
+        className={`mt-4 cursor-not-allowed rounded-lg border border-dashed border-neutral-300 font-medium text-neutral-400 dark:border-neutral-700 dark:text-neutral-500 ${
+          hero ? "px-4 py-1.5 text-[13px]" : "px-3 py-1 text-xs"
+        }`}
+      >
+        Install — needs Ollama
+      </button>
     );
   }
   return (
     <button
       onClick={() => onInstall(tag)}
-      className="mt-3 rounded-lg bg-neutral-900 px-3 py-1 text-xs font-medium text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-white"
+      className={`mt-4 rounded-lg font-medium transition-colors ${
+        hero
+          ? "bg-emerald-600 px-4 py-1.5 text-[13px] text-white hover:bg-emerald-500 dark:bg-emerald-500 dark:text-emerald-950 dark:hover:bg-emerald-400"
+          : "bg-neutral-900 px-3 py-1 text-xs text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-white"
+      }`}
     >
       Install
     </button>
   );
 }
 
-function PickCard({
-  tag,
+function Confidence({ a }: { a: Assessment }) {
+  if (a.confidence === "measured") {
+    return (
+      <span className="text-emerald-600 dark:text-emerald-500" title="Extrapolated from a real benchmark on this machine">
+        {" "}measured
+      </span>
+    );
+  }
+  return <span className="text-neutral-400 dark:text-neutral-500"> est.</span>;
+}
+
+function HeroPick({
   a,
-  highlight,
+  usable,
   children,
 }: {
-  tag: string;
   a: Assessment;
-  highlight?: boolean;
+  usable: number;
   children?: React.ReactNode;
 }) {
   return (
-    <div
-      className={`flex-1 rounded-2xl border p-5 ${
-        highlight
-          ? "border-emerald-300 bg-emerald-50/60 dark:border-emerald-800 dark:bg-emerald-950/40"
-          : "border-neutral-200 bg-white dark:border-neutral-800 dark:bg-neutral-900"
-      }`}
-    >
+    <div className="rounded-2xl border border-emerald-200/80 bg-gradient-to-b from-emerald-50/70 to-white p-6 shadow-sm dark:border-emerald-900/60 dark:from-emerald-950/35 dark:to-neutral-900">
       <div className="flex items-baseline justify-between">
         <span
-          className={`text-[11px] font-semibold uppercase tracking-wider ${
-            highlight ? "text-emerald-600 dark:text-emerald-400" : "text-neutral-400"
-          }`}
+          title={PICK_HINTS.Best}
+          className="text-[11px] font-semibold uppercase tracking-[0.14em] text-emerald-600 dark:text-emerald-400"
         >
-          {tag}
+          Best for this machine
         </span>
-        <span className="text-sm font-semibold tabular-nums">{Math.round(a.score)}/100</span>
+        <span
+          title="Quality × speed score for the selected objective, 0–100"
+          className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold tabular-nums text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
+        >
+          {Math.round(a.score)}<span className="font-normal opacity-60">/100</span>
+        </span>
       </div>
-      <div className="mt-2 text-[15px] font-semibold leading-snug">{a.name}</div>
-      <div className="text-xs text-neutral-400">{a.quant}</div>
-      <div className="mt-3 space-y-1 text-[13px] text-neutral-500 dark:text-neutral-400">
-        <div>{FIT_WORDS[a.fit]} · ~{a.estMemoryGb} GB</div>
+      <div className="mt-2.5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <h2 className="text-[22px] font-semibold leading-tight tracking-tight">{a.name}</h2>
+        <span className="text-[13px] text-neutral-400 dark:text-neutral-500">{a.quant}</span>
+      </div>
+      <div className="mt-4 flex gap-8">
         <div>
-          ~{Math.round(a.estTokPerSec)} tok/s
-          {a.confidence === "medium" && <span className="text-neutral-400"> (est.)</span>}
-          {a.confidence === "measured" && (
-            <span className="text-emerald-600 dark:text-emerald-500"> measured baseline</span>
-          )}
+          <div className="text-lg font-semibold tabular-nums leading-tight">
+            ~{Math.round(a.estTokPerSec)}
+            <span className="text-[13px] font-normal text-neutral-400"> tok/s</span>
+            <span className="text-[13px] font-normal"><Confidence a={a} /></span>
+          </div>
+          <div className="text-xs text-neutral-400 dark:text-neutral-500">generation speed</div>
         </div>
+        <div>
+          <div className="text-lg font-semibold tabular-nums leading-tight">
+            ~{a.estMemoryGb}
+            <span className="text-[13px] font-normal text-neutral-400"> GB</span>
+          </div>
+          <div className="text-xs text-neutral-400 dark:text-neutral-500">memory needed</div>
+        </div>
+      </div>
+      <div className="mt-4">
+        <FitGauge a={a} usable={usable} />
       </div>
       {children}
     </div>
   );
 }
 
-function Spec({ label, value }: { label: string; value: string }) {
+function MiniPick({
+  tag,
+  a,
+  usable,
+  children,
+}: {
+  tag: string;
+  a: Assessment;
+  usable: number;
+  children?: React.ReactNode;
+}) {
   return (
-    <div>
-      <div className="text-xs uppercase tracking-wide text-neutral-400 dark:text-neutral-500">
-        {label}
+    <div className="flex-1 rounded-2xl border border-neutral-200 bg-white p-5 dark:border-neutral-800 dark:bg-neutral-900">
+      <div className="flex items-baseline justify-between">
+        <span
+          title={PICK_HINTS[tag]}
+          className="text-[11px] font-semibold uppercase tracking-[0.14em] text-neutral-400"
+        >
+          {tag}
+        </span>
+        <span className="text-xs font-semibold tabular-nums text-neutral-500 dark:text-neutral-400">
+          {Math.round(a.score)}/100
+        </span>
       </div>
-      <div className="mt-0.5 text-[15px] font-medium">{value}</div>
+      <div className="mt-2 text-[15px] font-semibold leading-snug">{a.name}</div>
+      <div className="text-xs text-neutral-400">{a.quant}</div>
+      <div className="mt-3 text-[13px] tabular-nums text-neutral-500 dark:text-neutral-400">
+        ~{Math.round(a.estTokPerSec)} tok/s<Confidence a={a} /> · ~{a.estMemoryGb} GB
+      </div>
+      <div className="mt-2.5">
+        <FitGauge a={a} usable={usable} compact />
+      </div>
+      {children}
     </div>
   );
 }
@@ -168,7 +323,7 @@ function Segmented<T extends string>({
   onChange: (v: T) => void;
 }) {
   return (
-    <div className="inline-flex rounded-full bg-neutral-100 p-0.5 dark:bg-neutral-800">
+    <div role="group" className="inline-flex rounded-full bg-neutral-100 p-0.5 dark:bg-neutral-800">
       {options.map((o) => (
         <button
           key={o.id}
@@ -189,20 +344,24 @@ function Segmented<T extends string>({
 
 function FitBadge({ a }: { a: Assessment }) {
   if (a.excludedReason) {
-    return <span className="text-xs text-neutral-400">{a.excludedReason}</span>;
+    return (
+      <span className="text-xs leading-snug text-neutral-500 dark:text-neutral-400">
+        {a.excludedReason}
+      </span>
+    );
   }
   const styles =
     a.fit === "comfortable"
       ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
       : "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400";
   return (
-    <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${styles}`}>
+    <span className={`whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-medium ${styles}`}>
       {FIT_WORDS[a.fit]}
     </span>
   );
 }
 
-function HardwareCard({
+function HardwareStrip({
   hw,
   onEdited,
 }: {
@@ -235,86 +394,99 @@ function HardwareCard({
     onEdited(next);
   };
 
-  return (
-    <section className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
-      <div className="flex items-baseline justify-between">
-        <h2 className="text-lg font-semibold">{hw.cpuModel}</h2>
-        <div className="flex items-baseline gap-3">
-          <span className="text-xs text-neutral-400">{hw.osVersion}</span>
-          <button
-            onClick={() => (editing ? apply() : startEdit())}
-            className="text-xs font-medium text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200"
-          >
-            {editing ? "Done" : "Edit"}
-          </button>
-        </div>
-      </div>
+  const gpu = hw.gpus[0];
+  const specs = [
+    `${hw.totalRamGb} GB${hw.unifiedMemory ? " unified" : ""}`,
+    `${hw.physicalCores}-core CPU`,
+    gpu &&
+      (gpu.coreCount ? `${gpu.coreCount}-core GPU` : gpu.name),
+    gpu && !hw.unifiedMemory && gpu.vramGb != null && `${gpu.vramGb} GB VRAM`,
+    `${Math.round(hw.diskAvailableGb)} GB free disk`,
+    ...hw.accelerations.filter((a) => a !== "cpu").map((a) => ACCEL_LABELS[a] ?? a),
+  ].filter(Boolean) as string[];
 
-      <div className="mt-5 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3">
-        {editing ? (
-          <div>
-            <div className="text-xs uppercase tracking-wide text-neutral-400">Memory (GB)</div>
-            <input
-              value={ram}
-              onChange={(e) => setRam(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") apply();
-                if (e.key === "Escape") setEditing(false);
-              }}
-              className="mt-0.5 w-24 rounded-lg border border-neutral-300 bg-transparent px-2 py-0.5 text-[15px] font-medium outline-none focus:border-neutral-500 dark:border-neutral-700"
-            />
-          </div>
-        ) : (
-          <Spec
-            label="Memory"
-            value={`${hw.totalRamGb} GB${hw.unifiedMemory ? " unified" : ""}`}
-          />
-        )}
-        <Spec label="CPU cores" value={String(hw.physicalCores)} />
-        {hw.gpus[0] && (
-          <Spec
-            label="GPU"
-            value={
-              hw.gpus[0].coreCount
-                ? `${hw.gpus[0].vendor} · ${hw.gpus[0].coreCount} cores`
-                : hw.gpus[0].name
-            }
-          />
-        )}
-        {hw.gpus[0] && !hw.unifiedMemory && (
-          editing ? (
-            <div>
-              <div className="text-xs uppercase tracking-wide text-neutral-400">VRAM (GB)</div>
-              <input
-                value={vram}
-                onChange={(e) => setVram(e.target.value)}
-                onKeyDown={(e) => {
-                if (e.key === "Enter") apply();
-                if (e.key === "Escape") setEditing(false);
-              }}
-                className="mt-0.5 w-24 rounded-lg border border-neutral-300 bg-transparent px-2 py-0.5 text-[15px] font-medium outline-none focus:border-neutral-500 dark:border-neutral-700"
-              />
+  const editField = (
+    label: string,
+    value: string,
+    setValue: (v: string) => void,
+  ) => (
+    <label className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-400">
+      {label}
+      <input
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") apply();
+          if (e.key === "Escape") setEditing(false);
+        }}
+        autoFocus={label.startsWith("Memory")}
+        className="w-20 rounded-lg border border-neutral-300 bg-white px-2 py-1 text-[13px] font-medium tabular-nums text-neutral-900 outline-none focus:border-emerald-500 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-100 dark:focus:border-emerald-500"
+      />
+    </label>
+  );
+
+  return (
+    <section className="rounded-2xl border border-neutral-200 bg-white px-5 py-4 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+        <div className="flex min-w-0 flex-wrap items-baseline gap-x-2.5 gap-y-1">
+          <h2 className="text-[15px] font-semibold tracking-tight">{hw.cpuModel}</h2>
+          <span className="text-[13px] text-neutral-400 dark:text-neutral-500">
+            {specs.join(" · ")}
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          {editing ? (
+            <div className="flex items-center gap-3">
+              {editField("Memory (GB)", ram, setRam)}
+              {gpu && !hw.unifiedMemory && editField("VRAM (GB)", vram, setVram)}
+              <button
+                onClick={() => setEditing(false)}
+                className="text-xs font-medium text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={apply}
+                className="rounded-lg bg-neutral-900 px-2.5 py-1 text-xs font-medium text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-white"
+              >
+                Done
+              </button>
             </div>
           ) : (
-            hw.gpus[0].vramGb != null && (
-              <Spec label="VRAM" value={`${hw.gpus[0].vramGb} GB`} />
-            )
-          )
-        )}
-        <Spec label="Free disk" value={`${Math.round(hw.diskAvailableGb)} GB`} />
-      </div>
-
-      <div className="mt-5 flex gap-2">
-        {hw.accelerations.map((a) => (
-          <span
-            key={a}
-            className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-medium text-neutral-600 dark:bg-neutral-800 dark:text-neutral-300"
-          >
-            {ACCEL_LABELS[a] ?? a}
-          </span>
-        ))}
+            <>
+              <span className="text-xs text-neutral-400 dark:text-neutral-500">
+                {hw.osVersion}
+              </span>
+              <button
+                onClick={startEdit}
+                title="Detected specs are editable — plan for a different machine"
+                className="text-xs font-medium text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200"
+              >
+                Edit
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </section>
+  );
+}
+
+function Skeleton() {
+  return (
+    <div className="animate-pulse" aria-label="Detecting your machine…" role="status">
+      <div className="h-14 rounded-2xl bg-neutral-200/60 dark:bg-neutral-800/60" />
+      <div className="mt-6 flex items-center justify-between">
+        <div className="h-8 w-72 rounded-full bg-neutral-200/60 dark:bg-neutral-800/60" />
+        <div className="h-8 w-24 rounded-lg bg-neutral-200/60 dark:bg-neutral-800/60" />
+      </div>
+      <div className="mt-6 h-52 rounded-2xl bg-neutral-200/60 dark:bg-neutral-800/60" />
+      <div className="mt-3 flex gap-3">
+        <div className="h-36 flex-1 rounded-2xl bg-neutral-200/60 dark:bg-neutral-800/60" />
+        <div className="h-36 flex-1 rounded-2xl bg-neutral-200/60 dark:bg-neutral-800/60" />
+      </div>
+      <div className="mt-4 text-center text-xs text-neutral-400">Detecting your machine…</div>
+    </div>
   );
 }
 
@@ -446,9 +618,8 @@ export default function App() {
       .finally(() => setBenchmarking(false));
   };
 
-  const picks = recs?.best
+  const secondary = recs?.best
     ? [
-        { tag: "Best", a: recs.best, highlight: true },
         ...(recs.safe && recs.safe.modelId !== recs.best.modelId
           ? [{ tag: "Safe", a: recs.safe }]
           : []),
@@ -461,11 +632,14 @@ export default function App() {
     : [];
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-2xl flex-col px-8 py-10">
-      <header className="mb-8">
-        <h1 className="text-xl font-semibold tracking-tight">ModelFit</h1>
-        <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
-          Find the best AI model for your machine.
+    <div className="mx-auto flex min-h-screen max-w-2xl flex-col px-8 py-9">
+      <header className="mb-7 flex items-baseline justify-between">
+        <h1 className="flex items-center gap-2 text-lg font-semibold tracking-tight">
+          <span aria-hidden className="inline-block h-2.5 w-2.5 rounded-[4px] bg-emerald-500" />
+          ModelFit
+        </h1>
+        <p className="text-[13px] text-neutral-400 dark:text-neutral-500">
+          Find the best AI model for your machine
         </p>
       </header>
 
@@ -475,13 +649,11 @@ export default function App() {
         </div>
       )}
 
-      {!hw && !error && (
-        <div className="text-sm text-neutral-400">Detecting your machine…</div>
-      )}
+      {!hw && !error && <Skeleton />}
 
       {hw && (
         <>
-          <HardwareCard hw={hw} onEdited={(next) => update(objective, contextLength, next)} />
+          <HardwareStrip hw={hw} onEdited={(next) => update(objective, contextLength, next)} />
 
           <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
             <Segmented
@@ -489,7 +661,10 @@ export default function App() {
               value={objective}
               onChange={(o) => update(o, contextLength)}
             />
-            <label className="flex items-center gap-2 text-[13px] text-neutral-500 dark:text-neutral-400">
+            <label
+              title="How much conversation the model can hold at once — longer context needs more memory"
+              className="flex items-center gap-2 text-[13px] text-neutral-500 dark:text-neutral-400"
+            >
               Context
               <select
                 value={contextLength}
@@ -520,31 +695,47 @@ export default function App() {
                     : "Try a smaller context length or a different objective.";
                 })()}
               </p>
+              {contextLength > CONTEXTS[0] && (
+                <button
+                  onClick={() =>
+                    update(
+                      objective,
+                      CONTEXTS[Math.max(0, CONTEXTS.indexOf(contextLength) - 1)],
+                    )
+                  }
+                  className="mt-3 rounded-lg border border-neutral-200 px-3 py-1 text-[13px] font-medium text-neutral-600 hover:border-neutral-400 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500"
+                >
+                  Try {fmtCtx(CONTEXTS[Math.max(0, CONTEXTS.indexOf(contextLength) - 1)])} context
+                </button>
+              )}
             </section>
           )}
 
           {recs && recs.best && (
-            <section className="mt-6">
-              <div className="mb-3 flex items-baseline justify-between">
-                <h3 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">
-                  Your machine can comfortably run
-                </h3>
-                <span className="text-xs text-neutral-400">
-                  {recs.usableMemoryGb} GB usable for models
-                </span>
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row">
-                {picks.map((p) => (
-                  <PickCard key={p.tag} tag={p.tag} a={p.a} highlight={p.highlight}>
-                    <InstallControl
-                      a={p.a}
-                      runtime={runtime}
-                      pulling={pulling}
-                      onInstall={install}
-                    />
-                  </PickCard>
-                ))}
-              </div>
+            <section className="mt-6" aria-label="Recommendations">
+              <HeroPick a={recs.best} usable={recs.usableMemoryGb}>
+                <InstallControl
+                  a={recs.best}
+                  runtime={runtime}
+                  pulling={pulling}
+                  onInstall={install}
+                  hero
+                />
+              </HeroPick>
+              {secondary.length > 0 && (
+                <div className="mt-3 flex flex-col gap-3 sm:flex-row">
+                  {secondary.map((p) => (
+                    <MiniPick key={p.tag} tag={p.tag} a={p.a} usable={recs.usableMemoryGb}>
+                      <InstallControl
+                        a={p.a}
+                        runtime={runtime}
+                        pulling={pulling}
+                        onInstall={install}
+                      />
+                    </MiniPick>
+                  ))}
+                </div>
+              )}
             </section>
           )}
 
@@ -582,13 +773,19 @@ export default function App() {
                 <button
                   onClick={runBenchmark}
                   disabled={benchmarking}
-                  className="rounded-lg border border-neutral-200 px-3 py-1 font-medium text-neutral-600 hover:border-neutral-400 disabled:opacity-50 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500"
+                  title="Runs a short generation on a small installed model to measure this machine's real memory bandwidth (~1 min)"
+                  className="rounded-lg border border-neutral-200 px-3 py-1 font-medium text-neutral-600 hover:border-neutral-400 disabled:opacity-60 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500"
                 >
-                  {benchmarking
-                    ? "Benchmarking…"
-                    : calibration
-                      ? "Re-run benchmark"
-                      : "Run real benchmark"}
+                  {benchmarking ? (
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="h-3 w-3 animate-spin rounded-full border-[1.5px] border-neutral-300 border-t-neutral-600 dark:border-neutral-600 dark:border-t-neutral-200" />
+                      Benchmarking…
+                    </span>
+                  ) : calibration ? (
+                    "Re-run benchmark"
+                  ) : (
+                    "Benchmark this machine"
+                  )}
                 </button>
               </div>
             )}
@@ -598,9 +795,11 @@ export default function App() {
             <section className="mt-6">
               <button
                 onClick={() => setShowAll(!showAll)}
+                aria-expanded={showAll}
                 className="text-[13px] font-medium text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200"
               >
                 {showAll ? "Hide all models" : `Show all ${recs.all.length} models`}
+                <span aria-hidden className="ml-1">{showAll ? "▴" : "▾"}</span>
               </button>
               {showAll && (
                 <div className="mt-3 overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
@@ -618,24 +817,44 @@ export default function App() {
                       {recs.all.map((a) => (
                         <tr
                           key={a.modelId}
-                          className={`border-b border-neutral-100 last:border-0 dark:border-neutral-800/60 ${
-                            a.excludedReason ? "opacity-55" : ""
-                          }`}
+                          className="border-b border-neutral-100 transition-colors last:border-0 hover:bg-neutral-50 dark:border-neutral-800/60 dark:hover:bg-neutral-900"
                         >
                           <td className="px-4 py-2.5">
-                            <span className="font-medium">{a.name}</span>{" "}
-                            <span className="text-neutral-400">{a.quant}</span>
+                            <span
+                              className={`font-medium ${
+                                a.excludedReason
+                                  ? "text-neutral-400 dark:text-neutral-500"
+                                  : ""
+                              }`}
+                            >
+                              {a.name}
+                            </span>{" "}
+                            <span className="text-neutral-400 dark:text-neutral-600">
+                              {a.quant}
+                            </span>
                           </td>
-                          <td className="px-3 py-2.5 text-right tabular-nums">
+                          <td
+                            className={`whitespace-nowrap px-3 py-2.5 text-right tabular-nums ${
+                              a.excludedReason ? "text-neutral-400 dark:text-neutral-500" : ""
+                            }`}
+                          >
                             {a.estMemoryGb} GB
                           </td>
-                          <td className="px-3 py-2.5 text-right tabular-nums">
+                          <td
+                            className={`whitespace-nowrap px-3 py-2.5 text-right tabular-nums ${
+                              a.excludedReason ? "text-neutral-400 dark:text-neutral-500" : ""
+                            }`}
+                          >
                             ~{Math.round(a.estTokPerSec)} t/s
                           </td>
-                          <td className="px-3 py-2.5 text-right font-medium tabular-nums">
-                            {a.excludedReason ? "—" : Math.round(a.score)}
+                          <td className="whitespace-nowrap px-3 py-2.5 text-right font-medium tabular-nums">
+                            {a.excludedReason ? (
+                              <span className="text-neutral-300 dark:text-neutral-600">—</span>
+                            ) : (
+                              Math.round(a.score)
+                            )}
                           </td>
-                          <td className="max-w-[220px] px-4 py-2.5">
+                          <td className="max-w-[240px] px-4 py-2.5">
                             <FitBadge a={a} />
                           </td>
                         </tr>
@@ -647,29 +866,30 @@ export default function App() {
             </section>
           )}
 
-          {registry && (
-            <div className="mt-4 flex items-center gap-2 text-xs text-neutral-400">
-              <span>
-                Registry {registry.version} · {registry.modelCount} models
-              </span>
-              <button
-                onClick={updateRegistry}
-                disabled={updating}
-                className="font-medium text-neutral-500 underline decoration-neutral-300 hover:text-neutral-700 disabled:opacity-50 dark:text-neutral-400 dark:hover:text-neutral-200"
-              >
-                {updating ? "updating…" : "Update"}
-              </button>
-              {registryMsg && <span>{registryMsg}</span>}
-            </div>
-          )}
-
-          <p className="mt-2 text-xs text-neutral-400">
-            {recs?.bandwidthMeasured
-              ? `Speeds are extrapolated from a real benchmark on this machine (${Math.round(
-                  recs.bandwidthGbps,
-                )} GB/s effective bandwidth).`
-              : "Speeds are estimates from your chip's memory bandwidth — run the benchmark for measured numbers."}
-          </p>
+          <footer className="mt-6 space-y-1.5 border-t border-neutral-200/70 pt-4 text-xs text-neutral-400 dark:border-neutral-800/70">
+            <p>
+              {recs?.bandwidthMeasured
+                ? `Speeds are extrapolated from a real benchmark on this machine (${Math.round(
+                    recs.bandwidthGbps,
+                  )} GB/s effective bandwidth).`
+                : "Speeds are estimates from your chip's memory bandwidth — run the benchmark for measured numbers."}
+            </p>
+            {registry && (
+              <div className="flex items-center gap-2">
+                <span>
+                  Registry {registry.version} · {registry.modelCount} models
+                </span>
+                <button
+                  onClick={updateRegistry}
+                  disabled={updating}
+                  className="font-medium text-neutral-500 underline decoration-neutral-300 hover:text-neutral-700 disabled:opacity-50 dark:text-neutral-400 dark:hover:text-neutral-200"
+                >
+                  {updating ? "updating…" : "Update"}
+                </button>
+                {registryMsg && <span>{registryMsg}</span>}
+              </div>
+            )}
+          </footer>
         </>
       )}
     </div>

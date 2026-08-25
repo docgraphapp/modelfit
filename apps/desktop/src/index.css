@@ -2,6 +2,7 @@
 
 @theme {
   --font-sans: -apple-system, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", monospace;
 }
 
 html,
@@ -11,10 +12,37 @@ body {
 
 body {
   @apply bg-neutral-50 text-neutral-900 antialiased;
+  /* Faint top wash so the page has depth without decoration. */
+  background-image: radial-gradient(
+    60rem 24rem at 50% -8rem,
+    rgb(16 185 129 / 0.05),
+    transparent 70%
+  );
 }
 
 @media (prefers-color-scheme: dark) {
   body {
     @apply bg-neutral-950 text-neutral-100;
+    background-image: radial-gradient(
+      60rem 24rem at 50% -8rem,
+      rgb(16 185 129 / 0.07),
+      transparent 70%
+    );
   }
+}
+
+button {
+  cursor: default; /* native desktop feel — pointers are for links */
+}
+
+:focus-visible {
+  outline: 2px solid rgb(16 185 129 / 0.7);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Numbers line up everywhere they're compared. */
+td,
+th {
+  font-variant-numeric: tabular-nums;
 }

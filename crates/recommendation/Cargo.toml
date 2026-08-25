@@ -7,3 +7,6 @@ edition.workspace = true
 serde.workspace = true
 modelfit-hardware = { path = "../hardware" }
 modelfit-registry = { path = "../registry" }
+
+[dev-dependencies]
+serde_json.workspace = true
