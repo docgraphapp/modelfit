@@ -26,6 +26,12 @@ mkdir -p "$OUT/registry/v1"
 cp -R "$SITE/." "$OUT/"
 cp "$ROOT/registry/registry.json" "$OUT/registry/v1/registry.json"
 
+# /glossary/ is generated from apps/desktop/src/glossary.ts, the same file the
+# desktop app bundles its hover cards from. Rendering it here rather than
+# committing it to the website repo is what keeps the app and the site from
+# drifting apart on a definition. The checked-in copy is only for local preview.
+python3 "$ROOT/scripts/build-glossary-page.py" "$OUT/glossary/index.html"
+
 cat > "$OUT/_headers" <<'EOF'
 /registry/*
   Cache-Control: public, max-age=300

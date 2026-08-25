@@ -47,10 +47,16 @@ jobs:
           token: ${{ secrets.MODELFIT_WEB_TOKEN }}
           path: website
 
-      # The app's hover cards deep-link into the fundamentals post. Fail here
-      # rather than shipping a site where "Learn more" lands nowhere.
+      # The app's hover cards deep-link into section ids across the blog posts.
+      # Fail here rather than shipping a site where "Learn more" lands nowhere.
       - name: Check glossary anchors
         run: python3 scripts/check-glossary-anchors.py
+
+      # /glossary/ is generated from glossary.ts at deploy time. Fail if the
+      # copy committed to the website repo was edited by hand — that edit would
+      # be silently discarded, which is worse than a red build.
+      - name: Check glossary page is generated, not authored
+        run: python3 scripts/build-glossary-page.py --check website/glossary/index.html
 
       - name: Deploy site + registry to Cloudflare Pages
         if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
