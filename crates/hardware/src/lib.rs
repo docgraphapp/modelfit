@@ -6,7 +6,7 @@
 //! cases like AMD/Intel VRAM or iGPU shared memory).
 
 use serde::{Deserialize, Serialize};
-use sysinfo::{Disks, System};
+use sysinfo::{CpuRefreshKind, Disks, MemoryRefreshKind, RefreshKind, System};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -46,7 +46,13 @@ fn round1(v: f64) -> f64 {
 }
 
 pub fn detect() -> HardwareInfo {
-    let sys = System::new_all();
+    // Only CPU and memory are read below — the default `new_all` would also
+    // enumerate every process on the machine, which costs hundreds of ms.
+    let sys = System::new_with_specifics(
+        RefreshKind::nothing()
+            .with_cpu(CpuRefreshKind::everything())
+            .with_memory(MemoryRefreshKind::everything()),
+    );
 
     let cpu_model = sys
         .cpus()

@@ -53,15 +53,19 @@ struct RegistryInfo {
 }
 
 #[tauri::command]
-fn detect_hardware() -> HardwareInfo {
-    modelfit_hardware::detect()
+async fn detect_hardware() -> HardwareInfo {
+    // Subprocess + sysfs probing; spawn_blocking keeps it off both the main
+    // thread (which a sync command would block) and the async workers.
+    tauri::async_runtime::spawn_blocking(modelfit_hardware::detect)
+        .await
+        .unwrap_or_else(|_| modelfit_hardware::detect())
 }
 
 /// `hardware` lets the frontend reuse one detection (and, later, pass
 /// user-edited specs) so preset/context changes recompute instantly instead of
 /// re-probing the machine on every call.
 #[tauri::command]
-fn get_recommendations(
+async fn get_recommendations(
     app: tauri::AppHandle,
     hardware: Option<HardwareInfo>,
     request: Option<Request>,
@@ -72,7 +76,7 @@ fn get_recommendations(
 }
 
 #[tauri::command]
-fn registry_info(app: tauri::AppHandle) -> RegistryInfo {
+async fn registry_info(app: tauri::AppHandle) -> RegistryInfo {
     let (registry, source) = effective_registry(&app);
     RegistryInfo {
         version: registry.version,
@@ -130,16 +134,29 @@ async fn runtime_status() -> RuntimeStatus {
     Ollama::default().status().await
 }
 
+/// Forward pull progress to the UI, rate-limited. Ollama emits one NDJSON
+/// line per network chunk — hundreds per second on a fast connection — and
+/// each forwarded event costs an IPC round-trip plus a React re-render.
+/// Phase changes ("verifying sha256…", "success") always go through; byte
+/// updates within a phase are capped at ~10/s.
+fn throttled_emitter(app: tauri::AppHandle) -> impl Fn(modelfit_runtime_adapters::PullProgress) {
+    let last = std::sync::Mutex::new((String::new(), std::time::Instant::now() - std::time::Duration::from_secs(1)));
+    move |p| {
+        let mut g = last.lock().unwrap();
+        let now = std::time::Instant::now();
+        if p.status != g.0 || now.duration_since(g.1) >= std::time::Duration::from_millis(100) {
+            *g = (p.status.clone(), now);
+            let _ = app.emit("modelfit://pull-progress", &p);
+        }
+    }
+}
+
 /// Pull a model into Ollama, streaming progress to the UI as
 /// `modelfit://pull-progress` events.
 #[tauri::command]
 async fn install_model(app: tauri::AppHandle, tag: String) -> Result<(), String> {
     let ollama = Ollama::default();
-    ollama
-        .pull(&tag, &move |p| {
-            let _ = app.emit("modelfit://pull-progress", &p);
-        })
-        .await
+    ollama.pull(&tag, &throttled_emitter(app)).await
 }
 
 /// Calibration benchmark: measure real tok/s on a small dense model (using an
@@ -159,12 +176,7 @@ async fn run_calibration(app: tauri::AppHandle) -> Result<Calibration, String> {
         Some(t) => t,
         None => {
             // Nothing suitable installed — pull the small fallback first.
-            let app2 = app.clone();
-            ollama
-                .pull(&fallback, &move |p| {
-                    let _ = app2.emit("modelfit://pull-progress", &p);
-                })
-                .await?;
+            ollama.pull(&fallback, &throttled_emitter(app.clone())).await?;
             fallback
         }
     };
