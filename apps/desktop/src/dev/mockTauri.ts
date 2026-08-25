@@ -296,6 +296,8 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
       return null;
     }
     case "open_external":
+      // Logged as well as opened: pane-embedded browsers block the popup.
+      console.info(`[mockTauri] open_external ${args.url}`);
       window.open(args.url, "_blank");
       return null;
     case "plugin:window|is_decorated":

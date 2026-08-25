@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 import TitleBar from "./TitleBar";
+import Term from "./Term";
+import type { TermId } from "./glossary";
 import type {
   Assessment,
   Calibration,
@@ -97,7 +99,7 @@ function FitGauge({
       </div>
       {!compact && (
         <div className="mt-1.5 flex justify-between text-xs text-neutral-400 dark:text-neutral-500">
-          <span>{FIT_WORDS[a.fit]}</span>
+          <Term id="fit">{FIT_WORDS[a.fit]}</Term>
           <span className="tabular-nums">
             ~{a.estMemoryGb} of {usable} GB usable
           </span>
@@ -223,12 +225,18 @@ function InstallControl({
 function Confidence({ a }: { a: Assessment }) {
   if (a.confidence === "measured") {
     return (
-      <span className="text-emerald-600 dark:text-emerald-500" title="Extrapolated from a real benchmark on this machine">
-        {" "}measured
+      <span className="text-emerald-600 dark:text-emerald-500">
+        {" "}
+        <Term id="measured">measured</Term>
       </span>
     );
   }
-  return <span className="text-neutral-400 dark:text-neutral-500"> est.</span>;
+  return (
+    <span className="text-neutral-400 dark:text-neutral-500">
+      {" "}
+      <Term id="measured">est.</Term>
+    </span>
+  );
 }
 
 function HeroPick({
@@ -249,16 +257,17 @@ function HeroPick({
         >
           Best for this machine
         </span>
-        <span
-          title="Quality × speed score for the selected objective, 0–100"
-          className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold tabular-nums text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400"
-        >
-          {Math.round(a.score)}<span className="font-normal opacity-60">/100</span>
+        <span className="rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-semibold tabular-nums text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400">
+          <Term id="score">
+            {Math.round(a.score)}<span className="font-normal opacity-60">/100</span>
+          </Term>
         </span>
       </div>
       <div className="mt-2.5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
         <h2 className="text-xl font-semibold leading-tight tracking-tight">{a.name}</h2>
-        <span className="text-[13px] text-neutral-400 dark:text-neutral-500">{a.quant}</span>
+        <span className="text-[13px] text-neutral-400 dark:text-neutral-500">
+          <Term id="quantization">{a.quant}</Term>
+        </span>
       </div>
       <div className="mt-4 flex gap-8">
         <div>
@@ -267,14 +276,18 @@ function HeroPick({
             <span className="text-[13px] font-normal text-neutral-400"> tok/s</span>
             <span className="text-[13px] font-normal"><Confidence a={a} /></span>
           </div>
-          <div className="text-xs text-neutral-400 dark:text-neutral-500">generation speed</div>
+          <div className="text-xs text-neutral-400 dark:text-neutral-500">
+            <Term id="tokensPerSecond">generation speed</Term>
+          </div>
         </div>
         <div>
           <div className="text-lg font-semibold tabular-nums leading-tight">
             ~{a.estMemoryGb}
             <span className="text-[13px] font-normal text-neutral-400"> GB</span>
           </div>
-          <div className="text-xs text-neutral-400 dark:text-neutral-500">memory needed</div>
+          <div className="text-xs text-neutral-400 dark:text-neutral-500">
+            <Term id="memory">memory needed</Term>
+          </div>
         </div>
       </div>
       <div className="mt-4">
@@ -310,7 +323,9 @@ function MiniPick({
         </span>
       </div>
       <div className="mt-2 text-[15px] font-semibold leading-snug">{a.name}</div>
-      <div className="text-xs text-neutral-400">{a.quant}</div>
+      <div className="text-xs text-neutral-400">
+        <Term id="quantization">{a.quant}</Term>
+      </div>
       <div className="mt-3 text-[13px] tabular-nums text-neutral-500 dark:text-neutral-400">
         ~{Math.round(a.estTokPerSec)} tok/s<Confidence a={a} /> · ~{a.estMemoryGb} GB
       </div>
@@ -370,9 +385,11 @@ function FitBadge({ a }: { a: Assessment }) {
   );
 }
 
-function Brand() {
+function Brand({ ready }: { ready: boolean }) {
+  // `ready` starts the gauge sweep. Until then the mark holds at zero, which
+  // reads honestly next to the "Detecting your machine…" skeleton.
   return (
-    <div className="flex items-center gap-2.5">
+    <div className={`app-brand flex items-center gap-2.5 ${ready ? "is-ready" : ""}`}>
       <span
         aria-hidden
         className="relative flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-[10px] bg-neutral-900 shadow-sm shadow-emerald-500/30 ring-1 ring-white/10"
@@ -394,14 +411,16 @@ function Brand() {
             strokeLinecap="round"
           />
           <path
+            className="mark-arc"
+            pathLength={100}
             d="M 8.64 21.25 A 8.5 8.5 0 1 1 23.7 13.41"
             fill="none"
             stroke="url(#brand-arc)"
             strokeWidth="2.4"
             strokeLinecap="round"
           />
-          <path d="M 22.9 13.9 L 15.5 18.1 A 1.7 1.7 0 0 1 16.4 15.4 Z" fill="#fafafa" />
-          <circle cx="16" cy="17" r="2.6" fill="#0c0c0e" stroke="#10b981" strokeWidth="1.4" />
+          <path className="mark-needle" d="M 22.9 13.9 L 15.5 18.1 A 1.7 1.7 0 0 1 16.4 15.4 Z" fill="#fafafa" />
+          <circle className="mark-hub" cx="16" cy="17" r="2.6" fill="#0c0c0e" stroke="#10b981" strokeWidth="1.4" />
         </svg>
       </span>
       <div className="leading-tight">
@@ -450,15 +469,23 @@ function HeaderCard({
   };
 
   const gpu = hw?.gpus[0];
+  // A few chips are explainable; the rest are plain text.
   const specs = hw
     ? ([
-        `${hw.totalRamGb} GB${hw.unifiedMemory ? " unified" : ""}`,
-        `${hw.physicalCores}-core CPU`,
-        gpu && (gpu.coreCount ? `${gpu.coreCount}-core GPU` : gpu.name),
-        gpu && !hw.unifiedMemory && gpu.vramGb != null && `${gpu.vramGb} GB VRAM`,
-        `${Math.round(hw.diskAvailableGb)} GB free disk`,
-        ...hw.accelerations.filter((a) => a !== "cpu").map((a) => ACCEL_LABELS[a] ?? a),
-      ].filter(Boolean) as string[])
+        {
+          text: `${hw.totalRamGb} GB${hw.unifiedMemory ? " unified" : ""}`,
+          term: hw.unifiedMemory ? ("unifiedMemory" as const) : undefined,
+        },
+        { text: `${hw.physicalCores}-core CPU` },
+        gpu && { text: gpu.coreCount ? `${gpu.coreCount}-core GPU` : gpu.name },
+        gpu &&
+          !hw.unifiedMemory &&
+          gpu.vramGb != null && { text: `${gpu.vramGb} GB VRAM`, term: "vram" as const },
+        { text: `${Math.round(hw.diskAvailableGb)} GB free disk` },
+        ...hw.accelerations
+          .filter((a) => a !== "cpu")
+          .map((a) => ({ text: ACCEL_LABELS[a] ?? a })),
+      ].filter(Boolean) as { text: string; term?: TermId }[])
     : [];
 
   const editField = (
@@ -488,7 +515,7 @@ function HeaderCard({
         className="pointer-events-none absolute -left-20 -top-24 h-52 w-52 rounded-full bg-emerald-400/10 blur-3xl dark:bg-emerald-500/10"
       />
       <div className="relative flex flex-wrap items-center gap-x-5 gap-y-3">
-        <Brand />
+        <Brand ready={!!hw} />
         <div
           aria-hidden
           className="hidden h-9 w-px bg-neutral-200 dark:bg-neutral-800 md:block"
@@ -536,10 +563,10 @@ function HeaderCard({
             <div className="mt-1.5 flex flex-wrap gap-1.5">
               {specs.map((s) => (
                 <span
-                  key={s}
+                  key={s.text}
                   className="rounded-md bg-neutral-100 px-1.5 py-0.5 text-[11px] font-medium tabular-nums text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400"
                 >
-                  {s}
+                  {s.term ? <Term id={s.term}>{s.text}</Term> : s.text}
                 </span>
               ))}
             </div>
@@ -777,11 +804,8 @@ export default function App() {
                 value={objective}
                 onChange={(o) => update(o, contextLength)}
               />
-              <label
-                title="How much conversation the model can hold at once — longer context needs more memory"
-                className="flex items-center gap-2 text-[13px] text-neutral-500 dark:text-neutral-400"
-              >
-                Context
+              <label className="flex items-center gap-2 text-[13px] text-neutral-500 dark:text-neutral-400">
+                <Term id="context">Context</Term>
                 <select
                   value={contextLength}
                   onChange={(e) => update(objective, Number(e.target.value))}
@@ -873,10 +897,18 @@ export default function App() {
                       <thead>
                         <tr className="border-b border-neutral-200 text-left text-xs uppercase tracking-wide text-neutral-400 dark:border-neutral-800">
                           <th className="px-4 py-2.5 font-medium">Model</th>
-                          <th className="px-3 py-2.5 text-right font-medium">Memory</th>
-                          <th className="px-3 py-2.5 text-right font-medium">Speed</th>
-                          <th className="px-3 py-2.5 text-right font-medium">Score</th>
-                          <th className="px-4 py-2.5 font-medium">Verdict</th>
+                          <th className="px-3 py-2.5 text-right font-medium">
+                            <Term id="memory">Memory</Term>
+                          </th>
+                          <th className="px-3 py-2.5 text-right font-medium">
+                            <Term id="tokensPerSecond">Speed</Term>
+                          </th>
+                          <th className="px-3 py-2.5 text-right font-medium">
+                            <Term id="score">Score</Term>
+                          </th>
+                          <th className="px-4 py-2.5 font-medium">
+                            <Term id="fit">Verdict</Term>
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
@@ -936,7 +968,8 @@ export default function App() {
                 {runtime?.running ? (
                   <>
                     <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-emerald-500" />
-                    Ollama {runtime.version} · {runtime.installedTags.length} model
+                    <Term id="runtime">Ollama</Term> {runtime.version} ·{" "}
+                    {runtime.installedTags.length} model
                     {runtime.installedTags.length === 1 ? "" : "s"} installed
                   </>
                 ) : (
@@ -958,7 +991,8 @@ export default function App() {
                 <div className="flex items-center gap-3 text-[13px]">
                   {calibration && !benchmarking && (
                     <span className="text-neutral-400">
-                      measured {Math.round(calibration.effectiveBandwidthGbps)} GB/s via{" "}
+                      <Term id="benchmark">measured</Term>{" "}
+                      {Math.round(calibration.effectiveBandwidthGbps)} GB/s via{" "}
                       {calibration.modelTag}
                     </span>
                   )}
@@ -989,11 +1023,19 @@ export default function App() {
 
             <footer className="mt-auto space-y-1.5 border-t border-neutral-200/70 pt-3 text-xs text-neutral-400 dark:border-neutral-800/70">
               <p>
-                {recs?.bandwidthMeasured
-                  ? `Speeds are extrapolated from a real benchmark on this machine (${Math.round(
-                      recs.bandwidthGbps,
-                    )} GB/s effective bandwidth).`
-                  : "Speeds are estimates from your chip's memory bandwidth — run the benchmark for measured numbers."}
+                {recs?.bandwidthMeasured ? (
+                  <>
+                    Speeds are extrapolated from a real benchmark on this machine (
+                    {Math.round(recs.bandwidthGbps)} GB/s effective{" "}
+                    <Term id="bandwidth">memory bandwidth</Term>).
+                  </>
+                ) : (
+                  <>
+                    Speeds are estimates from your chip's{" "}
+                    <Term id="bandwidth">memory bandwidth</Term> — run the{" "}
+                    <Term id="benchmark">benchmark</Term> for measured numbers.
+                  </>
+                )}
               </p>
               {registry && (
                 <div className="flex items-center gap-2">

@@ -47,6 +47,11 @@ jobs:
           token: ${{ secrets.MODELFIT_WEB_TOKEN }}
           path: website
 
+      # The app's hover cards deep-link into the fundamentals post. Fail here
+      # rather than shipping a site where "Learn more" lands nowhere.
+      - name: Check glossary anchors
+        run: python3 scripts/check-glossary-anchors.py
+
       - name: Deploy site + registry to Cloudflare Pages
         if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
         env:
