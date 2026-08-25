@@ -38,7 +38,8 @@ ModelFit
 ├── Embedding models    (near-free: same runtimes, same math)
 ├── Vision/multimodal   (same runtimes)
 ├── Speech (Whisper)    (new runtime adapter)
-└── Image generation    (new runtimes + it/s benchmark axis)
+├── Image generation    (new runtimes + it/s benchmark axis)
+└── WebAssembly Simulator (compile Rust crates to WASM for web-based "What-if" queries)
 ```
 
 ### Non-goals (v1)
@@ -57,6 +58,7 @@ ModelFit
 - CPU model, cores/threads
 - Total and available system RAM
 - GPU(s): vendor, model, dedicated VRAM
+  - **Multi-GPU / Asymmetric compute**: Explicit detection and handling of multiple GPUs (e.g., 3090 + 3060), enabling tensor splitting calculations for VRAM pooling and bus transfer speed penalties.
 - Apple Silicon unified memory (single pool — changes the whole fit calculation)
 - Available disk space (models are 5–40 GB)
 - OS + architecture (macOS/Windows/Linux, x86_64/arm64)
@@ -111,8 +113,8 @@ Pipeline: `hardware → hard constraints → candidates → memory estimate → 
   - must fit with ≥ 10% memory headroom at the requested context
   - must clear a task-dependent tok/s floor (chat needs speed; a summarizer tolerates less)
 - **Weighted score on survivors**: quality vs speed weights set by task preset.
-- **User-selectable objective**: Best quality / Best speed / Best coding / Best overall (+ context length selector).
-- **Explainable**: excluded models say why ("needs 26 GB, you have 21 available", "est. 4 tok/s — below chat floor"). No opaque single numbers.
+- **User-selectable objective & Workload Presets**: Best quality / Best speed / Best coding / Best overall. Instead of just a raw context length selector, use **Workload Presets** (e.g., Chat [4k-8k], Document Q&A [16k-32k], Agentic Coding [64k+]) to automatically adjust KV cache memory assumptions.
+- **Explainable & Upgrade Path**: Excluded models say why ("needs 26 GB, you have 21 available"). Additionally, turn disqualifications into recommendations via a **Hardware Upgrade Path** (e.g., "Adding 16GB of RAM unlocks 42 more models, including Qwen-72B"). No opaque single numbers.
 
 ### FR-5 Benchmark engine (calibrate → extrapolate → verify)
 
@@ -123,6 +125,7 @@ First-run must reach a recommendation in **< 2 minutes** — therefore never dow
 3. Derive the machine's **effective memory bandwidth**
 4. **Extrapolate** speed for every registry model (`≈ bandwidth / bytes-touched-per-token`, using active params)
 5. Full benchmark of a chosen model = **opt-in "Verify"** after install; measured results replace estimates and are labeled as measured
+6. **Crowd-Sourced Telemetry (Opt-in)**: Submit "Verify" results (Hardware specs + Model + Tok/s) to our backend (Cloudflare Worker). This aggregates real-world performance to refine mathematical estimates over time.
 
 ### FR-6 One-click install
 
@@ -142,9 +145,10 @@ The app turns an overwhelming question into one clear answer — the UI must fee
 
 Sidebar: Dashboard · Hardware · Models · Benchmarks · Downloads · Settings.
 
-- **Dashboard**: machine summary, runtime status, BEST/SAFE/FAST cards with score, est. memory, est. tok/s, `[Install]` `[Verify]`
+- **Dashboard**: machine summary, runtime status, BEST/SAFE/FAST cards with score, est. memory, est. tok/s, `[Install]` `[Verify]`. Includes **Upgrade Path** suggestions (e.g. "Add 16GB RAM for 42 more models").
 - **Hardware**: full detected specs + edit
-- **Models**: filterable registry table (task, size, family), fit verdict per row at current context setting
+- **Models**: filterable registry table (task, size, family), fit verdict per row at current context setting.
+  - **Tinkerer's View**: A toggle to reveal a sparkline chart showing the Quality vs. Speed tradeoff curve across *all* quantizations (Q2_K to Q8_0) for a specific model, allowing power users to override recommendations.
 - **Benchmarks**: calibration result, measured-vs-estimated history
 - Confidence labels (HIGH / MEDIUM / measured) on every estimate
 
