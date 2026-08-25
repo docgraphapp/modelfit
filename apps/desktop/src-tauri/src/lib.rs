@@ -7,11 +7,14 @@ use modelfit_runtime_adapters::{
 use serde::Serialize;
 use tauri::{Emitter, Manager};
 
-/// Tried in order; the first that yields a valid registry wins. The custom
-/// domain may not exist yet — the pages.dev URL is the reliable fallback.
+/// Tried in order; the first that yields a valid registry wins. Three
+/// independent failure domains: our domain, Cloudflare's, GitHub's — the
+/// open-source repo doubles as the last-resort mirror (the same file CI
+/// commits on every rebuild).
 const REGISTRY_URLS: &[&str] = &[
     "https://modelfit.docgraph.app/registry/v1/registry.json",
     "https://modelfit-registry.pages.dev/registry/v1/registry.json",
+    "https://raw.githubusercontent.com/docgraphapp/modelfit/main/registry/registry.json",
 ];
 
 fn cache_path(app: &tauri::AppHandle) -> Option<std::path::PathBuf> {
