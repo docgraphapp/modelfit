@@ -38,6 +38,15 @@ jobs:
       # A Pages deploy REPLACES the whole site, and the website shares this
       # project with the registry — so build-site.sh publishes both together.
       # Deploying the registry alone would take modelfit.docgraph.app down.
+      # The website lives in the private docgraphapp/modelfit-web repo;
+      # MODELFIT_WEB_TOKEN must be a PAT with read access to it.
+      - name: Check out website
+        uses: actions/checkout@v4
+        with:
+          repository: docgraphapp/modelfit-web
+          token: ${{ secrets.MODELFIT_WEB_TOKEN }}
+          path: website
+
       - name: Deploy site + registry to Cloudflare Pages
         if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
         env:
