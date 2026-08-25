@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { invoke } from "@tauri-apps/api/core";
 import App from "./App";
 import "./index.css";
 
@@ -14,6 +15,13 @@ async function bootstrap() {
       <App />
     </React.StrictMode>,
   );
+  // The window is created hidden; tell the backend the first frame exists so
+  // it can show the window already painted (double rAF = after first paint).
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      invoke("frontend_ready").catch(() => {});
+    });
+  });
 }
 
 void bootstrap();

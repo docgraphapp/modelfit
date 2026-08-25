@@ -313,6 +313,8 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
       listeners.get(args.event)!.add(id);
       return id;
     }
+    case "frontend_ready":
+      return null; // browser harness has no hidden window to reveal
     case "plugin:event|unlisten":
       listeners.get(args.event)?.delete(args.eventId);
       return null;

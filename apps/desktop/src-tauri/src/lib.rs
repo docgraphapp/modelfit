@@ -52,6 +52,14 @@ struct RegistryInfo {
     added: Option<usize>,
 }
 
+/// First paint is done — show the window (see setup).
+#[tauri::command]
+async fn frontend_ready(window: tauri::WebviewWindow) {
+    log::info!("frontend_ready received; showing window");
+    let _ = window.show();
+    let _ = window.set_focus();
+}
+
 #[tauri::command]
 async fn detect_hardware() -> HardwareInfo {
     // Subprocess + sysfs probing; spawn_blocking keeps it off both the main
@@ -225,6 +233,12 @@ pub fn run() {
                 .level(log::LevelFilter::Info)
                 .build(),
         )
+        // Startup trace: release builds have been seen white-screening with
+        // no navigation at all — this line in the log file is the fastest way
+        // to tell "assets never loaded" from "frontend crashed after load".
+        .on_page_load(|_window, payload| {
+            log::info!("page load: {:?} {}", payload.event(), payload.url());
+        })
         .setup(|app| {
             let window = app.get_webview_window("main").expect("main window");
             // macOS keeps its native traffic lights, floated over the app's own
@@ -232,12 +246,28 @@ pub fn run() {
             // frame comes off entirely and TitleBar.tsx draws the controls.
             #[cfg(not(target_os = "macos"))]
             window.set_decorations(false)?;
-            // The window is configured hidden so the frame change above lands
-            // before the first paint instead of flashing a decorated window.
-            window.show()?;
+            // The window stays hidden until the frontend reports ready
+            // (frontend_ready below), so it appears with the UI already
+            // painted instead of flashing an empty dark webview. The frame
+            // change above also lands before anything is visible. Fallback:
+            // if the frontend never reports in (crash, dev-server down),
+            // show anyway so a broken build is debuggable rather than
+            // invisible.
+            let fallback = window.clone();
+            tauri::async_runtime::spawn(async move {
+                // std sleep: this dedicated fallback task may block its slot.
+                let _ = tauri::async_runtime::spawn_blocking(|| {
+                    std::thread::sleep(std::time::Duration::from_secs(3));
+                })
+                .await;
+                if !fallback.is_visible().unwrap_or(true) {
+                    let _ = fallback.show();
+                }
+            });
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
+            frontend_ready,
             detect_hardware,
             get_recommendations,
             runtime_status,

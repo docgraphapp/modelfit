@@ -48,9 +48,12 @@ fn round1(v: f64) -> f64 {
 pub fn detect() -> HardwareInfo {
     // Only CPU and memory are read below — the default `new_all` would also
     // enumerate every process on the machine, which costs hundreds of ms.
+    // CpuRefreshKind::nothing() still populates the CPU list (and brand) —
+    // everything() would additionally sample usage and frequency, which this
+    // never reads.
     let sys = System::new_with_specifics(
         RefreshKind::nothing()
-            .with_cpu(CpuRefreshKind::everything())
+            .with_cpu(CpuRefreshKind::nothing())
             .with_memory(MemoryRefreshKind::everything()),
     );
 
