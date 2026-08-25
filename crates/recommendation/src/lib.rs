@@ -250,10 +250,22 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
                 req.context_length / 1024
             ));
         } else if fit == FitVerdict::TooBig {
-            excluded_reason = Some(format!(
-                "needs ~{:.0} GB, your usable memory is {:.0} GB",
-                est_memory, usable
-            ));
+            // Two flavors so the message never looks self-contradictory:
+            // rounding "needs 16.2, usable 16.8" to integers reads as
+            // "needs 16 of 17" — which sounds like it should fit.
+            excluded_reason = Some(if est_memory <= usable {
+                format!(
+                    "needs ~{:.1} GB — too close to your {:.1} GB usable memory ({:.0}% headroom required)",
+                    est_memory,
+                    usable,
+                    (1.0 - FIT_FRACTION) * 100.0
+                )
+            } else {
+                format!(
+                    "needs ~{:.1} GB, your usable memory is {:.1} GB",
+                    est_memory, usable
+                )
+            });
         } else if tok_s < floor {
             excluded_reason = Some(format!(
                 "estimated {:.0} tok/s — below the {:.0} tok/s floor for this objective",
