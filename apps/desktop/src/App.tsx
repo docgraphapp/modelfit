@@ -334,10 +334,12 @@ export default function App() {
   const [updating, setUpdating] = useState(false);
   const calibrationRef = useRef(calibration);
   calibrationRef.current = calibration;
+  const recomputeSeq = useRef(0);
 
   const recompute = useCallback(
     (hardware: HardwareInfo, obj: Objective, ctx: number, cal?: Calibration | null) => {
       const c = cal !== undefined ? cal : calibrationRef.current;
+      const seq = ++recomputeSeq.current;
       invoke<Recommendations>("get_recommendations", {
         hardware,
         request: {
@@ -346,8 +348,15 @@ export default function App() {
           measuredEffectiveBandwidthGbps: c?.effectiveBandwidthGbps ?? null,
         },
       })
-        .then(setRecs)
-        .catch((e) => setError(String(e)));
+        .then((r) => {
+          // A stale response must not overwrite a newer request's result.
+          if (seq !== recomputeSeq.current) return;
+          setRecs(r);
+          setError(null);
+        })
+        .catch((e) => {
+          if (seq === recomputeSeq.current) setError(String(e));
+        });
     },
     [],
   );
