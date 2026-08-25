@@ -375,11 +375,34 @@ function Brand() {
     <div className="flex items-center gap-2.5">
       <span
         aria-hidden
-        className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm shadow-emerald-500/30"
+        className="relative flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-[10px] bg-neutral-900 shadow-sm shadow-emerald-500/30 ring-1 ring-white/10"
       >
-        {/* nested block: a model fitting inside a machine */}
-        <span className="absolute inset-[7px] rounded-[5px] border-[1.5px] border-white/80" />
-        <span className="absolute bottom-[10px] left-[10px] h-2.5 w-2.5 rounded-[3px] bg-white" />
+        {/* gauge needle landing in the green — same mark as the app icon */}
+        <svg viewBox="0 0 32 32" className="h-8 w-8">
+          <defs>
+            <linearGradient id="brand-arc" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" stopColor="#059669" />
+              <stop offset="0.6" stopColor="#10b981" />
+              <stop offset="1" stopColor="#4ade80" />
+            </linearGradient>
+          </defs>
+          <path
+            d="M 8.64 21.25 A 8.5 8.5 0 1 1 23.36 21.25"
+            fill="none"
+            stroke="#3f3f46"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+          />
+          <path
+            d="M 8.64 21.25 A 8.5 8.5 0 1 1 23.7 13.41"
+            fill="none"
+            stroke="url(#brand-arc)"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+          />
+          <path d="M 22.9 13.9 L 15.5 18.1 A 1.7 1.7 0 0 1 16.4 15.4 Z" fill="#fafafa" />
+          <circle cx="16" cy="17" r="2.6" fill="#0c0c0e" stroke="#10b981" strokeWidth="1.4" />
+        </svg>
       </span>
       <div className="leading-tight">
         <h1 className="text-[15px] font-semibold tracking-tight">ModelFit</h1>
