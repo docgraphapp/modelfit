@@ -87,10 +87,11 @@ export default function Term({
         onBlur={() => close(true)}
         onClick={(e) => {
           // Some triggers sit inside a <label>, which would otherwise forward
-          // the click to its form control.
+          // the click to its form control. Always open — never toggle: an
+          // activation can fire focus (opens the card) and click in the same
+          // gesture, and a toggle would close it in the same instant.
           e.preventDefault();
-          if (place) close(true);
-          else position();
+          position();
         }}
         className={`cursor-help underline decoration-neutral-400 decoration-dotted underline-offset-[3px] hover:decoration-neutral-600 dark:decoration-neutral-600 dark:hover:decoration-neutral-400 ${className}`}
       >
