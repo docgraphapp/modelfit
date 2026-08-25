@@ -32,6 +32,11 @@ const hw: HardwareInfo = {
 // Ollama replace the synthetic fixtures.
 const params = new URLSearchParams(location.search);
 const scenario = params.get("scenario");
+// The real shell decorates the window on macOS only, so the harness follows the
+// host it runs on. ?chrome=custom forces the undecorated Windows/Linux look —
+// orthogonal to scenario, so real data still loads.
+const decorated =
+  params.get("chrome") !== "custom" && navigator.userAgent.includes("Macintosh");
 
 interface RealData {
   hardware: HardwareInfo;
@@ -240,6 +245,13 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
     case "open_external":
       window.open(args.url, "_blank");
       return null;
+    case "plugin:window|is_decorated":
+      return decorated;
+    case "plugin:window|minimize":
+    case "plugin:window|close":
+      // No window to act on in a browser tab; log so the click is still visible.
+      console.info(`[mockTauri] ${cmd}`);
+      return null;
     case "plugin:event|listen": {
       const id = args.handler as number;
       if (!listeners.has(args.event)) listeners.set(args.event, new Set());
@@ -256,6 +268,11 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
 
 (window as any).__TAURI_INTERNALS__ = {
   invoke: mockInvoke,
+  // getCurrentWindow()/getCurrentWebview() read their label from here.
+  metadata: {
+    currentWindow: { label: "main" },
+    currentWebview: { windowLabel: "main", label: "main" },
+  },
   transformCallback(cb: Handler) {
     const id = nextCb++;
     callbacks.set(id, cb);
@@ -271,4 +288,4 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
   },
 };
 
-console.info("[mockTauri] browser design harness active", { scenario });
+console.info("[mockTauri] browser design harness active", { scenario, decorated });

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
+import TitleBar from "./TitleBar";
 import type {
   Assessment,
   Calibration,
@@ -688,266 +689,269 @@ export default function App() {
     : [];
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-2xl flex-col px-8 py-9">
-      <header className="mb-7 flex items-baseline justify-between">
-        <h1 className="flex items-center gap-2 text-lg font-semibold tracking-tight">
-          <span aria-hidden className="inline-block h-2.5 w-2.5 rounded-[4px] bg-emerald-500" />
-          ModelFit
-        </h1>
-        <p className="text-[13px] text-neutral-400 dark:text-neutral-500">
-          Find the best AI model for your machine
-        </p>
-      </header>
+    <>
+      <TitleBar />
+      <div className="mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-2xl flex-col px-8 pb-9 pt-2">
+        <header className="mb-7 flex items-baseline justify-between">
+          <h1 className="flex items-center gap-2 text-lg font-semibold tracking-tight">
+            <span aria-hidden className="inline-block h-2.5 w-2.5 rounded-[4px] bg-emerald-500" />
+            ModelFit
+          </h1>
+          <p className="text-[13px] text-neutral-400 dark:text-neutral-500">
+            Find the best AI model for your machine
+          </p>
+        </header>
 
-      {error && (
-        <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">
-          Something went wrong: {error}
-        </div>
-      )}
-
-      {!hw && !error && <Skeleton />}
-
-      {hw && (
-        <>
-          <HardwareStrip hw={hw} onEdited={(next) => update(objective, contextLength, next)} />
-
-          <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
-            <Segmented
-              options={OBJECTIVES}
-              value={objective}
-              onChange={(o) => update(o, contextLength)}
-            />
-            <label
-              title="How much conversation the model can hold at once — longer context needs more memory"
-              className="flex items-center gap-2 text-[13px] text-neutral-500 dark:text-neutral-400"
-            >
-              Context
-              <select
-                value={contextLength}
-                onChange={(e) => update(objective, Number(e.target.value))}
-                className="rounded-lg border border-neutral-200 bg-white px-2 py-1 text-[13px] font-medium text-neutral-700 outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200"
-              >
-                {CONTEXTS.map((c) => (
-                  <option key={c} value={c}>
-                    {fmtCtx(c)}
-                  </option>
-                ))}
-              </select>
-            </label>
+        {error && (
+          <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">
+            Something went wrong: {error}
           </div>
+        )}
 
-          {recs && (
-            <ViewTabs view={view} modelCount={recs.all.length} onChange={setView} />
-          )}
+        {!hw && !error && <Skeleton />}
 
-          {view === "picks" && recs && !recs.best && (
-            <section className="mt-5 rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
-              <h3 className="text-sm font-semibold">
-                No model clears the bar for this machine and objective
-              </h3>
-              <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
-                {(() => {
-                  const closest = [...recs.all].sort(
-                    (a, b) => a.estMemoryGb - b.estMemoryGb,
-                  )[0];
-                  return closest?.excludedReason
-                    ? `Closest candidate: ${closest.name} — ${closest.excludedReason}.`
-                    : "Try a smaller context length or a different objective.";
-                })()}
-              </p>
-              {contextLength > CONTEXTS[0] && (
-                <button
-                  onClick={() =>
-                    update(
-                      objective,
-                      CONTEXTS[Math.max(0, CONTEXTS.indexOf(contextLength) - 1)],
-                    )
-                  }
-                  className="mt-3 rounded-lg border border-neutral-200 px-3 py-1 text-[13px] font-medium text-neutral-600 hover:border-neutral-400 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500"
+        {hw && (
+          <>
+            <HardwareStrip hw={hw} onEdited={(next) => update(objective, contextLength, next)} />
+
+            <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+              <Segmented
+                options={OBJECTIVES}
+                value={objective}
+                onChange={(o) => update(o, contextLength)}
+              />
+              <label
+                title="How much conversation the model can hold at once — longer context needs more memory"
+                className="flex items-center gap-2 text-[13px] text-neutral-500 dark:text-neutral-400"
+              >
+                Context
+                <select
+                  value={contextLength}
+                  onChange={(e) => update(objective, Number(e.target.value))}
+                  className="rounded-lg border border-neutral-200 bg-white px-2 py-1 text-[13px] font-medium text-neutral-700 outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200"
                 >
-                  Try {fmtCtx(CONTEXTS[Math.max(0, CONTEXTS.indexOf(contextLength) - 1)])} context
-                </button>
-              )}
-            </section>
-          )}
-
-          {view === "picks" && recs && recs.best && (
-            <section className="mt-5" aria-label="Recommendations">
-              <HeroPick a={recs.best} usable={recs.usableMemoryGb}>
-                <InstallControl
-                  a={recs.best}
-                  runtime={runtime}
-                  pulling={pulling}
-                  onInstall={install}
-                  hero
-                  benchmarking={benchmarking}
-                />
-              </HeroPick>
-              {secondary.length > 0 && (
-                <div className="mt-3 flex flex-col gap-3 sm:flex-row">
-                  {secondary.map((p) => (
-                    <MiniPick key={p.tag} tag={p.tag} a={p.a} usable={recs.usableMemoryGb}>
-                      <InstallControl
-                        a={p.a}
-                        runtime={runtime}
-                        pulling={pulling}
-                        onInstall={install}
-                        benchmarking={benchmarking}
-                      />
-                    </MiniPick>
+                  {CONTEXTS.map((c) => (
+                    <option key={c} value={c}>
+                      {fmtCtx(c)}
+                    </option>
                   ))}
+                </select>
+              </label>
+            </div>
+
+            {recs && (
+              <ViewTabs view={view} modelCount={recs.all.length} onChange={setView} />
+            )}
+
+            {view === "picks" && recs && !recs.best && (
+              <section className="mt-5 rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
+                <h3 className="text-sm font-semibold">
+                  No model clears the bar for this machine and objective
+                </h3>
+                <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
+                  {(() => {
+                    const closest = [...recs.all].sort(
+                      (a, b) => a.estMemoryGb - b.estMemoryGb,
+                    )[0];
+                    return closest?.excludedReason
+                      ? `Closest candidate: ${closest.name} — ${closest.excludedReason}.`
+                      : "Try a smaller context length or a different objective.";
+                  })()}
+                </p>
+                {contextLength > CONTEXTS[0] && (
+                  <button
+                    onClick={() =>
+                      update(
+                        objective,
+                        CONTEXTS[Math.max(0, CONTEXTS.indexOf(contextLength) - 1)],
+                      )
+                    }
+                    className="mt-3 rounded-lg border border-neutral-200 px-3 py-1 text-[13px] font-medium text-neutral-600 hover:border-neutral-400 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500"
+                  >
+                    Try {fmtCtx(CONTEXTS[Math.max(0, CONTEXTS.indexOf(contextLength) - 1)])} context
+                  </button>
+                )}
+              </section>
+            )}
+
+            {view === "picks" && recs && recs.best && (
+              <section className="mt-5" aria-label="Recommendations">
+                <HeroPick a={recs.best} usable={recs.usableMemoryGb}>
+                  <InstallControl
+                    a={recs.best}
+                    runtime={runtime}
+                    pulling={pulling}
+                    onInstall={install}
+                    hero
+                    benchmarking={benchmarking}
+                  />
+                </HeroPick>
+                {secondary.length > 0 && (
+                  <div className="mt-3 flex flex-col gap-3 sm:flex-row">
+                    {secondary.map((p) => (
+                      <MiniPick key={p.tag} tag={p.tag} a={p.a} usable={recs.usableMemoryGb}>
+                        <InstallControl
+                          a={p.a}
+                          runtime={runtime}
+                          pulling={pulling}
+                          onInstall={install}
+                          benchmarking={benchmarking}
+                        />
+                      </MiniPick>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )}
+
+            {view === "all" && recs && (
+              <section className="mt-5" aria-label="All models">
+                <div className="overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+                    <table className="w-full text-[13px]">
+                      <thead>
+                        <tr className="border-b border-neutral-200 text-left text-xs uppercase tracking-wide text-neutral-400 dark:border-neutral-800">
+                          <th className="px-4 py-2.5 font-medium">Model</th>
+                          <th className="px-3 py-2.5 text-right font-medium">Memory</th>
+                          <th className="px-3 py-2.5 text-right font-medium">Speed</th>
+                          <th className="px-3 py-2.5 text-right font-medium">Score</th>
+                          <th className="px-4 py-2.5 font-medium">Verdict</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {recs.all.map((a) => (
+                          <tr
+                            key={a.modelId}
+                            className="border-b border-neutral-100 transition-colors last:border-0 hover:bg-neutral-50 dark:border-neutral-800/60 dark:hover:bg-neutral-900"
+                          >
+                            <td className="px-4 py-2.5">
+                              <span
+                                className={`font-medium ${
+                                  a.excludedReason
+                                    ? "text-neutral-400 dark:text-neutral-500"
+                                    : ""
+                                }`}
+                              >
+                                {a.name}
+                              </span>{" "}
+                              <span className="text-neutral-400 dark:text-neutral-600">
+                                {a.quant}
+                              </span>
+                            </td>
+                            <td
+                              className={`whitespace-nowrap px-3 py-2.5 text-right tabular-nums ${
+                                a.excludedReason ? "text-neutral-400 dark:text-neutral-500" : ""
+                              }`}
+                            >
+                              {a.estMemoryGb} GB
+                            </td>
+                            <td
+                              className={`whitespace-nowrap px-3 py-2.5 text-right tabular-nums ${
+                                a.excludedReason ? "text-neutral-400 dark:text-neutral-500" : ""
+                              }`}
+                            >
+                              ~{Math.round(a.estTokPerSec)} t/s
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-2.5 text-right font-medium tabular-nums">
+                              {a.excludedReason ? (
+                                <span className="text-neutral-300 dark:text-neutral-600">—</span>
+                              ) : (
+                                Math.round(a.score)
+                              )}
+                            </td>
+                            <td className="max-w-[240px] px-4 py-2.5">
+                              <FitBadge a={a} />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                </div>
+              </section>
+            )}
+
+            <section className="mt-6 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-neutral-200 bg-white px-5 py-3.5 dark:border-neutral-800 dark:bg-neutral-900">
+              <div className="text-[13px] text-neutral-500 dark:text-neutral-400">
+                {runtime?.running ? (
+                  <>
+                    <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-emerald-500" />
+                    Ollama {runtime.version} · {runtime.installedTags.length} model
+                    {runtime.installedTags.length === 1 ? "" : "s"} installed
+                  </>
+                ) : (
+                  <>
+                    <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-neutral-300 dark:bg-neutral-600" />
+                    No runtime detected — install and benchmark need{" "}
+                    <button
+                      onClick={() =>
+                        invoke("open_external", { url: "https://ollama.com/download" })
+                      }
+                      className="font-medium text-neutral-700 underline decoration-neutral-300 hover:text-neutral-900 dark:text-neutral-200 dark:hover:text-white"
+                    >
+                      Ollama
+                    </button>
+                  </>
+                )}
+              </div>
+              {runtime?.running && (
+                <div className="flex items-center gap-3 text-[13px]">
+                  {calibration && !benchmarking && (
+                    <span className="text-neutral-400">
+                      measured {Math.round(calibration.effectiveBandwidthGbps)} GB/s via{" "}
+                      {calibration.modelTag}
+                    </span>
+                  )}
+                  <button
+                    onClick={runBenchmark}
+                    disabled={benchmarking || Object.keys(pulling).length > 0}
+                    title={
+                      Object.keys(pulling).length > 0
+                        ? "Wait for the current download to finish — a concurrent pull would skew the measurement"
+                        : "Runs a short generation on a small installed model to measure this machine's real memory bandwidth (~1 min)"
+                    }
+                    className="rounded-lg border border-neutral-200 px-3 py-1 font-medium text-neutral-600 hover:border-neutral-400 disabled:opacity-60 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500"
+                  >
+                    {benchmarking ? (
+                      <span className="inline-flex items-center gap-1.5">
+                        <span className="h-3 w-3 animate-spin rounded-full border-[1.5px] border-neutral-300 border-t-neutral-600 dark:border-neutral-600 dark:border-t-neutral-200" />
+                        Benchmarking…
+                      </span>
+                    ) : calibration ? (
+                      "Re-run benchmark"
+                    ) : (
+                      "Benchmark this machine"
+                    )}
+                  </button>
                 </div>
               )}
             </section>
-          )}
 
-          {view === "all" && recs && (
-            <section className="mt-5" aria-label="All models">
-              <div className="overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
-                  <table className="w-full text-[13px]">
-                    <thead>
-                      <tr className="border-b border-neutral-200 text-left text-xs uppercase tracking-wide text-neutral-400 dark:border-neutral-800">
-                        <th className="px-4 py-2.5 font-medium">Model</th>
-                        <th className="px-3 py-2.5 text-right font-medium">Memory</th>
-                        <th className="px-3 py-2.5 text-right font-medium">Speed</th>
-                        <th className="px-3 py-2.5 text-right font-medium">Score</th>
-                        <th className="px-4 py-2.5 font-medium">Verdict</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {recs.all.map((a) => (
-                        <tr
-                          key={a.modelId}
-                          className="border-b border-neutral-100 transition-colors last:border-0 hover:bg-neutral-50 dark:border-neutral-800/60 dark:hover:bg-neutral-900"
-                        >
-                          <td className="px-4 py-2.5">
-                            <span
-                              className={`font-medium ${
-                                a.excludedReason
-                                  ? "text-neutral-400 dark:text-neutral-500"
-                                  : ""
-                              }`}
-                            >
-                              {a.name}
-                            </span>{" "}
-                            <span className="text-neutral-400 dark:text-neutral-600">
-                              {a.quant}
-                            </span>
-                          </td>
-                          <td
-                            className={`whitespace-nowrap px-3 py-2.5 text-right tabular-nums ${
-                              a.excludedReason ? "text-neutral-400 dark:text-neutral-500" : ""
-                            }`}
-                          >
-                            {a.estMemoryGb} GB
-                          </td>
-                          <td
-                            className={`whitespace-nowrap px-3 py-2.5 text-right tabular-nums ${
-                              a.excludedReason ? "text-neutral-400 dark:text-neutral-500" : ""
-                            }`}
-                          >
-                            ~{Math.round(a.estTokPerSec)} t/s
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-2.5 text-right font-medium tabular-nums">
-                            {a.excludedReason ? (
-                              <span className="text-neutral-300 dark:text-neutral-600">—</span>
-                            ) : (
-                              Math.round(a.score)
-                            )}
-                          </td>
-                          <td className="max-w-[240px] px-4 py-2.5">
-                            <FitBadge a={a} />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-              </div>
-            </section>
-          )}
-
-          <section className="mt-6 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-neutral-200 bg-white px-5 py-3.5 dark:border-neutral-800 dark:bg-neutral-900">
-            <div className="text-[13px] text-neutral-500 dark:text-neutral-400">
-              {runtime?.running ? (
-                <>
-                  <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-emerald-500" />
-                  Ollama {runtime.version} · {runtime.installedTags.length} model
-                  {runtime.installedTags.length === 1 ? "" : "s"} installed
-                </>
-              ) : (
-                <>
-                  <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-neutral-300 dark:bg-neutral-600" />
-                  No runtime detected — install and benchmark need{" "}
-                  <button
-                    onClick={() =>
-                      invoke("open_external", { url: "https://ollama.com/download" })
-                    }
-                    className="font-medium text-neutral-700 underline decoration-neutral-300 hover:text-neutral-900 dark:text-neutral-200 dark:hover:text-white"
-                  >
-                    Ollama
-                  </button>
-                </>
-              )}
-            </div>
-            {runtime?.running && (
-              <div className="flex items-center gap-3 text-[13px]">
-                {calibration && !benchmarking && (
-                  <span className="text-neutral-400">
-                    measured {Math.round(calibration.effectiveBandwidthGbps)} GB/s via{" "}
-                    {calibration.modelTag}
+            <footer className="mt-6 space-y-1.5 border-t border-neutral-200/70 pt-4 text-xs text-neutral-400 dark:border-neutral-800/70">
+              <p>
+                {recs?.bandwidthMeasured
+                  ? `Speeds are extrapolated from a real benchmark on this machine (${Math.round(
+                      recs.bandwidthGbps,
+                    )} GB/s effective bandwidth).`
+                  : "Speeds are estimates from your chip's memory bandwidth — run the benchmark for measured numbers."}
+              </p>
+              {registry && (
+                <div className="flex items-center gap-2">
+                  <span>
+                    Registry {registry.version} · {registry.modelCount} models
                   </span>
-                )}
-                <button
-                  onClick={runBenchmark}
-                  disabled={benchmarking || Object.keys(pulling).length > 0}
-                  title={
-                    Object.keys(pulling).length > 0
-                      ? "Wait for the current download to finish — a concurrent pull would skew the measurement"
-                      : "Runs a short generation on a small installed model to measure this machine's real memory bandwidth (~1 min)"
-                  }
-                  className="rounded-lg border border-neutral-200 px-3 py-1 font-medium text-neutral-600 hover:border-neutral-400 disabled:opacity-60 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500"
-                >
-                  {benchmarking ? (
-                    <span className="inline-flex items-center gap-1.5">
-                      <span className="h-3 w-3 animate-spin rounded-full border-[1.5px] border-neutral-300 border-t-neutral-600 dark:border-neutral-600 dark:border-t-neutral-200" />
-                      Benchmarking…
-                    </span>
-                  ) : calibration ? (
-                    "Re-run benchmark"
-                  ) : (
-                    "Benchmark this machine"
-                  )}
-                </button>
-              </div>
-            )}
-          </section>
-
-          <footer className="mt-6 space-y-1.5 border-t border-neutral-200/70 pt-4 text-xs text-neutral-400 dark:border-neutral-800/70">
-            <p>
-              {recs?.bandwidthMeasured
-                ? `Speeds are extrapolated from a real benchmark on this machine (${Math.round(
-                    recs.bandwidthGbps,
-                  )} GB/s effective bandwidth).`
-                : "Speeds are estimates from your chip's memory bandwidth — run the benchmark for measured numbers."}
-            </p>
-            {registry && (
-              <div className="flex items-center gap-2">
-                <span>
-                  Registry {registry.version} · {registry.modelCount} models
-                </span>
-                <button
-                  onClick={updateRegistry}
-                  disabled={updating}
-                  className="font-medium text-neutral-500 underline decoration-neutral-300 hover:text-neutral-700 disabled:opacity-50 dark:text-neutral-400 dark:hover:text-neutral-200"
-                >
-                  {updating ? "updating…" : "Update"}
-                </button>
-                {registryMsg && <span>{registryMsg}</span>}
-              </div>
-            )}
-          </footer>
-        </>
-      )}
-    </div>
+                  <button
+                    onClick={updateRegistry}
+                    disabled={updating}
+                    className="font-medium text-neutral-500 underline decoration-neutral-300 hover:text-neutral-700 disabled:opacity-50 dark:text-neutral-400 dark:hover:text-neutral-200"
+                  >
+                    {updating ? "updating…" : "Update"}
+                  </button>
+                  {registryMsg && <span>{registryMsg}</span>}
+                </div>
+              )}
+            </footer>
+          </>
+        )}
+      </div>
+    </>
   );
 }

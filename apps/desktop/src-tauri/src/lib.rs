@@ -213,6 +213,18 @@ pub fn run() {
                 .level(log::LevelFilter::Info)
                 .build(),
         )
+        .setup(|app| {
+            let window = app.get_webview_window("main").expect("main window");
+            // macOS keeps its native traffic lights, floated over the app's own
+            // title bar by `titleBarStyle: Overlay`. Everywhere else the system
+            // frame comes off entirely and TitleBar.tsx draws the controls.
+            #[cfg(not(target_os = "macos"))]
+            window.set_decorations(false)?;
+            // The window is configured hidden so the frame change above lands
+            // before the first paint instead of flashing a decorated window.
+            window.show()?;
+            Ok(())
+        })
         .invoke_handler(tauri::generate_handler![
             detect_hardware,
             get_recommendations,
