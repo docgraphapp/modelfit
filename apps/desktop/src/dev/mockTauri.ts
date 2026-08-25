@@ -164,6 +164,58 @@ function recommendations(req: {
   };
 }
 
+// Precomputed results are only valid for the machine they were generated on.
+// When the user edits specs (plan-for-a-different-machine), re-derive each
+// model's fit and the picks against the new usable memory. Scores for models
+// the backend never scored (they were excluded) fall back to quality×10 —
+// approximate, but the harness stays responsive to edits instead of lying.
+function adjustForHardware(
+  base: Recommendations,
+  edited: HardwareInfo,
+  detected: HardwareInfo,
+): Recommendations {
+  const ratio = edited.totalRamGb / detected.totalRamGb;
+  if (Math.abs(ratio - 1) < 1e-6) return base;
+  const usable = Math.round(base.usableMemoryGb * ratio * 10) / 10;
+  const all = base.all.map((a) => {
+    // A context-length cap is a property of the model, not the machine.
+    if (a.excludedReason?.includes("max context")) return a;
+    const need = a.estMemoryGb;
+    if (need > usable)
+      return {
+        ...a,
+        fit: "toobig" as const,
+        excludedReason: `needs ~${need.toFixed(1)} GB, your usable memory is ${usable.toFixed(1)} GB`,
+      };
+    if (need > usable * 0.9)
+      return {
+        ...a,
+        fit: "toobig" as const,
+        excludedReason: `needs ~${need.toFixed(1)} GB — too close to your ${usable.toFixed(1)} GB usable memory (10% headroom required)`,
+      };
+    return {
+      ...a,
+      fit: (need <= usable * 0.7 ? "comfortable" : "tight") as Assessment["fit"],
+      score: a.excludedReason || !a.score ? Math.round(a.quality * 10) : a.score,
+      excludedReason: null,
+    };
+  });
+  const runnable = all.filter((a) => !a.excludedReason);
+  const byScore = [...runnable].sort((x, y) => y.score - x.score);
+  const bySpeed = [...runnable].sort((x, y) => y.estTokPerSec - x.estTokPerSec);
+  const comfortable = runnable
+    .filter((a) => a.fit === "comfortable")
+    .sort((x, y) => y.score - x.score);
+  return {
+    ...base,
+    all,
+    usableMemoryGb: usable,
+    best: byScore[0] ?? null,
+    safe: comfortable[0] ?? null,
+    fast: bySpeed[0] ?? null,
+  };
+}
+
 const runtime: RuntimeStatus =
   scenario === "noruntime"
     ? { running: false, version: null, installedTags: [] }
@@ -203,17 +255,18 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
       return real ? real.hardware : hw;
     case "get_recommendations": {
       await sleep(60);
+      let base: Recommendations | null = null;
       if (real) {
-        // Real precomputed results; hardware edits can't be recomputed here.
         const measured =
           args.request.measuredEffectiveBandwidthGbps != null
             ? real.recommendationsMeasured
             : undefined;
         const byCtx = (measured ?? real.recommendations)[args.request.objective];
-        const r = byCtx?.[String(args.request.contextLength)];
-        if (r) return r;
+        base = byCtx?.[String(args.request.contextLength)] ?? null;
       }
-      return recommendations(args.request);
+      base ??= recommendations(args.request);
+      // Honor edited specs (the real backend recomputes; the mock adjusts).
+      return adjustForHardware(base, args.hardware, real?.hardware ?? hw);
     }
     case "runtime_status":
       if (real) return (await realRuntimeStatus()) ?? runtime;
