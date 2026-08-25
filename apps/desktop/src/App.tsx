@@ -140,12 +140,14 @@ function InstallControl({
   pulling,
   onInstall,
   hero,
+  benchmarking,
 }: {
   a: Assessment;
   runtime: RuntimeStatus | null;
   pulling: Record<string, PullProgress>;
   onInstall: (tag: string) => void;
   hero?: boolean;
+  benchmarking?: boolean;
 }) {
   if (!a.ollamaTag) return null;
   const tag = a.ollamaTag;
@@ -200,7 +202,13 @@ function InstallControl({
   return (
     <button
       onClick={() => onInstall(tag)}
-      className={`mt-4 rounded-lg font-medium transition-colors ${
+      disabled={benchmarking}
+      title={
+        benchmarking
+          ? "Wait for the benchmark to finish — a download now would skew the measurement"
+          : undefined
+      }
+      className={`mt-4 rounded-lg font-medium transition-colors disabled:opacity-50 ${
         hero
           ? "bg-emerald-600 px-4 py-1.5 text-[13px] text-white hover:bg-emerald-500 dark:bg-emerald-500 dark:text-emerald-950 dark:hover:bg-emerald-400"
           : "bg-neutral-900 px-3 py-1 text-xs text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-white"
@@ -472,6 +480,54 @@ function HardwareStrip({
   );
 }
 
+function ViewTabs({
+  view,
+  modelCount,
+  onChange,
+}: {
+  view: "picks" | "all";
+  modelCount: number;
+  onChange: (v: "picks" | "all") => void;
+}) {
+  const tabs: { id: "picks" | "all"; label: React.ReactNode }[] = [
+    { id: "picks", label: "Recommended" },
+    {
+      id: "all",
+      label: (
+        <>
+          All models
+          <span className="ml-1.5 rounded-full bg-neutral-100 px-1.5 py-px text-[11px] font-semibold tabular-nums text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400">
+            {modelCount}
+          </span>
+        </>
+      ),
+    },
+  ];
+  return (
+    <div
+      role="tablist"
+      aria-label="Results view"
+      className="mt-6 flex gap-5 border-b border-neutral-200 dark:border-neutral-800"
+    >
+      {tabs.map((t) => (
+        <button
+          key={t.id}
+          role="tab"
+          aria-selected={view === t.id}
+          onClick={() => onChange(t.id)}
+          className={`-mb-px border-b-2 pb-2 text-[13px] font-medium transition-colors ${
+            view === t.id
+              ? "border-emerald-500 text-neutral-900 dark:text-neutral-100"
+              : "border-transparent text-neutral-400 hover:border-neutral-300 hover:text-neutral-600 dark:hover:border-neutral-600 dark:hover:text-neutral-300"
+          }`}
+        >
+          {t.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 function Skeleton() {
   return (
     <div className="animate-pulse" aria-label="Detecting your machine…" role="status">
@@ -495,7 +551,7 @@ export default function App() {
   const [recs, setRecs] = useState<Recommendations | null>(null);
   const [objective, setObjective] = useState<Objective>("overall");
   const [contextLength, setContextLength] = useState(8192);
-  const [showAll, setShowAll] = useState(false);
+  const [view, setView] = useState<"picks" | "all">("picks");
   const [error, setError] = useState<string | null>(null);
   const [runtime, setRuntime] = useState<RuntimeStatus | null>(null);
   const [calibration, setCalibration] = useState<Calibration | null>(loadCalibration);
@@ -680,8 +736,12 @@ export default function App() {
             </label>
           </div>
 
-          {recs && !recs.best && (
-            <section className="mt-6 rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
+          {recs && (
+            <ViewTabs view={view} modelCount={recs.all.length} onChange={setView} />
+          )}
+
+          {view === "picks" && recs && !recs.best && (
+            <section className="mt-5 rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
               <h3 className="text-sm font-semibold">
                 No model clears the bar for this machine and objective
               </h3>
@@ -711,8 +771,8 @@ export default function App() {
             </section>
           )}
 
-          {recs && recs.best && (
-            <section className="mt-6" aria-label="Recommendations">
+          {view === "picks" && recs && recs.best && (
+            <section className="mt-5" aria-label="Recommendations">
               <HeroPick a={recs.best} usable={recs.usableMemoryGb}>
                 <InstallControl
                   a={recs.best}
@@ -720,6 +780,7 @@ export default function App() {
                   pulling={pulling}
                   onInstall={install}
                   hero
+                  benchmarking={benchmarking}
                 />
               </HeroPick>
               {secondary.length > 0 && (
@@ -731,6 +792,7 @@ export default function App() {
                         runtime={runtime}
                         pulling={pulling}
                         onInstall={install}
+                        benchmarking={benchmarking}
                       />
                     </MiniPick>
                   ))}
@@ -739,70 +801,9 @@ export default function App() {
             </section>
           )}
 
-          <section className="mt-6 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-neutral-200 bg-white px-5 py-3.5 dark:border-neutral-800 dark:bg-neutral-900">
-            <div className="text-[13px] text-neutral-500 dark:text-neutral-400">
-              {runtime?.running ? (
-                <>
-                  <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-emerald-500" />
-                  Ollama {runtime.version} · {runtime.installedTags.length} model
-                  {runtime.installedTags.length === 1 ? "" : "s"} installed
-                </>
-              ) : (
-                <>
-                  <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-neutral-300 dark:bg-neutral-600" />
-                  No runtime detected — install and benchmark need{" "}
-                  <button
-                    onClick={() =>
-                      invoke("open_external", { url: "https://ollama.com/download" })
-                    }
-                    className="font-medium text-neutral-700 underline decoration-neutral-300 hover:text-neutral-900 dark:text-neutral-200 dark:hover:text-white"
-                  >
-                    Ollama
-                  </button>
-                </>
-              )}
-            </div>
-            {runtime?.running && (
-              <div className="flex items-center gap-3 text-[13px]">
-                {calibration && !benchmarking && (
-                  <span className="text-neutral-400">
-                    measured {Math.round(calibration.effectiveBandwidthGbps)} GB/s via{" "}
-                    {calibration.modelTag}
-                  </span>
-                )}
-                <button
-                  onClick={runBenchmark}
-                  disabled={benchmarking}
-                  title="Runs a short generation on a small installed model to measure this machine's real memory bandwidth (~1 min)"
-                  className="rounded-lg border border-neutral-200 px-3 py-1 font-medium text-neutral-600 hover:border-neutral-400 disabled:opacity-60 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500"
-                >
-                  {benchmarking ? (
-                    <span className="inline-flex items-center gap-1.5">
-                      <span className="h-3 w-3 animate-spin rounded-full border-[1.5px] border-neutral-300 border-t-neutral-600 dark:border-neutral-600 dark:border-t-neutral-200" />
-                      Benchmarking…
-                    </span>
-                  ) : calibration ? (
-                    "Re-run benchmark"
-                  ) : (
-                    "Benchmark this machine"
-                  )}
-                </button>
-              </div>
-            )}
-          </section>
-
-          {recs && (
-            <section className="mt-6">
-              <button
-                onClick={() => setShowAll(!showAll)}
-                aria-expanded={showAll}
-                className="text-[13px] font-medium text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200"
-              >
-                {showAll ? "Hide all models" : `Show all ${recs.all.length} models`}
-                <span aria-hidden className="ml-1">{showAll ? "▴" : "▾"}</span>
-              </button>
-              {showAll && (
-                <div className="mt-3 overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
+          {view === "all" && recs && (
+            <section className="mt-5" aria-label="All models">
+              <div className="overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
                   <table className="w-full text-[13px]">
                     <thead>
                       <tr className="border-b border-neutral-200 text-left text-xs uppercase tracking-wide text-neutral-400 dark:border-neutral-800">
@@ -861,10 +862,65 @@ export default function App() {
                       ))}
                     </tbody>
                   </table>
-                </div>
-              )}
+              </div>
             </section>
           )}
+
+          <section className="mt-6 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-neutral-200 bg-white px-5 py-3.5 dark:border-neutral-800 dark:bg-neutral-900">
+            <div className="text-[13px] text-neutral-500 dark:text-neutral-400">
+              {runtime?.running ? (
+                <>
+                  <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-emerald-500" />
+                  Ollama {runtime.version} · {runtime.installedTags.length} model
+                  {runtime.installedTags.length === 1 ? "" : "s"} installed
+                </>
+              ) : (
+                <>
+                  <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-neutral-300 dark:bg-neutral-600" />
+                  No runtime detected — install and benchmark need{" "}
+                  <button
+                    onClick={() =>
+                      invoke("open_external", { url: "https://ollama.com/download" })
+                    }
+                    className="font-medium text-neutral-700 underline decoration-neutral-300 hover:text-neutral-900 dark:text-neutral-200 dark:hover:text-white"
+                  >
+                    Ollama
+                  </button>
+                </>
+              )}
+            </div>
+            {runtime?.running && (
+              <div className="flex items-center gap-3 text-[13px]">
+                {calibration && !benchmarking && (
+                  <span className="text-neutral-400">
+                    measured {Math.round(calibration.effectiveBandwidthGbps)} GB/s via{" "}
+                    {calibration.modelTag}
+                  </span>
+                )}
+                <button
+                  onClick={runBenchmark}
+                  disabled={benchmarking || Object.keys(pulling).length > 0}
+                  title={
+                    Object.keys(pulling).length > 0
+                      ? "Wait for the current download to finish — a concurrent pull would skew the measurement"
+                      : "Runs a short generation on a small installed model to measure this machine's real memory bandwidth (~1 min)"
+                  }
+                  className="rounded-lg border border-neutral-200 px-3 py-1 font-medium text-neutral-600 hover:border-neutral-400 disabled:opacity-60 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500"
+                >
+                  {benchmarking ? (
+                    <span className="inline-flex items-center gap-1.5">
+                      <span className="h-3 w-3 animate-spin rounded-full border-[1.5px] border-neutral-300 border-t-neutral-600 dark:border-neutral-600 dark:border-t-neutral-200" />
+                      Benchmarking…
+                    </span>
+                  ) : calibration ? (
+                    "Re-run benchmark"
+                  ) : (
+                    "Benchmark this machine"
+                  )}
+                </button>
+              </div>
+            )}
+          </section>
 
           <footer className="mt-6 space-y-1.5 border-t border-neutral-200/70 pt-4 text-xs text-neutral-400 dark:border-neutral-800/70">
             <p>

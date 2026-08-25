@@ -38,6 +38,9 @@ interface RealData {
   registryVersion: string;
   modelCount: number;
   recommendations: Record<string, Record<string, Recommendations>>;
+  // Present when machine.json was generated with `--measured …`.
+  recommendationsMeasured?: Record<string, Record<string, Recommendations>>;
+  calibration?: Calibration;
 }
 
 let real: RealData | null = null;
@@ -197,7 +200,11 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
       await sleep(60);
       if (real) {
         // Real precomputed results; hardware edits can't be recomputed here.
-        const byCtx = real.recommendations[args.request.objective];
+        const measured =
+          args.request.measuredEffectiveBandwidthGbps != null
+            ? real.recommendationsMeasured
+            : undefined;
+        const byCtx = (measured ?? real.recommendations)[args.request.objective];
         const r = byCtx?.[String(args.request.contextLength)];
         if (r) return r;
       }
@@ -213,8 +220,9 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
         ? { ...registryInfo, version: real.registryVersion, modelCount: real.modelCount }
         : registryInfo;
     case "run_calibration":
-      await sleep(2500);
-      return calibration;
+      // Real numbers from the last `calibrate` example run when available.
+      await sleep(4000);
+      return real?.calibration ?? calibration;
     case "install_model": {
       const total = 5_600_000_000;
       for (let done = 0; done <= total; done += total / 40) {
@@ -252,6 +260,14 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
     const id = nextCb++;
     callbacks.set(id, cb);
     return id;
+  },
+};
+
+// @tauri-apps/api's event module cleans up through this, not through invoke.
+(window as any).__TAURI_EVENT_PLUGIN_INTERNALS__ = {
+  unregisterListener(event: string, id: number) {
+    listeners.get(event)?.delete(id);
+    callbacks.delete(id);
   },
 };
 

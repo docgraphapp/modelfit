@@ -10,3 +10,6 @@ async-trait = "0.1"
 futures-util = "0.3"
 reqwest = { version = "0.12", default-features = false, features = ["json", "stream"] }
 modelfit-registry = { path = "../registry" }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
