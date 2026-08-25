@@ -6,7 +6,7 @@ ModelFit is a small, fast desktop app that inspects your hardware and tells you
 which local LLMs you can realistically run — at what quantization, context
 length, and expected speed — with one-click install into Ollama.
 
-A [DocGraph](https://docgraph.app) product.
+**[modelfit.docgraph.app](https://modelfit.docgraph.app)** · A [DocGraph](https://docgraph.app) product.
 
 ## Why
 
