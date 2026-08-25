@@ -484,7 +484,7 @@ function HeaderCard({
         { text: `${Math.round(hw.diskAvailableGb)} GB free disk` },
         ...hw.accelerations
           .filter((a) => a !== "cpu")
-          .map((a) => ({ text: ACCEL_LABELS[a] ?? a })),
+          .map((a) => ({ text: ACCEL_LABELS[a] ?? a, term: "backend" as const })),
       ].filter(Boolean) as { text: string; term?: TermId }[])
     : [];
 
@@ -975,7 +975,8 @@ export default function App() {
                 ) : (
                   <>
                     <span className="mr-1.5 inline-block h-2 w-2 rounded-full bg-neutral-300 dark:bg-neutral-600" />
-                    No runtime detected — install and benchmark need{" "}
+                    No <Term id="runtime">runtime</Term> detected — install and
+                    benchmark need{" "}
                     <button
                       onClick={() =>
                         invoke("open_external", { url: "https://ollama.com/download" })

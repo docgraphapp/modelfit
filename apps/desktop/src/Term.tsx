@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { invoke } from "@tauri-apps/api/core";
-import { GLOSSARY, termUrl, type TermId } from "./glossary";
+import { GLOSSARY, glossaryUrl, termUrl, type TermId } from "./glossary";
 
 const CARD_WIDTH = 300;
 const MARGIN = 12;
@@ -11,8 +11,9 @@ const CLOSE_DELAY = 120; // long enough to move the pointer into the card
 type Placement = { left: number; top: number; above: boolean };
 
 /**
- * A term the user can hover for a one-paragraph explanation, with a link into
- * the matching section of the fundamentals post.
+ * A term the user can hover for a one-paragraph explanation, with two ways out:
+ * the section of the post that works it out, and the same term on the website
+ * glossary — which lands on this entry with the whole vocabulary under it.
  *
  * The card renders into a portal at the document root. Terms appear inside
  * rounded `overflow-hidden` containers that would clip it, and inside <p> and
@@ -57,6 +58,14 @@ export default function Term({
     if (immediate) setPlace(null);
     else timer.current = window.setTimeout(() => setPlace(null), CLOSE_DELAY);
   }, []);
+
+  const openExternal = useCallback(
+    (url: string) => {
+      close(true);
+      invoke("open_external", { url }).catch(() => {});
+    },
+    [close],
+  );
 
   useEffect(() => () => clear(), []);
 
@@ -119,16 +128,22 @@ export default function Term({
             <p className="mt-1 text-[12.5px] leading-relaxed text-neutral-600 dark:text-neutral-400">
               {entry.brief}
             </p>
-            <button
-              type="button"
-              onClick={() => {
-                close(true);
-                invoke("open_external", { url: termUrl(id) }).catch(() => {});
-              }}
-              className="mt-2.5 text-[12.5px] font-medium text-emerald-700 hover:underline dark:text-emerald-500"
-            >
-              Learn more →
-            </button>
+            <div className="mt-2.5 flex items-baseline justify-between gap-3 text-[12.5px]">
+              <button
+                type="button"
+                onClick={() => openExternal(termUrl(id))}
+                className="font-medium text-emerald-700 hover:underline dark:text-emerald-500"
+              >
+                Learn more →
+              </button>
+              <button
+                type="button"
+                onClick={() => openExternal(glossaryUrl(id))}
+                className="text-neutral-400 hover:text-neutral-600 hover:underline dark:text-neutral-500 dark:hover:text-neutral-300"
+              >
+                Glossary
+              </button>
+            </div>
           </div>,
           document.body,
         )}
