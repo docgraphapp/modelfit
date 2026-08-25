@@ -13,8 +13,8 @@
     "windows": [
       {
         "title": "ModelFit",
-        "width": 760,
-        "height": 720,
+        "width": 940,
+        "height": 640,
         "minWidth": 560,
         "minHeight": 520,
         "resizable": true,

@@ -241,7 +241,7 @@ function HeroPick({
   children?: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-emerald-200/80 bg-gradient-to-b from-emerald-50/70 to-white p-6 shadow-sm dark:border-emerald-900/60 dark:from-emerald-950/35 dark:to-neutral-900">
+    <div className="rounded-2xl border border-emerald-200/80 bg-gradient-to-b from-emerald-50/70 to-white p-5 shadow-sm dark:border-emerald-900/60 dark:from-emerald-950/35 dark:to-neutral-900">
       <div className="flex items-baseline justify-between">
         <span
           title={PICK_HINTS.Best}
@@ -257,7 +257,7 @@ function HeroPick({
         </span>
       </div>
       <div className="mt-2.5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-        <h2 className="text-[22px] font-semibold leading-tight tracking-tight">{a.name}</h2>
+        <h2 className="text-xl font-semibold leading-tight tracking-tight">{a.name}</h2>
         <span className="text-[13px] text-neutral-400 dark:text-neutral-500">{a.quant}</span>
       </div>
       <div className="mt-4 flex gap-8">
@@ -370,11 +370,32 @@ function FitBadge({ a }: { a: Assessment }) {
   );
 }
 
-function HardwareStrip({
+function Brand() {
+  return (
+    <div className="flex items-center gap-2.5">
+      <span
+        aria-hidden
+        className="relative flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] bg-gradient-to-br from-emerald-400 to-emerald-600 shadow-sm shadow-emerald-500/30"
+      >
+        {/* nested block: a model fitting inside a machine */}
+        <span className="absolute inset-[7px] rounded-[5px] border-[1.5px] border-white/80" />
+        <span className="absolute bottom-[10px] left-[10px] h-2.5 w-2.5 rounded-[3px] bg-white" />
+      </span>
+      <div className="leading-tight">
+        <h1 className="text-[15px] font-semibold tracking-tight">ModelFit</h1>
+        <p className="text-[11px] text-neutral-400 dark:text-neutral-500">
+          The best AI model for your machine
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function HeaderCard({
   hw,
   onEdited,
 }: {
-  hw: HardwareInfo;
+  hw: HardwareInfo | null;
   onEdited: (hw: HardwareInfo) => void;
 }) {
   const [editing, setEditing] = useState(false);
@@ -382,12 +403,14 @@ function HardwareStrip({
   const [vram, setVram] = useState("");
 
   const startEdit = () => {
+    if (!hw) return;
     setRam(String(hw.totalRamGb));
     setVram(String(hw.gpus[0]?.vramGb ?? ""));
     setEditing(true);
   };
 
   const apply = () => {
+    if (!hw) return;
     const ramGb = parseFloat(ram);
     const vramGb = parseFloat(vram);
     const next: HardwareInfo = { ...hw, gpus: hw.gpus.map((g) => ({ ...g })) };
@@ -403,16 +426,17 @@ function HardwareStrip({
     onEdited(next);
   };
 
-  const gpu = hw.gpus[0];
-  const specs = [
-    `${hw.totalRamGb} GB${hw.unifiedMemory ? " unified" : ""}`,
-    `${hw.physicalCores}-core CPU`,
-    gpu &&
-      (gpu.coreCount ? `${gpu.coreCount}-core GPU` : gpu.name),
-    gpu && !hw.unifiedMemory && gpu.vramGb != null && `${gpu.vramGb} GB VRAM`,
-    `${Math.round(hw.diskAvailableGb)} GB free disk`,
-    ...hw.accelerations.filter((a) => a !== "cpu").map((a) => ACCEL_LABELS[a] ?? a),
-  ].filter(Boolean) as string[];
+  const gpu = hw?.gpus[0];
+  const specs = hw
+    ? ([
+        `${hw.totalRamGb} GB${hw.unifiedMemory ? " unified" : ""}`,
+        `${hw.physicalCores}-core CPU`,
+        gpu && (gpu.coreCount ? `${gpu.coreCount}-core GPU` : gpu.name),
+        gpu && !hw.unifiedMemory && gpu.vramGb != null && `${gpu.vramGb} GB VRAM`,
+        `${Math.round(hw.diskAvailableGb)} GB free disk`,
+        ...hw.accelerations.filter((a) => a !== "cpu").map((a) => ACCEL_LABELS[a] ?? a),
+      ].filter(Boolean) as string[])
+    : [];
 
   const editField = (
     label: string,
@@ -435,47 +459,69 @@ function HardwareStrip({
   );
 
   return (
-    <section className="rounded-2xl border border-neutral-200 bg-white px-5 py-4 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
-      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-        <div className="flex min-w-0 flex-wrap items-baseline gap-x-2.5 gap-y-1">
-          <h2 className="text-[15px] font-semibold tracking-tight">{hw.cpuModel}</h2>
-          <span className="text-[13px] text-neutral-400 dark:text-neutral-500">
-            {specs.join(" · ")}
+    <section className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-white px-5 py-3.5 shadow-sm dark:border-neutral-800 dark:bg-neutral-900">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-20 -top-24 h-52 w-52 rounded-full bg-emerald-400/10 blur-3xl dark:bg-emerald-500/10"
+      />
+      <div className="relative flex flex-wrap items-center gap-x-5 gap-y-3">
+        <Brand />
+        <div
+          aria-hidden
+          className="hidden h-9 w-px bg-neutral-200 dark:bg-neutral-800 md:block"
+        />
+        {!hw ? (
+          <span className="animate-pulse text-[13px] text-neutral-400 dark:text-neutral-500">
+            Detecting your machine…
           </span>
-        </div>
-        <div className="flex items-center gap-3">
-          {editing ? (
-            <div className="flex items-center gap-3">
-              {editField("Memory (GB)", ram, setRam)}
-              {gpu && !hw.unifiedMemory && editField("VRAM (GB)", vram, setVram)}
-              <button
-                onClick={() => setEditing(false)}
-                className="text-xs font-medium text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={apply}
-                className="rounded-lg bg-neutral-900 px-2.5 py-1 text-xs font-medium text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-white"
-              >
-                Done
-              </button>
-            </div>
-          ) : (
-            <>
+        ) : (
+          <div className="min-w-0 grow basis-full md:basis-0">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-2">
+              <h2 className="text-[15px] font-semibold tracking-tight">{hw.cpuModel}</h2>
               <span className="text-xs text-neutral-400 dark:text-neutral-500">
                 {hw.osVersion}
               </span>
-              <button
-                onClick={startEdit}
-                title="Detected specs are editable — plan for a different machine"
-                className="text-xs font-medium text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200"
-              >
-                Edit
-              </button>
-            </>
-          )}
-        </div>
+              <div className="ml-auto">
+                {editing ? (
+                  <div className="flex flex-wrap items-center justify-end gap-x-3 gap-y-2">
+                    {editField("Memory (GB)", ram, setRam)}
+                    {gpu && !hw.unifiedMemory && editField("VRAM (GB)", vram, setVram)}
+                    <button
+                      onClick={() => setEditing(false)}
+                      className="text-xs font-medium text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      onClick={apply}
+                      className="rounded-lg bg-neutral-900 px-2.5 py-1 text-xs font-medium text-white hover:bg-neutral-700 dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-white"
+                    >
+                      Done
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={startEdit}
+                    title="Detected specs are editable — plan for a different machine"
+                    className="rounded-lg border border-neutral-200 px-2.5 py-1 text-xs font-medium text-neutral-500 hover:border-neutral-400 hover:text-neutral-700 dark:border-neutral-700 dark:text-neutral-400 dark:hover:border-neutral-500 dark:hover:text-neutral-200"
+                  >
+                    Edit
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="mt-1.5 flex flex-wrap gap-1.5">
+              {specs.map((s) => (
+                <span
+                  key={s}
+                  className="rounded-md bg-neutral-100 px-1.5 py-0.5 text-[11px] font-medium tabular-nums text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
@@ -508,7 +554,7 @@ function ViewTabs({
     <div
       role="tablist"
       aria-label="Results view"
-      className="mt-6 flex gap-5 border-b border-neutral-200 dark:border-neutral-800"
+      className="mt-4 flex gap-5 border-b border-neutral-200 dark:border-neutral-800"
     >
       {tabs.map((t) => (
         <button
@@ -531,9 +577,8 @@ function ViewTabs({
 
 function Skeleton() {
   return (
-    <div className="animate-pulse" aria-label="Detecting your machine…" role="status">
-      <div className="h-14 rounded-2xl bg-neutral-200/60 dark:bg-neutral-800/60" />
-      <div className="mt-6 flex items-center justify-between">
+    <div className="mt-4 animate-pulse" aria-label="Detecting your machine…" role="status">
+      <div className="flex items-center justify-between">
         <div className="h-8 w-72 rounded-full bg-neutral-200/60 dark:bg-neutral-800/60" />
         <div className="h-8 w-24 rounded-lg bg-neutral-200/60 dark:bg-neutral-800/60" />
       </div>
@@ -542,7 +587,6 @@ function Skeleton() {
         <div className="h-36 flex-1 rounded-2xl bg-neutral-200/60 dark:bg-neutral-800/60" />
         <div className="h-36 flex-1 rounded-2xl bg-neutral-200/60 dark:bg-neutral-800/60" />
       </div>
-      <div className="mt-4 text-center text-xs text-neutral-400">Detecting your machine…</div>
     </div>
   );
 }
@@ -691,19 +735,11 @@ export default function App() {
   return (
     <>
       <TitleBar />
-      <div className="mx-auto flex min-h-[calc(100vh-2.5rem)] max-w-2xl flex-col px-8 pb-9 pt-2">
-        <header className="mb-7 flex items-baseline justify-between">
-          <h1 className="flex items-center gap-2 text-lg font-semibold tracking-tight">
-            <span aria-hidden className="inline-block h-2.5 w-2.5 rounded-[4px] bg-emerald-500" />
-            ModelFit
-          </h1>
-          <p className="text-[13px] text-neutral-400 dark:text-neutral-500">
-            Find the best AI model for your machine
-          </p>
-        </header>
+      <div className="mx-auto flex min-h-[calc(100vh-2.5rem)] w-full max-w-6xl flex-col px-5 pb-5 pt-2 sm:px-7">
+        <HeaderCard hw={hw} onEdited={(next) => update(objective, contextLength, next)} />
 
         {error && (
-          <div className="mb-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">
+          <div className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">
             Something went wrong: {error}
           </div>
         )}
@@ -712,9 +748,7 @@ export default function App() {
 
         {hw && (
           <>
-            <HardwareStrip hw={hw} onEdited={(next) => update(objective, contextLength, next)} />
-
-            <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
               <Segmented
                 options={OBJECTIVES}
                 value={objective}
@@ -744,7 +778,7 @@ export default function App() {
             )}
 
             {view === "picks" && recs && !recs.best && (
-              <section className="mt-5 rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
+              <section className="mt-4 rounded-2xl border border-neutral-200 bg-white p-6 dark:border-neutral-800 dark:bg-neutral-900">
                 <h3 className="text-sm font-semibold">
                   No model clears the bar for this machine and objective
                 </h3>
@@ -775,7 +809,12 @@ export default function App() {
             )}
 
             {view === "picks" && recs && recs.best && (
-              <section className="mt-5" aria-label="Recommendations">
+              <section
+                className={`mt-4 grid gap-3 ${
+                  secondary.length > 0 ? "md:grid-cols-2" : ""
+                }`}
+                aria-label="Recommendations"
+              >
                 <HeroPick a={recs.best} usable={recs.usableMemoryGb}>
                   <InstallControl
                     a={recs.best}
@@ -787,7 +826,7 @@ export default function App() {
                   />
                 </HeroPick>
                 {secondary.length > 0 && (
-                  <div className="mt-3 flex flex-col gap-3 sm:flex-row">
+                  <div className="flex flex-col gap-3 sm:max-md:flex-row">
                     {secondary.map((p) => (
                       <MiniPick key={p.tag} tag={p.tag} a={p.a} usable={recs.usableMemoryGb}>
                         <InstallControl
@@ -805,7 +844,7 @@ export default function App() {
             )}
 
             {view === "all" && recs && (
-              <section className="mt-5" aria-label="All models">
+              <section className="mt-4" aria-label="All models">
                 <div className="overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800">
                     <table className="w-full text-[13px]">
                       <thead>
@@ -869,7 +908,7 @@ export default function App() {
               </section>
             )}
 
-            <section className="mt-6 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-neutral-200 bg-white px-5 py-3.5 dark:border-neutral-800 dark:bg-neutral-900">
+            <section className="mb-4 mt-4 flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-neutral-200 bg-white px-5 py-3 dark:border-neutral-800 dark:bg-neutral-900">
               <div className="text-[13px] text-neutral-500 dark:text-neutral-400">
                 {runtime?.running ? (
                   <>
@@ -925,7 +964,7 @@ export default function App() {
               )}
             </section>
 
-            <footer className="mt-6 space-y-1.5 border-t border-neutral-200/70 pt-4 text-xs text-neutral-400 dark:border-neutral-800/70">
+            <footer className="mt-auto space-y-1.5 border-t border-neutral-200/70 pt-3 text-xs text-neutral-400 dark:border-neutral-800/70">
               <p>
                 {recs?.bandwidthMeasured
                   ? `Speeds are extrapolated from a real benchmark on this machine (${Math.round(
