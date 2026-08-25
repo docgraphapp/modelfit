@@ -9,11 +9,22 @@
       "parametersB": 3.2,
       "activeParametersB": null,
       "maxContext": 131072,
-      "capabilities": ["chat"],
-      "quality": { "general": 6.6, "coding": 6.0 },
+      "capabilities": [
+        "chat"
+      ],
+      "quality": {
+        "general": 6.6,
+        "coding": 6.0
+      },
       "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 2.0, "kvCacheGbPer1kCtx": 0.09 },
-        "Q8_0": { "fileSizeGb": 3.4, "kvCacheGbPer1kCtx": 0.09 }
+        "Q4_K_M": {
+          "fileSizeGb": 1.88,
+          "kvCacheGbPer1kCtx": 0.117
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.19,
+          "kvCacheGbPer1kCtx": 0.117
+        }
       },
       "ollamaTag": "llama3.2:3b"
     },
@@ -24,11 +35,24 @@
       "parametersB": 4.0,
       "activeParametersB": null,
       "maxContext": 40960,
-      "capabilities": ["chat", "reasoning", "coding"],
-      "quality": { "general": 7.2, "coding": 6.8 },
+      "capabilities": [
+        "chat",
+        "reasoning",
+        "coding"
+      ],
+      "quality": {
+        "general": 7.2,
+        "coding": 6.8
+      },
       "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 2.6, "kvCacheGbPer1kCtx": 0.11 },
-        "Q8_0": { "fileSizeGb": 4.3, "kvCacheGbPer1kCtx": 0.11 }
+        "Q4_K_M": {
+          "fileSizeGb": 2.33,
+          "kvCacheGbPer1kCtx": 0.151
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.99,
+          "kvCacheGbPer1kCtx": 0.151
+        }
       },
       "ollamaTag": "qwen3:4b"
     },
@@ -39,10 +63,19 @@
       "parametersB": 4.3,
       "activeParametersB": null,
       "maxContext": 131072,
-      "capabilities": ["chat", "vision"],
-      "quality": { "general": 7.0, "coding": 6.3 },
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": {
+        "general": 7.0,
+        "coding": 6.3
+      },
       "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 2.6, "kvCacheGbPer1kCtx": 0.1 }
+        "Q4_K_M": {
+          "fileSizeGb": 2.32,
+          "kvCacheGbPer1kCtx": 0.143
+        }
       },
       "ollamaTag": "gemma3:4b"
     },
@@ -53,56 +86,26 @@
       "parametersB": 8.2,
       "activeParametersB": null,
       "maxContext": 40960,
-      "capabilities": ["chat", "reasoning", "coding"],
-      "quality": { "general": 7.8, "coding": 7.4 },
+      "capabilities": [
+        "chat",
+        "reasoning",
+        "coding"
+      ],
+      "quality": {
+        "general": 7.8,
+        "coding": 7.4
+      },
       "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 5.0, "kvCacheGbPer1kCtx": 0.14 },
-        "Q8_0": { "fileSizeGb": 8.9, "kvCacheGbPer1kCtx": 0.14 }
+        "Q4_K_M": {
+          "fileSizeGb": 4.68,
+          "kvCacheGbPer1kCtx": 0.151
+        },
+        "Q8_0": {
+          "fileSizeGb": 8.11,
+          "kvCacheGbPer1kCtx": 0.151
+        }
       },
       "ollamaTag": "qwen3:8b"
-    },
-    {
-      "id": "qwen3-14b",
-      "name": "Qwen3 14B",
-      "family": "qwen",
-      "parametersB": 14.8,
-      "activeParametersB": null,
-      "maxContext": 40960,
-      "capabilities": ["chat", "reasoning", "coding"],
-      "quality": { "general": 8.2, "coding": 7.8 },
-      "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 9.3, "kvCacheGbPer1kCtx": 0.19 },
-        "Q8_0": { "fileSizeGb": 15.7, "kvCacheGbPer1kCtx": 0.19 }
-      },
-      "ollamaTag": "qwen3:14b"
-    },
-    {
-      "id": "qwen3-30b-a3b",
-      "name": "Qwen3 30B-A3B",
-      "family": "qwen",
-      "parametersB": 30.5,
-      "activeParametersB": 3.3,
-      "maxContext": 40960,
-      "capabilities": ["chat", "reasoning", "coding"],
-      "quality": { "general": 8.5, "coding": 8.0 },
-      "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 18.6, "kvCacheGbPer1kCtx": 0.19 }
-      },
-      "ollamaTag": "qwen3:30b"
-    },
-    {
-      "id": "qwen3-32b",
-      "name": "Qwen3 32B",
-      "family": "qwen",
-      "parametersB": 32.8,
-      "activeParametersB": null,
-      "maxContext": 40960,
-      "capabilities": ["chat", "reasoning", "coding"],
-      "quality": { "general": 8.7, "coding": 8.3 },
-      "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 20.0, "kvCacheGbPer1kCtx": 0.25 }
-      },
-      "ollamaTag": "qwen3:32b"
     },
     {
       "id": "llama3.1-8b",
@@ -111,11 +114,22 @@
       "parametersB": 8.0,
       "activeParametersB": null,
       "maxContext": 131072,
-      "capabilities": ["chat"],
-      "quality": { "general": 7.4, "coding": 6.8 },
+      "capabilities": [
+        "chat"
+      ],
+      "quality": {
+        "general": 7.4,
+        "coding": 6.8
+      },
       "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 4.9, "kvCacheGbPer1kCtx": 0.13 },
-        "Q8_0": { "fileSizeGb": 8.5, "kvCacheGbPer1kCtx": 0.13 }
+        "Q4_K_M": {
+          "fileSizeGb": 4.58,
+          "kvCacheGbPer1kCtx": 0.134
+        },
+        "Q8_0": {
+          "fileSizeGb": 7.95,
+          "kvCacheGbPer1kCtx": 0.134
+        }
       },
       "ollamaTag": "llama3.1:8b"
     },
@@ -126,26 +140,49 @@
       "parametersB": 12.2,
       "activeParametersB": null,
       "maxContext": 131072,
-      "capabilities": ["chat", "vision"],
-      "quality": { "general": 7.9, "coding": 7.2 },
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": {
+        "general": 7.9,
+        "coding": 7.2
+      },
       "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 8.1, "kvCacheGbPer1kCtx": 0.15 }
+        "Q4_K_M": {
+          "fileSizeGb": 6.8,
+          "kvCacheGbPer1kCtx": 0.403
+        }
       },
       "ollamaTag": "gemma3:12b"
     },
     {
-      "id": "gemma3-27b",
-      "name": "Gemma 3 27B",
-      "family": "gemma",
-      "parametersB": 27.4,
+      "id": "qwen3-14b",
+      "name": "Qwen3 14B",
+      "family": "qwen",
+      "parametersB": 14.8,
       "activeParametersB": null,
-      "maxContext": 131072,
-      "capabilities": ["chat", "vision"],
-      "quality": { "general": 8.4, "coding": 7.7 },
-      "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 16.5, "kvCacheGbPer1kCtx": 0.24 }
+      "maxContext": 40960,
+      "capabilities": [
+        "chat",
+        "reasoning",
+        "coding"
+      ],
+      "quality": {
+        "general": 8.2,
+        "coding": 7.8
       },
-      "ollamaTag": "gemma3:27b"
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 8.38,
+          "kvCacheGbPer1kCtx": 0.168
+        },
+        "Q8_0": {
+          "fileSizeGb": 14.62,
+          "kvCacheGbPer1kCtx": 0.168
+        }
+      },
+      "ollamaTag": "qwen3:14b"
     },
     {
       "id": "phi4-14b",
@@ -154,26 +191,21 @@
       "parametersB": 14.7,
       "activeParametersB": null,
       "maxContext": 16384,
-      "capabilities": ["chat", "reasoning"],
-      "quality": { "general": 8.0, "coding": 7.6 },
+      "capabilities": [
+        "chat",
+        "reasoning"
+      ],
+      "quality": {
+        "general": 8.0,
+        "coding": 7.6
+      },
       "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 9.1, "kvCacheGbPer1kCtx": 0.16 }
+        "Q4_K_M": {
+          "fileSizeGb": 8.43,
+          "kvCacheGbPer1kCtx": 0.21
+        }
       },
       "ollamaTag": "phi4:14b"
-    },
-    {
-      "id": "mistral-small-3.1-24b",
-      "name": "Mistral Small 3.1 24B",
-      "family": "mistral",
-      "parametersB": 24.0,
-      "activeParametersB": null,
-      "maxContext": 131072,
-      "capabilities": ["chat", "vision", "coding"],
-      "quality": { "general": 8.1, "coding": 7.5 },
-      "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 14.3, "kvCacheGbPer1kCtx": 0.16 }
-      },
-      "ollamaTag": "mistral-small3.1"
     },
     {
       "id": "deepseek-r1-14b",
@@ -182,10 +214,19 @@
       "parametersB": 14.8,
       "activeParametersB": null,
       "maxContext": 131072,
-      "capabilities": ["chat", "reasoning"],
-      "quality": { "general": 8.3, "coding": 7.9 },
+      "capabilities": [
+        "chat",
+        "reasoning"
+      ],
+      "quality": {
+        "general": 8.3,
+        "coding": 7.9
+      },
       "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 9.0, "kvCacheGbPer1kCtx": 0.19 }
+        "Q4_K_M": {
+          "fileSizeGb": 8.37,
+          "kvCacheGbPer1kCtx": 0.201
+        }
       },
       "ollamaTag": "deepseek-r1:14b"
     },
@@ -196,12 +237,116 @@
       "parametersB": 14.8,
       "activeParametersB": null,
       "maxContext": 131072,
-      "capabilities": ["coding", "chat"],
-      "quality": { "general": 7.8, "coding": 8.3 },
+      "capabilities": [
+        "coding",
+        "chat"
+      ],
+      "quality": {
+        "general": 7.8,
+        "coding": 8.3
+      },
       "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 9.0, "kvCacheGbPer1kCtx": 0.19 }
+        "Q4_K_M": {
+          "fileSizeGb": 8.37,
+          "kvCacheGbPer1kCtx": 0.201
+        }
       },
       "ollamaTag": "qwen2.5-coder:14b"
+    },
+    {
+      "id": "mistral-small-3.1-24b",
+      "name": "Mistral Small 3.1 24B",
+      "family": "mistral",
+      "parametersB": 24.0,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "vision",
+        "coding"
+      ],
+      "quality": {
+        "general": 8.1,
+        "coding": 7.5
+      },
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 13.35,
+          "kvCacheGbPer1kCtx": 0.168
+        }
+      },
+      "ollamaTag": "mistral-small3.1"
+    },
+    {
+      "id": "gemma3-27b",
+      "name": "Gemma 3 27B",
+      "family": "gemma",
+      "parametersB": 27.4,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": {
+        "general": 8.4,
+        "coding": 7.7
+      },
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 15.41,
+          "kvCacheGbPer1kCtx": 0.52
+        }
+      },
+      "ollamaTag": "gemma3:27b"
+    },
+    {
+      "id": "qwen3-30b-a3b",
+      "name": "Qwen3 30B-A3B",
+      "family": "qwen",
+      "parametersB": 30.5,
+      "activeParametersB": 3.3,
+      "maxContext": 40960,
+      "capabilities": [
+        "chat",
+        "reasoning",
+        "coding"
+      ],
+      "quality": {
+        "general": 8.5,
+        "coding": 8.0
+      },
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 17.28,
+          "kvCacheGbPer1kCtx": 0.101
+        }
+      },
+      "ollamaTag": "qwen3:30b"
+    },
+    {
+      "id": "qwen3-32b",
+      "name": "Qwen3 32B",
+      "family": "qwen",
+      "parametersB": 32.8,
+      "activeParametersB": null,
+      "maxContext": 40960,
+      "capabilities": [
+        "chat",
+        "reasoning",
+        "coding"
+      ],
+      "quality": {
+        "general": 8.7,
+        "coding": 8.3
+      },
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 18.4,
+          "kvCacheGbPer1kCtx": 0.268
+        }
+      },
+      "ollamaTag": "qwen3:32b"
     },
     {
       "id": "qwen2.5-coder-32b",
@@ -210,10 +355,19 @@
       "parametersB": 32.8,
       "activeParametersB": null,
       "maxContext": 131072,
-      "capabilities": ["coding", "chat"],
-      "quality": { "general": 8.3, "coding": 8.8 },
+      "capabilities": [
+        "coding",
+        "chat"
+      ],
+      "quality": {
+        "general": 8.3,
+        "coding": 8.8
+      },
       "quantizations": {
-        "Q4_K_M": { "fileSizeGb": 19.9, "kvCacheGbPer1kCtx": 0.25 }
+        "Q4_K_M": {
+          "fileSizeGb": 18.49,
+          "kvCacheGbPer1kCtx": 0.268
+        }
       },
       "ollamaTag": "qwen2.5-coder:32b"
     }

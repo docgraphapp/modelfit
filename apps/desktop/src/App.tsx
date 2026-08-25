@@ -7,6 +7,7 @@ import type {
   HardwareInfo,
   PullProgress,
   Recommendations,
+  RegistryInfo,
   RuntimeStatus,
 } from "./types";
 
@@ -328,6 +329,9 @@ export default function App() {
   const [calibration, setCalibration] = useState<Calibration | null>(loadCalibration);
   const [benchmarking, setBenchmarking] = useState(false);
   const [pulling, setPulling] = useState<Record<string, PullProgress>>({});
+  const [registry, setRegistry] = useState<RegistryInfo | null>(null);
+  const [registryMsg, setRegistryMsg] = useState<string | null>(null);
+  const [updating, setUpdating] = useState(false);
   const calibrationRef = useRef(calibration);
   calibrationRef.current = calibration;
 
@@ -360,6 +364,11 @@ export default function App() {
       })
       .catch((e) => setError(String(e)));
     refreshRuntime();
+    invoke<RegistryInfo>("registry_info").then(setRegistry).catch(() => {});
+    // Silent startup refresh; failures keep the cached/bundled registry.
+    invoke<RegistryInfo>("update_registry")
+      .then((info) => setRegistry(info))
+      .catch(() => {});
     const unlisten = listen<PullProgress>("modelfit://pull-progress", (e) => {
       setPulling((prev) => ({ ...prev, [e.payload.tag]: e.payload }));
     });
@@ -391,6 +400,27 @@ export default function App() {
         });
         refreshRuntime();
       });
+  };
+
+  const updateRegistry = () => {
+    setUpdating(true);
+    setRegistryMsg(null);
+    invoke<RegistryInfo>("update_registry")
+      .then((info) => {
+        const changed =
+          info.version !== registry?.version || info.modelCount !== registry?.modelCount;
+        setRegistry(info);
+        setRegistryMsg(
+          info.added && info.added > 0
+            ? `+${info.added} new model${info.added === 1 ? "" : "s"}`
+            : changed
+              ? "updated"
+              : "up to date",
+        );
+        if (hw) recompute(hw, objective, contextLength);
+      })
+      .catch(() => setRegistryMsg("couldn't reach server — using current registry"))
+      .finally(() => setUpdating(false));
   };
 
   const runBenchmark = () => {
@@ -608,7 +638,23 @@ export default function App() {
             </section>
           )}
 
-          <p className="mt-4 text-xs text-neutral-400">
+          {registry && (
+            <div className="mt-4 flex items-center gap-2 text-xs text-neutral-400">
+              <span>
+                Registry {registry.version} · {registry.modelCount} models
+              </span>
+              <button
+                onClick={updateRegistry}
+                disabled={updating}
+                className="font-medium text-neutral-500 underline decoration-neutral-300 hover:text-neutral-700 disabled:opacity-50 dark:text-neutral-400 dark:hover:text-neutral-200"
+              >
+                {updating ? "updating…" : "Update"}
+              </button>
+              {registryMsg && <span>{registryMsg}</span>}
+            </div>
+          )}
+
+          <p className="mt-2 text-xs text-neutral-400">
             {recs?.bandwidthMeasured
               ? `Speeds are extrapolated from a real benchmark on this machine (${Math.round(
                   recs.bandwidthGbps,

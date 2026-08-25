@@ -42,6 +42,13 @@ export interface Calibration {
   effectiveBandwidthGbps: number;
 }
 
+export interface RegistryInfo {
+  version: string;
+  modelCount: number;
+  source: "bundled" | "updated";
+  added: number | null;
+}
+
 export interface PullProgress {
   tag: string;
   status: string;

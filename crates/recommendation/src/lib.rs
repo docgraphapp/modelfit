@@ -387,8 +387,9 @@ mod tests {
 
     #[test]
     fn context_length_flips_fit() {
-        // Gemma 27B on 32GB: fits at 8k, KV cache kills it at 40k+.
-        let hw = apple("M4 Pro", 32.0);
+        // Gemma 27B on 48GB: fits at 8k, but its heavy KV cache (~0.5GB/1k,
+        // from real GGUF metadata) kills it at 80k.
+        let hw = apple("M4 Pro", 48.0);
         let at_8k = rec(&hw, &Request { objective: Objective::Overall, context_length: 8192, ..Request::default() });
         assert!(find(&at_8k, "gemma3-27b").excluded_reason.is_none());
 

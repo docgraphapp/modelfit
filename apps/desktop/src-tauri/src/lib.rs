@@ -4,7 +4,50 @@ use modelfit_registry::Registry;
 use modelfit_runtime_adapters::{
     calibration_candidates, gb_per_token, Calibration, Ollama, RuntimeAdapter, RuntimeStatus,
 };
-use tauri::Emitter;
+use serde::Serialize;
+use tauri::{Emitter, Manager};
+
+/// Tried in order; the first that yields a valid registry wins. The custom
+/// domain may not exist yet — the pages.dev URL is the reliable fallback.
+const REGISTRY_URLS: &[&str] = &[
+    "https://modelfit.docgraph.app/registry/v1/registry.json",
+    "https://modelfit-registry.pages.dev/registry/v1/registry.json",
+];
+
+fn cache_path(app: &tauri::AppHandle) -> Option<std::path::PathBuf> {
+    let dir = app.path().app_data_dir().ok()?;
+    Some(dir.join("registry.json"))
+}
+
+/// Cached remote registry if valid and newer than the bundled snapshot
+/// (version strings are ISO dates, so string comparison is date comparison);
+/// otherwise the bundled one. The app must always have a working registry.
+fn effective_registry(app: &tauri::AppHandle) -> (Registry, &'static str) {
+    let bundled = Registry::bundled();
+    if let Some(path) = cache_path(app) {
+        if let Ok(text) = std::fs::read_to_string(&path) {
+            if let Ok(cached) = Registry::parse(&text) {
+                if cached.schema_version == 1
+                    && !cached.models.is_empty()
+                    && cached.version >= bundled.version
+                {
+                    return (cached, "updated");
+                }
+            }
+        }
+    }
+    (bundled, "bundled")
+}
+
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct RegistryInfo {
+    version: String,
+    model_count: usize,
+    source: String,
+    /// Only set by update_registry: how many models are new vs. before.
+    added: Option<usize>,
+}
 
 #[tauri::command]
 fn detect_hardware() -> HardwareInfo {
@@ -16,12 +59,67 @@ fn detect_hardware() -> HardwareInfo {
 /// re-probing the machine on every call.
 #[tauri::command]
 fn get_recommendations(
+    app: tauri::AppHandle,
     hardware: Option<HardwareInfo>,
     request: Option<Request>,
 ) -> Recommendations {
     let hw = hardware.unwrap_or_else(modelfit_hardware::detect);
-    let registry = Registry::bundled();
+    let (registry, _) = effective_registry(&app);
     recommend(&hw, &registry, &request.unwrap_or_default())
+}
+
+#[tauri::command]
+fn registry_info(app: tauri::AppHandle) -> RegistryInfo {
+    let (registry, source) = effective_registry(&app);
+    RegistryInfo {
+        version: registry.version,
+        model_count: registry.models.len(),
+        source: source.into(),
+        added: None,
+    }
+}
+
+/// Fetch the latest registry (startup refresh and the "Update registry"
+/// button share this path). On any failure the cached/bundled registry stays
+/// in place and the error is reported.
+#[tauri::command]
+async fn update_registry(app: tauri::AppHandle) -> Result<RegistryInfo, String> {
+    let before: std::collections::HashSet<String> = {
+        let (reg, _) = effective_registry(&app);
+        reg.models.iter().map(|m| m.id.clone()).collect()
+    };
+
+    let client = reqwest::Client::new();
+    let mut last_err = String::from("no registry URL configured");
+    for url in REGISTRY_URLS {
+        match client.get(*url).send().await {
+            Ok(resp) if resp.status().is_success() => {
+                let text = resp.text().await.map_err(|e| e.to_string())?;
+                let parsed = Registry::parse(&text)
+                    .map_err(|e| format!("invalid registry from {url}: {e}"))?;
+                if parsed.schema_version != 1 || parsed.models.is_empty() {
+                    last_err = format!("unusable registry from {url}");
+                    continue;
+                }
+                if let Some(path) = cache_path(&app) {
+                    if let Some(dir) = path.parent() {
+                        let _ = std::fs::create_dir_all(dir);
+                    }
+                    std::fs::write(&path, &text).map_err(|e| e.to_string())?;
+                }
+                let added = parsed.models.iter().filter(|m| !before.contains(&m.id)).count();
+                return Ok(RegistryInfo {
+                    version: parsed.version,
+                    model_count: parsed.models.len(),
+                    source: "updated".into(),
+                    added: Some(added),
+                });
+            }
+            Ok(resp) => last_err = format!("{url}: HTTP {}", resp.status()),
+            Err(e) => last_err = format!("{url}: {e}"),
+        }
+    }
+    Err(last_err)
 }
 
 #[tauri::command]
@@ -46,7 +144,7 @@ async fn install_model(app: tauri::AppHandle, tag: String) -> Result<(), String>
 /// memory bandwidth for the engine to extrapolate from.
 #[tauri::command]
 async fn run_calibration(app: tauri::AppHandle) -> Result<Calibration, String> {
-    let registry = Registry::bundled();
+    let (registry, _) = effective_registry(&app);
     let ollama = Ollama::default();
     let status = ollama.status().await;
     if !status.running {
@@ -118,7 +216,9 @@ pub fn run() {
             runtime_status,
             install_model,
             run_calibration,
-            open_external
+            open_external,
+            registry_info,
+            update_registry
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

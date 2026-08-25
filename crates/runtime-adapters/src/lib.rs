@@ -270,8 +270,15 @@ mod tests {
     #[test]
     fn gb_per_token_is_file_size_for_dense() {
         let reg = Registry::bundled();
+        // Dense model → each token touches ~the whole smallest-quant file.
         let g = gb_per_token(&reg, "llama3.1:8b").unwrap();
-        // Q4_K_M is 4.9GB for 8B dense → each token touches ~the whole file.
-        assert!((g - 4.9).abs() < 0.2, "{g}");
+        let expected = reg
+            .models
+            .iter()
+            .find(|m| m.id == "llama3.1-8b")
+            .unwrap()
+            .quantizations["Q4_K_M"]
+            .file_size_gb;
+        assert!((g - expected).abs() < 0.01, "{g} vs {expected}");
     }
 }

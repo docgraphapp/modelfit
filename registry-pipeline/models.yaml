@@ -1,0 +1,211 @@
+# ModelFit registry source of truth.
+#
+# The pipeline (build.py) enriches each entry from Hugging Face:
+#   - exact quant file sizes from the GGUF repo file listing
+#   - KV-cache cost per 1k context computed from GGUF header metadata
+#     (n_layers × 2 × n_kv_heads × head_dim × 2 bytes)
+# The `fallback` values below are used when HF is unreachable or a repo
+# moves, so the build always produces a complete registry.
+#
+# Curated by hand (deliberately): quality scores, capabilities, ollama tags.
+
+- id: llama3.2-3b
+  name: Llama 3.2 3B
+  family: llama
+  parameters_b: 3.2
+  max_context: 131072
+  capabilities: [chat]
+  quality: { general: 6.6, coding: 6.0 }
+  ollama_tag: llama3.2:3b
+  hf_repo: bartowski/Llama-3.2-3B-Instruct-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 2.0 }
+    Q8_0: { fallback_size_gb: 3.4 }
+  fallback_kv_gb_per_1k: 0.09
+
+- id: qwen3-4b
+  name: Qwen3 4B
+  family: qwen
+  parameters_b: 4.0
+  max_context: 40960
+  capabilities: [chat, reasoning, coding]
+  quality: { general: 7.2, coding: 6.8 }
+  ollama_tag: qwen3:4b
+  hf_repo: Qwen/Qwen3-4B-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 2.6 }
+    Q8_0: { fallback_size_gb: 4.3 }
+  fallback_kv_gb_per_1k: 0.11
+
+- id: gemma3-4b
+  name: Gemma 3 4B
+  family: gemma
+  parameters_b: 4.3
+  max_context: 131072
+  capabilities: [chat, vision]
+  quality: { general: 7.0, coding: 6.3 }
+  ollama_tag: gemma3:4b
+  hf_repo: bartowski/google_gemma-3-4b-it-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 2.6 }
+  fallback_kv_gb_per_1k: 0.1
+
+- id: qwen3-8b
+  name: Qwen3 8B
+  family: qwen
+  parameters_b: 8.2
+  max_context: 40960
+  capabilities: [chat, reasoning, coding]
+  quality: { general: 7.8, coding: 7.4 }
+  ollama_tag: qwen3:8b
+  hf_repo: Qwen/Qwen3-8B-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 5.0 }
+    Q8_0: { fallback_size_gb: 8.9 }
+  fallback_kv_gb_per_1k: 0.14
+
+- id: llama3.1-8b
+  name: Llama 3.1 8B
+  family: llama
+  parameters_b: 8.0
+  max_context: 131072
+  capabilities: [chat]
+  quality: { general: 7.4, coding: 6.8 }
+  ollama_tag: llama3.1:8b
+  hf_repo: bartowski/Meta-Llama-3.1-8B-Instruct-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 4.9 }
+    Q8_0: { fallback_size_gb: 8.5 }
+  fallback_kv_gb_per_1k: 0.13
+
+- id: gemma3-12b
+  name: Gemma 3 12B
+  family: gemma
+  parameters_b: 12.2
+  max_context: 131072
+  capabilities: [chat, vision]
+  quality: { general: 7.9, coding: 7.2 }
+  ollama_tag: gemma3:12b
+  hf_repo: bartowski/google_gemma-3-12b-it-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 8.1 }
+  fallback_kv_gb_per_1k: 0.15
+
+- id: qwen3-14b
+  name: Qwen3 14B
+  family: qwen
+  parameters_b: 14.8
+  max_context: 40960
+  capabilities: [chat, reasoning, coding]
+  quality: { general: 8.2, coding: 7.8 }
+  ollama_tag: qwen3:14b
+  hf_repo: Qwen/Qwen3-14B-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 9.3 }
+    Q8_0: { fallback_size_gb: 15.7 }
+  fallback_kv_gb_per_1k: 0.19
+
+- id: phi4-14b
+  name: Phi-4 14B
+  family: phi
+  parameters_b: 14.7
+  max_context: 16384
+  capabilities: [chat, reasoning]
+  quality: { general: 8.0, coding: 7.6 }
+  ollama_tag: phi4:14b
+  hf_repo: bartowski/phi-4-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 9.1 }
+  fallback_kv_gb_per_1k: 0.16
+
+- id: deepseek-r1-14b
+  name: DeepSeek-R1 14B
+  family: deepseek
+  parameters_b: 14.8
+  max_context: 131072
+  capabilities: [chat, reasoning]
+  quality: { general: 8.3, coding: 7.9 }
+  ollama_tag: deepseek-r1:14b
+  hf_repo: bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 9.0 }
+  fallback_kv_gb_per_1k: 0.19
+
+- id: qwen2.5-coder-14b
+  name: Qwen2.5 Coder 14B
+  family: qwen
+  parameters_b: 14.8
+  max_context: 131072
+  capabilities: [coding, chat]
+  quality: { general: 7.8, coding: 8.3 }
+  ollama_tag: qwen2.5-coder:14b
+  hf_repo: bartowski/Qwen2.5-Coder-14B-Instruct-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 9.0 }
+  fallback_kv_gb_per_1k: 0.19
+
+- id: mistral-small-3.1-24b
+  name: Mistral Small 3.1 24B
+  family: mistral
+  parameters_b: 24.0
+  max_context: 131072
+  capabilities: [chat, vision, coding]
+  quality: { general: 8.1, coding: 7.5 }
+  ollama_tag: mistral-small3.1
+  hf_repo: bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 14.3 }
+  fallback_kv_gb_per_1k: 0.16
+
+- id: gemma3-27b
+  name: Gemma 3 27B
+  family: gemma
+  parameters_b: 27.4
+  max_context: 131072
+  capabilities: [chat, vision]
+  quality: { general: 8.4, coding: 7.7 }
+  ollama_tag: gemma3:27b
+  hf_repo: bartowski/google_gemma-3-27b-it-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 16.5 }
+  fallback_kv_gb_per_1k: 0.24
+
+- id: qwen3-30b-a3b
+  name: Qwen3 30B-A3B
+  family: qwen
+  parameters_b: 30.5
+  active_parameters_b: 3.3
+  max_context: 40960
+  capabilities: [chat, reasoning, coding]
+  quality: { general: 8.5, coding: 8.0 }
+  ollama_tag: qwen3:30b
+  hf_repo: Qwen/Qwen3-30B-A3B-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 18.6 }
+  fallback_kv_gb_per_1k: 0.19
+
+- id: qwen3-32b
+  name: Qwen3 32B
+  family: qwen
+  parameters_b: 32.8
+  max_context: 40960
+  capabilities: [chat, reasoning, coding]
+  quality: { general: 8.7, coding: 8.3 }
+  ollama_tag: qwen3:32b
+  hf_repo: Qwen/Qwen3-32B-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 20.0 }
+  fallback_kv_gb_per_1k: 0.25
+
+- id: qwen2.5-coder-32b
+  name: Qwen2.5 Coder 32B
+  family: qwen
+  parameters_b: 32.8
+  max_context: 131072
+  capabilities: [coding, chat]
+  quality: { general: 8.3, coding: 8.8 }
+  ollama_tag: qwen2.5-coder:32b
+  hf_repo: bartowski/Qwen2.5-Coder-32B-Instruct-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 19.9 }
+  fallback_kv_gb_per_1k: 0.25
