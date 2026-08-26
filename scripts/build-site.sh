@@ -44,5 +44,10 @@ cat > "$OUT/_headers" <<'EOF'
   Cache-Control: public, max-age=86400
 EOF
 
+# NOTE: /img/* is cached for a day at the edge, so a redrawn favicon.svg keeps
+# serving from cache long after it ships — the tab icon is the last thing to
+# update and the first thing people notice is stale. When the artwork changes,
+# bump the ?v= on the favicon <link> in every page of the modelfit-web repo.
+
 echo "built $OUT"
 ls "$OUT"
