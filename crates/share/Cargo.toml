@@ -1,0 +1,12 @@
+[package]
+name = "modelfit-share"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
+serde.workspace = true
+modelfit-hardware = { path = "../hardware" }
+modelfit-runtime-adapters = { path = "../runtime-adapters" }
+
+[dev-dependencies]
+modelfit-registry = { path = "../registry" }

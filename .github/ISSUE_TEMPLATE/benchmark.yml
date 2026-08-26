@@ -30,7 +30,7 @@ body:
   - type: input
     id: accel
     attributes:
-      label: "Acceleration backends"
+      label: "Acceleration"
   - type: input
     id: os
     attributes:
@@ -40,7 +40,8 @@ body:
   - type: input
     id: model
     attributes:
-      label: "Benchmarked model (Ollama tag)"
+      label: "Benchmarked model"
+      description: "Ollama tag."
     validations:
       required: true
   - type: input
@@ -56,13 +57,14 @@ body:
   - type: input
     id: bandwidth
     attributes:
-      label: "Effective memory bandwidth (GB/s)"
+      label: "Effective bandwidth (GB/s)"
+      description: "Derived from generation tokens/sec."
     validations:
       required: true
   - type: input
     id: versions
     attributes:
-      label: "App / registry version"
+      label: "App / registry"
   - type: textarea
     id: notes
     attributes:
