@@ -5,10 +5,11 @@ export interface GpuInfo {
   coreCount: number | null;
 }
 
-export interface QuantOption {
+export interface QuantRung {
   quant: string;
   estMemoryGb: number;
   estTokPerSec: number;
+  fit: "comfortable" | "tight" | "toobig";
   ollamaTag: string | null;
 }
 
@@ -24,8 +25,8 @@ export interface Assessment {
   score: number;
   excludedReason: string | null;
   confidence: "high" | "medium" | "measured";
-  /// Richer quantizations this machine can also hold.
-  alsoFits: QuantOption[];
+  /// Every quantization of this model, smallest first, assessed on this machine.
+  ladder: QuantRung[];
 }
 
 export interface Recommendations {

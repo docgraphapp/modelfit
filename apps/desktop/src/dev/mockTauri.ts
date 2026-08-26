@@ -101,6 +101,15 @@ const ROWS: Row[] = [
   { id: "deepseek-r1-70b", name: "DeepSeek-R1 70B", quant: "Q4_K_M", tag: "deepseek-r1:70b", mem: 44.9, tps: 5, fit: "toobig", quality: 9.0, score: 0, excluded: "needs ~45 GB, your usable memory is 26 GB" },
 ];
 
+// Rung name -> bytes per weight relative to Q4_K_M, from the real registry.
+const LADDER: [string, number][] = [
+  ["Q3_K_M", 0.82],
+  ["Q4_K_M", 1.0],
+  ["Q5_K_M", 1.17],
+  ["Q6_K", 1.35],
+  ["Q8_0", 1.75],
+];
+
 function toAssessment(r: Row, measured: boolean, ctxKv = 0): Assessment {
   return {
     modelId: r.id,
@@ -114,19 +123,18 @@ function toAssessment(r: Row, measured: boolean, ctxKv = 0): Assessment {
     score: r.score,
     excludedReason: r.excluded,
     confidence: measured ? "measured" : "medium",
-    // Mirror the engine: a richer rung is offered, not auto-selected. Q8_0 is
-    // ~1.75x the bytes per weight of Q4_K_M, so it costs proportional speed.
-    alsoFits:
-      r.fit === "comfortable" && r.quant === "Q4_K_M" && (r.mem + ctxKv) * 1.6 <= 26 * 0.8
-        ? [
-            {
-              quant: "Q8_0",
-              estMemoryGb: Math.round((r.mem + ctxKv) * 1.6 * 10) / 10,
-              estTokPerSec: (measured ? r.tps * 1.12 : r.tps) * 0.57,
-              ollamaTag: r.tag && `${r.tag}-q8_0`,
-            },
-          ]
-        : [],
+    // Mirror the engine's ladder. Bytes per weight relative to Q4_K_M drive
+    // both memory and speed, so the mock trades the same way the real one does.
+    ladder: LADDER.map(([name, bpw]) => {
+      const mem = Math.round(((r.mem + ctxKv) * bpw) * 10) / 10;
+      return {
+        quant: name,
+        estMemoryGb: mem,
+        estTokPerSec: Math.round(((measured ? r.tps * 1.12 : r.tps) / bpw) * 10) / 10,
+        fit: mem <= 26 * 0.8 ? "comfortable" : mem <= 26 * 0.9 ? "tight" : "toobig",
+        ollamaTag: r.tag && `${r.tag}-${name.toLowerCase()}`,
+      } as const;
+    }),
   };
 }
 
