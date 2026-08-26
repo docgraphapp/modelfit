@@ -24,6 +24,7 @@ ROOT = Path(__file__).resolve().parent.parent
 TEMPLATE = ROOT / ".github" / "ISSUE_TEMPLATE" / "benchmark.yml"
 # Query keys that steer GitHub itself rather than filling a field.
 CONTROL_KEYS = {"template", "labels", "title", "assignees", "projects"}
+REPO = "docgraphapp/modelfit"
 
 
 def real_url() -> tuple[dict[str, str], str]:
@@ -43,6 +44,22 @@ def real_url() -> tuple[dict[str, str], str]:
         if m:
             printed[m.group(1).strip()] = m.group(2).strip()
     return printed, url
+
+
+def labels_exist(names: list[str]) -> list[str]:
+    """Names GitHub does not know about. A label in the template that does not
+    exist in the repo is dropped silently — the issue is created unlabelled and
+    never shows up in the collection it was meant to join."""
+    missing = []
+    for name in names:
+        r = subprocess.run(
+            ["gh", "api", f"repos/{REPO}/labels/{name}", "--jq", ".name"],
+            capture_output=True,
+            text=True,
+        )
+        if r.returncode != 0:
+            missing.append(name)
+    return missing
 
 
 def main() -> int:
@@ -74,6 +91,16 @@ def main() -> int:
     for key in sorted(sent):
         if not query[key].strip():
             errors.append(f"{key}: prefilled with an empty value")
+
+    # Labels are applied by name; unknown ones vanish without a warning.
+    wanted = sorted({*spec.get("labels", []), *query.get("labels", "").split(",")} - {""})
+    if wanted:
+        if subprocess.run(["gh", "auth", "status"], capture_output=True).returncode == 0:
+            missing = labels_exist(wanted)
+            if missing:
+                errors.append(f"labels not present in {REPO} (silently dropped): {missing}")
+        else:
+            print("note: gh not authenticated — skipped the label check", file=sys.stderr)
 
     # The preview the user approves must be what the URL carries.
     labels = {fields[i]["attributes"]["label"]: i for i in sent if i in fields}
