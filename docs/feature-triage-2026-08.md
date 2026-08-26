@@ -18,7 +18,7 @@ shipped. See [REQUIREMENTS.md](../REQUIREMENTS.md) for the product spec.
 | Quantization trade-off visualizer | **Do** |
 | Cloud hardware profiles ("Dream Machine") | **Do** |
 | Shareable setup links | **Do** — strongest distribution play |
-| Crowdsourced benchmarks | Defer — needs backend + user base |
+| Crowdsourced benchmarks | Do post-launch, GitHub-native — see revised plan below |
 | Multi-GPU / eGPU support | Defer — after Win/Linux single-GPU parity |
 | Additional backends (MLX, LM Studio, …) | Defer — one second adapter first |
 | Battery / thermal estimates | Qualitative warning only, or skip |
@@ -67,12 +67,23 @@ is hand-authored.
 
 ## Right idea, wrong time
 
-### Crowdsourced benchmarks
-Real tokens/sec per chipset would eventually make speed estimates unbeatable,
-but it needs a backend, anonymization, outlier/abuse filtering, and enough
-users for the data to mean anything. The existing calibration benchmark
-already gives each individual user accurate numbers. Park until there's
-traffic.
+### Crowdsourced benchmarks — revised 2026-08-26: GitHub-native, post-launch
+The original deferral reasons (backend, anonymization, abuse filtering) are
+sidestepped by making GitHub the backend: sharing is explicitly opt-in and
+public by design, and there is zero infrastructure to run.
+
+Plan: a "Share my benchmark" button in the app opens a prefilled GitHub
+**Issue form** URL (`issues/new?template=benchmark.yml&...`) — not a
+.md-file-via-PR flow, which loses most users at fork/branch/PR. Structured
+fields: chip, RAM, OS, measured bandwidth, model, quant, tok/s, app version.
+No OAuth and no token in the app; it only opens a URL. A label plus issue
+search gives a browsable leaderboard for free, and the structured body keeps
+the data machine-readable so estimates *could* use it later.
+
+Constraints: app estimates do NOT depend on this data for now (self-reported,
+unverified — treat as anecdata until validated). Show the user exactly what
+will be shared before opening the URL; it is public forever. Needs published
+users to be worth anything → post-launch, same bucket as share links.
 
 ### Multi-GPU / eGPU support
 Correct long-term, but Windows/Linux single-GPU parity hasn't shipped.
