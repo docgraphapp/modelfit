@@ -19,11 +19,23 @@
       "quantizations": {
         "Q4_K_M": {
           "fileSizeGb": 1.88,
-          "kvCacheGbPer1kCtx": 0.117
+          "kvCacheGbPer1kCtx": 0.117,
+          "ollamaTag": "llama3.2:3b-instruct-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.16,
+          "kvCacheGbPer1kCtx": 0.117,
+          "ollamaTag": "llama3.2:3b-instruct-q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.46,
+          "kvCacheGbPer1kCtx": 0.117,
+          "ollamaTag": "llama3.2:3b-instruct-q6_K"
         },
         "Q8_0": {
           "fileSizeGb": 3.19,
-          "kvCacheGbPer1kCtx": 0.117
+          "kvCacheGbPer1kCtx": 0.117,
+          "ollamaTag": "llama3.2:3b-instruct-q8_0"
         }
       },
       "ollamaTag": "llama3.2:3b"
@@ -47,11 +59,23 @@
       "quantizations": {
         "Q4_K_M": {
           "fileSizeGb": 2.33,
-          "kvCacheGbPer1kCtx": 0.151
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "qwen3:4b-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.69,
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "hf.co/Qwen/Qwen3-4B-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 3.08,
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "hf.co/Qwen/Qwen3-4B-GGUF:Q6_K"
         },
         "Q8_0": {
           "fileSizeGb": 3.99,
-          "kvCacheGbPer1kCtx": 0.151
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "qwen3:4b-q8_0"
         }
       },
       "ollamaTag": "qwen3:4b"
@@ -72,9 +96,30 @@
         "coding": 6.3
       },
       "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 1.95,
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q3_K_M"
+        },
         "Q4_K_M": {
           "fileSizeGb": 2.32,
-          "kvCacheGbPer1kCtx": 0.143
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "gemma3:4b-it-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.64,
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.97,
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.85,
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "gemma3:4b-it-q8_0"
         }
       },
       "ollamaTag": "gemma3:4b"
@@ -98,11 +143,23 @@
       "quantizations": {
         "Q4_K_M": {
           "fileSizeGb": 4.68,
-          "kvCacheGbPer1kCtx": 0.151
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "qwen3:8b-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 5.45,
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "hf.co/Qwen/Qwen3-8B-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 6.26,
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "hf.co/Qwen/Qwen3-8B-GGUF:Q6_K"
         },
         "Q8_0": {
           "fileSizeGb": 8.11,
-          "kvCacheGbPer1kCtx": 0.151
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "qwen3:8b-q8_0"
         }
       },
       "ollamaTag": "qwen3:8b"
@@ -122,13 +179,30 @@
         "coding": 6.8
       },
       "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 3.74,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "llama3.1:8b-instruct-q3_K_M"
+        },
         "Q4_K_M": {
           "fileSizeGb": 4.58,
-          "kvCacheGbPer1kCtx": 0.134
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "llama3.1:8b-instruct-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 5.34,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "llama3.1:8b-instruct-q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 6.14,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "llama3.1:8b-instruct-q6_K"
         },
         "Q8_0": {
           "fileSizeGb": 7.95,
-          "kvCacheGbPer1kCtx": 0.134
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "llama3.1:8b-instruct-q8_0"
         }
       },
       "ollamaTag": "llama3.1:8b"
@@ -149,9 +223,30 @@
         "coding": 7.2
       },
       "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 5.6,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q3_K_M"
+        },
         "Q4_K_M": {
           "fileSizeGb": 6.8,
-          "kvCacheGbPer1kCtx": 0.403
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "gemma3:12b-it-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 7.86,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 9.0,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 11.65,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "gemma3:12b-it-q8_0"
         }
       },
       "ollamaTag": "gemma3:12b"
@@ -175,11 +270,23 @@
       "quantizations": {
         "Q4_K_M": {
           "fileSizeGb": 8.38,
-          "kvCacheGbPer1kCtx": 0.168
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "qwen3:14b-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 9.79,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/Qwen/Qwen3-14B-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 11.29,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/Qwen/Qwen3-14B-GGUF:Q6_K"
         },
         "Q8_0": {
           "fileSizeGb": 14.62,
-          "kvCacheGbPer1kCtx": 0.168
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "qwen3:14b-q8_0"
         }
       },
       "ollamaTag": "qwen3:14b"
@@ -200,9 +307,30 @@
         "coding": 7.6
       },
       "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 6.86,
+          "kvCacheGbPer1kCtx": 0.21,
+          "ollamaTag": "hf.co/bartowski/phi-4-GGUF:Q3_K_M"
+        },
         "Q4_K_M": {
           "fileSizeGb": 8.43,
-          "kvCacheGbPer1kCtx": 0.21
+          "kvCacheGbPer1kCtx": 0.21,
+          "ollamaTag": "phi4:14b-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 9.88,
+          "kvCacheGbPer1kCtx": 0.21,
+          "ollamaTag": "hf.co/bartowski/phi-4-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 11.2,
+          "kvCacheGbPer1kCtx": 0.21,
+          "ollamaTag": "hf.co/bartowski/phi-4-GGUF:Q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 14.51,
+          "kvCacheGbPer1kCtx": 0.21,
+          "ollamaTag": "phi4:14b-q8_0"
         }
       },
       "ollamaTag": "phi4:14b"
@@ -223,9 +351,30 @@
         "coding": 7.9
       },
       "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 6.84,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q3_K_M"
+        },
         "Q4_K_M": {
           "fileSizeGb": 8.37,
-          "kvCacheGbPer1kCtx": 0.201
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "deepseek-r1:14b-qwen-distill-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 9.79,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 11.29,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 14.62,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "deepseek-r1:14b-qwen-distill-q8_0"
         }
       },
       "ollamaTag": "deepseek-r1:14b"
@@ -246,9 +395,30 @@
         "coding": 8.3
       },
       "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 6.84,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "qwen2.5-coder:14b-instruct-q3_K_M"
+        },
         "Q4_K_M": {
           "fileSizeGb": 8.37,
-          "kvCacheGbPer1kCtx": 0.201
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "qwen2.5-coder:14b-instruct-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 9.79,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "qwen2.5-coder:14b-instruct-q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 11.29,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "qwen2.5-coder:14b-instruct-q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 14.62,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "qwen2.5-coder:14b-instruct-q8_0"
         }
       },
       "ollamaTag": "qwen2.5-coder:14b"
@@ -270,12 +440,33 @@
         "coding": 7.5
       },
       "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 10.69,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF:Q3_K_M"
+        },
         "Q4_K_M": {
           "fileSizeGb": 13.35,
-          "kvCacheGbPer1kCtx": 0.168
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "mistral-small3.1:24b-instruct-2503-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 15.61,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 18.02,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF:Q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 23.33,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "mistral-small3.1:24b-instruct-2503-q8_0"
         }
       },
-      "ollamaTag": "mistral-small3.1"
+      "ollamaTag": "mistral-small3.1:24b"
     },
     {
       "id": "gemma3-27b",
@@ -293,9 +484,30 @@
         "coding": 7.7
       },
       "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 12.51,
+          "kvCacheGbPer1kCtx": 0.52,
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q3_K_M"
+        },
         "Q4_K_M": {
           "fileSizeGb": 15.41,
-          "kvCacheGbPer1kCtx": 0.52
+          "kvCacheGbPer1kCtx": 0.52,
+          "ollamaTag": "gemma3:27b-it-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 17.95,
+          "kvCacheGbPer1kCtx": 0.52,
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 20.64,
+          "kvCacheGbPer1kCtx": 0.52,
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 26.74,
+          "kvCacheGbPer1kCtx": 0.52,
+          "ollamaTag": "gemma3:27b-it-q8_0"
         }
       },
       "ollamaTag": "gemma3:27b"
@@ -319,7 +531,23 @@
       "quantizations": {
         "Q4_K_M": {
           "fileSizeGb": 17.28,
-          "kvCacheGbPer1kCtx": 0.101
+          "kvCacheGbPer1kCtx": 0.101,
+          "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 20.23,
+          "kvCacheGbPer1kCtx": 0.101,
+          "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 23.37,
+          "kvCacheGbPer1kCtx": 0.101,
+          "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 30.25,
+          "kvCacheGbPer1kCtx": 0.101,
+          "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q8_0"
         }
       },
       "ollamaTag": "qwen3:30b"
@@ -343,7 +571,23 @@
       "quantizations": {
         "Q4_K_M": {
           "fileSizeGb": 18.4,
-          "kvCacheGbPer1kCtx": 0.268
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "qwen3:32b-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 21.62,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/Qwen/Qwen3-32B-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 25.04,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/Qwen/Qwen3-32B-GGUF:Q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 32.43,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "qwen3:32b-q8_0"
         }
       },
       "ollamaTag": "qwen3:32b"
@@ -364,9 +608,30 @@
         "coding": 8.8
       },
       "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 14.84,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "qwen2.5-coder:32b-instruct-q3_K_M"
+        },
         "Q4_K_M": {
           "fileSizeGb": 18.49,
-          "kvCacheGbPer1kCtx": 0.268
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "qwen2.5-coder:32b-instruct-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 21.66,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "qwen2.5-coder:32b-instruct-q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 25.04,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "qwen2.5-coder:32b-instruct-q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 32.43,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "qwen2.5-coder:32b-instruct-q8_0"
         }
       },
       "ollamaTag": "qwen2.5-coder:32b"

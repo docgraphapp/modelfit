@@ -11,10 +11,11 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    # The `secrets` context is not available in a step-level `if:`, so the
-    # token is lifted to job env and the deploy step gates on that instead.
+    # The `secrets` context is not available in a step-level `if:`, so tokens
+    # are lifted to job env and the steps that need them gate on that instead.
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      MODELFIT_WEB_TOKEN: ${{ secrets.MODELFIT_WEB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -44,26 +45,34 @@ jobs:
       # Deploying the registry alone would take modelfit.docgraph.app down.
       # The website lives in the private docgraphapp/modelfit-web repo;
       # MODELFIT_WEB_TOKEN must be a PAT with read access to it.
+      # Everything below is the SITE half of the deploy, and it needs a token
+      # for the private website repo. Refreshing the registry is this job's
+      # actual purpose and must not fail because the site half is unavailable:
+      # the committed snapshot still reaches users through the app's GitHub
+      # mirror, and the site ships by local wrangler when there are no secrets.
       - name: Check out website
+        if: env.MODELFIT_WEB_TOKEN != ''
         uses: actions/checkout@v4
         with:
           repository: docgraphapp/modelfit-web
-          token: ${{ secrets.MODELFIT_WEB_TOKEN }}
+          token: ${{ env.MODELFIT_WEB_TOKEN }}
           path: website
 
       # The app's hover cards deep-link into section ids across the blog posts.
       # Fail here rather than shipping a site where "Learn more" lands nowhere.
       - name: Check glossary anchors
+        if: env.MODELFIT_WEB_TOKEN != ''
         run: python3 scripts/check-glossary-anchors.py
 
       # /glossary/ is generated from glossary.ts at deploy time. Fail if the
       # copy committed to the website repo was edited by hand — that edit would
       # be silently discarded, which is worse than a red build.
       - name: Check glossary page is generated, not authored
+        if: env.MODELFIT_WEB_TOKEN != ''
         run: python3 scripts/build-glossary-page.py --check website/glossary/index.html
 
       - name: Deploy site + registry to Cloudflare Pages
-        if: env.CLOUDFLARE_API_TOKEN != ''
+        if: env.CLOUDFLARE_API_TOKEN != '' && env.MODELFIT_WEB_TOKEN != ''
         env:
           CLOUDFLARE_ACCOUNT_ID: a407f54bd034ac91d08e953368b3aa12
         run: |

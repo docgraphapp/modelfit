@@ -13,7 +13,7 @@
 //! - Excluded models carry a human-readable reason ("explainable").
 
 use modelfit_hardware::HardwareInfo;
-use modelfit_registry::{Model, Registry};
+use modelfit_registry::{Model, Quant, Registry, DEFAULT_QUANT};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -59,6 +59,18 @@ pub enum FitVerdict {
     TooBig,
 }
 
+/// A rung richer than the one assessed that this machine can also run.
+/// Presented as a choice — the quality it buys is real but not modelled, so
+/// it must not move the score that ranks models against each other.
+#[derive(Debug, Clone, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct QuantOption {
+    pub quant: String,
+    pub est_memory_gb: f64,
+    pub est_tok_per_sec: f64,
+    pub ollama_tag: Option<String>,
+}
+
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Assessment {
@@ -76,6 +88,10 @@ pub struct Assessment {
     pub excluded_reason: Option<String>,
     /// "high" | "medium" — MoE throughput and unknown-bandwidth machines are medium.
     pub confidence: String,
+    /// Richer rungs that also fit, smallest first. Empty when the assessed
+    /// quant is already the richest this machine can hold.
+    #[serde(default)]
+    pub also_fits: Vec<QuantOption>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -199,19 +215,35 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
     let mut all: Vec<Assessment> = Vec::new();
 
     for model in &registry.models {
-        // Pick the richest quant that fits comfortably; fall back to the
-        // smallest one for reporting when nothing fits.
+        // Quants step DOWN, never up: the baseline rung when it fits, else the
+        // largest rung that does. Climbing into spare headroom would be wrong
+        // here — quality is modelled per model, not per quant, so a richer
+        // quant scores identical quality while being measurably slower, which
+        // would penalise precisely the models a capable machine handles best.
+        // Offering the richer rung is a separate decision for the user to make
+        // with the trade-off in front of them, not one to fold into the score.
         let ctx = req.context_length.min(model.max_context) as f64;
+        let mem_of = |q: &Quant| q.file_size_gb + q.kv_cache_gb_per_1k_ctx * ctx / 1024.0
+            + RUNTIME_OVERHEAD_GB;
+        let fits_comfy = |m: f64| m <= usable * COMFORT_FRACTION;
+
         let mut chosen: Option<(&String, f64)> = None; // (quant, est_memory)
         let mut smallest: Option<(&String, f64)> = None;
         for (qname, q) in &model.quantizations {
-            let mem = q.file_size_gb + q.kv_cache_gb_per_1k_ctx * ctx / 1024.0 + RUNTIME_OVERHEAD_GB;
+            let mem = mem_of(q);
             if smallest.as_ref().map_or(true, |(_, m)| mem < *m) {
                 smallest = Some((qname, mem));
             }
-            let fits_comfy = mem <= usable * COMFORT_FRACTION;
-            let bigger = chosen.as_ref().map_or(true, |(_, m)| mem > *m);
-            if fits_comfy && bigger {
+            // Below the baseline, prefer the largest rung that still fits.
+            let better = chosen.as_ref().map_or(true, |(_, m)| mem > *m);
+            if fits_comfy(mem) && better {
+                chosen = Some((qname, mem));
+            }
+        }
+        // The baseline wins whenever it fits, whatever richer rungs exist.
+        if let Some((qname, q)) = model.quantizations.get_key_value(DEFAULT_QUANT) {
+            let mem = mem_of(q);
+            if fits_comfy(mem) {
                 chosen = Some((qname, mem));
             }
         }
@@ -231,13 +263,29 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
         };
 
         // Speed: effective bandwidth / bytes each token touches.
-        let quant_data = &model.quantizations[quant];
-        let bytes_per_weight = quant_data.file_size_gb / model.parameters_b;
-        let gb_per_token = model.speed_params_b() * bytes_per_weight;
-        let mut tok_s = effective_bw / gb_per_token;
-        if model.is_moe() {
-            tok_s *= MOE_EFFICIENCY;
-        }
+        let tok_s_of = |q: &Quant| {
+            let bytes_per_weight = q.file_size_gb / model.parameters_b;
+            let mut t = effective_bw / (model.speed_params_b() * bytes_per_weight);
+            if model.is_moe() {
+                t *= MOE_EFFICIENCY;
+            }
+            t
+        };
+        let tok_s = tok_s_of(&model.quantizations[quant]);
+
+        // Richer rungs the machine can also hold, offered as alternatives.
+        let also_fits: Vec<QuantOption> = model
+            .quantizations
+            .iter()
+            .filter(|(_, q)| q.file_size_gb > model.quantizations[quant].file_size_gb)
+            .filter(|(_, q)| fits_comfy(mem_of(q)))
+            .map(|(qname, q)| QuantOption {
+                quant: qname.clone(),
+                est_memory_gb: round1(mem_of(q)),
+                est_tok_per_sec: round1(tok_s_of(q)),
+                ollama_tag: model.install_tag(qname),
+            })
+            .collect();
 
         let quality = quality_for(model, req.objective);
 
@@ -304,7 +352,7 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
             model_id: model.id.clone(),
             name: model.name.clone(),
             quant: quant.clone(),
-            ollama_tag: model.ollama_tag.clone(),
+            ollama_tag: model.install_tag(quant),
             est_memory_gb: round1(est_memory),
             est_tok_per_sec: round1(tok_s),
             fit,
@@ -312,6 +360,7 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
             score: round1(score),
             excluded_reason,
             confidence: confidence.into(),
+            also_fits,
         });
     }
 
@@ -522,12 +571,39 @@ mod tests {
     }
 
     #[test]
-    fn richer_quant_chosen_when_memory_allows() {
-        // 64GB: Qwen3 8B should be offered at Q8_0, not Q4.
+    fn richer_quant_offered_when_memory_allows() {
+        // 64GB: Qwen3 8B is still offered at Q8_0 — as an alternative, so the
+        // richer rung reaches the user without distorting the score that
+        // ranks models against each other.
         let r = rec(&apple("M4 Max", 64.0), &Request::default());
-        assert_eq!(find(&r, "qwen3-8b").quant, "Q8_0");
-        // 8GB: same model must drop to Q4_K_M.
+        let a = find(&r, "qwen3-8b");
+        assert_eq!(a.quant, DEFAULT_QUANT, "ranked at the baseline rung");
+        assert!(
+            a.also_fits.iter().any(|o| o.quant == "Q8_0"),
+            "expected Q8_0 offered on 64GB, got {:?}",
+            a.also_fits.iter().map(|o| &o.quant).collect::<Vec<_>>()
+        );
+        // 8GB: nothing richer fits, and the baseline still does.
         let r8 = rec(&apple("M1", 8.0), &Request::default());
-        assert_eq!(find(&r8, "qwen3-8b").quant, "Q4_K_M");
+        let a8 = find(&r8, "qwen3-8b");
+        assert_eq!(a8.quant, DEFAULT_QUANT);
+        assert!(a8.also_fits.is_empty(), "no headroom on 8GB");
+    }
+
+    #[test]
+    fn ranking_is_unaffected_by_richer_rungs() {
+        // Adding rungs a machine can afford must not reorder models: the
+        // score is computed at the same baseline rung for everyone.
+        let r = rec(&apple("M4 Max", 64.0), &Request::default());
+        for a in &r.all {
+            if a.excluded_reason.is_none() {
+                assert!(
+                    a.quant == DEFAULT_QUANT || a.also_fits.is_empty(),
+                    "{} ranked at {} while richer rungs fit",
+                    a.model_id,
+                    a.quant
+                );
+            }
+        }
     }
 }

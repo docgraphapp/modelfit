@@ -114,6 +114,19 @@ function toAssessment(r: Row, measured: boolean, ctxKv = 0): Assessment {
     score: r.score,
     excludedReason: r.excluded,
     confidence: measured ? "measured" : "medium",
+    // Mirror the engine: a richer rung is offered, not auto-selected. Q8_0 is
+    // ~1.75x the bytes per weight of Q4_K_M, so it costs proportional speed.
+    alsoFits:
+      r.fit === "comfortable" && r.quant === "Q4_K_M" && (r.mem + ctxKv) * 1.6 <= 26 * 0.8
+        ? [
+            {
+              quant: "Q8_0",
+              estMemoryGb: Math.round((r.mem + ctxKv) * 1.6 * 10) / 10,
+              estTokPerSec: (measured ? r.tps * 1.12 : r.tps) * 0.57,
+              ollamaTag: r.tag && `${r.tag}-q8_0`,
+            },
+          ]
+        : [],
   };
 }
 
