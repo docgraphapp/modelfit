@@ -59,6 +59,9 @@ impl Default for Ollama {
     }
 }
 
+/// The quant Ollama serves for a bare model tag.
+const DEFAULT_QUANT: &str = "Q4_K_M";
+
 pub fn normalize_tag(tag: &str) -> String {
     tag.strip_suffix(":latest").unwrap_or(tag).to_string()
 }
@@ -243,11 +246,34 @@ pub fn calibration_candidates(registry: &Registry, installed: &[String]) -> (Opt
 /// whole file). Used to convert measured tok/s into effective bandwidth.
 pub fn gb_per_token(registry: &Registry, tag: &str) -> Option<f64> {
     let norm = normalize_tag(tag);
-    let model = registry
-        .models
-        .iter()
-        .find(|m| m.ollama_tag.as_deref().map(normalize_tag) == Some(norm.clone()))?;
-    let quant = model.quantizations.values().next()?;
+
+    // The benchmark measured one specific file, so resolve the exact quant
+    // whose install tag was run. Quant tags are distinct per rung, so this
+    // matches "llama3.1:8b-instruct-q6_K" to Q6_K rather than to whichever
+    // quant happens to sort first.
+    let exact = registry.models.iter().find_map(|m| {
+        m.quantizations
+            .values()
+            .find(|q| q.ollama_tag.as_deref().map(normalize_tag) == Some(norm.clone()))
+            .map(|q| (m, q))
+    });
+
+    // A bare model tag ("llama3.1:8b") pulls the runtime's default quant.
+    let (model, quant) = match exact {
+        Some(pair) => pair,
+        None => {
+            let m = registry
+                .models
+                .iter()
+                .find(|m| m.ollama_tag.as_deref().map(normalize_tag) == Some(norm.clone()))?;
+            let q = m
+                .quantizations
+                .get(DEFAULT_QUANT)
+                .or_else(|| m.quantizations.values().next())?;
+            (m, q)
+        }
+    };
+
     let bytes_per_weight = quant.file_size_gb / model.parameters_b;
     Some(model.speed_params_b() * bytes_per_weight)
 }
@@ -270,7 +296,9 @@ mod tests {
     #[test]
     fn gb_per_token_is_file_size_for_dense() {
         let reg = Registry::bundled();
-        // Dense model → each token touches ~the whole smallest-quant file.
+        // Dense model → each token touches ~the whole file of the quant the
+        // bare tag actually pulls, which is the runtime default (not the
+        // smallest rung on the ladder).
         let g = gb_per_token(&reg, "llama3.1:8b").unwrap();
         let expected = reg
             .models
@@ -280,5 +308,22 @@ mod tests {
             .quantizations["Q4_K_M"]
             .file_size_gb;
         assert!((g - expected).abs() < 0.01, "{g} vs {expected}");
+    }
+
+    #[test]
+    fn gb_per_token_resolves_the_quant_that_was_run() {
+        let reg = Registry::bundled();
+        let model = reg.models.iter().find(|m| m.id == "llama3.1-8b").unwrap();
+        // Benchmarking a non-default rung must use that rung's file size,
+        // otherwise the measured bandwidth is scaled by the wrong weight.
+        for (qname, q) in &model.quantizations {
+            let tag = q.ollama_tag.as_deref().expect("every quant is installable");
+            let g = gb_per_token(&reg, tag).unwrap();
+            assert!(
+                (g - q.file_size_gb).abs() < 0.01,
+                "{qname}: {g} vs {}",
+                q.file_size_gb
+            );
+        }
     }
 }

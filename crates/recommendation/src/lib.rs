@@ -304,7 +304,7 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
             model_id: model.id.clone(),
             name: model.name.clone(),
             quant: quant.clone(),
-            ollama_tag: model.ollama_tag.clone(),
+            ollama_tag: model.install_tag(quant),
             est_memory_gb: round1(est_memory),
             est_tok_per_sec: round1(tok_s),
             fit,

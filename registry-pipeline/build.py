@@ -28,6 +28,11 @@ UA = {"User-Agent": "modelfit-registry-pipeline/1.0"}
 
 GIB = 1024**3
 
+# Known quantizations, smallest to largest. FP16 is deliberately absent: at
+# ~2 bytes/weight it is rarely the right local choice and would trip the
+# bytes/weight guard below.
+QUANT_ORDER = ["Q3_K_M", "Q4_K_M", "Q5_K_M", "Q6_K", "Q8_0"]
+
 
 def http_json(url: str):
     req = urllib.request.Request(url, headers=UA)
@@ -156,6 +161,46 @@ def kv_gb_per_1k(meta: dict, arch: str) -> float | None:
     return round(bytes_per_token * 1024 / 1e9, 3)
 
 
+def manifest_exists(url: str) -> bool:
+    """HEAD a registry manifest: 200 means the tag is real and pullable."""
+    req = urllib.request.Request(url, method="HEAD", headers=UA)
+    try:
+        with urllib.request.urlopen(req, timeout=25) as r:
+            return r.status == 200
+    except Exception:  # noqa: BLE001
+        return False
+
+
+def ollama_tag_for(m: dict, quant: str, offline: bool) -> tuple[str | None, str | None]:
+    """Install tag for one quant, as (tag, warning).
+
+    Ollama's library only publishes some quants (usually q4_K_M and q8_0), so
+    prefer the curated library tag and fall back to Hugging Face's
+    Ollama-compatible endpoint — `ollama run hf.co/<repo>:<QUANT>` — which
+    serves every quant in the repo. Both forms are verified before use, so a
+    renamed upstream tag can never ship as a broken install button.
+    """
+    base = m.get("ollama_tag")
+    hf_tag = f"hf.co/{m['hf_repo']}:{quant}" if m.get("hf_repo") else None
+    if offline:
+        # Nothing is reachable to verify against; the hf.co form is derived
+        # purely from curated data, so it is the safer offline guess.
+        return (hf_tag or base), None
+
+    if base and ":" in base:
+        name, ver = base.split(":", 1)
+        lib = f"{ver}{m.get('ollama_quant_infix', '')}-q{quant[1:]}"
+        if manifest_exists(f"https://registry.ollama.ai/v2/library/{name}/manifests/{lib}"):
+            return f"{name}:{lib}", None
+
+    if hf_tag:
+        repo = m["hf_repo"]
+        if manifest_exists(f"https://huggingface.co/v2/{repo}/manifests/{quant}"):
+            return hf_tag, None
+
+    return None, f"{m['id']}: no installable tag for {quant}"
+
+
 # --- build -------------------------------------------------------------------
 
 
@@ -192,7 +237,14 @@ def build(offline: bool) -> tuple[dict, list[str]]:
                         warnings.append(f"{m['id']}: GGUF header read failed ({e})")
             elif files:
                 warnings.append(f"{m['id']}: quant {qname} not found in {repo}; fallback size")
-            quants[qname] = {"fileSizeGb": size_gb, "kvCacheGbPer1kCtx": None}
+            tag, tag_warn = ollama_tag_for(m, qname, offline)
+            if tag_warn:
+                warnings.append(tag_warn)
+            quants[qname] = {
+                "fileSizeGb": size_gb,
+                "kvCacheGbPer1kCtx": None,
+                "ollamaTag": tag,
+            }
         if kv is None:
             kv = m["fallback_kv_gb_per_1k"]
             if not offline and repo:
@@ -247,6 +299,20 @@ def validate(registry: dict) -> list[str]:
             bpw = q["fileSizeGb"] / m["parametersB"]
             if not (0.3 < bpw < 1.6):
                 errors.append(f"{mid} {qname}: bytes/weight {bpw:.2f} out of range")
+        # Quant files are matched by substring, so a repo that names things
+        # unusually can silently bind the wrong file. More bits must always
+        # mean a bigger file — if that ordering breaks, the match was wrong.
+        ladder = [(q, m["quantizations"][q]["fileSizeGb"])
+                  for q in QUANT_ORDER if q in m["quantizations"]]
+        for (qa, sa), (qb, sb) in zip(ladder, ladder[1:]):
+            if sb <= sa:
+                errors.append(f"{mid}: {qb} ({sb} GB) is not larger than {qa} ({sa} GB)")
+        unknown = set(m["quantizations"]) - set(QUANT_ORDER)
+        if unknown:
+            errors.append(f"{mid}: quant not in the known ladder: {sorted(unknown)}")
+        # A model nothing can install is not a recommendation we can act on.
+        if not any(q.get("ollamaTag") for q in m["quantizations"].values()):
+            errors.append(f"{mid}: no quant has an installable tag")
     return errors
 
 

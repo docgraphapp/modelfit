@@ -47,9 +47,24 @@ pub struct Quant {
     pub file_size_gb: f64,
     /// KV cache is computed per requested context — never a flat number.
     pub kv_cache_gb_per_1k_ctx: f64,
+    /// Install tag for THIS quant. The model-level `ollama_tag` names only the
+    /// runtime's default quant, so recommending any other rung needs its own
+    /// tag or the install pulls something different from what was assessed.
+    /// `None` when the pipeline could not verify one (offline builds).
+    #[serde(default)]
+    pub ollama_tag: Option<String>,
 }
 
 impl Model {
+    /// Install tag for one quant: its own if the pipeline verified one, else
+    /// the model default (correct only for the runtime's default quant).
+    pub fn install_tag(&self, quant: &str) -> Option<String> {
+        self.quantizations
+            .get(quant)
+            .and_then(|q| q.ollama_tag.clone())
+            .or_else(|| self.ollama_tag.clone())
+    }
+
     /// Params that each generated token actually touches (speed math).
     pub fn speed_params_b(&self) -> f64 {
         self.active_parameters_b.unwrap_or(self.parameters_b)
