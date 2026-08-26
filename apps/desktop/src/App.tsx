@@ -366,6 +366,59 @@ function Segmented<T extends string>({
   );
 }
 
+// Discrete steps rather than a free-running range: these six values are the
+// ones the rest of the UI already speaks, and snapping caps a full drag at
+// five recomputes instead of one per pixel.
+function ContextSlider({
+  value,
+  onChange,
+  runnable,
+  total,
+}: {
+  value: number;
+  onChange: (v: number) => void;
+  runnable: number | null;
+  total: number | null;
+}) {
+  const idx = Math.max(0, CONTEXTS.indexOf(value));
+  return (
+    <div className="flex items-center gap-2.5">
+      <label className="flex items-center gap-2.5 text-[13px] text-neutral-500 dark:text-neutral-400">
+        <Term id="context">Context</Term>
+        <input
+          type="range"
+          min={0}
+          max={CONTEXTS.length - 1}
+          step={1}
+          value={idx}
+          onChange={(e) => onChange(CONTEXTS[Number(e.target.value)])}
+          aria-label="Context length"
+          aria-valuetext={`${fmtCtx(value)} tokens`}
+          style={
+            { "--fill": `${(idx / (CONTEXTS.length - 1)) * 100}%` } as React.CSSProperties
+          }
+          className="ctx-slider w-28 sm:w-36"
+        />
+      </label>
+      <span className="w-9 text-[13px] font-medium tabular-nums text-neutral-700 dark:text-neutral-200">
+        {fmtCtx(value)}
+      </span>
+      {runnable !== null && total !== null && (
+        <span
+          title="Models that still run at this context length. A longer context grows the KV cache, which competes with the weights for memory."
+          className={`whitespace-nowrap rounded-full px-2 py-0.5 text-xs font-medium tabular-nums transition-colors ${
+            runnable === 0
+              ? "bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300"
+              : "bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400"
+          }`}
+        >
+          {runnable} of {total} run
+        </span>
+      )}
+    </div>
+  );
+}
+
 function FitBadge({ a }: { a: Assessment }) {
   if (a.excludedReason) {
     return (
@@ -769,6 +822,10 @@ export default function App() {
       .finally(() => setBenchmarking(false));
   };
 
+  // Models the engine will actually recommend here — the number that visibly
+  // falls as context (and so KV cache) grows.
+  const runnable = recs ? recs.all.filter((a) => !a.excludedReason).length : null;
+
   const secondary = recs?.best
     ? [
         ...(recs.safe && recs.safe.modelId !== recs.best.modelId
@@ -804,20 +861,12 @@ export default function App() {
                 value={objective}
                 onChange={(o) => update(o, contextLength)}
               />
-              <label className="flex items-center gap-2 text-[13px] text-neutral-500 dark:text-neutral-400">
-                <Term id="context">Context</Term>
-                <select
-                  value={contextLength}
-                  onChange={(e) => update(objective, Number(e.target.value))}
-                  className="rounded-lg border border-neutral-200 bg-white px-2 py-1 text-[13px] font-medium text-neutral-700 outline-none dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200"
-                >
-                  {CONTEXTS.map((c) => (
-                    <option key={c} value={c}>
-                      {fmtCtx(c)}
-                    </option>
-                  ))}
-                </select>
-              </label>
+              <ContextSlider
+                value={contextLength}
+                onChange={(c) => update(objective, c)}
+                runnable={runnable}
+                total={recs?.all.length ?? null}
+              />
             </div>
 
             {recs && (
