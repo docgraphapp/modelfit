@@ -298,6 +298,49 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
       return real
         ? { ...registryInfo, version: real.registryVersion, modelCount: real.modelCount }
         : registryInfo;
+    case "benchmark_share": {
+      // Mirrors the backend: skip the prefix when the name already carries it.
+      const joinOnce = (prefix: string, name: string) =>
+        name.toLowerCase().includes(prefix.toLowerCase()) ? name : `${prefix} ${name}`;
+      const hw = args.hardware;
+      const cal = args.calibration;
+      const gpu = hw?.gpus?.[0];
+      const fields = [
+        { id: "chip", label: "CPU / chip", value: hw?.cpuModel ?? "" },
+        {
+          id: "ram",
+          label: "Memory",
+          value: `${Math.round(hw?.totalRamGb ?? 0)} GB${hw?.unifiedMemory ? " unified" : ""}`,
+        },
+        {
+          id: "gpu",
+          label: "GPU",
+          value: gpu
+            ? `${joinOnce(gpu.vendor, gpu.name)}${gpu.coreCount ? ` · ${gpu.coreCount} cores` : ""}`
+            : "none detected",
+        },
+        { id: "accel", label: "Acceleration", value: (hw?.accelerations ?? []).join(", ") },
+        {
+          id: "os",
+          label: "OS",
+          value: `${joinOnce(hw?.os ?? "", hw?.osVersion ?? "")} (${hw?.arch ?? ""})`,
+        },
+        { id: "model", label: "Benchmarked model", value: cal?.modelTag ?? "" },
+        { id: "gen_tps", label: "Generation tokens/sec", value: (cal?.genTokPerSec ?? 0).toFixed(1) },
+        { id: "prompt_tps", label: "Prompt tokens/sec", value: (cal?.promptTokPerSec ?? 0).toFixed(1) },
+        {
+          id: "bandwidth",
+          label: "Effective bandwidth (GB/s)",
+          value: (cal?.effectiveBandwidthGbps ?? 0).toFixed(1),
+        },
+        { id: "versions", label: "App / registry", value: `0.1.0 · ${registryInfo.version}` },
+      ];
+      const q = fields.map((f) => `${f.id}=${encodeURIComponent(f.value)}`).join("&");
+      return {
+        fields,
+        url: `https://github.com/docgraphapp/modelfit/issues/new?template=benchmark.yml&labels=benchmark&${q}`,
+      };
+    }
     case "run_calibration":
       // Real numbers from the last `calibrate` example run when available.
       await sleep(4000);
