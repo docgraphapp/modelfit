@@ -4,7 +4,7 @@
 
 use async_trait::async_trait;
 use futures_util::StreamExt;
-use modelfit_registry::Registry;
+use modelfit_registry::{Registry, DEFAULT_QUANT};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize)]
@@ -58,9 +58,6 @@ impl Default for Ollama {
         }
     }
 }
-
-/// The quant Ollama serves for a bare model tag.
-const DEFAULT_QUANT: &str = "Q4_K_M";
 
 pub fn normalize_tag(tag: &str) -> String {
     tag.strip_suffix(":latest").unwrap_or(tag).to_string()

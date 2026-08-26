@@ -6,6 +6,10 @@
 //! remote registry at runtime (M5).
 
 use serde::{Deserialize, Serialize};
+
+/// The rung a bare runtime tag pulls, and the baseline every model is ranked
+/// at so scores stay comparable across models.
+pub const DEFAULT_QUANT: &str = "Q4_K_M";
 use std::collections::BTreeMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

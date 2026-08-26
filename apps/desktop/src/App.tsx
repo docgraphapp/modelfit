@@ -293,8 +293,31 @@ function HeroPick({
       <div className="mt-4">
         <FitGauge a={a} usable={usable} />
       </div>
+      <AlsoFits a={a} />
       {children}
     </div>
+  );
+}
+
+// Richer quantizations are offered rather than auto-selected: the quality they
+// buy is real but not modelled, so the engine ranks every model at the same
+// rung and leaves this trade — more bits for fewer tokens/sec — to the reader.
+function AlsoFits({ a }: { a: Assessment }) {
+  if (!a.alsoFits?.length) return null;
+  return (
+    <p className="mt-3 text-xs leading-relaxed text-neutral-500 dark:text-neutral-400">
+      More memory to spare — also fits{" "}
+      {a.alsoFits.map((o, i) => (
+        <span key={o.quant}>
+          {i > 0 && ", "}
+          <Term id="quantization">{o.quant}</Term>{" "}
+          <span className="tabular-nums">
+            (~{o.estMemoryGb} GB, ~{Math.round(o.estTokPerSec)} tok/s)
+          </span>
+        </span>
+      ))}
+      .
+    </p>
   );
 }
 

@@ -5,6 +5,13 @@ export interface GpuInfo {
   coreCount: number | null;
 }
 
+export interface QuantOption {
+  quant: string;
+  estMemoryGb: number;
+  estTokPerSec: number;
+  ollamaTag: string | null;
+}
+
 export interface Assessment {
   modelId: string;
   name: string;
@@ -17,6 +24,8 @@ export interface Assessment {
   score: number;
   excludedReason: string | null;
   confidence: "high" | "medium" | "measured";
+  /// Richer quantizations this machine can also hold.
+  alsoFits: QuantOption[];
 }
 
 export interface Recommendations {
