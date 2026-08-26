@@ -8,3 +8,4 @@ website/
 # Machine-specific probe output for the browser design harness
 apps/desktop/public/machine.json
 .wrangler/
+__pycache__/

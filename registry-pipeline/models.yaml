@@ -17,10 +17,13 @@
   capabilities: [chat]
   quality: { general: 6.6, coding: 6.0 }
   ollama_tag: llama3.2:3b
+  ollama_quant_infix: "-instruct"
   hf_repo: bartowski/Llama-3.2-3B-Instruct-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 2.0 }
-    Q8_0: { fallback_size_gb: 3.4 }
+    Q4_K_M: { fallback_size_gb: 1.88 }
+    Q5_K_M: { fallback_size_gb: 2.16 }
+    Q6_K:   { fallback_size_gb: 2.46 }
+    Q8_0:   { fallback_size_gb: 3.19 }
   fallback_kv_gb_per_1k: 0.09
 
 - id: qwen3-4b
@@ -31,10 +34,13 @@
   capabilities: [chat, reasoning, coding]
   quality: { general: 7.2, coding: 6.8 }
   ollama_tag: qwen3:4b
+  ollama_quant_infix: ""
   hf_repo: Qwen/Qwen3-4B-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 2.6 }
-    Q8_0: { fallback_size_gb: 4.3 }
+    Q4_K_M: { fallback_size_gb: 2.33 }
+    Q5_K_M: { fallback_size_gb: 2.69 }
+    Q6_K:   { fallback_size_gb: 3.08 }
+    Q8_0:   { fallback_size_gb: 3.99 }
   fallback_kv_gb_per_1k: 0.11
 
 - id: gemma3-4b
@@ -45,9 +51,14 @@
   capabilities: [chat, vision]
   quality: { general: 7.0, coding: 6.3 }
   ollama_tag: gemma3:4b
+  ollama_quant_infix: "-it"
   hf_repo: bartowski/google_gemma-3-4b-it-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 2.6 }
+    Q3_K_M: { fallback_size_gb: 1.95 }
+    Q4_K_M: { fallback_size_gb: 2.32 }
+    Q5_K_M: { fallback_size_gb: 2.64 }
+    Q6_K:   { fallback_size_gb: 2.97 }
+    Q8_0:   { fallback_size_gb: 3.85 }
   fallback_kv_gb_per_1k: 0.1
 
 - id: qwen3-8b
@@ -58,10 +69,13 @@
   capabilities: [chat, reasoning, coding]
   quality: { general: 7.8, coding: 7.4 }
   ollama_tag: qwen3:8b
+  ollama_quant_infix: ""
   hf_repo: Qwen/Qwen3-8B-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 5.0 }
-    Q8_0: { fallback_size_gb: 8.9 }
+    Q4_K_M: { fallback_size_gb: 4.68 }
+    Q5_K_M: { fallback_size_gb: 5.45 }
+    Q6_K:   { fallback_size_gb: 6.26 }
+    Q8_0:   { fallback_size_gb: 8.11 }
   fallback_kv_gb_per_1k: 0.14
 
 - id: llama3.1-8b
@@ -72,10 +86,14 @@
   capabilities: [chat]
   quality: { general: 7.4, coding: 6.8 }
   ollama_tag: llama3.1:8b
+  ollama_quant_infix: "-instruct"
   hf_repo: bartowski/Meta-Llama-3.1-8B-Instruct-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 4.9 }
-    Q8_0: { fallback_size_gb: 8.5 }
+    Q3_K_M: { fallback_size_gb: 3.74 }
+    Q4_K_M: { fallback_size_gb: 4.58 }
+    Q5_K_M: { fallback_size_gb: 5.34 }
+    Q6_K:   { fallback_size_gb: 6.14 }
+    Q8_0:   { fallback_size_gb: 7.95 }
   fallback_kv_gb_per_1k: 0.13
 
 - id: gemma3-12b
@@ -86,9 +104,14 @@
   capabilities: [chat, vision]
   quality: { general: 7.9, coding: 7.2 }
   ollama_tag: gemma3:12b
+  ollama_quant_infix: "-it"
   hf_repo: bartowski/google_gemma-3-12b-it-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 8.1 }
+    Q3_K_M: { fallback_size_gb: 5.6 }
+    Q4_K_M: { fallback_size_gb: 6.8 }
+    Q5_K_M: { fallback_size_gb: 7.86 }
+    Q6_K:   { fallback_size_gb: 9.0 }
+    Q8_0:   { fallback_size_gb: 11.65 }
   fallback_kv_gb_per_1k: 0.15
 
 - id: qwen3-14b
@@ -99,10 +122,13 @@
   capabilities: [chat, reasoning, coding]
   quality: { general: 8.2, coding: 7.8 }
   ollama_tag: qwen3:14b
+  ollama_quant_infix: ""
   hf_repo: Qwen/Qwen3-14B-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 9.3 }
-    Q8_0: { fallback_size_gb: 15.7 }
+    Q4_K_M: { fallback_size_gb: 8.38 }
+    Q5_K_M: { fallback_size_gb: 9.79 }
+    Q6_K:   { fallback_size_gb: 11.29 }
+    Q8_0:   { fallback_size_gb: 14.62 }
   fallback_kv_gb_per_1k: 0.19
 
 - id: phi4-14b
@@ -113,9 +139,14 @@
   capabilities: [chat, reasoning]
   quality: { general: 8.0, coding: 7.6 }
   ollama_tag: phi4:14b
+  ollama_quant_infix: ""
   hf_repo: bartowski/phi-4-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 9.1 }
+    Q3_K_M: { fallback_size_gb: 6.86 }
+    Q4_K_M: { fallback_size_gb: 8.43 }
+    Q5_K_M: { fallback_size_gb: 9.88 }
+    Q6_K:   { fallback_size_gb: 11.2 }
+    Q8_0:   { fallback_size_gb: 14.51 }
   fallback_kv_gb_per_1k: 0.16
 
 - id: deepseek-r1-14b
@@ -126,9 +157,14 @@
   capabilities: [chat, reasoning]
   quality: { general: 8.3, coding: 7.9 }
   ollama_tag: deepseek-r1:14b
+  ollama_quant_infix: "-qwen-distill"
   hf_repo: bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 9.0 }
+    Q3_K_M: { fallback_size_gb: 6.84 }
+    Q4_K_M: { fallback_size_gb: 8.37 }
+    Q5_K_M: { fallback_size_gb: 9.79 }
+    Q6_K:   { fallback_size_gb: 11.29 }
+    Q8_0:   { fallback_size_gb: 14.62 }
   fallback_kv_gb_per_1k: 0.19
 
 - id: qwen2.5-coder-14b
@@ -139,9 +175,14 @@
   capabilities: [coding, chat]
   quality: { general: 7.8, coding: 8.3 }
   ollama_tag: qwen2.5-coder:14b
+  ollama_quant_infix: "-instruct"
   hf_repo: bartowski/Qwen2.5-Coder-14B-Instruct-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 9.0 }
+    Q3_K_M: { fallback_size_gb: 6.84 }
+    Q4_K_M: { fallback_size_gb: 8.37 }
+    Q5_K_M: { fallback_size_gb: 9.79 }
+    Q6_K:   { fallback_size_gb: 11.29 }
+    Q8_0:   { fallback_size_gb: 14.62 }
   fallback_kv_gb_per_1k: 0.19
 
 - id: mistral-small-3.1-24b
@@ -151,10 +192,15 @@
   max_context: 131072
   capabilities: [chat, vision, coding]
   quality: { general: 8.1, coding: 7.5 }
-  ollama_tag: mistral-small3.1
+  ollama_tag: mistral-small3.1:24b
+  ollama_quant_infix: "-instruct-2503"
   hf_repo: bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 14.3 }
+    Q3_K_M: { fallback_size_gb: 10.69 }
+    Q4_K_M: { fallback_size_gb: 13.35 }
+    Q5_K_M: { fallback_size_gb: 15.61 }
+    Q6_K:   { fallback_size_gb: 18.02 }
+    Q8_0:   { fallback_size_gb: 23.33 }
   fallback_kv_gb_per_1k: 0.16
 
 - id: gemma3-27b
@@ -165,9 +211,14 @@
   capabilities: [chat, vision]
   quality: { general: 8.4, coding: 7.7 }
   ollama_tag: gemma3:27b
+  ollama_quant_infix: "-it"
   hf_repo: bartowski/google_gemma-3-27b-it-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 16.5 }
+    Q3_K_M: { fallback_size_gb: 12.51 }
+    Q4_K_M: { fallback_size_gb: 15.41 }
+    Q5_K_M: { fallback_size_gb: 17.95 }
+    Q6_K:   { fallback_size_gb: 20.64 }
+    Q8_0:   { fallback_size_gb: 26.74 }
   fallback_kv_gb_per_1k: 0.24
 
 - id: qwen3-30b-a3b
@@ -179,9 +230,13 @@
   capabilities: [chat, reasoning, coding]
   quality: { general: 8.5, coding: 8.0 }
   ollama_tag: qwen3:30b
+  ollama_quant_infix: ""
   hf_repo: Qwen/Qwen3-30B-A3B-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 18.6 }
+    Q4_K_M: { fallback_size_gb: 17.28 }
+    Q5_K_M: { fallback_size_gb: 20.23 }
+    Q6_K:   { fallback_size_gb: 23.37 }
+    Q8_0:   { fallback_size_gb: 30.25 }
   fallback_kv_gb_per_1k: 0.19
 
 - id: qwen3-32b
@@ -192,9 +247,13 @@
   capabilities: [chat, reasoning, coding]
   quality: { general: 8.7, coding: 8.3 }
   ollama_tag: qwen3:32b
+  ollama_quant_infix: ""
   hf_repo: Qwen/Qwen3-32B-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 20.0 }
+    Q4_K_M: { fallback_size_gb: 18.4 }
+    Q5_K_M: { fallback_size_gb: 21.62 }
+    Q6_K:   { fallback_size_gb: 25.04 }
+    Q8_0:   { fallback_size_gb: 32.43 }
   fallback_kv_gb_per_1k: 0.25
 
 - id: qwen2.5-coder-32b
@@ -205,7 +264,12 @@
   capabilities: [coding, chat]
   quality: { general: 8.3, coding: 8.8 }
   ollama_tag: qwen2.5-coder:32b
+  ollama_quant_infix: "-instruct"
   hf_repo: bartowski/Qwen2.5-Coder-32B-Instruct-GGUF
   quants:
-    Q4_K_M: { fallback_size_gb: 19.9 }
+    Q3_K_M: { fallback_size_gb: 14.84 }
+    Q4_K_M: { fallback_size_gb: 18.49 }
+    Q5_K_M: { fallback_size_gb: 21.66 }
+    Q6_K:   { fallback_size_gb: 25.04 }
+    Q8_0:   { fallback_size_gb: 32.43 }
   fallback_kv_gb_per_1k: 0.25
