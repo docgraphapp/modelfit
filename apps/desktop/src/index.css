@@ -83,3 +83,66 @@ th {
   35% { transform: rotate(-16deg); }
   70% { transform: rotate(5deg); }
 }
+
+/* Context slider. A native range input, restyled: the filled portion is the
+   same emerald as a "runs comfortably" verdict, so raising context visibly
+   spends the machine's headroom. `--fill` is set inline from the value. */
+.ctx-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 1.25rem;
+  background: transparent;
+  cursor: pointer;
+}
+.ctx-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    rgb(16 185 129) var(--fill),
+    rgb(229 229 229) var(--fill)
+  );
+}
+.ctx-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    rgb(16 185 129) var(--fill),
+    rgb(229 229 229) var(--fill)
+  );
+}
+.ctx-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -5px; /* centre the 14px thumb on the 4px track */
+  height: 14px;
+  width: 14px;
+  border-radius: 9999px;
+  background: #fff;
+  border: 1px solid rgb(212 212 212);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+}
+.ctx-slider::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  border: 1px solid rgb(212 212 212);
+  border-radius: 9999px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.12);
+}
+@media (prefers-color-scheme: dark) {
+  .ctx-slider::-webkit-slider-runnable-track,
+  .ctx-slider::-moz-range-track {
+    background: linear-gradient(
+      to right,
+      rgb(16 185 129) var(--fill),
+      rgb(64 64 64) var(--fill)
+    );
+  }
+  .ctx-slider::-webkit-slider-thumb,
+  .ctx-slider::-moz-range-thumb {
+    background: rgb(229 229 229);
+    border-color: rgb(82 82 82);
+  }
+}
