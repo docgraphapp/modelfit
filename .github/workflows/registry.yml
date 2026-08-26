@@ -45,6 +45,12 @@ jobs:
       # Deploying the registry alone would take modelfit.docgraph.app down.
       # The website lives in the private docgraphapp/modelfit-web repo;
       # MODELFIT_WEB_TOKEN must be a PAT with read access to it.
+      # A renamed field id silently produces a blank prefill on GitHub, with no
+      # error anywhere — and it is only visible to a user who already clicked
+      # Share. Cheap to check here, invisible otherwise.
+      - name: Check the benchmark share form matches the app
+        run: python3 scripts/check-benchmark-form.py
+
       # Everything below is the SITE half of the deploy, and it needs a token
       # for the private website repo. Refreshing the registry is this job's
       # actual purpose and must not fail because the site half is unavailable:
