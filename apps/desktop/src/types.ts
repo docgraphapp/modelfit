@@ -80,3 +80,14 @@ export interface HardwareInfo {
   gpus: GpuInfo[];
   accelerations: string[];
 }
+
+export interface ShareField {
+  id: string;
+  label: string;
+  value: string;
+}
+
+export interface BenchmarkShare {
+  fields: ShareField[];
+  url: string;
+}

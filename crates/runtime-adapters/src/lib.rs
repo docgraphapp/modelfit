@@ -203,7 +203,7 @@ impl Ollama {
     }
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Calibration {
     pub model_tag: String,

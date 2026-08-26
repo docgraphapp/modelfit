@@ -1,0 +1,70 @@
+name: Benchmark result
+description: Share a measured tokens/sec result from ModelFit's calibration benchmark.
+title: "[benchmark] "
+labels: ["benchmark"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing. These fields are prefilled by ModelFit's
+        **Share my benchmark** button — you should not need to edit them.
+
+        Everything here is hardware and timing data. Nothing is sent until you
+        press Submit, so if you would rather not publish it, just close the tab.
+  - type: input
+    id: chip
+    attributes:
+      label: "CPU / chip"
+    validations:
+      required: true
+  - type: input
+    id: ram
+    attributes:
+      label: "Memory"
+    validations:
+      required: true
+  - type: input
+    id: gpu
+    attributes:
+      label: "GPU"
+  - type: input
+    id: accel
+    attributes:
+      label: "Acceleration backends"
+  - type: input
+    id: os
+    attributes:
+      label: "OS"
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: "Benchmarked model (Ollama tag)"
+    validations:
+      required: true
+  - type: input
+    id: gen_tps
+    attributes:
+      label: "Generation tokens/sec"
+    validations:
+      required: true
+  - type: input
+    id: prompt_tps
+    attributes:
+      label: "Prompt tokens/sec"
+  - type: input
+    id: bandwidth
+    attributes:
+      label: "Effective memory bandwidth (GB/s)"
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: "App / registry version"
+  - type: textarea
+    id: notes
+    attributes:
+      label: "Notes (optional)"
+      description: "Anything unusual — thermal state, other apps running, external power."
