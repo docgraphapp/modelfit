@@ -6,6 +6,7 @@ import Term from "./Term";
 import type { TermId } from "./glossary";
 import type {
   Assessment,
+  BenchmarkShare,
   Calibration,
   HardwareInfo,
   PullProgress,
@@ -364,6 +365,74 @@ function QuantLadder({ a, usable }: { a: Assessment; usable: number }) {
             );
           })}
         </ul>
+      </div>
+    </div>
+  );
+}
+
+// Sharing publishes to a public issue tracker, permanently. So the exact
+// payload is shown first, verbatim and in full — the user approves what will
+// be posted, not a description of it. Even then nothing is sent from here:
+// the button only opens a prefilled GitHub form, which the user must submit.
+function ShareBenchmarkDialog({
+  share,
+  onClose,
+}: {
+  share: BenchmarkShare;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-neutral-900/40 p-6 backdrop-blur-[2px] dark:bg-black/60"
+      onClick={onClose}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Share my benchmark"
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-md rounded-2xl border border-neutral-200 bg-white p-5 shadow-xl dark:border-neutral-800 dark:bg-neutral-900"
+      >
+        <h2 className="text-sm font-semibold">Share my benchmark</h2>
+        <p className="mt-1.5 text-xs leading-relaxed text-neutral-500 dark:text-neutral-400">
+          This opens a prefilled issue on GitHub with exactly the values below.
+          They become public. Nothing is sent until you press Submit there.
+        </p>
+
+        <dl className="mt-3.5 max-h-64 space-y-1 overflow-y-auto rounded-xl bg-neutral-50 p-3 text-xs dark:bg-neutral-950/60">
+          {share.fields.map((f) => (
+            <div key={f.id} className="flex gap-3">
+              <dt className="w-36 shrink-0 text-neutral-400 dark:text-neutral-500">{f.label}</dt>
+              <dd className="min-w-0 flex-1 break-words text-neutral-700 dark:text-neutral-200">
+                {f.value || "—"}
+              </dd>
+            </div>
+          ))}
+        </dl>
+
+        <div className="mt-4 flex items-center justify-end gap-2">
+          <button
+            onClick={onClose}
+            className="rounded-lg px-3 py-1.5 text-[13px] font-medium text-neutral-500 hover:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-100"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => {
+              invoke("open_external", { url: share.url }).catch(() => {});
+              onClose();
+            }}
+            className="rounded-lg bg-neutral-900 px-3 py-1.5 text-[13px] font-medium text-white hover:bg-neutral-700 dark:bg-white dark:text-neutral-900 dark:hover:bg-neutral-200"
+          >
+            Open GitHub
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -778,6 +847,7 @@ export default function App() {
   const [pulling, setPulling] = useState<Record<string, PullProgress>>({});
   const [registry, setRegistry] = useState<RegistryInfo | null>(null);
   const [registryMsg, setRegistryMsg] = useState<string | null>(null);
+  const [share, setShare] = useState<BenchmarkShare | null>(null);
   const [updating, setUpdating] = useState(false);
   const calibrationRef = useRef(calibration);
   calibrationRef.current = calibration;
@@ -877,6 +947,13 @@ export default function App() {
       })
       .catch(() => setRegistryMsg("couldn't reach server — using current registry"))
       .finally(() => setUpdating(false));
+  };
+
+  const openShare = () => {
+    if (!hw || !calibration) return;
+    invoke<BenchmarkShare>("benchmark_share", { hardware: hw, calibration })
+      .then(setShare)
+      .catch((e) => setError(String(e)));
   };
 
   const runBenchmark = () => {
@@ -1117,6 +1194,15 @@ export default function App() {
                       {calibration.modelTag}
                     </span>
                   )}
+                  {calibration && !benchmarking && (
+                    <button
+                      onClick={openShare}
+                      title="Publish this result to ModelFit's public benchmark collection on GitHub"
+                      className="rounded-lg border border-neutral-200 px-3 py-1 font-medium text-neutral-600 hover:border-neutral-400 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500"
+                    >
+                      Share my benchmark
+                    </button>
+                  )}
                   <button
                     onClick={runBenchmark}
                     disabled={benchmarking || Object.keys(pulling).length > 0}
@@ -1177,6 +1263,7 @@ export default function App() {
           </>
         )}
       </div>
+      {share && <ShareBenchmarkDialog share={share} onClose={() => setShare(null)} />}
     </>
   );
 }
