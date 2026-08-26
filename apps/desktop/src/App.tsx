@@ -17,6 +17,14 @@ import type {
 
 const CALIBRATION_KEY = "modelfit:calibration";
 
+// Sharing a benchmark works end to end — Rust builder, prefilled GitHub issue
+// form, preview dialog — but the framing still needs work ("Create new issue"
+// is GitHub's own heading and cannot be changed, which makes it read like
+// filing a bug). Hidden until that is polished; flip to true to restore.
+// Everything behind this flag stays built and tested, and CI keeps checking
+// the form fields still match: scripts/check-benchmark-form.py.
+const SHARE_BENCHMARK_ENABLED = false;
+
 function loadCalibration(): Calibration | null {
   try {
     const raw = localStorage.getItem(CALIBRATION_KEY);
@@ -1194,7 +1202,7 @@ export default function App() {
                       {calibration.modelTag}
                     </span>
                   )}
-                  {calibration && !benchmarking && (
+                  {SHARE_BENCHMARK_ENABLED && calibration && !benchmarking && (
                     <button
                       onClick={openShare}
                       title="Publish this result to ModelFit's public benchmark collection on GitHub"
