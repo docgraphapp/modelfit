@@ -293,31 +293,79 @@ function HeroPick({
       <div className="mt-4">
         <FitGauge a={a} usable={usable} />
       </div>
-      <AlsoFits a={a} />
+      <QuantLadder a={a} usable={usable} />
       {children}
     </div>
   );
 }
 
-// Richer quantizations are offered rather than auto-selected: the quality they
-// buy is real but not modelled, so the engine ranks every model at the same
-// rung and leaves this trade — more bits for fewer tokens/sec — to the reader.
-function AlsoFits({ a }: { a: Assessment }) {
-  if (!a.alsoFits?.length) return null;
+// The quantization ladder, shown rather than decided. More bits keep the model
+// closer to its original weights, and cost memory and speed — a trade the
+// engine cannot make for the reader, because quality is not modelled per quant.
+// So both measured axes are drawn and the choice is left visible.
+function QuantLadder({ a, usable }: { a: Assessment; usable: number }) {
+  if (!a.ladder || a.ladder.length < 2) return null;
+  // Bars share one scale so rungs are comparable, and the scale always spans
+  // usable memory — otherwise a ladder that all fits would look full.
+  const scale = Math.max(usable, ...a.ladder.map((r) => r.estMemoryGb));
+  const limit = (usable / scale) * 100;
+
   return (
-    <p className="mt-3 text-xs leading-relaxed text-neutral-500 dark:text-neutral-400">
-      More memory to spare — also fits{" "}
-      {a.alsoFits.map((o, i) => (
-        <span key={o.quant}>
-          {i > 0 && ", "}
-          <Term id="quantization">{o.quant}</Term>{" "}
-          <span className="tabular-nums">
-            (~{o.estMemoryGb} GB, ~{Math.round(o.estTokPerSec)} tok/s)
-          </span>
+    <div className="mt-4">
+      <div className="flex items-baseline justify-between text-[11px] text-neutral-400 dark:text-neutral-500">
+        <span className="font-medium uppercase tracking-[0.12em]">
+          <Term id="quantization">Quantizations</Term>
         </span>
-      ))}
-      .
-    </p>
+        <span title={`Your usable memory: ~${Math.round(usable)} GB`}>
+          more bits = closer to the original weights
+        </span>
+      </div>
+
+      <div className="mt-2">
+        <ul className="space-y-1">
+          {a.ladder.map((r) => {
+            const chosen = r.quant === a.quant;
+            const fits = r.fit !== "toobig";
+            return (
+              <li
+                key={r.quant}
+                className={`flex items-center gap-2 text-[11px] tabular-nums ${
+                  chosen
+                    ? "font-semibold text-neutral-800 dark:text-neutral-100"
+                    : fits
+                      ? "text-neutral-500 dark:text-neutral-400"
+                      : "text-neutral-400 dark:text-neutral-600"
+                }`}
+              >
+                <span className="w-20 shrink-0 truncate" title={chosen ? "Recommended" : undefined}>
+                  {chosen && <span aria-hidden className="mr-1 text-emerald-500">▸</span>}
+                  {r.quant}
+                </span>
+                <span className="relative h-1.5 flex-1 rounded-full bg-neutral-200/70 dark:bg-neutral-800">
+                  <span
+                    className={`block h-full rounded-full ${GAUGE_COLORS[r.fit]} ${
+                      fits ? "" : "opacity-40"
+                    }`}
+                    style={{ width: `${Math.min(100, (r.estMemoryGb / scale) * 100)}%` }}
+                  />
+                  {/* Your usable memory. Bars crossing it cannot run here.
+                      Drawn per row so it stays aligned with the bar column. */}
+                  <span
+                    aria-hidden
+                    className="absolute -top-0.5 h-2.5 w-px bg-neutral-400 dark:bg-neutral-500"
+                    style={{ left: `${limit}%` }}
+                  />
+                </span>
+                <span className="w-14 shrink-0 text-right">{r.estMemoryGb} GB</span>
+                <span className="w-16 shrink-0 text-right">
+                  {fits ? `~${Math.round(r.estTokPerSec)} tok/s` : "won't fit"}
+                </span>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
   );
 }
 

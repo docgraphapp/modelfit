@@ -59,15 +59,20 @@ pub enum FitVerdict {
     TooBig,
 }
 
-/// A rung richer than the one assessed that this machine can also run.
-/// Presented as a choice — the quality it buys is real but not modelled, so
-/// it must not move the score that ranks models against each other.
+/// One rung of a model's quantization ladder, assessed on this machine.
+///
+/// Every rung is reported, including ones that do not fit: the point of the
+/// ladder is to show the trade being made, and a rung the machine cannot hold
+/// explains the ceiling as clearly as one it can. Quality is deliberately
+/// absent — it is not modelled per quant, and inventing a number here would
+/// dress a guess as a measurement.
 #[derive(Debug, Clone, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub struct QuantOption {
+pub struct QuantRung {
     pub quant: String,
     pub est_memory_gb: f64,
     pub est_tok_per_sec: f64,
+    pub fit: FitVerdict,
     pub ollama_tag: Option<String>,
 }
 
@@ -88,10 +93,10 @@ pub struct Assessment {
     pub excluded_reason: Option<String>,
     /// "high" | "medium" — MoE throughput and unknown-bandwidth machines are medium.
     pub confidence: String,
-    /// Richer rungs that also fit, smallest first. Empty when the assessed
-    /// quant is already the richest this machine can hold.
+    /// Every quantization of this model, smallest first, assessed on this
+    /// machine. Always contains the rung named by `quant`.
     #[serde(default)]
-    pub also_fits: Vec<QuantOption>,
+    pub ladder: Vec<QuantRung>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -254,13 +259,16 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
             (qname, mem)
         });
 
-        let fit = if est_memory <= usable * COMFORT_FRACTION {
-            FitVerdict::Comfortable
-        } else if est_memory <= usable * FIT_FRACTION {
-            FitVerdict::Tight
-        } else {
-            FitVerdict::TooBig
+        let verdict = |mem: f64| {
+            if mem <= usable * COMFORT_FRACTION {
+                FitVerdict::Comfortable
+            } else if mem <= usable * FIT_FRACTION {
+                FitVerdict::Tight
+            } else {
+                FitVerdict::TooBig
+            }
         };
+        let fit = verdict(est_memory);
 
         // Speed: effective bandwidth / bytes each token touches.
         let tok_s_of = |q: &Quant| {
@@ -273,19 +281,22 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
         };
         let tok_s = tok_s_of(&model.quantizations[quant]);
 
-        // Richer rungs the machine can also hold, offered as alternatives.
-        let also_fits: Vec<QuantOption> = model
+        // The whole ladder, smallest rung first, each assessed on this machine.
+        let mut ladder: Vec<QuantRung> = model
             .quantizations
             .iter()
-            .filter(|(_, q)| q.file_size_gb > model.quantizations[quant].file_size_gb)
-            .filter(|(_, q)| fits_comfy(mem_of(q)))
-            .map(|(qname, q)| QuantOption {
-                quant: qname.clone(),
-                est_memory_gb: round1(mem_of(q)),
-                est_tok_per_sec: round1(tok_s_of(q)),
-                ollama_tag: model.install_tag(qname),
+            .map(|(qname, q)| {
+                let mem = mem_of(q);
+                QuantRung {
+                    quant: qname.clone(),
+                    est_memory_gb: round1(mem),
+                    est_tok_per_sec: round1(tok_s_of(q)),
+                    fit: verdict(mem),
+                    ollama_tag: model.install_tag(qname),
+                }
             })
             .collect();
+        ladder.sort_by(|a, b| a.est_memory_gb.partial_cmp(&b.est_memory_gb).unwrap());
 
         let quality = quality_for(model, req.objective);
 
@@ -360,7 +371,7 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
             score: round1(score),
             excluded_reason,
             confidence: confidence.into(),
-            also_fits,
+            ladder,
         });
     }
 
@@ -578,16 +589,44 @@ mod tests {
         let r = rec(&apple("M4 Max", 64.0), &Request::default());
         let a = find(&r, "qwen3-8b");
         assert_eq!(a.quant, DEFAULT_QUANT, "ranked at the baseline rung");
+        let richer_that_fits = |a: &Assessment| {
+            let chosen = a.est_memory_gb;
+            a.ladder
+                .iter()
+                .filter(|r| r.est_memory_gb > chosen && r.fit != FitVerdict::TooBig)
+                .map(|r| r.quant.clone())
+                .collect::<Vec<_>>()
+        };
         assert!(
-            a.also_fits.iter().any(|o| o.quant == "Q8_0"),
+            richer_that_fits(a).contains(&"Q8_0".to_string()),
             "expected Q8_0 offered on 64GB, got {:?}",
-            a.also_fits.iter().map(|o| &o.quant).collect::<Vec<_>>()
+            richer_that_fits(a)
         );
         // 8GB: nothing richer fits, and the baseline still does.
         let r8 = rec(&apple("M1", 8.0), &Request::default());
         let a8 = find(&r8, "qwen3-8b");
         assert_eq!(a8.quant, DEFAULT_QUANT);
-        assert!(a8.also_fits.is_empty(), "no headroom on 8GB");
+        assert!(richer_that_fits(a8).is_empty(), "no headroom on 8GB");
+    }
+
+    #[test]
+    fn ladder_is_complete_and_agrees_with_the_pick() {
+        let r = rec(&apple("M4 Max", 64.0), &Request::default());
+        for a in &r.all {
+            let chosen = a
+                .ladder
+                .iter()
+                .find(|x| x.quant == a.quant)
+                .unwrap_or_else(|| panic!("{}: ladder omits the chosen rung", a.model_id));
+            assert_eq!(chosen.est_memory_gb, a.est_memory_gb, "{}", a.model_id);
+            assert_eq!(chosen.est_tok_per_sec, a.est_tok_per_sec, "{}", a.model_id);
+            assert_eq!(chosen.fit, a.fit, "{}", a.model_id);
+            // Smallest first, and more bits always costs speed.
+            for w in a.ladder.windows(2) {
+                assert!(w[0].est_memory_gb <= w[1].est_memory_gb, "{}", a.model_id);
+                assert!(w[0].est_tok_per_sec >= w[1].est_tok_per_sec, "{}", a.model_id);
+            }
+        }
     }
 
     #[test]
@@ -597,8 +636,12 @@ mod tests {
         let r = rec(&apple("M4 Max", 64.0), &Request::default());
         for a in &r.all {
             if a.excluded_reason.is_none() {
+                let richer_fits = a
+                    .ladder
+                    .iter()
+                    .any(|r| r.est_memory_gb > a.est_memory_gb && r.fit != FitVerdict::TooBig);
                 assert!(
-                    a.quant == DEFAULT_QUANT || a.also_fits.is_empty(),
+                    a.quant == DEFAULT_QUANT || !richer_fits,
                     "{} ranked at {} while richer rungs fit",
                     a.model_id,
                     a.quant
