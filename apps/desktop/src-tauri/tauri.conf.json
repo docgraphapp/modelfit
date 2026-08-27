@@ -14,7 +14,7 @@
       {
         "title": "ModelFit",
         "width": 940,
-        "height": 640,
+        "height": 800,
         "minWidth": 560,
         "minHeight": 520,
         "resizable": true,

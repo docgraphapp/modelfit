@@ -53,6 +53,32 @@ struct RegistryInfo {
     added: Option<usize>,
 }
 
+/// Grow (or shrink) the window so the whole page fits without scrolling.
+///
+/// The frontend measures its own laid-out height once the first real content
+/// is on screen and hands it over; only the shell knows how much room the
+/// display actually has, so the clamp lives here. `work_area` excludes the
+/// menu bar and dock, and the small margin keeps the window off both edges.
+#[tauri::command]
+async fn fit_window_height(window: tauri::WebviewWindow, height: f64) {
+    let Ok(Some(monitor)) = window.current_monitor() else {
+        return;
+    };
+    let scale = monitor.scale_factor();
+    let work = monitor.work_area().size.to_logical::<f64>(scale);
+    let Ok(current) = window.inner_size() else {
+        return;
+    };
+    let current = current.to_logical::<f64>(scale);
+    let target = height.clamp(520.0, work.height - 24.0);
+    // Never shrink below what is already shown by less than a couple of
+    // pixels — sub-pixel rounding shouldn't nudge the window on every launch.
+    if (target - current.height).abs() < 2.0 {
+        return;
+    }
+    let _ = window.set_size(tauri::LogicalSize::new(current.width, target));
+}
+
 /// First paint is done — show the window (see setup).
 #[tauri::command]
 async fn frontend_ready(window: tauri::WebviewWindow) {
@@ -292,6 +318,7 @@ pub fn run() {
         })
         .invoke_handler(tauri::generate_handler![
             frontend_ready,
+            fit_window_height,
             detect_hardware,
             get_recommendations,
             runtime_status,

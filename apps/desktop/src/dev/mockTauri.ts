@@ -379,6 +379,10 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
     }
     case "frontend_ready":
       return null; // browser harness has no hidden window to reveal
+    case "fit_window_height":
+      // A browser tab can't resize itself; log the height the shell would use.
+      console.info(`[mockTauri] fit_window_height ${args.height}`);
+      return null;
     case "plugin:event|unlisten":
       listeners.get(args.event)?.delete(args.eventId);
       return null;

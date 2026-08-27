@@ -911,6 +911,36 @@ export default function App() {
     };
   }, [recompute, refreshRuntime]);
 
+  // Fit the window to the first real screen so nothing important sits below
+  // the fold on launch. The page keeps growing for a moment after the picks
+  // paint — runtime status and the registry footer land on their own async
+  // schedules — so this watches the body for a short settle window and keeps
+  // reporting the tallest layout it sees, then stops: later view switches are
+  // the user's to scroll, and a window resizing under every click would be
+  // maddening. The shell clamps the number to what the display can hold.
+  const fitted = useRef(false);
+  useEffect(() => {
+    if (fitted.current || !hw || !recs) return;
+    fitted.current = true;
+    let tallest = 0;
+    const report = () => {
+      const h = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight,
+      );
+      if (h <= tallest) return;
+      tallest = h;
+      invoke("fit_window_height", { height: h }).catch(() => {});
+    };
+    const observer = new ResizeObserver(report);
+    observer.observe(document.body);
+    const stop = setTimeout(() => observer.disconnect(), 2500);
+    return () => {
+      observer.disconnect();
+      clearTimeout(stop);
+    };
+  }, [hw, recs]);
+
   const update = (obj: Objective, ctx: number, hardware?: HardwareInfo) => {
     const machine = hardware ?? hw;
     setObjective(obj);
@@ -997,8 +1027,12 @@ export default function App() {
 
   return (
     <>
+      {/* Column at least as tall as the window: the footer sits at the bottom
+          on a short page, and the title bar's height no longer has to be
+          subtracted by hand (which left a stray pixel of scroll). */}
+      <div className="flex min-h-screen flex-col">
       <TitleBar />
-      <div className="mx-auto flex min-h-[calc(100vh-2.5rem)] w-full max-w-6xl flex-col px-5 pb-5 pt-2 sm:px-7">
+      <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-3 pb-3 pt-1">
         <HeaderCard hw={hw} onEdited={(next) => update(objective, contextLength, next)} />
 
         {error && (
@@ -1270,6 +1304,7 @@ export default function App() {
             </footer>
           </>
         )}
+      </div>
       </div>
       {share && <ShareBenchmarkDialog share={share} onClose={() => setShare(null)} />}
     </>
