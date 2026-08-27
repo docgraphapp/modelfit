@@ -125,8 +125,21 @@ class _Reader:
 
 
 def gguf_metadata(url: str, fetch_bytes: int = 8 * 1024 * 1024) -> dict:
-    """Read scalar metadata KVs from the head of a GGUF file via range request."""
-    buf = http_range(url, fetch_bytes)
+    """Read scalar metadata KVs from the head of a GGUF file via range request.
+
+    The header ends up as large as the tokenizer it carries: a 262K-token
+    vocabulary (Gemma) needs well past the 8 MB that covers most repos, so a
+    short read is retried with a bigger window before giving up.
+    """
+    for size in (fetch_bytes, fetch_bytes * 3):
+        try:
+            return _gguf_metadata_from(http_range(url, size))
+        except EOFError:
+            last = size
+    raise EOFError(f"GGUF header larger than {last} bytes")
+
+
+def _gguf_metadata_from(buf: bytes) -> dict:
     r = _Reader(buf)
     if r.take(4) != GGUF_MAGIC:
         raise ValueError("not a GGUF file")
@@ -145,8 +158,28 @@ def gguf_metadata(url: str, fetch_bytes: int = 8 * 1024 * 1024) -> dict:
     return meta
 
 
+# Sliding-window attention: how many layers attend to the whole context.
+# The GGUF header says a window exists but not which layers ignore it, so the
+# pattern is curated per family. Gemma interleaves five local layers with one
+# global one (llama.cpp's gemma3/gemma4 graphs); other SWA architectures fall
+# back to "every layer is global", which is the conservative reading.
+GLOBAL_LAYER_FRACTION = {"gemma3": 1 / 6, "gemma3n": 1 / 6, "gemma4": 1 / 6}
+
+# Context the sliding-window layers' fixed cost is amortized over. Their cache
+# never grows past the window, so it is a constant, not a per-1k rate; the
+# registry carries a single rate, so it is folded in at the context the app
+# opens on. Above it the estimate runs slightly high, which is the safe side.
+KV_REFERENCE_CTX = 8192
+
+
 def kv_gb_per_1k(meta: dict, arch: str) -> float | None:
-    """KV cache (GB, f16) per 1024 tokens from GGUF metadata."""
+    """KV cache (GB, f16) per 1024 tokens from GGUF metadata.
+
+    Layers that attend to the whole context grow with it. Layers behind a
+    sliding window stop growing once the window is full — costing them the
+    full context is what made a 256K-context Gemma look unrunnable on any
+    laptop — so they are charged their window and no more.
+    """
     def g(suffix: str):
         return meta.get(f"{arch}.{suffix}")
 
@@ -157,8 +190,20 @@ def kv_gb_per_1k(meta: dict, arch: str) -> float | None:
     head_dim = g("attention.key_length") or (embed // heads if embed and heads else None)
     if not (layers and kv_heads and head_dim):
         return None
-    bytes_per_token = layers * 2 * kv_heads * head_dim * 2  # K+V, f16
-    return round(bytes_per_token * 1024 / 1e9, 3)
+
+    per_layer_token = 2 * kv_heads * head_dim * 2  # K+V, f16
+    window = g("attention.sliding_window")
+    if not window:
+        return round(layers * per_layer_token * 1024 / 1e9, 3)
+
+    global_layers = max(1, round(layers * GLOBAL_LAYER_FRACTION.get(arch, 1.0)))
+    swa_layers = layers - global_layers
+    swa_head_dim = g("attention.key_length_swa") or head_dim
+    swa_per_layer_token = 2 * kv_heads * swa_head_dim * 2
+
+    growth = global_layers * per_layer_token * 1024
+    capped = swa_layers * swa_per_layer_token * min(window, KV_REFERENCE_CTX)
+    return round((growth + capped * 1024 / KV_REFERENCE_CTX) / 1e9, 3)
 
 
 def manifest_exists(url: str) -> bool:

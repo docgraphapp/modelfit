@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "2026-08-26",
+  "version": "2026-08-27",
   "models": [
     {
       "id": "llama3.2-3b",
@@ -98,31 +98,77 @@
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 1.95,
-          "kvCacheGbPer1kCtx": 0.143,
+          "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q3_K_M"
         },
         "Q4_K_M": {
           "fileSizeGb": 2.32,
-          "kvCacheGbPer1kCtx": 0.143,
+          "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "gemma3:4b-it-q4_K_M"
         },
         "Q5_K_M": {
           "fileSizeGb": 2.64,
-          "kvCacheGbPer1kCtx": 0.143,
+          "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q5_K_M"
         },
         "Q6_K": {
           "fileSizeGb": 2.97,
-          "kvCacheGbPer1kCtx": 0.143,
+          "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q6_K"
         },
         "Q8_0": {
           "fileSizeGb": 3.85,
-          "kvCacheGbPer1kCtx": 0.143,
+          "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "gemma3:4b-it-q8_0"
         }
       },
       "ollamaTag": "gemma3:4b"
+    },
+    {
+      "id": "gemma4-e4b",
+      "name": "Gemma 4 E4B",
+      "family": "gemma",
+      "parametersB": 8.0,
+      "activeParametersB": 4.5,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "reasoning",
+        "vision",
+        "coding"
+      ],
+      "quality": {
+        "general": 7.6,
+        "coding": 7.2
+      },
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 4.56,
+          "kvCacheGbPer1kCtx": 0.034,
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-E4B-it-GGUF:Q3_K_M"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 5.03,
+          "kvCacheGbPer1kCtx": 0.034,
+          "ollamaTag": "gemma4:e4b-it-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 5.42,
+          "kvCacheGbPer1kCtx": 0.034,
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-E4B-it-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 5.9,
+          "kvCacheGbPer1kCtx": 0.034,
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-E4B-it-GGUF:Q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 7.48,
+          "kvCacheGbPer1kCtx": 0.034,
+          "ollamaTag": "gemma4:e4b-it-q8_0"
+        }
+      },
+      "ollamaTag": "gemma4:e4b"
     },
     {
       "id": "qwen3-8b",
@@ -225,31 +271,77 @@
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 5.6,
-          "kvCacheGbPer1kCtx": 0.403,
+          "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q3_K_M"
         },
         "Q4_K_M": {
           "fileSizeGb": 6.8,
-          "kvCacheGbPer1kCtx": 0.403,
+          "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "gemma3:12b-it-q4_K_M"
         },
         "Q5_K_M": {
           "fileSizeGb": 7.86,
-          "kvCacheGbPer1kCtx": 0.403,
+          "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q5_K_M"
         },
         "Q6_K": {
           "fileSizeGb": 9.0,
-          "kvCacheGbPer1kCtx": 0.403,
+          "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q6_K"
         },
         "Q8_0": {
           "fileSizeGb": 11.65,
-          "kvCacheGbPer1kCtx": 0.403,
+          "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "gemma3:12b-it-q8_0"
         }
       },
       "ollamaTag": "gemma3:12b"
+    },
+    {
+      "id": "gemma4-12b",
+      "name": "Gemma 4 12B",
+      "family": "gemma",
+      "parametersB": 12.5,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "reasoning",
+        "vision",
+        "coding"
+      ],
+      "quality": {
+        "general": 8.4,
+        "coding": 8.2
+      },
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 5.87,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "hf.co/bartowski/gemma-4-12B-it-GGUF:Q3_K_M"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 7.14,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "gemma4:12b-it-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 8.17,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "hf.co/bartowski/gemma-4-12B-it-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 9.54,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "hf.co/bartowski/gemma-4-12B-it-GGUF:Q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 11.8,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "gemma4:12b-it-q8_0"
+        }
+      },
+      "ollamaTag": "gemma4:12b"
     },
     {
       "id": "qwen3-14b",
@@ -486,31 +578,77 @@
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 12.51,
-          "kvCacheGbPer1kCtx": 0.52,
+          "kvCacheGbPer1kCtx": 0.138,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q3_K_M"
         },
         "Q4_K_M": {
           "fileSizeGb": 15.41,
-          "kvCacheGbPer1kCtx": 0.52,
+          "kvCacheGbPer1kCtx": 0.138,
           "ollamaTag": "gemma3:27b-it-q4_K_M"
         },
         "Q5_K_M": {
           "fileSizeGb": 17.95,
-          "kvCacheGbPer1kCtx": 0.52,
+          "kvCacheGbPer1kCtx": 0.138,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q5_K_M"
         },
         "Q6_K": {
           "fileSizeGb": 20.64,
-          "kvCacheGbPer1kCtx": 0.52,
+          "kvCacheGbPer1kCtx": 0.138,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q6_K"
         },
         "Q8_0": {
           "fileSizeGb": 26.74,
-          "kvCacheGbPer1kCtx": 0.52,
+          "kvCacheGbPer1kCtx": 0.138,
           "ollamaTag": "gemma3:27b-it-q8_0"
         }
       },
       "ollamaTag": "gemma3:27b"
+    },
+    {
+      "id": "gemma4-26b-a4b",
+      "name": "Gemma 4 26B-A4B",
+      "family": "gemma",
+      "parametersB": 25.2,
+      "activeParametersB": 3.8,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "reasoning",
+        "vision",
+        "coding"
+      ],
+      "quality": {
+        "general": 9.0,
+        "coding": 8.8
+      },
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 12.13,
+          "kvCacheGbPer1kCtx": 0.22,
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-26B-A4B-it-GGUF:Q3_K_M"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 15.87,
+          "kvCacheGbPer1kCtx": 0.22,
+          "ollamaTag": "gemma4:26b-a4b-it-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 17.99,
+          "kvCacheGbPer1kCtx": 0.22,
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-26B-A4B-it-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 21.29,
+          "kvCacheGbPer1kCtx": 0.22,
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-26B-A4B-it-GGUF:Q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 25.02,
+          "kvCacheGbPer1kCtx": 0.22,
+          "ollamaTag": "gemma4:26b-a4b-it-q8_0"
+        }
+      },
+      "ollamaTag": "gemma4:26b"
     },
     {
       "id": "qwen3-30b-a3b",
@@ -551,6 +689,52 @@
         }
       },
       "ollamaTag": "qwen3:30b"
+    },
+    {
+      "id": "gemma4-31b",
+      "name": "Gemma 4 31B",
+      "family": "gemma",
+      "parametersB": 30.7,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "reasoning",
+        "vision",
+        "coding"
+      ],
+      "quality": {
+        "general": 9.2,
+        "coding": 9.0
+      },
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 14.82,
+          "kvCacheGbPer1kCtx": 0.881,
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-31B-it-GGUF:Q3_K_M"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 18.25,
+          "kvCacheGbPer1kCtx": 0.881,
+          "ollamaTag": "gemma4:31b-it-q4_K_M"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 21.06,
+          "kvCacheGbPer1kCtx": 0.881,
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-31B-it-GGUF:Q5_K_M"
+        },
+        "Q6_K": {
+          "fileSizeGb": 24.89,
+          "kvCacheGbPer1kCtx": 0.881,
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-31B-it-GGUF:Q6_K"
+        },
+        "Q8_0": {
+          "fileSizeGb": 30.39,
+          "kvCacheGbPer1kCtx": 0.881,
+          "ollamaTag": "gemma4:31b-it-q8_0"
+        }
+      },
+      "ollamaTag": "gemma4:31b"
     },
     {
       "id": "qwen3-32b",

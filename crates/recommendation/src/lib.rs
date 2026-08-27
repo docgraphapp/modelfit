@@ -459,15 +459,15 @@ mod tests {
 
     #[test]
     fn context_length_flips_fit() {
-        // Gemma 27B on 48GB: fits at 8k, but its heavy KV cache (~0.5GB/1k,
-        // from real GGUF metadata) kills it at 80k.
+        // Gemma 27B on 48GB: fits at 8k, but its KV cache (~0.14GB/1k, from
+        // real GGUF metadata) outgrows the machine by its full 128k context.
         let hw = apple("M4 Pro", 48.0);
         let at_8k = rec(&hw, &Request { objective: Objective::Overall, context_length: 8192, ..Request::default() });
         assert!(find(&at_8k, "gemma3-27b").excluded_reason.is_none());
 
-        let at_80k = rec(&hw, &Request { objective: Objective::Overall, context_length: 81920, ..Request::default() });
-        let g = find(&at_80k, "gemma3-27b");
-        assert!(g.excluded_reason.is_some(), "27B + 80k ctx KV cache must not fit in 22GB usable");
+        let at_128k = rec(&hw, &Request { objective: Objective::Overall, context_length: 131072, ..Request::default() });
+        let g = find(&at_128k, "gemma3-27b");
+        assert!(g.excluded_reason.is_some(), "27B + 128k ctx KV cache must not fit in 22GB usable");
         assert!(g.excluded_reason.as_ref().unwrap().contains("GB"));
     }
 
