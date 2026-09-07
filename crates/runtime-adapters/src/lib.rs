@@ -63,6 +63,66 @@ pub fn normalize_tag(tag: &str) -> String {
     tag.strip_suffix(":latest").unwrap_or(tag).to_string()
 }
 
+/// Below this, the runtime did not actually evaluate the prompt we sent.
+///
+/// `measurement_prompt` is several hundred tokens, so a handful of evaluated
+/// tokens means they came out of a cache. See `prompt_tok_per_sec`.
+const MIN_PROMPT_TOKENS: u64 = 64;
+
+/// The prompt for one benchmark run — never the same text twice.
+///
+/// A runtime serves a repeated prompt from its cache, so a benchmark that can
+/// be re-run must never send a prompt it has sent before: the second run would
+/// time the cache instead of the model. The failure is silent and spectacular
+/// — the same mistake elsewhere in this codebase's family produced a reported
+/// 546,720 tokens/sec.
+///
+/// The nonce leads the prompt because prefix matching is what the cache does.
+/// Appending one would still let almost all of the prompt hit, and a partial
+/// hit is the worst case of all: measured against a cache, but not obviously
+/// wrong enough to notice.
+///
+/// It is built to differ in its *first* characters, not its last. Two clock
+/// readings a moment apart share every digit but the last few ("1775…901234"
+/// vs "1775…909999"), which is a shared prefix a cache can still match on — so
+/// a per-process counter goes first and the clock digits are reversed behind
+/// it. The counter alone would repeat across restarts; the clock alone repeats
+/// if two runs land in the same tick. Together they cannot.
+fn measurement_prompt() -> String {
+    static RUN: std::sync::atomic::AtomicU64 = std::sync::atomic::AtomicU64::new(0);
+    let seq = RUN.fetch_add(1, std::sync::atomic::Ordering::Relaxed);
+    let clock = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|d| d.as_nanos())
+        .unwrap_or(0);
+    let nonce: String = clock.to_string().chars().rev().collect();
+    format!(
+        "Run {seq}-{nonce}. {}",
+        "Summarize, in your own words, why the sky appears blue during the day \
+         and red at sunset. Cover Rayleigh scattering, the wavelength dependence, \
+         and the longer atmospheric path at dusk. "
+            .repeat(4)
+    )
+}
+
+/// Prompt-processing throughput, or 0 when the runtime did not measure it.
+///
+/// Zero means "unknown" and travels all the way to the app as no
+/// time-to-first-token at all. That is the point: this number becomes a
+/// `Calibrated` estimate — one the app presents as measured on this machine —
+/// so a cache artifact here would put our second-highest confidence tier on
+/// the number least likely to be true. Reporting nothing is the honest answer;
+/// a fast wrong number is not.
+fn prompt_tok_per_sec(count: Option<u64>, duration_ns: Option<u64>) -> f64 {
+    match (count, duration_ns) {
+        // A cache hit shows up as far fewer evaluated tokens than we sent, a
+        // near-zero duration, or both — and the ratio of two near-zero numbers
+        // is where an absurd figure comes from.
+        (Some(c), Some(d)) if c >= MIN_PROMPT_TOKENS && d > 0 => c as f64 / (d as f64 / 1e9),
+        _ => 0.0,
+    }
+}
+
 #[derive(Deserialize)]
 struct TagsResponse {
     models: Vec<TagEntry>,
@@ -151,10 +211,7 @@ impl RuntimeAdapter for Ollama {
     async fn measure(&self, tag: &str) -> Result<Measurement, String> {
         // Warmup loads the model so load time doesn't pollute the timing.
         self.generate(tag, "Say OK.", 4).await?;
-        let prompt = "Summarize, in your own words, why the sky appears blue during the day \
-                      and red at sunset. Cover Rayleigh scattering, the wavelength dependence, \
-                      and the longer atmospheric path at dusk. "
-            .repeat(4);
+        let prompt = measurement_prompt();
         let g = self.generate(tag, &prompt, 160).await?;
         let (Some(ec), Some(ed)) = (g.eval_count, g.eval_duration) else {
             return Err("runtime returned no timing data".into());
@@ -162,15 +219,13 @@ impl RuntimeAdapter for Ollama {
         if ed == 0 || ec < 16 {
             return Err(format!("measurement too short ({ec} tokens)"));
         }
-        let gen = ec as f64 / (ed as f64 / 1e9);
-        let prompt_tps = match (g.prompt_eval_count, g.prompt_eval_duration) {
-            (Some(c), Some(d)) if d > 0 => c as f64 / (d as f64 / 1e9),
-            _ => 0.0,
-        };
         Ok(Measurement {
             model_tag: normalize_tag(tag),
-            gen_tok_per_sec: gen,
-            prompt_tok_per_sec: prompt_tps,
+            gen_tok_per_sec: ec as f64 / (ed as f64 / 1e9),
+            prompt_tok_per_sec: prompt_tok_per_sec(
+                g.prompt_eval_count,
+                g.prompt_eval_duration,
+            ),
         })
     }
 }
@@ -344,5 +399,42 @@ mod tests {
                 q.file_size_gb
             );
         }
+    }
+
+    #[test]
+    fn no_two_benchmark_runs_send_the_same_prompt() {
+        // The whole point: a repeated prompt is served from the runtime's
+        // cache, and the second run then times the cache instead of the model.
+        let a = measurement_prompt();
+        let b = measurement_prompt();
+        assert_ne!(a, b, "a re-run would be served from the prompt cache");
+        // The nonce must lead: caches match on prefix, so a trailing nonce
+        // would still let almost the whole prompt hit.
+        let common = a
+            .chars()
+            .zip(b.chars())
+            .take_while(|(x, y)| x == y)
+            .count();
+        assert!(common < 8, "prompts share a {common}-char prefix; nonce is not leading");
+        // Still a real prompt, not just the nonce.
+        assert!(a.len() > 400, "prompt too short to measure prefill");
+    }
+
+    #[test]
+    fn a_cached_prompt_reports_no_prefill_rather_than_a_fast_lie() {
+        // The real shape of the bug: a handful of evaluated tokens in a
+        // near-zero duration, whose ratio is a spectacular wrong number.
+        assert_eq!(prompt_tok_per_sec(Some(3), Some(5_000)), 0.0);
+        assert_eq!(prompt_tok_per_sec(Some(0), Some(0)), 0.0);
+        // Missing timing is equally unknown, not zero throughput.
+        assert_eq!(prompt_tok_per_sec(None, Some(1_000_000)), 0.0);
+        assert_eq!(prompt_tok_per_sec(Some(200), None), 0.0);
+        // A duration of zero cannot produce a rate, however many tokens.
+        assert_eq!(prompt_tok_per_sec(Some(500), Some(0)), 0.0);
+
+        // A real evaluation of the whole prompt is reported as measured:
+        // 220 tokens in 1.1 s is 200 tok/s.
+        let tps = prompt_tok_per_sec(Some(220), Some(1_100_000_000));
+        assert!((tps - 200.0).abs() < 0.001, "got {tps}");
     }
 }

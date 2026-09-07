@@ -116,10 +116,16 @@ pub fn build_diagnostics(d: &Diagnostics) -> String {
         "Benchmark".into(),
         match d.calibration {
             Some(c) => format!(
-                "{} · {:.0} tok/s generation · {:.0} tok/s prompt · {:.0} GB/s effective · {}",
+                "{} · {:.0} tok/s generation · {} · {:.0} GB/s effective · {}",
                 c.model_tag,
                 c.gen_tok_per_sec,
-                c.prompt_tok_per_sec,
+                // Zero means the runtime served the prompt from cache or gave
+                // no timing — not that it processed zero tokens per second.
+                if c.prompt_tok_per_sec > 0.0 {
+                    format!("{:.0} tok/s prompt", c.prompt_tok_per_sec)
+                } else {
+                    "prompt not measured".into()
+                },
                 c.effective_bandwidth_gbps,
                 match c.prefill_capacity {
                     // Without this there is no time-to-first-token anywhere in
@@ -222,6 +228,25 @@ mod tests {
         assert!(!out.contains("spec-sheet"));
         assert!(out.contains("Ollama 0.5.1 · 1 model(s) installed"));
         assert!(out.contains("prefill 1321 B-params·tok/s"));
+        assert!(out.contains("413 tok/s prompt"));
+    }
+
+    #[test]
+    fn a_prompt_served_from_cache_is_reported_as_unmeasured() {
+        // Zero is "the runtime told us nothing usable", not "zero tok/s".
+        // A report that prints it as a rate sends us chasing a performance
+        // problem that does not exist.
+        let cal = Calibration {
+            model_tag: "llama3.2:3b".into(),
+            gen_tok_per_sec: 96.4,
+            prompt_tok_per_sec: 0.0,
+            effective_bandwidth_gbps: 187.3,
+            prefill_capacity: None,
+        };
+        let out = render(Some(&cal), &stopped());
+        assert!(out.contains("prompt not measured"));
+        assert!(!out.contains("0 tok/s prompt"));
+        assert!(out.contains("no prefill timing"));
     }
 
     #[test]

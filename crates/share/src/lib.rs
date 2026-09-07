@@ -126,7 +126,14 @@ pub fn build_benchmark_share(
         f(
             "prompt_tps",
             "Prompt tokens/sec",
-            format!("{:.1}", calibration.prompt_tok_per_sec),
+            // Zero means the runtime served the prompt from its cache and no
+            // prefill was timed. Publishing it as "0.0" would put a number
+            // into a shared dataset that describes nothing.
+            if calibration.prompt_tok_per_sec > 0.0 {
+                format!("{:.1}", calibration.prompt_tok_per_sec)
+            } else {
+                "not measured".into()
+            },
         ),
         f(
             "bandwidth",
