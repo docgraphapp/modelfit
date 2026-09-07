@@ -4,11 +4,17 @@
 
 use modelfit_recommendation::{recommend, Objective, Request};
 use modelfit_registry::Registry;
+use std::collections::BTreeMap;
 
 fn grid(
     hw: &modelfit_hardware::HardwareInfo,
     registry: &Registry,
     measured: Option<f64>,
+    // The benchmark timed one real model, so that rung reports what it ran at
+    // rather than an extrapolation. Passing it through is what lets the
+    // browser harness render the measured tier at all.
+    measured_tags: &BTreeMap<String, f64>,
+    prefill: Option<f64>,
 ) -> serde_json::Map<String, serde_json::Value> {
     let objectives = [
         ("overall", Objective::Overall),
@@ -28,6 +34,9 @@ fn grid(
                     objective: obj,
                     context_length: ctx,
                     measured_effective_bandwidth_gbps: measured,
+                    measured_tok_per_sec: measured_tags.clone(),
+                    measured_prefill_capacity: prefill,
+                    ..Request::default()
                 },
             );
             by_ctx.insert(ctx.to_string(), serde_json::to_value(&r).unwrap());
@@ -45,7 +54,7 @@ fn main() {
         "hardware": hw,
         "registryVersion": registry.version,
         "modelCount": registry.models.len(),
-        "recommendations": grid(&hw, &registry, None),
+        "recommendations": grid(&hw, &registry, None, &BTreeMap::new(), None),
     });
 
     // Optional: `--measured <gbps> <tag> <gen_tps> <prompt_tps>` (numbers from
@@ -57,12 +66,22 @@ fn main() {
         let tag = args[i + 2].clone();
         let gen: f64 = args[i + 3].parse().expect("gen tok/s");
         let prompt: f64 = args[i + 4].parse().expect("prompt tok/s");
-        out["recommendationsMeasured"] = grid(&hw, &registry, Some(bw)).into();
+        let measured_tags = BTreeMap::from([(tag.clone(), gen)]);
+        // Prefill scales with the parameters each prompt token is pushed
+        // through, so the measurement is stored as prompt tok/s × those params.
+        let prefill = registry
+            .models
+            .iter()
+            .find(|m| m.ollama_tag.as_deref() == Some(tag.as_str()))
+            .map(|m| prompt * m.speed_params_b());
+        out["recommendationsMeasured"] =
+            grid(&hw, &registry, Some(bw), &measured_tags, prefill).into();
         out["calibration"] = serde_json::json!({
             "modelTag": tag,
             "genTokPerSec": gen,
             "promptTokPerSec": prompt,
             "effectiveBandwidthGbps": bw,
+            "prefillCapacity": prefill,
         });
     }
 

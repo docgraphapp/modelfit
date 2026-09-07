@@ -2,9 +2,10 @@ use modelfit_hardware::HardwareInfo;
 use modelfit_recommendation::{recommend, Recommendations, Request};
 use modelfit_registry::Registry;
 use modelfit_runtime_adapters::{
-    calibration_candidates, gb_per_token, Calibration, Ollama, RuntimeAdapter, RuntimeStatus,
+    active_params_b, calibration_candidates, gb_per_token, Calibration, Ollama, RuntimeAdapter,
+    RuntimeStatus,
 };
-use modelfit_share::{build_benchmark_share, BenchmarkShare};
+use modelfit_share::{build_benchmark_share, build_diagnostics, BenchmarkShare, Diagnostics};
 use serde::Serialize;
 use tauri::{Emitter, Manager};
 
@@ -219,11 +220,19 @@ async fn run_calibration(app: tauri::AppHandle) -> Result<Calibration, String> {
     let m = ollama.measure(&tag).await?;
     let gb_tok = gb_per_token(&registry, &tag)
         .ok_or_else(|| format!("{tag} is not in the model registry"))?;
+    // Prefill is compute-bound, so it gets its own constant: prompt tok/s
+    // scaled by the parameters each token was pushed through. Absent when the
+    // runtime reported no prompt timing — the app then shows no
+    // time-to-first-token rather than a derived guess.
+    let prefill_capacity = (m.prompt_tok_per_sec > 0.0)
+        .then(|| active_params_b(&registry, &tag).map(|p| m.prompt_tok_per_sec * p))
+        .flatten();
     Ok(Calibration {
         model_tag: m.model_tag,
         gen_tok_per_sec: m.gen_tok_per_sec,
         prompt_tok_per_sec: m.prompt_tok_per_sec,
         effective_bandwidth_gbps: m.gen_tok_per_sec * gb_tok,
+        prefill_capacity,
     })
 }
 
@@ -248,6 +257,34 @@ async fn benchmark_share(
         env!("CARGO_PKG_VERSION"),
         &registry.version,
     )
+}
+
+/// The state behind the numbers on screen, as Markdown for a bug report.
+///
+/// Assembled here rather than in the webview so the report always describes
+/// what the engine actually assumed — the registry in force, the bandwidth
+/// tier, the runtime — instead of what the UI happened to be rendering.
+#[tauri::command]
+async fn diagnostics(
+    app: tauri::AppHandle,
+    hardware: Option<HardwareInfo>,
+    calibration: Option<Calibration>,
+) -> String {
+    let hw = match hardware {
+        Some(h) => h,
+        None => detect_hardware().await,
+    };
+    let (registry, source) = effective_registry(&app);
+    let runtime = Ollama::default().status().await;
+    build_diagnostics(&Diagnostics {
+        hardware: &hw,
+        runtime: &runtime,
+        calibration: calibration.as_ref(),
+        app_version: env!("CARGO_PKG_VERSION"),
+        registry_version: &registry.version,
+        registry_model_count: registry.models.len(),
+        registry_source: source,
+    })
 }
 
 /// Open an external page in the default browser (e.g. the Ollama download
@@ -327,7 +364,8 @@ pub fn run() {
             open_external,
             registry_info,
             update_registry,
-            benchmark_share
+            benchmark_share,
+            diagnostics
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

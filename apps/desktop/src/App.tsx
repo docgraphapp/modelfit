@@ -8,6 +8,8 @@ import type {
   Assessment,
   BenchmarkShare,
   Calibration,
+  Confidence as ConfidenceTier,
+  Estimate,
   HardwareInfo,
   PullProgress,
   Recommendations,
@@ -16,6 +18,11 @@ import type {
 } from "./types";
 
 const CALIBRATION_KEY = "modelfit:calibration";
+// tok/s this machine has actually produced, by runtime tag. Kept separate from
+// the calibration: a calibration is one reading that ages out when the machine
+// changes, while these are facts about models the user has really run, and the
+// engine reports them verbatim instead of extrapolating.
+const MEASUREMENTS_KEY = "modelfit:measurements";
 
 // Sharing a benchmark works end to end — Rust builder, prefilled GitHub issue
 // form, preview dialog — but the framing still needs work ("Create new issue"
@@ -31,6 +38,25 @@ function loadCalibration(): Calibration | null {
     return raw ? (JSON.parse(raw) as Calibration) : null;
   } catch {
     return null;
+  }
+}
+
+type Measurements = Record<string, number>;
+
+function loadMeasurements(): Measurements {
+  try {
+    const raw = localStorage.getItem(MEASUREMENTS_KEY);
+    const parsed = raw ? (JSON.parse(raw) as unknown) : null;
+    if (!parsed || typeof parsed !== "object") return {};
+    // Storage is user-writable and survives version changes, so anything that
+    // is not a usable tok/s reading is dropped rather than shown as measured.
+    return Object.fromEntries(
+      Object.entries(parsed as Record<string, unknown>).filter(
+        ([tag, tps]) => tag && typeof tps === "number" && tps > 0 && Number.isFinite(tps),
+      ),
+    ) as Measurements;
+  } catch {
+    return {};
   }
 }
 
@@ -52,6 +78,15 @@ const ACCEL_LABELS: Record<string, string> = {
   rocm: "ROCm",
   vulkan: "Vulkan",
 };
+
+/** A duration a reader can feel: sub-minute in seconds, above that in minutes. */
+function formatSeconds(s: number): string {
+  if (s < 1) return "<1s";
+  if (s < 60) return `${Math.round(s)}s`;
+  const m = Math.floor(s / 60);
+  const rest = Math.round(s % 60);
+  return rest ? `${m}m ${rest}s` : `${m}m`;
+}
 
 const FIT_WORDS: Record<Assessment["fit"], string> = {
   comfortable: "runs comfortably",
@@ -88,13 +123,13 @@ function FitGauge({
   usable: number;
   compact?: boolean;
 }) {
-  const pct = Math.min(100, (a.estMemoryGb / usable) * 100);
+  const pct = Math.min(100, (a.memory.value / usable) * 100);
   return (
     <div>
       <div
         role="meter"
-        aria-label={`Estimated memory: ${a.estMemoryGb} of ${usable} GB usable`}
-        aria-valuenow={a.estMemoryGb}
+        aria-label={`Estimated memory: ${a.memory.value} of ${usable} GB usable`}
+        aria-valuenow={a.memory.value}
         aria-valuemin={0}
         aria-valuemax={usable}
         className={`overflow-hidden rounded-full bg-neutral-200/80 dark:bg-neutral-800 ${
@@ -110,7 +145,7 @@ function FitGauge({
         <div className="mt-1.5 flex justify-between text-xs text-neutral-400 dark:text-neutral-500">
           <Term id="fit">{FIT_WORDS[a.fit]}</Term>
           <span className="tabular-nums">
-            ~{a.estMemoryGb} of {usable} GB usable
+            ~{a.memory.value} of {usable} GB usable
           </span>
         </div>
       )}
@@ -231,19 +266,79 @@ function InstallControl({
   );
 }
 
-function Confidence({ a }: { a: Assessment }) {
-  if (a.confidence === "measured") {
-    return (
-      <span className="text-emerald-600 dark:text-emerald-500">
-        {" "}
-        <Term id="measured">measured</Term>
-      </span>
-    );
-  }
+// How each tier reads. A number the user cannot check is just an assertion, so
+// every figure carries its basis as a tooltip — the whole point of the tiers is
+// that a guess and a measurement never look alike.
+//
+// `estimated` deliberately has no glyph: it is the baseline every figure on
+// screen already announces with a leading "~", and stamping a second tilde on
+// each one ("~65 tok/s ~") taught the reader nothing while making the dense
+// rows unreadable. A mark is spent only on a number that is better than an
+// estimate — or worse than one.
+const CONFIDENCE_MARKS: Record<
+  ConfidenceTier,
+  { glyph: string; word: string; className: string }
+> = {
+  measuredLocal: {
+    glyph: "✓",
+    word: "measured on this machine",
+    className: "text-emerald-600 dark:text-emerald-500",
+  },
+  community: {
+    glyph: "✓",
+    word: "measured on hardware like yours",
+    className: "text-sky-600 dark:text-sky-500",
+  },
+  calibrated: {
+    glyph: "≈",
+    word: "calibrated",
+    className: "text-emerald-700/80 dark:text-emerald-500/80",
+  },
+  estimated: {
+    glyph: "",
+    word: "est.",
+    className: "text-neutral-400 dark:text-neutral-500",
+  },
+  unknown: {
+    glyph: "?",
+    word: "unverified",
+    className: "text-amber-600 dark:text-amber-500",
+  },
+};
+
+function markFor(e: Estimate) {
+  return CONFIDENCE_MARKS[e.confidence] ?? CONFIDENCE_MARKS.estimated;
+}
+
+/**
+ * A number the engine produced, hoverable for the basis behind it.
+ *
+ * Every figure carries its basis whether or not it earns a glyph — that is
+ * what makes it checkable rather than merely asserted — so the hover target is
+ * the number itself, not a symbol beside it.
+ */
+function Num({ e, children }: { e: Estimate; children: React.ReactNode }) {
+  const mark = markFor(e);
   return (
-    <span className="text-neutral-400 dark:text-neutral-500">
+    <span className="cursor-help" title={`${mark.word} — ${e.basis}`}>
+      {children}
+      {mark.glyph && (
+        <span className={mark.className} aria-label={`${mark.word}. ${e.basis}`}>
+          {" "}
+          <span aria-hidden>{mark.glyph}</span>
+        </span>
+      )}
+    </span>
+  );
+}
+
+/// The hero has room for the tier in words, where the dense rows do not.
+function ConfidenceWord({ e }: { e: Estimate }) {
+  const mark = markFor(e);
+  return (
+    <span className={mark.className} title={e.basis}>
       {" "}
-      <Term id="measured">est.</Term>
+      <Term id="measured">{e.confidence === "measuredLocal" ? "measured" : mark.word}</Term>
     </span>
   );
 }
@@ -281,9 +376,11 @@ function HeroPick({
       <div className="mt-4 flex gap-8">
         <div>
           <div className="text-lg font-semibold tabular-nums leading-tight">
-            ~{Math.round(a.estTokPerSec)}
+            ~{Math.round(a.speed.value)}
             <span className="text-[13px] font-normal text-neutral-400"> tok/s</span>
-            <span className="text-[13px] font-normal"><Confidence a={a} /></span>
+            <span className="text-[13px] font-normal">
+              <ConfidenceWord e={a.speed} />
+            </span>
           </div>
           <div className="text-xs text-neutral-400 dark:text-neutral-500">
             <Term id="tokensPerSecond">generation speed</Term>
@@ -291,13 +388,29 @@ function HeroPick({
         </div>
         <div>
           <div className="text-lg font-semibold tabular-nums leading-tight">
-            ~{a.estMemoryGb}
-            <span className="text-[13px] font-normal text-neutral-400"> GB</span>
+            <Num e={a.memory}>
+              ~{a.memory.value}
+              <span className="text-[13px] font-normal text-neutral-400"> GB</span>
+            </Num>
           </div>
           <div className="text-xs text-neutral-400 dark:text-neutral-500">
             <Term id="memory">memory needed</Term>
           </div>
         </div>
+        {/* Only after the benchmark: prefill throughput cannot be read off a
+            spec sheet, so before then there is no honest number to show. */}
+        {a.timeToFirstTokenS && (
+          <div>
+            <div className="text-lg font-semibold tabular-nums leading-tight">
+              <Num e={a.timeToFirstTokenS}>
+                ~{formatSeconds(a.timeToFirstTokenS.value)}
+              </Num>
+            </div>
+            <div className="text-xs text-neutral-400 dark:text-neutral-500">
+              <Term id="prefillDecode">to first token</Term>
+            </div>
+          </div>
+        )}
       </div>
       <div className="mt-4">
         <FitGauge a={a} usable={usable} />
@@ -316,7 +429,7 @@ function QuantLadder({ a, usable }: { a: Assessment; usable: number }) {
   if (!a.ladder || a.ladder.length < 2) return null;
   // Bars share one scale so rungs are comparable, and the scale always spans
   // usable memory — otherwise a ladder that all fits would look full.
-  const scale = Math.max(usable, ...a.ladder.map((r) => r.estMemoryGb));
+  const scale = Math.max(usable, ...a.ladder.map((r) => r.memory.value));
   const limit = (usable / scale) * 100;
 
   return (
@@ -355,7 +468,7 @@ function QuantLadder({ a, usable }: { a: Assessment; usable: number }) {
                     className={`block h-full rounded-full ${GAUGE_COLORS[r.fit]} ${
                       fits ? "" : "opacity-40"
                     }`}
-                    style={{ width: `${Math.min(100, (r.estMemoryGb / scale) * 100)}%` }}
+                    style={{ width: `${Math.min(100, (r.memory.value / scale) * 100)}%` }}
                   />
                   {/* Your usable memory. Bars crossing it cannot run here.
                       Drawn per row so it stays aligned with the bar column. */}
@@ -365,9 +478,15 @@ function QuantLadder({ a, usable }: { a: Assessment; usable: number }) {
                     style={{ left: `${limit}%` }}
                   />
                 </span>
-                <span className="w-14 shrink-0 text-right">{r.estMemoryGb} GB</span>
-                <span className="w-16 shrink-0 text-right">
-                  {fits ? `~${Math.round(r.estTokPerSec)} tok/s` : "won't fit"}
+                <span className="w-14 shrink-0 text-right">
+                  <Num e={r.memory}>{r.memory.value} GB</Num>
+                </span>
+                <span className="w-[4.5rem] shrink-0 text-right">
+                  {fits ? (
+                    <Num e={r.speed}>~{Math.round(r.speed.value)} tok/s</Num>
+                  ) : (
+                    "won't fit"
+                  )}
                 </span>
               </li>
             );
@@ -475,7 +594,8 @@ function MiniPick({
         <Term id="quantization">{a.quant}</Term>
       </div>
       <div className="mt-3 text-[13px] tabular-nums text-neutral-500 dark:text-neutral-400">
-        ~{Math.round(a.estTokPerSec)} tok/s<Confidence a={a} /> · ~{a.estMemoryGb} GB
+        <Num e={a.speed}>~{Math.round(a.speed.value)} tok/s</Num> ·{" "}
+        <Num e={a.memory}>~{a.memory.value} GB</Num>
       </div>
       <div className="mt-2.5">
         <FitGauge a={a} usable={usable} compact />
@@ -851,6 +971,8 @@ export default function App() {
   const [error, setError] = useState<string | null>(null);
   const [runtime, setRuntime] = useState<RuntimeStatus | null>(null);
   const [calibration, setCalibration] = useState<Calibration | null>(loadCalibration);
+  const [measurements, setMeasurements] = useState<Measurements>(loadMeasurements);
+  const [copiedDiagnostics, setCopiedDiagnostics] = useState(false);
   const [benchmarking, setBenchmarking] = useState(false);
   const [pulling, setPulling] = useState<Record<string, PullProgress>>({});
   const [registry, setRegistry] = useState<RegistryInfo | null>(null);
@@ -859,10 +981,18 @@ export default function App() {
   const [updating, setUpdating] = useState(false);
   const calibrationRef = useRef(calibration);
   calibrationRef.current = calibration;
+  const measurementsRef = useRef(measurements);
+  measurementsRef.current = measurements;
   const recomputeSeq = useRef(0);
 
   const recompute = useCallback(
-    (hardware: HardwareInfo, obj: Objective, ctx: number, cal?: Calibration | null) => {
+    (
+      hardware: HardwareInfo,
+      obj: Objective,
+      ctx: number,
+      cal?: Calibration | null,
+      meas?: Measurements,
+    ) => {
       const c = cal !== undefined ? cal : calibrationRef.current;
       const seq = ++recomputeSeq.current;
       invoke<Recommendations>("get_recommendations", {
@@ -871,6 +1001,8 @@ export default function App() {
           objective: obj,
           contextLength: ctx,
           measuredEffectiveBandwidthGbps: c?.effectiveBandwidthGbps ?? null,
+          measuredTokPerSec: meas ?? measurementsRef.current,
+          measuredPrefillCapacity: c?.prefillCapacity ?? null,
         },
       })
         .then((r) => {
@@ -1001,11 +1133,47 @@ export default function App() {
       .then((cal) => {
         setCalibration(cal);
         localStorage.setItem(CALIBRATION_KEY, JSON.stringify(cal));
-        if (hw) recompute(hw, objective, contextLength, cal);
+        // The benchmark timed one real model on this machine, so that rung
+        // stops being extrapolated — here and on every later launch. The
+        // derived bandwidth still improves every other model's estimate.
+        const next = { ...measurementsRef.current, [cal.modelTag]: cal.genTokPerSec };
+        setMeasurements(next);
+        try {
+          localStorage.setItem(MEASUREMENTS_KEY, JSON.stringify(next));
+        } catch {
+          // A full or blocked store costs the memory of this reading, not the
+          // benchmark the user just waited for.
+        }
+        if (hw) recompute(hw, objective, contextLength, cal, next);
         refreshRuntime();
       })
       .catch((e) => setError(String(e)))
       .finally(() => setBenchmarking(false));
+  };
+
+  // The state behind the numbers on screen, for a bug report. Built in Rust so
+  // it describes what the engine assumed rather than what the UI rendered.
+  const copyDiagnostics = () => {
+    invoke<string>("diagnostics", { hardware: hw, calibration })
+      .then(async (text) => {
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          // Clipboard access can be refused; a selectable textarea is a worse
+          // experience than the copy but better than losing the report.
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          ta.remove();
+        }
+        setCopiedDiagnostics(true);
+        window.setTimeout(() => setCopiedDiagnostics(false), 1600);
+      })
+      .catch((e) => setError(String(e)));
   };
 
   // Models the engine will actually recommend here — the number that visibly
@@ -1071,7 +1239,7 @@ export default function App() {
                 <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
                   {(() => {
                     const closest = [...recs.all].sort(
-                      (a, b) => a.estMemoryGb - b.estMemoryGb,
+                      (a, b) => a.memory.value - b.memory.value,
                     )[0];
                     return closest?.excludedReason
                       ? `Closest candidate: ${closest.name} — ${closest.excludedReason}.`
@@ -1175,20 +1343,35 @@ export default function App() {
                                 a.excludedReason ? "text-neutral-400 dark:text-neutral-500" : ""
                               }`}
                             >
-                              {a.estMemoryGb} GB
+                              <Num e={a.memory}>{a.memory.value} GB</Num>
                             </td>
                             <td
                               className={`whitespace-nowrap px-3 py-2.5 text-right tabular-nums ${
                                 a.excludedReason ? "text-neutral-400 dark:text-neutral-500" : ""
                               }`}
                             >
-                              ~{Math.round(a.estTokPerSec)} t/s
+                              <Num e={a.speed}>~{Math.round(a.speed.value)} t/s</Num>
                             </td>
                             <td className="whitespace-nowrap px-3 py-2.5 text-right font-medium tabular-nums">
                               {a.excludedReason ? (
                                 <span className="text-neutral-300 dark:text-neutral-600">—</span>
-                              ) : (
+                              ) : a.recommendable ? (
                                 Math.round(a.score)
+                              ) : (
+                                // Discovered, not curated: it runs, and we say
+                                // so, but nothing here has rated how good it
+                                // is — and a score invented to fill the column
+                                // is exactly what would put it in BEST.
+                                <span
+                                  className="cursor-help text-neutral-300 dark:text-neutral-600"
+                                  title={
+                                    a.quality
+                                      ? `Provisional score from ${a.qualitySource} — not curated, so this model is listed but never recommended`
+                                      : "Not rated yet — listed with real memory and speed, but never recommended"
+                                  }
+                                >
+                                  unrated
+                                </span>
                               )}
                             </td>
                             <td className="max-w-[240px] px-4 py-2.5">
@@ -1272,11 +1455,17 @@ export default function App() {
 
             <footer className="mt-auto space-y-1.5 border-t border-neutral-200/70 pt-3 text-xs text-neutral-400 dark:border-neutral-800/70">
               <p>
-                {recs?.bandwidthMeasured ? (
+                {recs?.bandwidth.confidence === "calibrated" ? (
                   <>
                     Speeds are extrapolated from a real benchmark on this machine (
-                    {Math.round(recs.bandwidthGbps)} GB/s effective{" "}
+                    {Math.round(recs.bandwidth.value)} GB/s effective{" "}
                     <Term id="bandwidth">memory bandwidth</Term>).
+                  </>
+                ) : recs?.bandwidth.confidence === "unknown" ? (
+                  <>
+                    We have no <Term id="bandwidth">memory bandwidth</Term> figure for
+                    this hardware, so speeds use a placeholder — run the{" "}
+                    <Term id="benchmark">benchmark</Term> for real numbers.
                   </>
                 ) : (
                   <>
@@ -1299,6 +1488,17 @@ export default function App() {
                     {updating ? "updating…" : "Update"}
                   </button>
                   {registryMsg && <span>{registryMsg}</span>}
+                  {/* Sits with the other "about this run" facts rather than in
+                      the hero: it is only ever wanted when something looks
+                      wrong, and that is the moment the user goes looking here. */}
+                  <span aria-hidden>·</span>
+                  <button
+                    onClick={copyDiagnostics}
+                    title="Copy this machine, the registry in force, and where each estimate comes from — for a bug report"
+                    className="font-medium text-neutral-500 underline decoration-neutral-300 hover:text-neutral-700 dark:text-neutral-400 dark:hover:text-neutral-200"
+                  >
+                    {copiedDiagnostics ? "Copied" : "Copy diagnostics"}
+                  </button>
                 </div>
               )}
             </footer>

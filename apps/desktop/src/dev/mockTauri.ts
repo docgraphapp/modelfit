@@ -4,6 +4,7 @@
 // builds and inert inside the real app.
 import type {
   Assessment,
+  Estimate,
   Calibration,
   HardwareInfo,
   Recommendations,
@@ -110,32 +111,71 @@ const LADDER: [string, number][] = [
   ["Q8_0", 1.75],
 ];
 
+// The engine ships every number with how well it is known and what it assumes;
+// the harness has to as well, or the marks it renders would be fiction.
+function est(value: number, confidence: Estimate["confidence"], basis: string): Estimate {
+  return { value, confidence, basis };
+}
+
 function toAssessment(r: Row, measured: boolean, ctxKv = 0): Assessment {
+  const speedTier = measured ? "calibrated" : "estimated";
+  const bandwidth = measured ? 187 : 150;
+  const memoryOf = (mem: number) =>
+    est(
+      mem,
+      "estimated",
+      `${(mem - 1.5).toFixed(1)} GB weights + KV cache at this context + 1.5 GB runtime overhead`,
+    );
+  const speedOf = (tps: number) =>
+    est(
+      tps,
+      speedTier,
+      measured
+        ? `${bandwidth} GB/s measured on this machine by the calibration benchmark`
+        : `${bandwidth} GB/s effective bandwidth ÷ GB touched per token`,
+    );
   return {
     modelId: r.id,
     name: r.name,
     quant: r.quant,
     ollamaTag: r.tag,
-    estMemoryGb: Math.round((r.mem + ctxKv) * 10) / 10,
-    estTokPerSec: measured ? r.tps * 1.12 : r.tps,
+    memory: memoryOf(Math.round((r.mem + ctxKv) * 10) / 10),
+    speed: speedOf(measured ? r.tps * 1.12 : r.tps),
+    timeToFirstTokenS: measured
+      ? est(
+          Math.round((8192 / (1400 / Math.max(1, r.mem * 1.6))) * 10) / 10,
+          "calibrated",
+          "prompt tokens/sec measured here, against an 8k context",
+        )
+      : null,
     fit: r.fit,
     quality: r.quality,
+    // The harness only carries curated fixtures; the discovered tier is
+    // exercised by the engine's own tests.
+    recommendable: true,
+    qualitySource: "hand",
     score: r.score,
     excludedReason: r.excluded,
-    confidence: measured ? "measured" : "medium",
     // Mirror the engine's ladder. Bytes per weight relative to Q4_K_M drive
     // both memory and speed, so the mock trades the same way the real one does.
     ladder: LADDER.map(([name, bpw]) => {
       const mem = Math.round(((r.mem + ctxKv) * bpw) * 10) / 10;
       return {
         quant: name,
-        estMemoryGb: mem,
-        estTokPerSec: Math.round(((measured ? r.tps * 1.12 : r.tps) / bpw) * 10) / 10,
-        fit: mem <= 26 * 0.8 ? "comfortable" : mem <= 26 * 0.9 ? "tight" : "toobig",
+        memory: memoryOf(mem),
+        speed: speedOf(Math.round(((measured ? r.tps * 1.12 : r.tps) / bpw) * 10) / 10),
+        fit: (mem <= 26 * 0.8 ? "comfortable" : mem <= 26 * 0.9 ? "tight" : "toobig") as
+          Assessment["fit"],
         ollamaTag: r.tag && `${r.tag}-${name.toLowerCase()}`,
-      } as const;
+      };
     }),
   };
+}
+
+function bandwidthEstimate(measured: boolean): Estimate {
+  return measured
+    ? est(187, "calibrated", "187 GB/s measured on this machine by the calibration benchmark")
+    : est(150, "estimated", "Apple M4 Pro spec-sheet memory bandwidth 273 GB/s × 55% real-world efficiency");
 }
 
 function recommendations(req: {
@@ -154,24 +194,23 @@ function recommendations(req: {
       fast: null,
       all: all.map((a) => ({
         ...a,
-        excludedReason: a.excludedReason ?? `needs ~${a.estMemoryGb} GB at 128k context`,
+        excludedReason: a.excludedReason ?? `needs ~${a.memory.value} GB at 128k context`,
         fit: "toobig",
       })),
       usableMemoryGb: 26,
-      bandwidthGbps: measured ? 187 : 150,
-      bandwidthMeasured: measured,
+      bandwidth: bandwidthEstimate(measured),
     };
   }
   const byScore = [...runnable].sort((a, b) => b.score - a.score);
   const comfortable = runnable.filter((a) => a.fit === "comfortable");
-  const bySpeed = [...runnable].sort((a, b) => b.estTokPerSec - a.estTokPerSec);
+  const bySpeed = [...runnable].sort((a, b) => b.speed.value - a.speed.value);
   const best =
     req.objective === "coding"
       ? runnable.find((a) => a.modelId.includes("coder")) ?? byScore[0]
       : req.objective === "speed"
         ? bySpeed[0]
         : req.objective === "quality"
-          ? [...runnable].sort((a, b) => b.quality - a.quality)[0]
+          ? [...runnable].sort((a, b) => (b.quality ?? 0) - (a.quality ?? 0))[0]
           : byScore[0];
   const safe = comfortable.sort((a, b) => b.score - a.score)[0] ?? null;
   return {
@@ -180,8 +219,7 @@ function recommendations(req: {
     fast: bySpeed[0] ?? null,
     all,
     usableMemoryGb: 26,
-    bandwidthGbps: measured ? 187 : 150,
-    bandwidthMeasured: measured,
+    bandwidth: bandwidthEstimate(measured),
   };
 }
 
@@ -201,7 +239,7 @@ function adjustForHardware(
   const all = base.all.map((a) => {
     // A context-length cap is a property of the model, not the machine.
     if (a.excludedReason?.includes("max context")) return a;
-    const need = a.estMemoryGb;
+    const need = a.memory.value;
     if (need > usable)
       return {
         ...a,
@@ -217,13 +255,13 @@ function adjustForHardware(
     return {
       ...a,
       fit: (need <= usable * 0.7 ? "comfortable" : "tight") as Assessment["fit"],
-      score: a.excludedReason || !a.score ? Math.round(a.quality * 10) : a.score,
+      score: a.excludedReason || !a.score ? Math.round((a.quality ?? 0) * 10) : a.score,
       excludedReason: null,
     };
   });
   const runnable = all.filter((a) => !a.excludedReason);
   const byScore = [...runnable].sort((x, y) => y.score - x.score);
-  const bySpeed = [...runnable].sort((x, y) => y.estTokPerSec - x.estTokPerSec);
+  const bySpeed = [...runnable].sort((x, y) => y.speed.value - x.speed.value);
   const comfortable = runnable
     .filter((a) => a.fit === "comfortable")
     .sort((x, y) => y.score - x.score);
@@ -254,6 +292,8 @@ const calibration: Calibration = {
   genTokPerSec: 94,
   promptTokPerSec: 612,
   effectiveBandwidthGbps: 187,
+  // prompt tok/s × the 3.2B model's parameters.
+  prefillCapacity: 612 * 3.2,
 };
 
 type Handler = (payload: { event: string; id: number; payload: unknown }) => void;
@@ -292,6 +332,23 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
     case "runtime_status":
       if (real) return (await realRuntimeStatus()) ?? runtime;
       return runtime;
+    case "diagnostics": {
+      // The real command builds this in Rust from the engine's own state; the
+      // harness only has to prove the button copies something shaped like it.
+      const machine: HardwareInfo = args.hardware ?? real?.hardware ?? hw;
+      const cal: Calibration | null = args.calibration ?? null;
+      const rows: [string, string][] = [
+        ["App", "0.1.0 (browser harness)"],
+        ["Registry", `${real?.registryVersion ?? registryInfo.version} · ${real?.modelCount ?? registryInfo.modelCount} models`],
+        ["OS", `${machine.os} ${machine.osVersion} (${machine.arch})`],
+        ["CPU", `${machine.cpuModel} · ${machine.physicalCores} cores`],
+        ["Memory", `${machine.totalRamGb} GB${machine.unifiedMemory ? " unified" : ""}`],
+        ["Benchmark", cal ? `${cal.modelTag} · ${Math.round(cal.genTokPerSec)} tok/s` : "not run"],
+      ];
+      return `### ModelFit diagnostics\n\n| | |\n|---|---|\n${rows
+        .map(([k, v]) => `| ${k} | ${v} |`)
+        .join("\n")}\n`;
+    }
     case "registry_info":
     case "update_registry":
       await sleep(cmd === "update_registry" ? 600 : 0);

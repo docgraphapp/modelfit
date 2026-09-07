@@ -9,6 +9,9 @@ use modelfit_hardware::HardwareInfo;
 use modelfit_runtime_adapters::Calibration;
 use serde::Serialize;
 
+mod diagnostics;
+pub use diagnostics::{build_diagnostics, Diagnostics};
+
 /// Where "Share my benchmark" posts. A GitHub issue form is the whole backend:
 /// sharing is opt-in and public by construction, there is nothing to host, and
 /// nothing is sent until the user presses Submit on GitHub's own page.

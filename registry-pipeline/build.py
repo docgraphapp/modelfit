@@ -1,9 +1,17 @@
 #!/usr/bin/env python3
 """ModelFit registry builder.
 
-Reads the curated models.yaml, enriches it from Hugging Face (exact GGUF file
-sizes + KV-cache cost computed from GGUF header metadata), validates, and
-emits registry/registry.json — the file the app bundles and fetches remotely.
+Reads models.yaml (curated) and, when present, discovered.yaml (written by
+discover.py), enriches both from Hugging Face (exact GGUF file sizes +
+KV-cache cost computed from GGUF header metadata), validates, and emits
+registry/registry.json — the file the app bundles and fetches remotely.
+
+The two tiers are the design, not an implementation detail. A curated entry
+carries a hand-written quality score and is the only kind the app will offer
+as a BEST / SAFE / FAST pick. A discovered entry carries facts read out of the
+model file and no quality at all: it is listed, so "will this run here" is
+answered for hundreds of models, and it is never recommended, so a pick always
+rests on a number a person stood behind.
 
 Runs in CI on a schedule; never on user machines. Every HF lookup has a
 curated fallback so one moved repo can't break the build.
@@ -15,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import datetime
+import re
 import json
 import struct
 import sys
@@ -58,23 +67,32 @@ def list_repo_files(repo: str) -> dict[str, int]:
     return files
 
 
+# "<name>-Q6_K.gguf" or, for a model too big for one file,
+# "<name>-Q6_K-00001-of-00002.gguf". The quant must end the stem: a substring
+# test matches "Q6_K" inside "Q6_K_L", and summing the shards of both variants
+# is how a 70B model ends up claiming 165 GB at Q6_K.
+SHARD_SUFFIX = r"(?:-\d{5}-of-\d{5})?"
+
+
 def find_quant_file(files: dict[str, int], quant: str) -> tuple[str, int] | None:
-    """Match e.g. 'Q4_K_M' to '...Q4_K_M.gguf' (case-insensitive), ignoring
-    multi-part shards (-00001-of-)."""
-    needle = quant.lower()
-    candidates = [
-        (p, s)
-        for p, s in files.items()
-        if needle in p.lower() and "-of-" not in p.lower()
-    ]
-    if not candidates:
-        # Sharded quant: sum the parts.
-        parts = [(p, s) for p, s in files.items() if needle in p.lower() and "-of-" in p.lower()]
-        if parts:
-            return (parts[0][0], sum(s for _, s in parts))
+    """Total bytes of one quant, summing its shards when it has any."""
+    pattern = re.compile(rf"[-._]{re.escape(quant)}{SHARD_SUFFIX}\.gguf$", re.IGNORECASE)
+    matches = [(p, s) for p, s in files.items() if pattern.search(p)]
+    if not matches:
         return None
-    # Prefer the shortest path (top-level file over subfolder variants).
-    return min(candidates, key=lambda t: len(t[0]))
+    plain = [(p, s) for p, s in matches if not re.search(r"-\d{5}-of-\d{5}\.gguf$", p)]
+    if plain:
+        # A single file always wins: prefer the shortest path, so a top-level
+        # file beats a subfolder copy of the same quant.
+        return min(plain, key=lambda t: len(t[0]))
+    shards = [(p, s) for p, s in matches if (p, s) not in plain]
+    # Shards of one quant may sit beside another variant's; group by the stem
+    # before the part number so only one model's parts are added together.
+    groups: dict[str, list[tuple[str, int]]] = {}
+    for path, size in shards:
+        groups.setdefault(re.sub(r"-\d{5}-of-\d{5}\.gguf$", "", path), []).append((path, size))
+    stem, parts = min(groups.items(), key=lambda kv: len(kv[0]))
+    return (parts[0][0], sum(s for _, s in parts))
 
 
 # --- minimal GGUF v2/v3 header reader (metadata only) -----------------------
@@ -249,9 +267,31 @@ def ollama_tag_for(m: dict, quant: str, offline: bool) -> tuple[str | None, str 
 # --- build -------------------------------------------------------------------
 
 
-def build(offline: bool) -> tuple[dict, list[str]]:
+def load_sources() -> tuple[list[dict], list[str]]:
+    """Curated entries first, then any discovered ones not already curated."""
     models = yaml.safe_load((HERE / "models.yaml").read_text())
-    warnings: list[str] = []
+    notes: list[str] = []
+    discovered_path = HERE / "discovered.yaml"
+    if not discovered_path.exists():
+        return models, notes
+    discovered = yaml.safe_load(discovered_path.read_text()) or []
+    curated_ids = {m["id"] for m in models}
+    for m in discovered:
+        if m["id"] in curated_ids:
+            # Promotion: the entry was copied into models.yaml and given a
+            # quality score. The curated one wins and the stale copy is dropped
+            # rather than shadowing it.
+            notes.append(f"{m['id']}: discovered entry superseded by the curated one")
+            continue
+        # A discovered entry must never arrive carrying a quality score: that
+        # is the one field the automated path is not allowed to fill.
+        m["quality"] = None
+        models.append(m)
+    return models, notes
+
+
+def build(offline: bool) -> tuple[dict, list[str]]:
+    models, warnings = load_sources()
     out_models = []
 
     for m in models:
@@ -267,10 +307,12 @@ def build(offline: bool) -> tuple[dict, list[str]]:
         quants = {}
         for qname, qcfg in m["quants"].items():
             size_gb = qcfg["fallback_size_gb"]
+            size_source = "fallback"
             hit = find_quant_file(files, qname) if files else None
             if hit:
                 path, size = hit
                 size_gb = round(size / GIB, 2)
+                size_source = "hf"
                 if kv is None and not offline:
                     try:
                         meta = gguf_metadata(
@@ -289,13 +331,20 @@ def build(offline: bool) -> tuple[dict, list[str]]:
                 "fileSizeGb": size_gb,
                 "kvCacheGbPer1kCtx": None,
                 "ollamaTag": tag,
+                # The app labels every estimate with how well it is known, so
+                # each number carries where it came from. A curated fallback
+                # is a guess and must not be presented as a read fact.
+                "sizeSource": size_source,
             }
+        kv_source = "gguf"
         if kv is None:
             kv = m["fallback_kv_gb_per_1k"]
+            kv_source = "fallback"
             if not offline and repo:
                 warnings.append(f"{m['id']}: KV from fallback, not GGUF metadata")
         for q in quants.values():
             q["kvCacheGbPer1kCtx"] = kv
+            q["kvSource"] = kv_source
 
         out_models.append(
             {
@@ -306,9 +355,11 @@ def build(offline: bool) -> tuple[dict, list[str]]:
                 "activeParametersB": m.get("active_parameters_b"),
                 "maxContext": m["max_context"],
                 "capabilities": m["capabilities"],
-                "quality": m["quality"],
+                # Curated entries carry a hand-written score; discovered ones
+                # carry none, which is what keeps them out of the picks.
+                "quality": quality_of(m),
                 "quantizations": quants,
-                "ollamaTag": m["ollama_tag"],
+                "ollamaTag": m.get("ollama_tag"),
             }
         )
 
@@ -318,6 +369,16 @@ def build(offline: bool) -> tuple[dict, list[str]]:
         "models": out_models,
     }
     return registry, warnings
+
+
+def quality_of(m: dict) -> dict | None:
+    q = m.get("quality")
+    if not q:
+        return None
+    # `source` names where the numbers came from. Only "hand" makes a model
+    # eligible to be recommended, so it is written explicitly rather than left
+    # to a default that a future edit could quietly change.
+    return {"general": q["general"], "coding": q["coding"], "source": q.get("source", "hand")}
 
 
 def validate(registry: dict) -> list[str]:
@@ -335,6 +396,15 @@ def validate(registry: dict) -> list[str]:
             errors.append(f"{mid}: MoE active >= total")
         if not m["quantizations"]:
             errors.append(f"{mid}: no quantizations")
+        q = m.get("quality")
+        if q is not None:
+            if not (0 < q["general"] <= 10) or not (0 < q["coding"] <= 10):
+                errors.append(f"{mid}: quality out of range")
+            # An automated source that claimed to be hand-curated would put an
+            # unvetted model straight into BEST — the one failure this whole
+            # two-tier split exists to prevent.
+            if q.get("source") not in ("hand", "leaderboard-v2"):
+                errors.append(f"{mid}: unknown quality source {q.get('source')!r}")
         for qname, q in m["quantizations"].items():
             if not (0.1 < q["fileSizeGb"] < 2000):
                 errors.append(f"{mid} {qname}: implausible size {q['fileSizeGb']}")

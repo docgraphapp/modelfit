@@ -4,7 +4,7 @@
 
 use async_trait::async_trait;
 use futures_util::StreamExt;
-use modelfit_registry::{Registry, DEFAULT_QUANT};
+use modelfit_registry::{Model, Quant, Registry, DEFAULT_QUANT};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize)]
@@ -213,6 +213,16 @@ pub struct Calibration {
     /// machine's real effective memory bandwidth, which the engine uses to
     /// extrapolate speed for every registry model.
     pub effective_bandwidth_gbps: f64,
+    /// prompt_tok/s × the calibration model's active parameters (billions):
+    /// how much prompt this machine can chew through, in a form that scales to
+    /// other models. Generation is bandwidth-bound and prefill is
+    /// compute-bound, so it needs its own constant rather than a share of the
+    /// bandwidth figure.
+    ///
+    /// `None` when the runtime returned no prompt timing — a time-to-first-
+    /// token we cannot measure is one we do not report.
+    #[serde(default)]
+    pub prefill_capacity: Option<f64>,
 }
 
 /// Pick the calibration model: the smallest *dense* registry model already
@@ -239,25 +249,23 @@ pub fn calibration_candidates(registry: &Registry, installed: &[String]) -> (Opt
     (installed_pick, fallback)
 }
 
-/// GB each generated token touches for a registry model+quant (dense: the
-/// whole file). Used to convert measured tok/s into effective bandwidth.
-pub fn gb_per_token(registry: &Registry, tag: &str) -> Option<f64> {
+/// The registry model and quant a runtime tag names.
+///
+/// The benchmark measured one specific file, so the exact quant whose install
+/// tag was run is resolved first — quant tags are distinct per rung, so
+/// "llama3.1:8b-instruct-q6_K" matches Q6_K rather than whichever quant
+/// happens to sort first. A bare model tag ("llama3.1:8b") pulls the runtime's
+/// default quant.
+fn resolve_tag<'a>(registry: &'a Registry, tag: &str) -> Option<(&'a Model, &'a Quant)> {
     let norm = normalize_tag(tag);
-
-    // The benchmark measured one specific file, so resolve the exact quant
-    // whose install tag was run. Quant tags are distinct per rung, so this
-    // matches "llama3.1:8b-instruct-q6_K" to Q6_K rather than to whichever
-    // quant happens to sort first.
     let exact = registry.models.iter().find_map(|m| {
         m.quantizations
             .values()
             .find(|q| q.ollama_tag.as_deref().map(normalize_tag) == Some(norm.clone()))
             .map(|q| (m, q))
     });
-
-    // A bare model tag ("llama3.1:8b") pulls the runtime's default quant.
-    let (model, quant) = match exact {
-        Some(pair) => pair,
+    match exact {
+        Some(pair) => Some(pair),
         None => {
             let m = registry
                 .models
@@ -267,12 +275,26 @@ pub fn gb_per_token(registry: &Registry, tag: &str) -> Option<f64> {
                 .quantizations
                 .get(DEFAULT_QUANT)
                 .or_else(|| m.quantizations.values().next())?;
-            (m, q)
+            Some((m, q))
         }
-    };
+    }
+}
 
+/// GB each generated token touches for a registry model+quant (dense: the
+/// whole file). Used to convert measured tok/s into effective bandwidth.
+pub fn gb_per_token(registry: &Registry, tag: &str) -> Option<f64> {
+    let (model, quant) = resolve_tag(registry, tag)?;
     let bytes_per_weight = quant.file_size_gb / model.parameters_b;
     Some(model.speed_params_b() * bytes_per_weight)
+}
+
+/// Active parameters (billions) of the model a tag names.
+///
+/// Prefill cost scales with the parameters each token is pushed through, so
+/// this is what turns one machine's measured prompt throughput into a figure
+/// that applies to every other model.
+pub fn active_params_b(registry: &Registry, tag: &str) -> Option<f64> {
+    resolve_tag(registry, tag).map(|(m, _)| m.speed_params_b())
 }
 
 #[cfg(test)]

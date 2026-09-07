@@ -3,7 +3,16 @@ name: Update model registry
 on:
   schedule:
     - cron: "17 6 * * 1" # weekly, Monday 06:17 UTC
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      rediscover:
+        description: >-
+          Re-run discovery (rewrites discovered.yaml from Hugging Face).
+          Off by default: the discovered tier is committed so the catalogue
+          changes in a reviewable commit rather than silently every Monday,
+          and discovery reads a GGUF header per candidate, which is slow.
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -23,17 +32,31 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install pipeline deps
+        run: pip install pyyaml
+
+      # Opt-in: rewrites the discovered tier. Never rates anything — every
+      # entry it adds is listed in the app and excluded from the picks until a
+      # person copies it into models.yaml with a quality score.
+      - name: Re-run discovery
+        if: inputs.rediscover
+        run: python3 registry-pipeline/discover.py
+
+      # Both bugs these cover were found by a built registry failing
+      # validation, which is a slow way to learn a filename matched the wrong
+      # file. Runs offline, so it fails in seconds rather than minutes.
+      - name: Check the pipeline's matching and tier rules
+        run: python3 scripts/check-registry-pipeline.py
+
       - name: Build registry from Hugging Face
-        run: |
-          pip install pyyaml
-          python3 registry-pipeline/build.py
+        run: python3 registry-pipeline/build.py
 
       - name: Commit updated snapshot
         run: |
           git config user.name "modelfit-registry-bot"
           git config user.email "noreply@docgraph.app"
-          if ! git diff --quiet registry/registry.json; then
-            git add registry/registry.json
+          if ! git diff --quiet registry/registry.json registry-pipeline/discovered.yaml; then
+            git add registry/registry.json registry-pipeline/discovered.yaml
             git commit -m "registry: automated update $(date -u +%F)"
             git push
           else

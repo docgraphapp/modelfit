@@ -1994,6 +1994,7 @@ name = "modelfit-share"
 version = "0.1.0"
 dependencies = [
  "modelfit-hardware",
+ "modelfit-recommendation",
  "modelfit-registry",
  "modelfit-runtime-adapters",
  "serde",

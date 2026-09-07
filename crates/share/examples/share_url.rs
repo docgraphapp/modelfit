@@ -13,6 +13,7 @@ fn main() {
         gen_tok_per_sec: 96.4,
         prompt_tok_per_sec: 412.7,
         effective_bandwidth_gbps: 187.3,
+        prefill_capacity: Some(1300.0),
     };
     let share = build_benchmark_share(&hw, &cal, "0.1.0", &Registry::bundled().version);
     for f in &share.fields {

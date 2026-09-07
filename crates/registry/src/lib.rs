@@ -32,7 +32,9 @@ pub struct Model {
     pub active_parameters_b: Option<f64>,
     pub max_context: u32,
     pub capabilities: Vec<String>,
-    pub quality: Quality,
+    /// Absent for a discovered model that nothing has rated yet.
+    #[serde(default)]
+    pub quality: Option<Quality>,
     /// Quant name (e.g. "Q4_K_M") → facts.
     pub quantizations: BTreeMap<String, Quant>,
     pub ollama_tag: Option<String>,
@@ -43,6 +45,20 @@ pub struct Model {
 pub struct Quality {
     pub general: f64,
     pub coding: f64,
+    /// Where the scores came from: `"hand"` for a curated entry, otherwise the
+    /// id of the automated source (e.g. a leaderboard). Absent means hand —
+    /// every entry predating the field was written by a person.
+    #[serde(default)]
+    pub source: Option<String>,
+}
+
+impl Quality {
+    /// The one source that makes a model eligible to be recommended.
+    pub const HAND: &'static str = "hand";
+
+    pub fn is_curated(&self) -> bool {
+        self.source.as_deref().unwrap_or(Self::HAND) == Self::HAND
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -57,9 +73,56 @@ pub struct Quant {
     /// `None` when the pipeline could not verify one (offline builds).
     #[serde(default)]
     pub ollama_tag: Option<String>,
+    /// Where `file_size_gb` came from: `"hf"` (exact file listing) or
+    /// `"fallback"` (the curated guess in models.yaml, used when the lookup
+    /// failed). Absent in registries built before the field existed, which is
+    /// read as `"hf"` — the pipeline only falls back when it warns, so
+    /// assuming the good case keeps old snapshots honest rather than marking
+    /// every number unknown.
+    #[serde(default)]
+    pub size_source: Option<String>,
+    /// Where `kv_cache_gb_per_1k_ctx` came from: `"gguf"` (computed from the
+    /// file's own header) or `"fallback"`. Same absent-means-good rule.
+    #[serde(default)]
+    pub kv_source: Option<String>,
+}
+
+/// True when a source marker names a curated fallback rather than a fact read
+/// from the file itself.
+fn is_fallback(source: &Option<String>) -> bool {
+    source.as_deref() == Some("fallback")
+}
+
+impl Quant {
+    /// Whether both numbers behind this rung's memory estimate were read from
+    /// the model file, or at least one is a curated fallback.
+    pub fn facts_are_measured(&self) -> bool {
+        !is_fallback(&self.size_source) && !is_fallback(&self.kv_source)
+    }
 }
 
 impl Model {
+    /// Whether this model may be offered as a BEST / SAFE / FAST pick.
+    ///
+    /// Only a hand-curated quality score qualifies. A discovered model is
+    /// still listed with its memory and speed — those are facts read out of
+    /// the model file, and they answer "will this run here". But a pick
+    /// asserts "this is the best one for you", and that claim rests entirely
+    /// on a quality number. Ranking a model nobody has assessed, or one an
+    /// automated leaderboard scored on benchmarks that may not survive
+    /// quantization, would spend exactly the trust the recommendation exists
+    /// to earn. Discovery is automated; eligibility is curated.
+    pub fn is_recommendable(&self) -> bool {
+        self.quality.as_ref().is_some_and(|q| q.is_curated())
+    }
+
+    /// The quality score for an objective, if this model has one at all.
+    pub fn quality_for(&self, coding: bool) -> Option<f64> {
+        self.quality
+            .as_ref()
+            .map(|q| if coding { q.coding } else { q.general })
+    }
+
     /// Install tag for one quant: its own if the pipeline verified one, else
     /// the model default (correct only for the runtime's default quant).
     pub fn install_tag(&self, quant: &str) -> Option<String> {
@@ -109,7 +172,47 @@ mod tests {
                 assert!(q.file_size_gb > 0.0, "{} {}", m.id, qname);
                 assert!(q.kv_cache_gb_per_1k_ctx > 0.0, "{} {}", m.id, qname);
             }
+            if let Some(q) = &m.quality {
+                assert!(q.general > 0.0 && q.general <= 10.0, "{}", m.id);
+                assert!(q.coding > 0.0 && q.coding <= 10.0, "{}", m.id);
+            }
         }
+    }
+
+    #[test]
+    fn the_snapshot_ships_both_tiers_and_can_always_recommend_something() {
+        // The discovered tier makes the catalogue big; the curated tier is what
+        // makes a pick possible. A snapshot with nothing curated would render
+        // an app that lists a hundred models and recommends none of them.
+        let r = Registry::bundled();
+        let curated = r.models.iter().filter(|m| m.is_recommendable()).count();
+        assert!(curated >= 10, "only {curated} curated models in the snapshot");
+        // Nothing may reach the curated tier by accident: an entry is either
+        // hand-written or it carries a source saying it was not.
+        for m in r.models.iter().filter(|m| !m.is_recommendable()) {
+            assert!(
+                m.quality.as_ref().is_none_or(|q| q.source.is_some()),
+                "{}: uncurated but claims no source",
+                m.id
+            );
+        }
+    }
+
+    #[test]
+    fn only_hand_curated_quality_makes_a_model_recommendable() {
+        let mut m = Registry::bundled().models.remove(0);
+        assert!(m.is_recommendable(), "curated by default");
+
+        m.quality.as_mut().unwrap().source = Some("leaderboard-v2".into());
+        assert!(
+            !m.is_recommendable(),
+            "a provisional score is not a curation"
+        );
+        assert_eq!(m.quality_for(false), Some(6.6), "but it is still reported");
+
+        m.quality = None;
+        assert!(!m.is_recommendable());
+        assert_eq!(m.quality_for(false), None);
     }
 
     #[test]
