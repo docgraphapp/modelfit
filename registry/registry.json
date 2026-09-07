@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "2026-08-27",
+  "version": "2026-09-07",
   "models": [
     {
       "id": "llama3.2-3b",
@@ -14,28 +14,37 @@
       ],
       "quality": {
         "general": 6.6,
-        "coding": 6.0
+        "coding": 6.0,
+        "source": "hand"
       },
       "quantizations": {
         "Q4_K_M": {
           "fileSizeGb": 1.88,
           "kvCacheGbPer1kCtx": 0.117,
-          "ollamaTag": "llama3.2:3b-instruct-q4_K_M"
+          "ollamaTag": "llama3.2:3b-instruct-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 2.16,
           "kvCacheGbPer1kCtx": 0.117,
-          "ollamaTag": "llama3.2:3b-instruct-q5_K_M"
+          "ollamaTag": "llama3.2:3b-instruct-q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 2.46,
           "kvCacheGbPer1kCtx": 0.117,
-          "ollamaTag": "llama3.2:3b-instruct-q6_K"
+          "ollamaTag": "llama3.2:3b-instruct-q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 3.19,
           "kvCacheGbPer1kCtx": 0.117,
-          "ollamaTag": "llama3.2:3b-instruct-q8_0"
+          "ollamaTag": "llama3.2:3b-instruct-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "llama3.2:3b"
@@ -54,28 +63,37 @@
       ],
       "quality": {
         "general": 7.2,
-        "coding": 6.8
+        "coding": 6.8,
+        "source": "hand"
       },
       "quantizations": {
         "Q4_K_M": {
           "fileSizeGb": 2.33,
           "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "qwen3:4b-q4_K_M"
+          "ollamaTag": "qwen3:4b-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 2.69,
           "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "hf.co/Qwen/Qwen3-4B-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/Qwen/Qwen3-4B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 3.08,
           "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "hf.co/Qwen/Qwen3-4B-GGUF:Q6_K"
+          "ollamaTag": "hf.co/Qwen/Qwen3-4B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 3.99,
           "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "qwen3:4b-q8_0"
+          "ollamaTag": "qwen3:4b-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "qwen3:4b"
@@ -93,33 +111,44 @@
       ],
       "quality": {
         "general": 7.0,
-        "coding": 6.3
+        "coding": 6.3,
+        "source": "hand"
       },
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 1.95,
           "kvCacheGbPer1kCtx": 0.04,
-          "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q3_K_M"
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q4_K_M": {
           "fileSizeGb": 2.32,
           "kvCacheGbPer1kCtx": 0.04,
-          "ollamaTag": "gemma3:4b-it-q4_K_M"
+          "ollamaTag": "gemma3:4b-it-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 2.64,
           "kvCacheGbPer1kCtx": 0.04,
-          "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 2.97,
           "kvCacheGbPer1kCtx": 0.04,
-          "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q6_K"
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 3.85,
           "kvCacheGbPer1kCtx": 0.04,
-          "ollamaTag": "gemma3:4b-it-q8_0"
+          "ollamaTag": "gemma3:4b-it-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "gemma3:4b"
@@ -139,33 +168,44 @@
       ],
       "quality": {
         "general": 7.6,
-        "coding": 7.2
+        "coding": 7.2,
+        "source": "hand"
       },
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 4.56,
           "kvCacheGbPer1kCtx": 0.034,
-          "ollamaTag": "hf.co/bartowski/google_gemma-4-E4B-it-GGUF:Q3_K_M"
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-E4B-it-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q4_K_M": {
           "fileSizeGb": 5.03,
           "kvCacheGbPer1kCtx": 0.034,
-          "ollamaTag": "gemma4:e4b-it-q4_K_M"
+          "ollamaTag": "gemma4:e4b-it-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 5.42,
           "kvCacheGbPer1kCtx": 0.034,
-          "ollamaTag": "hf.co/bartowski/google_gemma-4-E4B-it-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-E4B-it-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 5.9,
           "kvCacheGbPer1kCtx": 0.034,
-          "ollamaTag": "hf.co/bartowski/google_gemma-4-E4B-it-GGUF:Q6_K"
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-E4B-it-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 7.48,
           "kvCacheGbPer1kCtx": 0.034,
-          "ollamaTag": "gemma4:e4b-it-q8_0"
+          "ollamaTag": "gemma4:e4b-it-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "gemma4:e4b"
@@ -184,28 +224,37 @@
       ],
       "quality": {
         "general": 7.8,
-        "coding": 7.4
+        "coding": 7.4,
+        "source": "hand"
       },
       "quantizations": {
         "Q4_K_M": {
           "fileSizeGb": 4.68,
           "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "qwen3:8b-q4_K_M"
+          "ollamaTag": "qwen3:8b-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 5.45,
           "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "hf.co/Qwen/Qwen3-8B-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/Qwen/Qwen3-8B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 6.26,
           "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "hf.co/Qwen/Qwen3-8B-GGUF:Q6_K"
+          "ollamaTag": "hf.co/Qwen/Qwen3-8B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 8.11,
           "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "qwen3:8b-q8_0"
+          "ollamaTag": "qwen3:8b-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "qwen3:8b"
@@ -222,33 +271,44 @@
       ],
       "quality": {
         "general": 7.4,
-        "coding": 6.8
+        "coding": 6.8,
+        "source": "hand"
       },
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 3.74,
           "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "llama3.1:8b-instruct-q3_K_M"
+          "ollamaTag": "llama3.1:8b-instruct-q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q4_K_M": {
           "fileSizeGb": 4.58,
           "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "llama3.1:8b-instruct-q4_K_M"
+          "ollamaTag": "llama3.1:8b-instruct-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 5.34,
           "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "llama3.1:8b-instruct-q5_K_M"
+          "ollamaTag": "llama3.1:8b-instruct-q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 6.14,
           "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "llama3.1:8b-instruct-q6_K"
+          "ollamaTag": "llama3.1:8b-instruct-q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 7.95,
           "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "llama3.1:8b-instruct-q8_0"
+          "ollamaTag": "llama3.1:8b-instruct-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "llama3.1:8b"
@@ -266,33 +326,44 @@
       ],
       "quality": {
         "general": 7.9,
-        "coding": 7.2
+        "coding": 7.2,
+        "source": "hand"
       },
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 5.6,
           "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q3_K_M"
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q4_K_M": {
           "fileSizeGb": 6.8,
           "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "gemma3:12b-it-q4_K_M"
+          "ollamaTag": "gemma3:12b-it-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 7.86,
           "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 9.0,
           "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q6_K"
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 11.65,
           "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "gemma3:12b-it-q8_0"
+          "ollamaTag": "gemma3:12b-it-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "gemma3:12b"
@@ -312,33 +383,44 @@
       ],
       "quality": {
         "general": 8.4,
-        "coding": 8.2
+        "coding": 8.2,
+        "source": "hand"
       },
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 5.87,
           "kvCacheGbPer1kCtx": 0.352,
-          "ollamaTag": "hf.co/bartowski/gemma-4-12B-it-GGUF:Q3_K_M"
+          "ollamaTag": "hf.co/bartowski/gemma-4-12B-it-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q4_K_M": {
           "fileSizeGb": 7.14,
           "kvCacheGbPer1kCtx": 0.352,
-          "ollamaTag": "gemma4:12b-it-q4_K_M"
+          "ollamaTag": "gemma4:12b-it-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 8.17,
           "kvCacheGbPer1kCtx": 0.352,
-          "ollamaTag": "hf.co/bartowski/gemma-4-12B-it-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/bartowski/gemma-4-12B-it-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 9.54,
           "kvCacheGbPer1kCtx": 0.352,
-          "ollamaTag": "hf.co/bartowski/gemma-4-12B-it-GGUF:Q6_K"
+          "ollamaTag": "hf.co/bartowski/gemma-4-12B-it-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 11.8,
           "kvCacheGbPer1kCtx": 0.352,
-          "ollamaTag": "gemma4:12b-it-q8_0"
+          "ollamaTag": "gemma4:12b-it-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "gemma4:12b"
@@ -357,28 +439,37 @@
       ],
       "quality": {
         "general": 8.2,
-        "coding": 7.8
+        "coding": 7.8,
+        "source": "hand"
       },
       "quantizations": {
         "Q4_K_M": {
           "fileSizeGb": 8.38,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "qwen3:14b-q4_K_M"
+          "ollamaTag": "qwen3:14b-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 9.79,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "hf.co/Qwen/Qwen3-14B-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/Qwen/Qwen3-14B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 11.29,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "hf.co/Qwen/Qwen3-14B-GGUF:Q6_K"
+          "ollamaTag": "hf.co/Qwen/Qwen3-14B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 14.62,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "qwen3:14b-q8_0"
+          "ollamaTag": "qwen3:14b-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "qwen3:14b"
@@ -396,33 +487,44 @@
       ],
       "quality": {
         "general": 8.0,
-        "coding": 7.6
+        "coding": 7.6,
+        "source": "hand"
       },
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 6.86,
           "kvCacheGbPer1kCtx": 0.21,
-          "ollamaTag": "hf.co/bartowski/phi-4-GGUF:Q3_K_M"
+          "ollamaTag": "hf.co/bartowski/phi-4-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q4_K_M": {
           "fileSizeGb": 8.43,
           "kvCacheGbPer1kCtx": 0.21,
-          "ollamaTag": "phi4:14b-q4_K_M"
+          "ollamaTag": "phi4:14b-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 9.88,
           "kvCacheGbPer1kCtx": 0.21,
-          "ollamaTag": "hf.co/bartowski/phi-4-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/bartowski/phi-4-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 11.2,
           "kvCacheGbPer1kCtx": 0.21,
-          "ollamaTag": "hf.co/bartowski/phi-4-GGUF:Q6_K"
+          "ollamaTag": "hf.co/bartowski/phi-4-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 14.51,
           "kvCacheGbPer1kCtx": 0.21,
-          "ollamaTag": "phi4:14b-q8_0"
+          "ollamaTag": "phi4:14b-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "phi4:14b"
@@ -440,33 +542,44 @@
       ],
       "quality": {
         "general": 8.3,
-        "coding": 7.9
+        "coding": 7.9,
+        "source": "hand"
       },
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 6.84,
           "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q3_K_M"
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q4_K_M": {
           "fileSizeGb": 8.37,
           "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "deepseek-r1:14b-qwen-distill-q4_K_M"
+          "ollamaTag": "deepseek-r1:14b-qwen-distill-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 9.79,
           "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 11.29,
           "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q6_K"
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 14.62,
           "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "deepseek-r1:14b-qwen-distill-q8_0"
+          "ollamaTag": "deepseek-r1:14b-qwen-distill-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "deepseek-r1:14b"
@@ -484,33 +597,44 @@
       ],
       "quality": {
         "general": 7.8,
-        "coding": 8.3
+        "coding": 8.3,
+        "source": "hand"
       },
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 6.84,
           "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "qwen2.5-coder:14b-instruct-q3_K_M"
+          "ollamaTag": "qwen2.5-coder:14b-instruct-q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q4_K_M": {
           "fileSizeGb": 8.37,
           "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "qwen2.5-coder:14b-instruct-q4_K_M"
+          "ollamaTag": "qwen2.5-coder:14b-instruct-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 9.79,
           "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "qwen2.5-coder:14b-instruct-q5_K_M"
+          "ollamaTag": "qwen2.5-coder:14b-instruct-q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 11.29,
           "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "qwen2.5-coder:14b-instruct-q6_K"
+          "ollamaTag": "qwen2.5-coder:14b-instruct-q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 14.62,
           "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "qwen2.5-coder:14b-instruct-q8_0"
+          "ollamaTag": "qwen2.5-coder:14b-instruct-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "qwen2.5-coder:14b"
@@ -529,33 +653,44 @@
       ],
       "quality": {
         "general": 8.1,
-        "coding": 7.5
+        "coding": 7.5,
+        "source": "hand"
       },
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 10.69,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "hf.co/bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF:Q3_K_M"
+          "ollamaTag": "hf.co/bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q4_K_M": {
           "fileSizeGb": 13.35,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "mistral-small3.1:24b-instruct-2503-q4_K_M"
+          "ollamaTag": "mistral-small3.1:24b-instruct-2503-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 15.61,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "hf.co/bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 18.02,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "hf.co/bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF:Q6_K"
+          "ollamaTag": "hf.co/bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 23.33,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "mistral-small3.1:24b-instruct-2503-q8_0"
+          "ollamaTag": "mistral-small3.1:24b-instruct-2503-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "mistral-small3.1:24b"
@@ -573,33 +708,44 @@
       ],
       "quality": {
         "general": 8.4,
-        "coding": 7.7
+        "coding": 7.7,
+        "source": "hand"
       },
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 12.51,
           "kvCacheGbPer1kCtx": 0.138,
-          "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q3_K_M"
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q4_K_M": {
           "fileSizeGb": 15.41,
           "kvCacheGbPer1kCtx": 0.138,
-          "ollamaTag": "gemma3:27b-it-q4_K_M"
+          "ollamaTag": "gemma3:27b-it-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 17.95,
           "kvCacheGbPer1kCtx": 0.138,
-          "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 20.64,
           "kvCacheGbPer1kCtx": 0.138,
-          "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q6_K"
+          "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 26.74,
           "kvCacheGbPer1kCtx": 0.138,
-          "ollamaTag": "gemma3:27b-it-q8_0"
+          "ollamaTag": "gemma3:27b-it-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "gemma3:27b"
@@ -619,33 +765,44 @@
       ],
       "quality": {
         "general": 9.0,
-        "coding": 8.8
+        "coding": 8.8,
+        "source": "hand"
       },
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 12.13,
           "kvCacheGbPer1kCtx": 0.22,
-          "ollamaTag": "hf.co/bartowski/google_gemma-4-26B-A4B-it-GGUF:Q3_K_M"
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-26B-A4B-it-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q4_K_M": {
           "fileSizeGb": 15.87,
           "kvCacheGbPer1kCtx": 0.22,
-          "ollamaTag": "gemma4:26b-a4b-it-q4_K_M"
+          "ollamaTag": "gemma4:26b-a4b-it-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 17.99,
           "kvCacheGbPer1kCtx": 0.22,
-          "ollamaTag": "hf.co/bartowski/google_gemma-4-26B-A4B-it-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-26B-A4B-it-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 21.29,
           "kvCacheGbPer1kCtx": 0.22,
-          "ollamaTag": "hf.co/bartowski/google_gemma-4-26B-A4B-it-GGUF:Q6_K"
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-26B-A4B-it-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 25.02,
           "kvCacheGbPer1kCtx": 0.22,
-          "ollamaTag": "gemma4:26b-a4b-it-q8_0"
+          "ollamaTag": "gemma4:26b-a4b-it-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "gemma4:26b"
@@ -664,28 +821,37 @@
       ],
       "quality": {
         "general": 8.5,
-        "coding": 8.0
+        "coding": 8.0,
+        "source": "hand"
       },
       "quantizations": {
         "Q4_K_M": {
           "fileSizeGb": 17.28,
           "kvCacheGbPer1kCtx": 0.101,
-          "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q4_K_M"
+          "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 20.23,
           "kvCacheGbPer1kCtx": 0.101,
-          "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 23.37,
           "kvCacheGbPer1kCtx": 0.101,
-          "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q6_K"
+          "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 30.25,
           "kvCacheGbPer1kCtx": 0.101,
-          "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q8_0"
+          "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "qwen3:30b"
@@ -705,33 +871,44 @@
       ],
       "quality": {
         "general": 9.2,
-        "coding": 9.0
+        "coding": 9.0,
+        "source": "hand"
       },
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 14.82,
           "kvCacheGbPer1kCtx": 0.881,
-          "ollamaTag": "hf.co/bartowski/google_gemma-4-31B-it-GGUF:Q3_K_M"
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-31B-it-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q4_K_M": {
           "fileSizeGb": 18.25,
           "kvCacheGbPer1kCtx": 0.881,
-          "ollamaTag": "gemma4:31b-it-q4_K_M"
+          "ollamaTag": "gemma4:31b-it-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 21.06,
           "kvCacheGbPer1kCtx": 0.881,
-          "ollamaTag": "hf.co/bartowski/google_gemma-4-31B-it-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-31B-it-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 24.89,
           "kvCacheGbPer1kCtx": 0.881,
-          "ollamaTag": "hf.co/bartowski/google_gemma-4-31B-it-GGUF:Q6_K"
+          "ollamaTag": "hf.co/bartowski/google_gemma-4-31B-it-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 30.39,
           "kvCacheGbPer1kCtx": 0.881,
-          "ollamaTag": "gemma4:31b-it-q8_0"
+          "ollamaTag": "gemma4:31b-it-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "gemma4:31b"
@@ -750,28 +927,37 @@
       ],
       "quality": {
         "general": 8.7,
-        "coding": 8.3
+        "coding": 8.3,
+        "source": "hand"
       },
       "quantizations": {
         "Q4_K_M": {
           "fileSizeGb": 18.4,
           "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "qwen3:32b-q4_K_M"
+          "ollamaTag": "qwen3:32b-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 21.62,
           "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/Qwen/Qwen3-32B-GGUF:Q5_K_M"
+          "ollamaTag": "hf.co/Qwen/Qwen3-32B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 25.04,
           "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/Qwen/Qwen3-32B-GGUF:Q6_K"
+          "ollamaTag": "hf.co/Qwen/Qwen3-32B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 32.43,
           "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "qwen3:32b-q8_0"
+          "ollamaTag": "qwen3:32b-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "qwen3:32b"
@@ -789,36 +975,3227 @@
       ],
       "quality": {
         "general": 8.3,
-        "coding": 8.8
+        "coding": 8.8,
+        "source": "hand"
       },
       "quantizations": {
         "Q3_K_M": {
           "fileSizeGb": 14.84,
           "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "qwen2.5-coder:32b-instruct-q3_K_M"
+          "ollamaTag": "qwen2.5-coder:32b-instruct-q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q4_K_M": {
           "fileSizeGb": 18.49,
           "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "qwen2.5-coder:32b-instruct-q4_K_M"
+          "ollamaTag": "qwen2.5-coder:32b-instruct-q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 21.66,
           "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "qwen2.5-coder:32b-instruct-q5_K_M"
+          "ollamaTag": "qwen2.5-coder:32b-instruct-q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 25.04,
           "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "qwen2.5-coder:32b-instruct-q6_K"
+          "ollamaTag": "qwen2.5-coder:32b-instruct-q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 32.43,
           "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "qwen2.5-coder:32b-instruct-q8_0"
+          "ollamaTag": "qwen2.5-coder:32b-instruct-q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
         }
       },
       "ollamaTag": "qwen2.5-coder:32b"
+    },
+    {
+      "id": "qwen3.8-27b",
+      "name": "Qwen3.8 27B",
+      "family": "qwen",
+      "parametersB": 27.32,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 15.33,
+          "kvCacheGbPer1kCtx": 0.273,
+          "ollamaTag": "hf.co/unsloth/Qwen3.8-27B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 18.41,
+          "kvCacheGbPer1kCtx": 0.273,
+          "ollamaTag": "hf.co/unsloth/Qwen3.8-27B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 20.47,
+          "kvCacheGbPer1kCtx": 0.273,
+          "ollamaTag": "hf.co/unsloth/Qwen3.8-27B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 27.05,
+          "kvCacheGbPer1kCtx": 0.273,
+          "ollamaTag": "hf.co/unsloth/Qwen3.8-27B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen3.5-9b",
+      "name": "Qwen3.5 9B",
+      "family": "qwen",
+      "parametersB": 8.95,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 4.35,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-9B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 5.29,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-9B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 6.13,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-9B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 6.95,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-9B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 8.87,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-9B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen3.6-27b",
+      "name": "Qwen3.6 27B",
+      "family": "qwen",
+      "parametersB": 26.9,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 12.65,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/unsloth/Qwen3.6-27B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 15.66,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/unsloth/Qwen3.6-27B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 18.17,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/unsloth/Qwen3.6-27B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 20.98,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/unsloth/Qwen3.6-27B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 26.63,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/unsloth/Qwen3.6-27B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "muse-glimmer-30b",
+      "name": "Muse Glimmer 30B",
+      "family": "muse-glimmer",
+      "parametersB": 27.85,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q5_K_M": {
+          "fileSizeGb": 17.88,
+          "kvCacheGbPer1kCtx": 0.055,
+          "ollamaTag": "hf.co/unsloth/Muse-Glimmer-30B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 24.46,
+          "kvCacheGbPer1kCtx": 0.055,
+          "ollamaTag": null,
+          "sizeSource": "fallback",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 27.58,
+          "kvCacheGbPer1kCtx": 0.055,
+          "ollamaTag": "hf.co/unsloth/Muse-Glimmer-30B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen3.5-4b",
+      "name": "Qwen3.5 4B",
+      "family": "qwen",
+      "parametersB": 4.21,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 2.14,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 2.55,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.93,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 3.28,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 4.17,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen3.5-27b",
+      "name": "Qwen3.5 27B",
+      "family": "qwen",
+      "parametersB": 26.9,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 12.58,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-27B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 15.59,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-27B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 18.26,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-27B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 20.91,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-27B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 26.63,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-27B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "gemma-4-31b",
+      "name": "Gemma 4 31B",
+      "family": "gemma",
+      "parametersB": 30.7,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 13.72,
+          "kvCacheGbPer1kCtx": 0.881,
+          "ollamaTag": "hf.co/unsloth/gemma-4-31B-it-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 17.07,
+          "kvCacheGbPer1kCtx": 0.881,
+          "ollamaTag": "hf.co/unsloth/gemma-4-31B-it-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 20.17,
+          "kvCacheGbPer1kCtx": 0.881,
+          "ollamaTag": "hf.co/unsloth/gemma-4-31B-it-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 23.47,
+          "kvCacheGbPer1kCtx": 0.881,
+          "ollamaTag": "hf.co/unsloth/gemma-4-31B-it-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 30.39,
+          "kvCacheGbPer1kCtx": 0.881,
+          "ollamaTag": "hf.co/unsloth/gemma-4-31B-it-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "gemma-4-12b",
+      "name": "Gemma 4 12B",
+      "family": "gemma",
+      "parametersB": 11.91,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 5.3,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "hf.co/unsloth/gemma-4-12b-it-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 6.63,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "hf.co/unsloth/gemma-4-12b-it-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 7.84,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "hf.co/unsloth/gemma-4-12b-it-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 9.11,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "hf.co/unsloth/gemma-4-12b-it-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 11.8,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "hf.co/unsloth/gemma-4-12b-it-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2.5-3b",
+      "name": "Qwen2.5 3B",
+      "family": "qwen",
+      "parametersB": 3.4,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 1.61,
+          "kvCacheGbPer1kCtx": 0.038,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-3B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 1.96,
+          "kvCacheGbPer1kCtx": 0.038,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-3B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.27,
+          "kvCacheGbPer1kCtx": 0.038,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-3B-Instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.6,
+          "kvCacheGbPer1kCtx": 0.038,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-3B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.37,
+          "kvCacheGbPer1kCtx": 0.038,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-3B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "ornith-1.0-9b",
+      "name": "Ornith 1.0 9B",
+      "family": "qwen",
+      "parametersB": 8.95,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 4.38,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Ornith-1.0-9B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 5.31,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Ornith-1.0-9B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 6.09,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Ornith-1.0-9B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 6.96,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Ornith-1.0-9B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 8.87,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Ornith-1.0-9B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen3.5-2b",
+      "name": "Qwen3.5 2B",
+      "family": "qwen",
+      "parametersB": 1.94,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 1.14,
+          "kvCacheGbPer1kCtx": 0.052,
+          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-2B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 1.3,
+          "kvCacheGbPer1kCtx": 0.052,
+          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-2B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 1.46,
+          "kvCacheGbPer1kCtx": 0.052,
+          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-2B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 1.58,
+          "kvCacheGbPer1kCtx": 0.052,
+          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-2B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 1.94,
+          "kvCacheGbPer1kCtx": 0.052,
+          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-2B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen3.5-0.8b",
+      "name": "Qwen3.5 0.8B",
+      "family": "qwen",
+      "parametersB": 0.77,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 0.48,
+          "kvCacheGbPer1kCtx": 0.052,
+          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 0.54,
+          "kvCacheGbPer1kCtx": 0.052,
+          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 0.6,
+          "kvCacheGbPer1kCtx": 0.052,
+          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 0.64,
+          "kvCacheGbPer1kCtx": 0.052,
+          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 0.78,
+          "kvCacheGbPer1kCtx": 0.052,
+          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2.5-7b",
+      "name": "Qwen2.5 7B",
+      "family": "qwen",
+      "parametersB": 7.62,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 3.55,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/bartowski/Qwen2.5-7B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 4.36,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/bartowski/Qwen2.5-7B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 5.07,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/bartowski/Qwen2.5-7B-Instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 5.82,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/bartowski/Qwen2.5-7B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 7.54,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/bartowski/Qwen2.5-7B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "fara1.5-27b",
+      "name": "Fara1.5 27B",
+      "family": "qwen",
+      "parametersB": 26.9,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 13.38,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-27B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 16.33,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-27B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 19.1,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-27B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 21.63,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-27B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 26.7,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-27B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "fara1.5-9b",
+      "name": "Fara1.5 9B",
+      "family": "qwen",
+      "parametersB": 8.95,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 4.58,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-9B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 5.5,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-9B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 6.38,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-9B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 7.17,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-9B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 8.89,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-9B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2.5-coder-7b",
+      "name": "Qwen2.5 Coder 7B",
+      "family": "qwen",
+      "parametersB": 7.62,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "coding"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 3.55,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 4.36,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 5.07,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 5.82,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 7.54,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "fara1.5-4b",
+      "name": "Fara1.5 4B",
+      "family": "qwen",
+      "parametersB": 4.21,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 2.28,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-4B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 2.69,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-4B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 3.09,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-4B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 3.42,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-4B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 4.19,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/Fara1.5-4B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "grug-12b",
+      "name": "Grug 12B",
+      "family": "gemma",
+      "parametersB": 11.91,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "reasoning"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 5.87,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "hf.co/bartowski/kai-os_Grug-12B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 7.14,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "hf.co/bartowski/kai-os_Grug-12B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 8.17,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "hf.co/bartowski/kai-os_Grug-12B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 9.54,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "hf.co/bartowski/kai-os_Grug-12B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 11.8,
+          "kvCacheGbPer1kCtx": 0.352,
+          "ollamaTag": "hf.co/bartowski/kai-os_Grug-12B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "llama-3.2-3b",
+      "name": "Llama 3.2 3B",
+      "family": "llama",
+      "parametersB": 3.21,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 1.57,
+          "kvCacheGbPer1kCtx": 0.117,
+          "ollamaTag": "hf.co/unsloth/Llama-3.2-3B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 1.88,
+          "kvCacheGbPer1kCtx": 0.117,
+          "ollamaTag": "hf.co/unsloth/Llama-3.2-3B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.16,
+          "kvCacheGbPer1kCtx": 0.117,
+          "ollamaTag": "hf.co/unsloth/Llama-3.2-3B-Instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.46,
+          "kvCacheGbPer1kCtx": 0.117,
+          "ollamaTag": "hf.co/unsloth/Llama-3.2-3B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.19,
+          "kvCacheGbPer1kCtx": 0.117,
+          "ollamaTag": "hf.co/unsloth/Llama-3.2-3B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "gemma-3-1b",
+      "name": "Gemma 3 1B",
+      "family": "gemma",
+      "parametersB": 1.0,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 0.75,
+          "kvCacheGbPer1kCtx": 0.006,
+          "ollamaTag": "hf.co/ggml-org/gemma-3-1b-it-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 1.0,
+          "kvCacheGbPer1kCtx": 0.006,
+          "ollamaTag": "hf.co/ggml-org/gemma-3-1b-it-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "deepseek-r1-distill-llama-70b",
+      "name": "Deepseek R1 Distill Llama 70B",
+      "family": "llama",
+      "parametersB": 70.55,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "reasoning"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 31.91,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-70B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 39.6,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-70B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 46.52,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-70B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 53.91,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 69.83,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2.5-0.5b",
+      "name": "Qwen2.5 0.5B",
+      "family": "qwen",
+      "parametersB": 0.63,
+      "activeParametersB": null,
+      "maxContext": 8192,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 0.4,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 0.46,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 0.49,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 0.61,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 0.63,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "arex-turbo-4b",
+      "name": "Arex Turbo 4B",
+      "family": "qwen",
+      "parametersB": 4.21,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "reasoning",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 2.28,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/BAAI_AREX-Turbo-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 2.69,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/BAAI_AREX-Turbo-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 3.09,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/BAAI_AREX-Turbo-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 3.42,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/BAAI_AREX-Turbo-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 4.19,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/BAAI_AREX-Turbo-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2.5-1.5b",
+      "name": "Qwen2.5 1.5B",
+      "family": "qwen",
+      "parametersB": 1.78,
+      "activeParametersB": null,
+      "maxContext": 8192,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 0.86,
+          "kvCacheGbPer1kCtx": 0.029,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 1.04,
+          "kvCacheGbPer1kCtx": 0.029,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 1.2,
+          "kvCacheGbPer1kCtx": 0.029,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 1.36,
+          "kvCacheGbPer1kCtx": 0.029,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 1.76,
+          "kvCacheGbPer1kCtx": 0.029,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "ui-mate-9b",
+      "name": "Ui Mate 9B",
+      "family": "qwen",
+      "parametersB": 8.95,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 4.58,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-9B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 5.5,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-9B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 6.38,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-9B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 7.17,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-9B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 8.89,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-9B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "hermes-3-llama-3.1-70b",
+      "name": "Hermes 3 Llama 3.1 70B",
+      "family": "llama",
+      "parametersB": 70.55,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 31.91,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/bartowski/Hermes-3-Llama-3.1-70B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 39.6,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/bartowski/Hermes-3-Llama-3.1-70B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 46.52,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 53.91,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 69.83,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "ui-mate-27b",
+      "name": "Ui Mate 27B",
+      "family": "qwen",
+      "parametersB": 26.9,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 13.38,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-27B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 16.33,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-27B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 19.1,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-27B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 21.63,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-27B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 26.7,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-27B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "llama-3.2-1b",
+      "name": "Llama 3.2 1B",
+      "family": "llama",
+      "parametersB": 1.24,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 0.75,
+          "kvCacheGbPer1kCtx": 0.034,
+          "ollamaTag": "hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 0.85,
+          "kvCacheGbPer1kCtx": 0.034,
+          "ollamaTag": "hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 0.95,
+          "kvCacheGbPer1kCtx": 0.034,
+          "ollamaTag": "hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 1.23,
+          "kvCacheGbPer1kCtx": 0.034,
+          "ollamaTag": "hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "deepseek-r1-0528-qwen3-8b",
+      "name": "Deepseek R1 0528 Qwen3 8B",
+      "family": "qwen",
+      "parametersB": 8.19,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "reasoning"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 4.68,
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "hf.co/lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 6.26,
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "hf.co/lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 8.11,
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "hf.co/lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2.5-coder-1.5b",
+      "name": "Qwen2.5 Coder 1.5B",
+      "family": "qwen",
+      "parametersB": 1.78,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat",
+        "coding"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 0.86,
+          "kvCacheGbPer1kCtx": 0.029,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 1.04,
+          "kvCacheGbPer1kCtx": 0.029,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 1.2,
+          "kvCacheGbPer1kCtx": 0.029,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 1.36,
+          "kvCacheGbPer1kCtx": 0.029,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 1.76,
+          "kvCacheGbPer1kCtx": 0.029,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen3-0.6b",
+      "name": "Qwen3 0.6B",
+      "family": "qwen",
+      "parametersB": 0.6,
+      "activeParametersB": null,
+      "maxContext": 40960,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q8_0": {
+          "fileSizeGb": 0.6,
+          "kvCacheGbPer1kCtx": 0.117,
+          "ollamaTag": "hf.co/Qwen/Qwen3-0.6B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2.5-72b",
+      "name": "Qwen2.5 72B",
+      "family": "qwen",
+      "parametersB": 72.71,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 35.11,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/bartowski/Qwen2.5-72B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 44.16,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/bartowski/Qwen2.5-72B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 50.71,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 59.93,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 71.96,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "meta-llama-3.1-70b",
+      "name": "Meta Llama 3.1 70B",
+      "family": "llama",
+      "parametersB": 70.55,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 31.91,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/bartowski/Meta-Llama-3.1-70B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 39.6,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/bartowski/Meta-Llama-3.1-70B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 46.52,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 53.91,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 69.83,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "meta-llama-3.1-8b",
+      "name": "Meta Llama 3.1 8B",
+      "family": "llama",
+      "parametersB": 8.03,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 4.58,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 5.34,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 6.14,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 7.95,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "gemma-2-2b",
+      "name": "Gemma 2 2B",
+      "family": "gemma",
+      "parametersB": 2.61,
+      "activeParametersB": null,
+      "maxContext": 8192,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 1.59,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/bartowski/gemma-2-2b-it-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 1.79,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/bartowski/gemma-2-2b-it-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.0,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/bartowski/gemma-2-2b-it-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 2.59,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/bartowski/gemma-2-2b-it-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "ministral-3-8b-2512",
+      "name": "Ministral 3 8B 2512",
+      "family": "mistral",
+      "parametersB": 8.49,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 4.84,
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 5.64,
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 8.41,
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "deepseek-r1-distill-qwen-7b",
+      "name": "Deepseek R1 Distill Qwen 7B",
+      "family": "qwen",
+      "parametersB": 7.62,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "reasoning"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 3.55,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 4.36,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 5.07,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 5.82,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 7.54,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2.5-14b",
+      "name": "Qwen2.5 14B",
+      "family": "qwen",
+      "parametersB": 14.77,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 6.84,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "hf.co/bartowski/Qwen2.5-14B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 8.37,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "hf.co/bartowski/Qwen2.5-14B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 9.79,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "hf.co/bartowski/Qwen2.5-14B-Instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 11.29,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "hf.co/bartowski/Qwen2.5-14B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 14.62,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "hf.co/bartowski/Qwen2.5-14B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "gemma-3-4b",
+      "name": "Gemma 3 4B",
+      "family": "gemma",
+      "parametersB": 3.88,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 2.32,
+          "kvCacheGbPer1kCtx": 0.04,
+          "ollamaTag": "hf.co/lmstudio-community/gemma-3-4b-it-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.97,
+          "kvCacheGbPer1kCtx": 0.04,
+          "ollamaTag": "hf.co/lmstudio-community/gemma-3-4b-it-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.85,
+          "kvCacheGbPer1kCtx": 0.04,
+          "ollamaTag": "hf.co/lmstudio-community/gemma-3-4b-it-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2.5-coder-3b",
+      "name": "Qwen2.5 Coder 3B",
+      "family": "qwen",
+      "parametersB": 3.4,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat",
+        "coding"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 1.61,
+          "kvCacheGbPer1kCtx": 0.038,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-3B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 1.96,
+          "kvCacheGbPer1kCtx": 0.038,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-3B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.27,
+          "kvCacheGbPer1kCtx": 0.038,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-3B-Instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.6,
+          "kvCacheGbPer1kCtx": 0.038,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-3B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.37,
+          "kvCacheGbPer1kCtx": 0.038,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-3B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "olmo-3.1-32b-think",
+      "name": "Olmo 3.1 32B Think",
+      "family": "olmo",
+      "parametersB": 32.23,
+      "activeParametersB": null,
+      "maxContext": 65536,
+      "capabilities": [
+        "chat",
+        "reasoning"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 14.53,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/allenai_Olmo-3.1-32B-Think-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 18.14,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/allenai_Olmo-3.1-32B-Think-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 21.29,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/allenai_Olmo-3.1-32B-Think-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 24.63,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/allenai_Olmo-3.1-32B-Think-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 31.9,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/allenai_Olmo-3.1-32B-Think-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "ministral-3-14b-reasoning-2512",
+      "name": "Ministral 3 14B Reasoning 2512",
+      "family": "mistral",
+      "parametersB": 13.51,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 7.67,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/lmstudio-community/Ministral-3-14B-Reasoning-2512-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 10.33,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/lmstudio-community/Ministral-3-14B-Reasoning-2512-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 13.37,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/lmstudio-community/Ministral-3-14B-Reasoning-2512-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "deepseek-r1-distill-qwen-14b",
+      "name": "Deepseek R1 Distill Qwen 14B",
+      "family": "qwen",
+      "parametersB": 14.77,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "reasoning"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 8.37,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "hf.co/lmstudio-community/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 11.29,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "hf.co/lmstudio-community/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 14.62,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "hf.co/lmstudio-community/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "llama-3.3-70b",
+      "name": "Llama 3.3 70B",
+      "family": "llama",
+      "parametersB": 70.55,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 31.91,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/bartowski/Llama-3.3-70B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 39.6,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/bartowski/Llama-3.3-70B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 46.52,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 53.91,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 69.83,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": null,
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "phi-3.5-mini-4b",
+      "name": "Phi 3.5 Mini 4B",
+      "family": "phi",
+      "parametersB": 3.82,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "coding"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 1.82,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/bartowski/Phi-3.5-mini-instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 2.23,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/bartowski/Phi-3.5-mini-instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.62,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/bartowski/Phi-3.5-mini-instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.92,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/bartowski/Phi-3.5-mini-instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.78,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/bartowski/Phi-3.5-mini-instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "glm-4.6v-flash-9b",
+      "name": "Glm 4.6v Flash 9B",
+      "family": "glm4",
+      "parametersB": 9.4,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 5.74,
+          "kvCacheGbPer1kCtx": 0.042,
+          "ollamaTag": "hf.co/lmstudio-community/GLM-4.6V-Flash-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 7.7,
+          "kvCacheGbPer1kCtx": 0.042,
+          "ollamaTag": "hf.co/lmstudio-community/GLM-4.6V-Flash-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 9.31,
+          "kvCacheGbPer1kCtx": 0.042,
+          "ollamaTag": "hf.co/lmstudio-community/GLM-4.6V-Flash-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "nvidia-nemotron-3-nano-4b-bf16",
+      "name": "Nvidia Nemotron 3 Nano 4B Bf16",
+      "family": "nemotron_h",
+      "parametersB": 3.97,
+      "activeParametersB": null,
+      "maxContext": 1048576,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 2.64,
+          "kvCacheGbPer1kCtx": 0.881,
+          "ollamaTag": "hf.co/lmstudio-community/NVIDIA-Nemotron-3-Nano-4B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 3.66,
+          "kvCacheGbPer1kCtx": 0.881,
+          "ollamaTag": "hf.co/lmstudio-community/NVIDIA-Nemotron-3-Nano-4B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.94,
+          "kvCacheGbPer1kCtx": 0.881,
+          "ollamaTag": "hf.co/lmstudio-community/NVIDIA-Nemotron-3-Nano-4B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "ministral-3-3b-2512-bf16",
+      "name": "Ministral 3 3B 2512 Bf16",
+      "family": "mistral",
+      "parametersB": 3.43,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 2.0,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/lmstudio-community/Ministral-3-3B-Instruct-2512-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.63,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/lmstudio-community/Ministral-3-3B-Instruct-2512-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.4,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/lmstudio-community/Ministral-3-3B-Instruct-2512-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "deepseek-r1-distill-qwen-32b",
+      "name": "Deepseek R1 Distill Qwen 32B",
+      "family": "qwen",
+      "parametersB": 32.76,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "reasoning"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 14.84,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 18.49,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 21.66,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 25.04,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 32.43,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "glm-ocr-0.9b",
+      "name": "Glm Ocr 0.9B",
+      "family": "glm4",
+      "parametersB": 0.89,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q8_0": {
+          "fileSizeGb": 0.89,
+          "kvCacheGbPer1kCtx": 0.071,
+          "ollamaTag": "hf.co/ggml-org/GLM-OCR-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen3-1.7b",
+      "name": "Qwen3 1.7B",
+      "family": "qwen",
+      "parametersB": 1.72,
+      "activeParametersB": null,
+      "maxContext": 40960,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q8_0": {
+          "fileSizeGb": 1.71,
+          "kvCacheGbPer1kCtx": 0.117,
+          "ollamaTag": "hf.co/Qwen/Qwen3-1.7B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "phi-4-mini-4b",
+      "name": "Phi 4 Mini 4B",
+      "family": "phi",
+      "parametersB": 3.84,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 1.97,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/microsoft_Phi-4-mini-instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 2.32,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/microsoft_Phi-4-mini-instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.65,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/microsoft_Phi-4-mini-instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.94,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/microsoft_Phi-4-mini-instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.8,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/bartowski/microsoft_Phi-4-mini-instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "devstral-small-2-24b-2512",
+      "name": "Devstral Small 2 24B 2512",
+      "family": "mistral",
+      "parametersB": 23.57,
+      "activeParametersB": null,
+      "maxContext": 393216,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 13.35,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/lmstudio-community/Devstral-Small-2-24B-Instruct-2512-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 18.02,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/lmstudio-community/Devstral-Small-2-24B-Instruct-2512-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 23.33,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/lmstudio-community/Devstral-Small-2-24B-Instruct-2512-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen3-4b-2507",
+      "name": "Qwen3 4B 2507",
+      "family": "qwen",
+      "parametersB": 4.02,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 2.33,
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "hf.co/lmstudio-community/Qwen3-4B-Instruct-2507-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 3.08,
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "hf.co/lmstudio-community/Qwen3-4B-Instruct-2507-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.99,
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "hf.co/lmstudio-community/Qwen3-4B-Instruct-2507-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "smolvlm-500m",
+      "name": "Smolvlm 500M",
+      "family": "llama",
+      "parametersB": 0.41,
+      "activeParametersB": null,
+      "maxContext": 8192,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q8_0": {
+          "fileSizeGb": 0.41,
+          "kvCacheGbPer1kCtx": 0.042,
+          "ollamaTag": "hf.co/ggml-org/SmolVLM-500M-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "gemma-3-12b",
+      "name": "Gemma 3 12B",
+      "family": "gemma",
+      "parametersB": 11.77,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 6.8,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/lmstudio-community/gemma-3-12b-it-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 9.0,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/lmstudio-community/gemma-3-12b-it-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 11.65,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/lmstudio-community/gemma-3-12b-it-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "ministral-3-3b-2512",
+      "name": "Ministral 3 3B 2512",
+      "family": "mistral",
+      "parametersB": 3.43,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 2.0,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Instruct-2512-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.3,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Instruct-2512-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.4,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Instruct-2512-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "olmocr-2-7b-1025",
+      "name": "Olmocr 2 7B 1025",
+      "family": "qwen",
+      "parametersB": 7.62,
+      "activeParametersB": null,
+      "maxContext": 128000,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 4.36,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/lmstudio-community/olmOCR-2-7B-1025-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 5.82,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/lmstudio-community/olmOCR-2-7B-1025-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 7.54,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/lmstudio-community/olmOCR-2-7B-1025-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen3-4b-thinking-2507",
+      "name": "Qwen3 4B Thinking 2507",
+      "family": "qwen",
+      "parametersB": 4.02,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "reasoning"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 2.33,
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "hf.co/lmstudio-community/Qwen3-4B-Thinking-2507-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 3.08,
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "hf.co/lmstudio-community/Qwen3-4B-Thinking-2507-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.99,
+          "kvCacheGbPer1kCtx": 0.151,
+          "ollamaTag": "hf.co/lmstudio-community/Qwen3-4B-Thinking-2507-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwq-32b",
+      "name": "Qwq 32B",
+      "family": "qwen",
+      "parametersB": 32.76,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 18.49,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/Qwen/QwQ-32B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 21.66,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/Qwen/QwQ-32B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 25.04,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/Qwen/QwQ-32B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 32.43,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/Qwen/QwQ-32B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2.5-math-7b",
+      "name": "Qwen2.5 Math 7B",
+      "family": "qwen",
+      "parametersB": 7.62,
+      "activeParametersB": null,
+      "maxContext": 4096,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 4.36,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/lmstudio-community/Qwen2.5-Math-7B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 5.82,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/lmstudio-community/Qwen2.5-Math-7B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 7.54,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/lmstudio-community/Qwen2.5-Math-7B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "ministral-3-14b-2512",
+      "name": "Ministral 3 14B 2512",
+      "family": "mistral",
+      "parametersB": 13.51,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 7.67,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-14B-Instruct-2512-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 8.96,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-14B-Instruct-2512-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 13.37,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-14B-Instruct-2512-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2.5-coder-0.5b",
+      "name": "Qwen2.5 Coder 0.5B",
+      "family": "qwen",
+      "parametersB": 0.63,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat",
+        "coding"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 0.4,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 0.46,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 0.49,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 0.61,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 0.63,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "smolvlm2-2.2b",
+      "name": "Smolvlm2 2.2B",
+      "family": "llama",
+      "parametersB": 1.81,
+      "activeParametersB": null,
+      "maxContext": 8192,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 1.04,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "hf.co/ggml-org/SmolVLM2-2.2B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 1.8,
+          "kvCacheGbPer1kCtx": 0.201,
+          "ollamaTag": "hf.co/ggml-org/SmolVLM2-2.2B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen3-asr-1.7b",
+      "name": "Qwen3 Asr 1.7B",
+      "family": "qwen",
+      "parametersB": 2.03,
+      "activeParametersB": null,
+      "maxContext": 65536,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q8_0": {
+          "fileSizeGb": 2.02,
+          "kvCacheGbPer1kCtx": 0.117,
+          "ollamaTag": "hf.co/ggml-org/Qwen3-ASR-1.7B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "smolvlm2-500m-video",
+      "name": "Smolvlm2 500M Video",
+      "family": "llama",
+      "parametersB": 0.41,
+      "activeParametersB": null,
+      "maxContext": 8192,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q8_0": {
+          "fileSizeGb": 0.41,
+          "kvCacheGbPer1kCtx": 0.042,
+          "ollamaTag": "hf.co/ggml-org/SmolVLM2-500M-Video-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "bge-m3-0.6b",
+      "name": "Bge M3 0.6B",
+      "family": "bert",
+      "parametersB": 0.57,
+      "activeParametersB": null,
+      "maxContext": 8192,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q8_0": {
+          "fileSizeGb": 0.59,
+          "kvCacheGbPer1kCtx": 0.101,
+          "ollamaTag": "hf.co/ggml-org/bge-m3-Q8_0-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2-0.5b",
+      "name": "Qwen2 0.5B",
+      "family": "qwen",
+      "parametersB": 0.49,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 0.33,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2-0.5B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 0.37,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2-0.5B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 0.39,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2-0.5B-Instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 0.47,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2-0.5B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 0.49,
+          "kvCacheGbPer1kCtx": 0.013,
+          "ollamaTag": "hf.co/Qwen/Qwen2-0.5B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "smollm3-3b",
+      "name": "Smollm3 3B",
+      "family": "smollm3",
+      "parametersB": 3.08,
+      "activeParametersB": null,
+      "maxContext": 65536,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 1.78,
+          "kvCacheGbPer1kCtx": 0.075,
+          "ollamaTag": "hf.co/ggml-org/SmolLM3-3B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.05,
+          "kvCacheGbPer1kCtx": 0.075,
+          "ollamaTag": "hf.co/ggml-org/SmolLM3-3B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen3-asr-0.6b",
+      "name": "Qwen3 Asr 0.6B",
+      "family": "qwen",
+      "parametersB": 0.75,
+      "activeParametersB": null,
+      "maxContext": 65536,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q8_0": {
+          "fileSizeGb": 0.75,
+          "kvCacheGbPer1kCtx": 0.117,
+          "ollamaTag": "hf.co/ggml-org/Qwen3-ASR-0.6B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2.5-omni-7b",
+      "name": "Qwen2.5 Omni 7B",
+      "family": "qwen",
+      "parametersB": 7.62,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 4.36,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/ggml-org/Qwen2.5-Omni-7B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 7.54,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/ggml-org/Qwen2.5-Omni-7B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "hunyuanocr-0.5b",
+      "name": "Hunyuanocr 0.5B",
+      "family": "hunyuan_vl",
+      "parametersB": 0.54,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q8_0": {
+          "fileSizeGb": 0.54,
+          "kvCacheGbPer1kCtx": 0.101,
+          "ollamaTag": "hf.co/ggml-org/HunyuanOCR-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "ministral-3-3b-reasoning-2512",
+      "name": "Ministral 3 3B Reasoning 2512",
+      "family": "mistral",
+      "parametersB": 3.43,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 2.0,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Reasoning-2512-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.3,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Reasoning-2512-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.4,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Reasoning-2512-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "ministral-3-8b-reasoning-2512",
+      "name": "Ministral 3 8B Reasoning 2512",
+      "family": "mistral",
+      "parametersB": 8.49,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 4.84,
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-8B-Reasoning-2512-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 5.64,
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-8B-Reasoning-2512-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 8.41,
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-8B-Reasoning-2512-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "qwen2-7b",
+      "name": "Qwen2 7B",
+      "family": "qwen",
+      "parametersB": 7.62,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 3.55,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/Qwen/Qwen2-7B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 4.36,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/Qwen/Qwen2-7B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 5.07,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/Qwen/Qwen2-7B-Instruct-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 5.82,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/Qwen/Qwen2-7B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 7.54,
+          "kvCacheGbPer1kCtx": 0.059,
+          "ollamaTag": "hf.co/Qwen/Qwen2-7B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "devstral-small-2507-24b",
+      "name": "Devstral Small 2507 24B",
+      "family": "llama",
+      "parametersB": 23.57,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 13.35,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/mistralai/Devstral-Small-2507_gguf:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 15.61,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/mistralai/Devstral-Small-2507_gguf:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 23.33,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/mistralai/Devstral-Small-2507_gguf:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
     }
   ]
 }
