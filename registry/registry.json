@@ -1182,13 +1182,6 @@
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
-        "Q6_K": {
-          "fileSizeGb": 24.46,
-          "kvCacheGbPer1kCtx": 0.055,
-          "ollamaTag": null,
-          "sizeSource": "fallback",
-          "kvSource": "gguf"
-        },
         "Q8_0": {
           "fileSizeGb": 27.58,
           "kvCacheGbPer1kCtx": 0.055,
@@ -1404,462 +1397,6 @@
       "ollamaTag": null
     },
     {
-      "id": "qwen2.5-3b",
-      "name": "Qwen2.5 3B",
-      "family": "qwen",
-      "parametersB": 3.4,
-      "activeParametersB": null,
-      "maxContext": 32768,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 1.61,
-          "kvCacheGbPer1kCtx": 0.038,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-3B-Instruct-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 1.96,
-          "kvCacheGbPer1kCtx": 0.038,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-3B-Instruct-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 2.27,
-          "kvCacheGbPer1kCtx": 0.038,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-3B-Instruct-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 2.6,
-          "kvCacheGbPer1kCtx": 0.038,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-3B-Instruct-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 3.37,
-          "kvCacheGbPer1kCtx": 0.038,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-3B-Instruct-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "ornith-1.0-9b",
-      "name": "Ornith 1.0 9B",
-      "family": "qwen",
-      "parametersB": 8.95,
-      "activeParametersB": null,
-      "maxContext": 262144,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 4.38,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/unsloth/Ornith-1.0-9B-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 5.31,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/unsloth/Ornith-1.0-9B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 6.09,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/unsloth/Ornith-1.0-9B-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 6.96,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/unsloth/Ornith-1.0-9B-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 8.87,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/unsloth/Ornith-1.0-9B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen3.5-2b",
-      "name": "Qwen3.5 2B",
-      "family": "qwen",
-      "parametersB": 1.94,
-      "activeParametersB": null,
-      "maxContext": 262144,
-      "capabilities": [
-        "chat",
-        "vision"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 1.14,
-          "kvCacheGbPer1kCtx": 0.052,
-          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-2B-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 1.3,
-          "kvCacheGbPer1kCtx": 0.052,
-          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-2B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 1.46,
-          "kvCacheGbPer1kCtx": 0.052,
-          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-2B-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 1.58,
-          "kvCacheGbPer1kCtx": 0.052,
-          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-2B-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 1.94,
-          "kvCacheGbPer1kCtx": 0.052,
-          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-2B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen3.5-0.8b",
-      "name": "Qwen3.5 0.8B",
-      "family": "qwen",
-      "parametersB": 0.77,
-      "activeParametersB": null,
-      "maxContext": 262144,
-      "capabilities": [
-        "chat",
-        "vision"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 0.48,
-          "kvCacheGbPer1kCtx": 0.052,
-          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 0.54,
-          "kvCacheGbPer1kCtx": 0.052,
-          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 0.6,
-          "kvCacheGbPer1kCtx": 0.052,
-          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 0.64,
-          "kvCacheGbPer1kCtx": 0.052,
-          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 0.78,
-          "kvCacheGbPer1kCtx": 0.052,
-          "ollamaTag": "hf.co/bartowski/Qwen_Qwen3.5-0.8B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen2.5-7b",
-      "name": "Qwen2.5 7B",
-      "family": "qwen",
-      "parametersB": 7.62,
-      "activeParametersB": null,
-      "maxContext": 32768,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 3.55,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/bartowski/Qwen2.5-7B-Instruct-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 4.36,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/bartowski/Qwen2.5-7B-Instruct-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 5.07,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/bartowski/Qwen2.5-7B-Instruct-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 5.82,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/bartowski/Qwen2.5-7B-Instruct-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 7.54,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/bartowski/Qwen2.5-7B-Instruct-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "fara1.5-27b",
-      "name": "Fara1.5 27B",
-      "family": "qwen",
-      "parametersB": 26.9,
-      "activeParametersB": null,
-      "maxContext": 262144,
-      "capabilities": [
-        "chat",
-        "vision"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 13.38,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-27B-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 16.33,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-27B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 19.1,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-27B-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 21.63,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-27B-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 26.7,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-27B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "fara1.5-9b",
-      "name": "Fara1.5 9B",
-      "family": "qwen",
-      "parametersB": 8.95,
-      "activeParametersB": null,
-      "maxContext": 262144,
-      "capabilities": [
-        "chat",
-        "vision"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 4.58,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-9B-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 5.5,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-9B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 6.38,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-9B-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 7.17,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-9B-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 8.89,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-9B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen2.5-coder-7b",
-      "name": "Qwen2.5 Coder 7B",
-      "family": "qwen",
-      "parametersB": 7.62,
-      "activeParametersB": null,
-      "maxContext": 131072,
-      "capabilities": [
-        "chat",
-        "coding"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 3.55,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-7B-Instruct-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 4.36,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": null,
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 5.07,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": null,
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 5.82,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": null,
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 7.54,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": null,
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "fara1.5-4b",
-      "name": "Fara1.5 4B",
-      "family": "qwen",
-      "parametersB": 4.21,
-      "activeParametersB": null,
-      "maxContext": 262144,
-      "capabilities": [
-        "chat",
-        "vision"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 2.28,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-4B-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 2.69,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-4B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 3.09,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-4B-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 3.42,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-4B-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 4.19,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/Fara1.5-4B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
       "id": "grug-12b",
       "name": "Grug 12B",
       "family": "gemma",
@@ -2041,209 +1578,6 @@
       "ollamaTag": null
     },
     {
-      "id": "qwen2.5-0.5b",
-      "name": "Qwen2.5 0.5B",
-      "family": "qwen",
-      "parametersB": 0.63,
-      "activeParametersB": null,
-      "maxContext": 8192,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 0.4,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 0.46,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 0.49,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 0.61,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 0.63,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "arex-turbo-4b",
-      "name": "Arex Turbo 4B",
-      "family": "qwen",
-      "parametersB": 4.21,
-      "activeParametersB": null,
-      "maxContext": 262144,
-      "capabilities": [
-        "chat",
-        "reasoning",
-        "vision"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 2.28,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/BAAI_AREX-Turbo-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 2.69,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/BAAI_AREX-Turbo-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 3.09,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/BAAI_AREX-Turbo-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 3.42,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/BAAI_AREX-Turbo-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 4.19,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/BAAI_AREX-Turbo-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen2.5-1.5b",
-      "name": "Qwen2.5 1.5B",
-      "family": "qwen",
-      "parametersB": 1.78,
-      "activeParametersB": null,
-      "maxContext": 8192,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 0.86,
-          "kvCacheGbPer1kCtx": 0.029,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 1.04,
-          "kvCacheGbPer1kCtx": 0.029,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 1.2,
-          "kvCacheGbPer1kCtx": 0.029,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 1.36,
-          "kvCacheGbPer1kCtx": 0.029,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 1.76,
-          "kvCacheGbPer1kCtx": 0.029,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "ui-mate-9b",
-      "name": "Ui Mate 9B",
-      "family": "qwen",
-      "parametersB": 8.95,
-      "activeParametersB": null,
-      "maxContext": 262144,
-      "capabilities": [
-        "chat",
-        "vision"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 4.58,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-9B-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 5.5,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-9B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 6.38,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-9B-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 7.17,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-9B-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 8.89,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-9B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
       "id": "hermes-3-llama-3.1-70b",
       "name": "Hermes 3 Llama 3.1 70B",
       "family": "llama",
@@ -2294,57 +1628,6 @@
       "ollamaTag": null
     },
     {
-      "id": "ui-mate-27b",
-      "name": "Ui Mate 27B",
-      "family": "qwen",
-      "parametersB": 26.9,
-      "activeParametersB": null,
-      "maxContext": 262144,
-      "capabilities": [
-        "chat",
-        "vision"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 13.38,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-27B-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 16.33,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-27B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 19.1,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-27B-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 21.63,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-27B-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 26.7,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/tencent_UI-Mate-27B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
       "id": "llama-3.2-1b",
       "name": "Llama 3.2 1B",
       "family": "llama",
@@ -2388,49 +1671,12 @@
       "ollamaTag": null
     },
     {
-      "id": "deepseek-r1-0528-qwen3-8b",
-      "name": "Deepseek R1 0528 Qwen3 8B",
-      "family": "qwen",
-      "parametersB": 8.19,
+      "id": "phi-4-mini-4b",
+      "name": "Phi 4 Mini",
+      "family": "phi",
+      "parametersB": 3.84,
       "activeParametersB": null,
       "maxContext": 131072,
-      "capabilities": [
-        "chat",
-        "reasoning"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q4_K_M": {
-          "fileSizeGb": 4.68,
-          "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "hf.co/lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 6.26,
-          "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "hf.co/lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 8.11,
-          "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "hf.co/lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen2.5-coder-1.5b",
-      "name": "Qwen2.5 Coder 1.5B",
-      "family": "qwen",
-      "parametersB": 1.78,
-      "activeParametersB": null,
-      "maxContext": 32768,
       "capabilities": [
         "chat",
         "coding"
@@ -2438,109 +1684,37 @@
       "quality": null,
       "quantizations": {
         "Q3_K_M": {
-          "fileSizeGb": 0.86,
-          "kvCacheGbPer1kCtx": 0.029,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF:Q3_K_M",
+          "fileSizeGb": 1.97,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Phi-4-mini-instruct-GGUF:Q3_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q4_K_M": {
-          "fileSizeGb": 1.04,
-          "kvCacheGbPer1kCtx": 0.029,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF:Q4_K_M",
+          "fileSizeGb": 2.32,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Phi-4-mini-instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q5_K_M": {
-          "fileSizeGb": 1.2,
-          "kvCacheGbPer1kCtx": 0.029,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF:Q5_K_M",
+          "fileSizeGb": 2.65,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Phi-4-mini-instruct-GGUF:Q5_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q6_K": {
-          "fileSizeGb": 1.36,
-          "kvCacheGbPer1kCtx": 0.029,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF:Q6_K",
+          "fileSizeGb": 2.94,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Phi-4-mini-instruct-GGUF:Q6_K",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q8_0": {
-          "fileSizeGb": 1.76,
-          "kvCacheGbPer1kCtx": 0.029,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen3-0.6b",
-      "name": "Qwen3 0.6B",
-      "family": "qwen",
-      "parametersB": 0.6,
-      "activeParametersB": null,
-      "maxContext": 40960,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q8_0": {
-          "fileSizeGb": 0.6,
-          "kvCacheGbPer1kCtx": 0.117,
-          "ollamaTag": "hf.co/Qwen/Qwen3-0.6B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen2.5-72b",
-      "name": "Qwen2.5 72B",
-      "family": "qwen",
-      "parametersB": 72.71,
-      "activeParametersB": null,
-      "maxContext": 32768,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 35.11,
-          "kvCacheGbPer1kCtx": 0.336,
-          "ollamaTag": "hf.co/bartowski/Qwen2.5-72B-Instruct-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 44.16,
-          "kvCacheGbPer1kCtx": 0.336,
-          "ollamaTag": "hf.co/bartowski/Qwen2.5-72B-Instruct-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 50.71,
-          "kvCacheGbPer1kCtx": 0.336,
-          "ollamaTag": null,
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 59.93,
-          "kvCacheGbPer1kCtx": 0.336,
-          "ollamaTag": null,
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 71.96,
-          "kvCacheGbPer1kCtx": 0.336,
-          "ollamaTag": null,
+          "fileSizeGb": 3.8,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Phi-4-mini-instruct-GGUF:Q8_0",
           "sizeSource": "hf",
           "kvSource": "gguf"
         }
@@ -2641,42 +1815,100 @@
       "ollamaTag": null
     },
     {
-      "id": "gemma-2-2b",
-      "name": "Gemma 2 2B",
+      "id": "gemma-3-4b",
+      "name": "Gemma 3 4B",
       "family": "gemma",
-      "parametersB": 2.61,
+      "parametersB": 3.88,
       "activeParametersB": null,
-      "maxContext": 8192,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 1.95,
+          "kvCacheGbPer1kCtx": 0.04,
+          "ollamaTag": "hf.co/unsloth/gemma-3-4b-it-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 2.32,
+          "kvCacheGbPer1kCtx": 0.04,
+          "ollamaTag": "hf.co/unsloth/gemma-3-4b-it-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.64,
+          "kvCacheGbPer1kCtx": 0.04,
+          "ollamaTag": "hf.co/unsloth/gemma-3-4b-it-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.97,
+          "kvCacheGbPer1kCtx": 0.04,
+          "ollamaTag": "hf.co/unsloth/gemma-3-4b-it-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.85,
+          "kvCacheGbPer1kCtx": 0.04,
+          "ollamaTag": "hf.co/unsloth/gemma-3-4b-it-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "lfm2.5-1.2b",
+      "name": "Lfm2.5 1.2B",
+      "family": "lfm2",
+      "parametersB": 1.17,
+      "activeParametersB": null,
+      "maxContext": 128000,
       "capabilities": [
         "chat"
       ],
       "quality": null,
       "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 0.56,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/LFM2.5-1.2B-Instruct-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
         "Q4_K_M": {
-          "fileSizeGb": 1.59,
-          "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/bartowski/gemma-2-2b-it-GGUF:Q4_K_M",
+          "fileSizeGb": 0.68,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/LFM2.5-1.2B-Instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q5_K_M": {
-          "fileSizeGb": 1.79,
-          "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/bartowski/gemma-2-2b-it-GGUF:Q5_K_M",
+          "fileSizeGb": 0.79,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/LFM2.5-1.2B-Instruct-GGUF:Q5_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q6_K": {
-          "fileSizeGb": 2.0,
-          "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/bartowski/gemma-2-2b-it-GGUF:Q6_K",
+          "fileSizeGb": 0.9,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/LFM2.5-1.2B-Instruct-GGUF:Q6_K",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q8_0": {
-          "fileSizeGb": 2.59,
-          "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/bartowski/gemma-2-2b-it-GGUF:Q8_0",
+          "fileSizeGb": 1.16,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/LFM2.5-1.2B-Instruct-GGUF:Q8_0",
           "sizeSource": "hf",
           "kvSource": "gguf"
         }
@@ -2713,195 +1945,6 @@
           "fileSizeGb": 8.41,
           "kvCacheGbPer1kCtx": 0.143,
           "ollamaTag": "hf.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "deepseek-r1-distill-qwen-7b",
-      "name": "Deepseek R1 Distill Qwen 7B",
-      "family": "qwen",
-      "parametersB": 7.62,
-      "activeParametersB": null,
-      "maxContext": 131072,
-      "capabilities": [
-        "chat",
-        "reasoning"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 3.55,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 4.36,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 5.07,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 5.82,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 7.54,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen2.5-14b",
-      "name": "Qwen2.5 14B",
-      "family": "qwen",
-      "parametersB": 14.77,
-      "activeParametersB": null,
-      "maxContext": 32768,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 6.84,
-          "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "hf.co/bartowski/Qwen2.5-14B-Instruct-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 8.37,
-          "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "hf.co/bartowski/Qwen2.5-14B-Instruct-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 9.79,
-          "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "hf.co/bartowski/Qwen2.5-14B-Instruct-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 11.29,
-          "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "hf.co/bartowski/Qwen2.5-14B-Instruct-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 14.62,
-          "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "hf.co/bartowski/Qwen2.5-14B-Instruct-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "gemma-3-4b",
-      "name": "Gemma 3 4B",
-      "family": "gemma",
-      "parametersB": 3.88,
-      "activeParametersB": null,
-      "maxContext": 131072,
-      "capabilities": [
-        "chat",
-        "vision"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q4_K_M": {
-          "fileSizeGb": 2.32,
-          "kvCacheGbPer1kCtx": 0.04,
-          "ollamaTag": "hf.co/lmstudio-community/gemma-3-4b-it-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 2.97,
-          "kvCacheGbPer1kCtx": 0.04,
-          "ollamaTag": "hf.co/lmstudio-community/gemma-3-4b-it-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 3.85,
-          "kvCacheGbPer1kCtx": 0.04,
-          "ollamaTag": "hf.co/lmstudio-community/gemma-3-4b-it-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen2.5-coder-3b",
-      "name": "Qwen2.5 Coder 3B",
-      "family": "qwen",
-      "parametersB": 3.4,
-      "activeParametersB": null,
-      "maxContext": 32768,
-      "capabilities": [
-        "chat",
-        "coding"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 1.61,
-          "kvCacheGbPer1kCtx": 0.038,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-3B-Instruct-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 1.96,
-          "kvCacheGbPer1kCtx": 0.038,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-3B-Instruct-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 2.27,
-          "kvCacheGbPer1kCtx": 0.038,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-3B-Instruct-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 2.6,
-          "kvCacheGbPer1kCtx": 0.038,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-3B-Instruct-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 3.37,
-          "kvCacheGbPer1kCtx": 0.038,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-3B-Instruct-GGUF:Q8_0",
           "sizeSource": "hf",
           "kvSource": "gguf"
         }
@@ -2996,43 +2039,6 @@
       "ollamaTag": null
     },
     {
-      "id": "deepseek-r1-distill-qwen-14b",
-      "name": "Deepseek R1 Distill Qwen 14B",
-      "family": "qwen",
-      "parametersB": 14.77,
-      "activeParametersB": null,
-      "maxContext": 131072,
-      "capabilities": [
-        "chat",
-        "reasoning"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q4_K_M": {
-          "fileSizeGb": 8.37,
-          "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "hf.co/lmstudio-community/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 11.29,
-          "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "hf.co/lmstudio-community/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 14.62,
-          "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "hf.co/lmstudio-community/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
       "id": "llama-3.3-70b",
       "name": "Llama 3.3 70B",
       "family": "llama",
@@ -3084,7 +2090,7 @@
     },
     {
       "id": "phi-3.5-mini-4b",
-      "name": "Phi 3.5 Mini 4B",
+      "name": "Phi 3.5 Mini",
       "family": "phi",
       "parametersB": 3.82,
       "activeParametersB": null,
@@ -3135,7 +2141,7 @@
     },
     {
       "id": "glm-4.6v-flash-9b",
-      "name": "Glm 4.6v Flash 9B",
+      "name": "Glm 4.6v Flash",
       "family": "glm4",
       "parametersB": 9.4,
       "activeParametersB": null,
@@ -3242,10 +2248,10 @@
       "ollamaTag": null
     },
     {
-      "id": "deepseek-r1-distill-qwen-32b",
-      "name": "Deepseek R1 Distill Qwen 32B",
-      "family": "qwen",
-      "parametersB": 32.76,
+      "id": "deepseek-r1-distill-llama-8b",
+      "name": "Deepseek R1 Distill Llama 8B",
+      "family": "llama",
+      "parametersB": 8.03,
       "activeParametersB": null,
       "maxContext": 131072,
       "capabilities": [
@@ -3255,37 +2261,37 @@
       "quality": null,
       "quantizations": {
         "Q3_K_M": {
-          "fileSizeGb": 14.84,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF:Q3_K_M",
+          "fileSizeGb": 3.74,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF:Q3_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q4_K_M": {
-          "fileSizeGb": 18.49,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF:Q4_K_M",
+          "fileSizeGb": 4.58,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF:Q4_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q5_K_M": {
-          "fileSizeGb": 21.66,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF:Q5_K_M",
+          "fileSizeGb": 5.34,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF:Q5_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q6_K": {
-          "fileSizeGb": 25.04,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF:Q6_K",
+          "fileSizeGb": 6.14,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF:Q6_K",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q8_0": {
-          "fileSizeGb": 32.43,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF:Q8_0",
+          "fileSizeGb": 7.95,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF:Q8_0",
           "sizeSource": "hf",
           "kvSource": "gguf"
         }
@@ -3294,7 +2300,7 @@
     },
     {
       "id": "glm-ocr-0.9b",
-      "name": "Glm Ocr 0.9B",
+      "name": "Glm Ocr",
       "family": "glm4",
       "parametersB": 0.89,
       "activeParametersB": null,
@@ -3315,78 +2321,6 @@
       "ollamaTag": null
     },
     {
-      "id": "qwen3-1.7b",
-      "name": "Qwen3 1.7B",
-      "family": "qwen",
-      "parametersB": 1.72,
-      "activeParametersB": null,
-      "maxContext": 40960,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q8_0": {
-          "fileSizeGb": 1.71,
-          "kvCacheGbPer1kCtx": 0.117,
-          "ollamaTag": "hf.co/Qwen/Qwen3-1.7B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "phi-4-mini-4b",
-      "name": "Phi 4 Mini 4B",
-      "family": "phi",
-      "parametersB": 3.84,
-      "activeParametersB": null,
-      "maxContext": 131072,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 1.97,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/microsoft_Phi-4-mini-instruct-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 2.32,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/microsoft_Phi-4-mini-instruct-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 2.65,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/microsoft_Phi-4-mini-instruct-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 2.94,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/microsoft_Phi-4-mini-instruct-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 3.8,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/bartowski/microsoft_Phi-4-mini-instruct-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
       "id": "devstral-small-2-24b-2512",
       "name": "Devstral Small 2 24B 2512",
       "family": "mistral",
@@ -3398,24 +2332,38 @@
       ],
       "quality": null,
       "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 10.69,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
         "Q4_K_M": {
           "fileSizeGb": 13.35,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "hf.co/lmstudio-community/Devstral-Small-2-24B-Instruct-2512-GGUF:Q4_K_M",
+          "ollamaTag": "hf.co/unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 15.61,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF:Q5_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q6_K": {
           "fileSizeGb": 18.02,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "hf.co/lmstudio-community/Devstral-Small-2-24B-Instruct-2512-GGUF:Q6_K",
+          "ollamaTag": "hf.co/unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF:Q6_K",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 23.33,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "hf.co/lmstudio-community/Devstral-Small-2-24B-Instruct-2512-GGUF:Q8_0",
+          "ollamaTag": "hf.co/unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF:Q8_0",
           "sizeSource": "hf",
           "kvSource": "gguf"
         }
@@ -3423,35 +2371,151 @@
       "ollamaTag": null
     },
     {
-      "id": "qwen3-4b-2507",
-      "name": "Qwen3 4B 2507",
-      "family": "qwen",
-      "parametersB": 4.02,
+      "id": "mistral-small-3.2-24b-2506",
+      "name": "Mistral Small 3.2 24B 2506",
+      "family": "llama",
+      "parametersB": 23.57,
       "activeParametersB": null,
-      "maxContext": 262144,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 10.69,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 13.35,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 15.61,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 18.02,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 23.33,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "smollm3-3b",
+      "name": "Smollm3 3B",
+      "family": "smollm3",
+      "parametersB": 3.08,
+      "activeParametersB": null,
+      "maxContext": 65536,
       "capabilities": [
         "chat"
       ],
       "quality": null,
       "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 1.46,
+          "kvCacheGbPer1kCtx": 0.075,
+          "ollamaTag": "hf.co/bartowski/HuggingFaceTB_SmolLM3-3B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
         "Q4_K_M": {
-          "fileSizeGb": 2.33,
-          "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "hf.co/lmstudio-community/Qwen3-4B-Instruct-2507-GGUF:Q4_K_M",
+          "fileSizeGb": 1.78,
+          "kvCacheGbPer1kCtx": 0.075,
+          "ollamaTag": "hf.co/bartowski/HuggingFaceTB_SmolLM3-3B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.06,
+          "kvCacheGbPer1kCtx": 0.075,
+          "ollamaTag": "hf.co/bartowski/HuggingFaceTB_SmolLM3-3B-GGUF:Q5_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q6_K": {
-          "fileSizeGb": 3.08,
-          "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "hf.co/lmstudio-community/Qwen3-4B-Instruct-2507-GGUF:Q6_K",
+          "fileSizeGb": 2.36,
+          "kvCacheGbPer1kCtx": 0.075,
+          "ollamaTag": "hf.co/bartowski/HuggingFaceTB_SmolLM3-3B-GGUF:Q6_K",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q8_0": {
-          "fileSizeGb": 3.99,
-          "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "hf.co/lmstudio-community/Qwen3-4B-Instruct-2507-GGUF:Q8_0",
+          "fileSizeGb": 3.05,
+          "kvCacheGbPer1kCtx": 0.075,
+          "ollamaTag": "hf.co/bartowski/HuggingFaceTB_SmolLM3-3B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "muse-glimmer-30b-heretic",
+      "name": "Muse Glimmer 30B Heretic",
+      "family": "muse-glimmer",
+      "parametersB": 27.85,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "vision"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 13.0,
+          "kvCacheGbPer1kCtx": 0.055,
+          "ollamaTag": "hf.co/bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 16.12,
+          "kvCacheGbPer1kCtx": 0.055,
+          "ollamaTag": "hf.co/bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 18.72,
+          "kvCacheGbPer1kCtx": 0.055,
+          "ollamaTag": "hf.co/bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 21.81,
+          "kvCacheGbPer1kCtx": 0.055,
+          "ollamaTag": "hf.co/bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 27.58,
+          "kvCacheGbPer1kCtx": 0.055,
+          "ollamaTag": "hf.co/bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF:Q8_0",
           "sizeSource": "hf",
           "kvSource": "gguf"
         }
@@ -3481,43 +2545,6 @@
       "ollamaTag": null
     },
     {
-      "id": "gemma-3-12b",
-      "name": "Gemma 3 12B",
-      "family": "gemma",
-      "parametersB": 11.77,
-      "activeParametersB": null,
-      "maxContext": 131072,
-      "capabilities": [
-        "chat",
-        "vision"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q4_K_M": {
-          "fileSizeGb": 6.8,
-          "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/lmstudio-community/gemma-3-12b-it-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 9.0,
-          "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/lmstudio-community/gemma-3-12b-it-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 11.65,
-          "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/lmstudio-community/gemma-3-12b-it-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
       "id": "ministral-3-3b-2512",
       "name": "Ministral 3 3B 2512",
       "family": "mistral",
@@ -3529,24 +2556,38 @@
       ],
       "quality": null,
       "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 1.67,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/unsloth/Ministral-3-3B-Instruct-2512-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
         "Q4_K_M": {
           "fileSizeGb": 2.0,
           "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Instruct-2512-GGUF:Q4_K_M",
+          "ollamaTag": "hf.co/unsloth/Ministral-3-3B-Instruct-2512-GGUF:Q4_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q5_K_M": {
           "fileSizeGb": 2.3,
           "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Instruct-2512-GGUF:Q5_K_M",
+          "ollamaTag": "hf.co/unsloth/Ministral-3-3B-Instruct-2512-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.63,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/unsloth/Ministral-3-3B-Instruct-2512-GGUF:Q6_K",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q8_0": {
           "fileSizeGb": 3.4,
           "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Instruct-2512-GGUF:Q8_0",
+          "ollamaTag": "hf.co/unsloth/Ministral-3-3B-Instruct-2512-GGUF:Q8_0",
           "sizeSource": "hf",
           "kvSource": "gguf"
         }
@@ -3554,151 +2595,36 @@
       "ollamaTag": null
     },
     {
-      "id": "olmocr-2-7b-1025",
-      "name": "Olmocr 2 7B 1025",
-      "family": "qwen",
-      "parametersB": 7.62,
-      "activeParametersB": null,
-      "maxContext": 128000,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q4_K_M": {
-          "fileSizeGb": 4.36,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/lmstudio-community/olmOCR-2-7B-1025-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 5.82,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/lmstudio-community/olmOCR-2-7B-1025-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 7.54,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/lmstudio-community/olmOCR-2-7B-1025-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen3-4b-thinking-2507",
-      "name": "Qwen3 4B Thinking 2507",
-      "family": "qwen",
-      "parametersB": 4.02,
-      "activeParametersB": null,
-      "maxContext": 262144,
-      "capabilities": [
-        "chat",
-        "reasoning"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q4_K_M": {
-          "fileSizeGb": 2.33,
-          "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "hf.co/lmstudio-community/Qwen3-4B-Thinking-2507-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 3.08,
-          "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "hf.co/lmstudio-community/Qwen3-4B-Thinking-2507-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 3.99,
-          "kvCacheGbPer1kCtx": 0.151,
-          "ollamaTag": "hf.co/lmstudio-community/Qwen3-4B-Thinking-2507-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwq-32b",
-      "name": "Qwq 32B",
-      "family": "qwen",
-      "parametersB": 32.76,
+      "id": "phi-4-mini-reasoning-4b",
+      "name": "Phi 4 Mini Reasoning",
+      "family": "phi",
+      "parametersB": 3.84,
       "activeParametersB": null,
       "maxContext": 131072,
       "capabilities": [
-        "chat"
+        "chat",
+        "coding"
       ],
       "quality": null,
       "quantizations": {
         "Q4_K_M": {
-          "fileSizeGb": 18.49,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/Qwen/QwQ-32B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 21.66,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/Qwen/QwQ-32B-GGUF:Q5_K_M",
+          "fileSizeGb": 2.32,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/lmstudio-community/Phi-4-mini-reasoning-GGUF:Q4_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q6_K": {
-          "fileSizeGb": 25.04,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/Qwen/QwQ-32B-GGUF:Q6_K",
+          "fileSizeGb": 2.94,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/lmstudio-community/Phi-4-mini-reasoning-GGUF:Q6_K",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q8_0": {
-          "fileSizeGb": 32.43,
-          "kvCacheGbPer1kCtx": 0.268,
-          "ollamaTag": "hf.co/Qwen/QwQ-32B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen2.5-math-7b",
-      "name": "Qwen2.5 Math 7B",
-      "family": "qwen",
-      "parametersB": 7.62,
-      "activeParametersB": null,
-      "maxContext": 4096,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q4_K_M": {
-          "fileSizeGb": 4.36,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/lmstudio-community/Qwen2.5-Math-7B-Instruct-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 5.82,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/lmstudio-community/Qwen2.5-Math-7B-Instruct-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 7.54,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/lmstudio-community/Qwen2.5-Math-7B-Instruct-GGUF:Q8_0",
+          "fileSizeGb": 3.8,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/lmstudio-community/Phi-4-mini-reasoning-GGUF:Q8_0",
           "sizeSource": "hf",
           "kvSource": "gguf"
         }
@@ -3742,12 +2668,300 @@
       "ollamaTag": null
     },
     {
-      "id": "qwen2.5-coder-0.5b",
-      "name": "Qwen2.5 Coder 0.5B",
-      "family": "qwen",
-      "parametersB": 0.63,
+      "id": "nanbeige4.2-3b",
+      "name": "Nanbeige4.2 3B",
+      "family": "nanbeige",
+      "parametersB": 4.17,
       "activeParametersB": null,
-      "maxContext": 32768,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 2.09,
+          "kvCacheGbPer1kCtx": 0.092,
+          "ollamaTag": "hf.co/bartowski/Nanbeige_Nanbeige4.2-3B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 2.5,
+          "kvCacheGbPer1kCtx": 0.092,
+          "ollamaTag": "hf.co/bartowski/Nanbeige_Nanbeige4.2-3B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.87,
+          "kvCacheGbPer1kCtx": 0.092,
+          "ollamaTag": "hf.co/bartowski/Nanbeige_Nanbeige4.2-3B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 3.35,
+          "kvCacheGbPer1kCtx": 0.092,
+          "ollamaTag": "hf.co/bartowski/Nanbeige_Nanbeige4.2-3B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 4.13,
+          "kvCacheGbPer1kCtx": 0.092,
+          "ollamaTag": "hf.co/bartowski/Nanbeige_Nanbeige4.2-3B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "granite-4.0-h-micro-3b",
+      "name": "Granite 4.0 H Micro",
+      "family": "granite",
+      "parametersB": 3.19,
+      "activeParametersB": null,
+      "maxContext": 1048576,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 1.45,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/bartowski/ibm-granite_granite-4.0-h-micro-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 1.81,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/bartowski/ibm-granite_granite-4.0-h-micro-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.12,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/bartowski/ibm-granite_granite-4.0-h-micro-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.44,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/bartowski/ibm-granite_granite-4.0-h-micro-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.16,
+          "kvCacheGbPer1kCtx": 0.336,
+          "ollamaTag": "hf.co/bartowski/ibm-granite_granite-4.0-h-micro-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "granite-4.2-30b",
+      "name": "Granite 4.2 30B",
+      "family": "granite",
+      "parametersB": 29.28,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat",
+        "reasoning"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 13.37,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/granite-4.2-30b-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 16.79,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/granite-4.2-30b-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 19.58,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/granite-4.2-30b-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 22.83,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/granite-4.2-30b-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 28.98,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/bartowski/granite-4.2-30b-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "granite-4.1-8b",
+      "name": "Granite 4.1 8B",
+      "family": "granite",
+      "parametersB": 8.79,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 4.05,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/unsloth/granite-4.1-8b-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 4.98,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/unsloth/granite-4.1-8b-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 5.82,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/unsloth/granite-4.1-8b-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 6.72,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/unsloth/granite-4.1-8b-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 8.7,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/unsloth/granite-4.1-8b-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "phi-4-15b",
+      "name": "Phi 4",
+      "family": "phi",
+      "parametersB": 14.66,
+      "activeParametersB": null,
+      "maxContext": 16384,
+      "capabilities": [
+        "chat",
+        "coding"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 8.43,
+          "kvCacheGbPer1kCtx": 0.21,
+          "ollamaTag": "hf.co/lmstudio-community/phi-4-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 11.2,
+          "kvCacheGbPer1kCtx": 0.21,
+          "ollamaTag": "hf.co/lmstudio-community/phi-4-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 14.51,
+          "kvCacheGbPer1kCtx": 0.21,
+          "ollamaTag": "hf.co/lmstudio-community/phi-4-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "ai21-jamba-reasoning-3b",
+      "name": "Ai21 Jamba Reasoning 3B",
+      "family": "jamba",
+      "parametersB": 3.2,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 1.43,
+          "kvCacheGbPer1kCtx": 0.294,
+          "ollamaTag": "hf.co/bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 1.8,
+          "kvCacheGbPer1kCtx": 0.294,
+          "ollamaTag": "hf.co/bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.12,
+          "kvCacheGbPer1kCtx": 0.294,
+          "ollamaTag": "hf.co/bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.46,
+          "kvCacheGbPer1kCtx": 0.294,
+          "ollamaTag": "hf.co/bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.17,
+          "kvCacheGbPer1kCtx": 0.294,
+          "ollamaTag": "hf.co/bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "phi-3-mini-128k-4b",
+      "name": "Phi 3 Mini 128k",
+      "family": "phi",
+      "parametersB": 3.82,
+      "activeParametersB": null,
+      "maxContext": 131072,
       "capabilities": [
         "chat",
         "coding"
@@ -3755,37 +2969,37 @@
       "quality": null,
       "quantizations": {
         "Q3_K_M": {
-          "fileSizeGb": 0.4,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF:Q3_K_M",
+          "fileSizeGb": 1.82,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/bartowski/Phi-3.1-mini-128k-instruct-GGUF:Q3_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q4_K_M": {
-          "fileSizeGb": 0.46,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF:Q4_K_M",
+          "fileSizeGb": 2.23,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/bartowski/Phi-3.1-mini-128k-instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q5_K_M": {
-          "fileSizeGb": 0.49,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF:Q5_K_M",
+          "fileSizeGb": 2.62,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/bartowski/Phi-3.1-mini-128k-instruct-GGUF:Q5_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q6_K": {
-          "fileSizeGb": 0.61,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF:Q6_K",
+          "fileSizeGb": 2.92,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/bartowski/Phi-3.1-mini-128k-instruct-GGUF:Q6_K",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q8_0": {
-          "fileSizeGb": 0.63,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF:Q8_0",
+          "fileSizeGb": 3.78,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/bartowski/Phi-3.1-mini-128k-instruct-GGUF:Q8_0",
           "sizeSource": "hf",
           "kvSource": "gguf"
         }
@@ -3793,144 +3007,50 @@
       "ollamaTag": null
     },
     {
-      "id": "smolvlm2-2.2b",
-      "name": "Smolvlm2 2.2B",
-      "family": "llama",
-      "parametersB": 1.81,
+      "id": "granite-20b-code",
+      "name": "Granite 20B Code",
+      "family": "granite",
+      "parametersB": 20.07,
       "activeParametersB": null,
       "maxContext": 8192,
       "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q4_K_M": {
-          "fileSizeGb": 1.04,
-          "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "hf.co/ggml-org/SmolVLM2-2.2B-Instruct-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 1.8,
-          "kvCacheGbPer1kCtx": 0.201,
-          "ollamaTag": "hf.co/ggml-org/SmolVLM2-2.2B-Instruct-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen3-asr-1.7b",
-      "name": "Qwen3 Asr 1.7B",
-      "family": "qwen",
-      "parametersB": 2.03,
-      "activeParametersB": null,
-      "maxContext": 65536,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q8_0": {
-          "fileSizeGb": 2.02,
-          "kvCacheGbPer1kCtx": 0.117,
-          "ollamaTag": "hf.co/ggml-org/Qwen3-ASR-1.7B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "smolvlm2-500m-video",
-      "name": "Smolvlm2 500M Video",
-      "family": "llama",
-      "parametersB": 0.41,
-      "activeParametersB": null,
-      "maxContext": 8192,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q8_0": {
-          "fileSizeGb": 0.41,
-          "kvCacheGbPer1kCtx": 0.042,
-          "ollamaTag": "hf.co/ggml-org/SmolVLM2-500M-Video-Instruct-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "bge-m3-0.6b",
-      "name": "Bge M3 0.6B",
-      "family": "bert",
-      "parametersB": 0.57,
-      "activeParametersB": null,
-      "maxContext": 8192,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q8_0": {
-          "fileSizeGb": 0.59,
-          "kvCacheGbPer1kCtx": 0.101,
-          "ollamaTag": "hf.co/ggml-org/bge-m3-Q8_0-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen2-0.5b",
-      "name": "Qwen2 0.5B",
-      "family": "qwen",
-      "parametersB": 0.49,
-      "activeParametersB": null,
-      "maxContext": 32768,
-      "capabilities": [
-        "chat"
+        "chat",
+        "coding"
       ],
       "quality": null,
       "quantizations": {
         "Q3_K_M": {
-          "fileSizeGb": 0.33,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2-0.5B-Instruct-GGUF:Q3_K_M",
+          "fileSizeGb": 9.84,
+          "kvCacheGbPer1kCtx": 0.027,
+          "ollamaTag": "hf.co/bartowski/granite-20b-code-instruct-GGUF:Q3_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q4_K_M": {
-          "fileSizeGb": 0.37,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2-0.5B-Instruct-GGUF:Q4_K_M",
+          "fileSizeGb": 11.94,
+          "kvCacheGbPer1kCtx": 0.027,
+          "ollamaTag": "hf.co/bartowski/granite-20b-code-instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q5_K_M": {
-          "fileSizeGb": 0.39,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2-0.5B-Instruct-GGUF:Q5_K_M",
+          "fileSizeGb": 13.79,
+          "kvCacheGbPer1kCtx": 0.027,
+          "ollamaTag": "hf.co/bartowski/granite-20b-code-instruct-GGUF:Q5_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q6_K": {
-          "fileSizeGb": 0.47,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2-0.5B-Instruct-GGUF:Q6_K",
+          "fileSizeGb": 15.49,
+          "kvCacheGbPer1kCtx": 0.027,
+          "ollamaTag": "hf.co/bartowski/granite-20b-code-instruct-GGUF:Q6_K",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q8_0": {
-          "fileSizeGb": 0.49,
-          "kvCacheGbPer1kCtx": 0.013,
-          "ollamaTag": "hf.co/Qwen/Qwen2-0.5B-Instruct-GGUF:Q8_0",
+          "fileSizeGb": 20.01,
+          "kvCacheGbPer1kCtx": 0.027,
+          "ollamaTag": "hf.co/bartowski/granite-20b-code-instruct-GGUF:Q8_0",
           "sizeSource": "hf",
           "kvSource": "gguf"
         }
@@ -3938,101 +3058,73 @@
       "ollamaTag": null
     },
     {
-      "id": "smollm3-3b",
-      "name": "Smollm3 3B",
-      "family": "smollm3",
-      "parametersB": 3.08,
+      "id": "phi-4-reasoning-plus-15b",
+      "name": "Phi 4 Reasoning Plus",
+      "family": "phi",
+      "parametersB": 14.66,
       "activeParametersB": null,
-      "maxContext": 65536,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat",
+        "coding",
+        "reasoning"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 8.43,
+          "kvCacheGbPer1kCtx": 0.21,
+          "ollamaTag": "hf.co/lmstudio-community/Phi-4-reasoning-plus-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 11.2,
+          "kvCacheGbPer1kCtx": 0.21,
+          "ollamaTag": "hf.co/lmstudio-community/Phi-4-reasoning-plus-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 14.51,
+          "kvCacheGbPer1kCtx": 0.21,
+          "ollamaTag": "hf.co/lmstudio-community/Phi-4-reasoning-plus-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "nuextract-v1.5-4b",
+      "name": "Nuextract V1.5",
+      "family": "phi",
+      "parametersB": 3.82,
+      "activeParametersB": null,
+      "maxContext": 131072,
       "capabilities": [
         "chat"
       ],
       "quality": null,
       "quantizations": {
         "Q4_K_M": {
-          "fileSizeGb": 1.78,
-          "kvCacheGbPer1kCtx": 0.075,
-          "ollamaTag": "hf.co/ggml-org/SmolLM3-3B-GGUF:Q4_K_M",
+          "fileSizeGb": 2.23,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/lmstudio-community/NuExtract-v1.5-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.92,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/lmstudio-community/NuExtract-v1.5-GGUF:Q6_K",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q8_0": {
-          "fileSizeGb": 3.05,
-          "kvCacheGbPer1kCtx": 0.075,
-          "ollamaTag": "hf.co/ggml-org/SmolLM3-3B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen3-asr-0.6b",
-      "name": "Qwen3 Asr 0.6B",
-      "family": "qwen",
-      "parametersB": 0.75,
-      "activeParametersB": null,
-      "maxContext": 65536,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q8_0": {
-          "fileSizeGb": 0.75,
-          "kvCacheGbPer1kCtx": 0.117,
-          "ollamaTag": "hf.co/ggml-org/Qwen3-ASR-0.6B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen2.5-omni-7b",
-      "name": "Qwen2.5 Omni 7B",
-      "family": "qwen",
-      "parametersB": 7.62,
-      "activeParametersB": null,
-      "maxContext": 32768,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q4_K_M": {
-          "fileSizeGb": 4.36,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/ggml-org/Qwen2.5-Omni-7B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 7.54,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/ggml-org/Qwen2.5-Omni-7B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "hunyuanocr-0.5b",
-      "name": "Hunyuanocr 0.5B",
-      "family": "hunyuan_vl",
-      "parametersB": 0.54,
-      "activeParametersB": null,
-      "maxContext": 32768,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q8_0": {
-          "fileSizeGb": 0.54,
-          "kvCacheGbPer1kCtx": 0.101,
-          "ollamaTag": "hf.co/ggml-org/HunyuanOCR-GGUF:Q8_0",
+          "fileSizeGb": 3.78,
+          "kvCacheGbPer1kCtx": 0.403,
+          "ollamaTag": "hf.co/lmstudio-community/NuExtract-v1.5-GGUF:Q8_0",
           "sizeSource": "hf",
           "kvSource": "gguf"
         }
@@ -4112,60 +3204,10 @@
       "ollamaTag": null
     },
     {
-      "id": "qwen2-7b",
-      "name": "Qwen2 7B",
-      "family": "qwen",
-      "parametersB": 7.62,
-      "activeParametersB": null,
-      "maxContext": 32768,
-      "capabilities": [
-        "chat"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 3.55,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/Qwen/Qwen2-7B-Instruct-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 4.36,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/Qwen/Qwen2-7B-Instruct-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 5.07,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/Qwen/Qwen2-7B-Instruct-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 5.82,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/Qwen/Qwen2-7B-Instruct-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 7.54,
-          "kvCacheGbPer1kCtx": 0.059,
-          "ollamaTag": "hf.co/Qwen/Qwen2-7B-Instruct-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "devstral-small-2507-24b",
-      "name": "Devstral Small 2507 24B",
-      "family": "llama",
-      "parametersB": 23.57,
+      "id": "granite-3.2-8b",
+      "name": "Granite 3.2 8B",
+      "family": "granite",
+      "parametersB": 8.17,
       "activeParametersB": null,
       "maxContext": 131072,
       "capabilities": [
@@ -4174,23 +3216,348 @@
       "quality": null,
       "quantizations": {
         "Q4_K_M": {
-          "fileSizeGb": 13.35,
+          "fileSizeGb": 4.6,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "hf.co/mistralai/Devstral-Small-2507_gguf:Q4_K_M",
+          "ollamaTag": "hf.co/lmstudio-community/granite-3.2-8b-instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
-        "Q5_K_M": {
-          "fileSizeGb": 15.61,
+        "Q6_K": {
+          "fileSizeGb": 6.24,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "hf.co/mistralai/Devstral-Small-2507_gguf:Q5_K_M",
+          "ollamaTag": "hf.co/lmstudio-community/granite-3.2-8b-instruct-GGUF:Q6_K",
           "sizeSource": "hf",
           "kvSource": "gguf"
         },
         "Q8_0": {
-          "fileSizeGb": 23.33,
+          "fileSizeGb": 8.09,
           "kvCacheGbPer1kCtx": 0.168,
-          "ollamaTag": "hf.co/mistralai/Devstral-Small-2507_gguf:Q8_0",
+          "ollamaTag": "hf.co/lmstudio-community/granite-3.2-8b-instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "seed-oss-36b",
+      "name": "Seed Oss 36B",
+      "family": "seed_oss",
+      "parametersB": 36.15,
+      "activeParametersB": null,
+      "maxContext": 524288,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 20.27,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/lmstudio-community/Seed-OSS-36B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 27.63,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/lmstudio-community/Seed-OSS-36B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 35.78,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/lmstudio-community/Seed-OSS-36B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "ministral-3-8b-2512-bf16",
+      "name": "Ministral 3 8B 2512 Bf16",
+      "family": "mistral",
+      "parametersB": 8.49,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 4.84,
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "hf.co/lmstudio-community/Ministral-3-8B-Instruct-2512-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 6.49,
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "hf.co/lmstudio-community/Ministral-3-8B-Instruct-2512-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 8.41,
+          "kvCacheGbPer1kCtx": 0.143,
+          "ollamaTag": "hf.co/lmstudio-community/Ministral-3-8B-Instruct-2512-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "lfm2.5-2.6b",
+      "name": "Lfm2.5 2.6B",
+      "family": "lfm2",
+      "parametersB": 2.7,
+      "activeParametersB": null,
+      "maxContext": 128000,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 1.56,
+          "kvCacheGbPer1kCtx": 0.252,
+          "ollamaTag": "hf.co/lmstudio-community/LFM2.5-2.6B-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.07,
+          "kvCacheGbPer1kCtx": 0.252,
+          "ollamaTag": "hf.co/lmstudio-community/LFM2.5-2.6B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 2.68,
+          "kvCacheGbPer1kCtx": 0.252,
+          "ollamaTag": "hf.co/lmstudio-community/LFM2.5-2.6B-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "ministral-3-14b-2512-bf16",
+      "name": "Ministral 3 14B 2512 Bf16",
+      "family": "mistral",
+      "parametersB": 13.51,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 7.67,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/lmstudio-community/Ministral-3-14B-Instruct-2512-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 10.33,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/lmstudio-community/Ministral-3-14B-Instruct-2512-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 13.37,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/lmstudio-community/Ministral-3-14B-Instruct-2512-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "granite-3.1-8b",
+      "name": "Granite 3.1 8B",
+      "family": "granite",
+      "parametersB": 8.17,
+      "activeParametersB": null,
+      "maxContext": 131072,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 4.6,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/lmstudio-community/granite-3.1-8b-instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 6.24,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/lmstudio-community/granite-3.1-8b-instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 8.09,
+          "kvCacheGbPer1kCtx": 0.168,
+          "ollamaTag": "hf.co/lmstudio-community/granite-3.1-8b-instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "exaone-3.5-7.8b",
+      "name": "Exaone 3.5 7.8B",
+      "family": "exaone",
+      "parametersB": 7.82,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 4.44,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/lmstudio-community/EXAONE-3.5-7.8B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 5.98,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/lmstudio-community/EXAONE-3.5-7.8B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 7.74,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/lmstudio-community/EXAONE-3.5-7.8B-Instruct-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "olmo-3-32b-think",
+      "name": "Olmo 3 32B Think",
+      "family": "olmo",
+      "parametersB": 32.23,
+      "activeParametersB": null,
+      "maxContext": 65536,
+      "capabilities": [
+        "chat",
+        "reasoning"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 18.14,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/lmstudio-community/Olmo-3-32B-Think-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 24.63,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/lmstudio-community/Olmo-3-32B-Think-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 31.9,
+          "kvCacheGbPer1kCtx": 0.268,
+          "ollamaTag": "hf.co/lmstudio-community/Olmo-3-32B-Think-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "amd-olmo-1b-sft-dpo",
+      "name": "Amd Olmo 1B Sft Dpo",
+      "family": "olmo",
+      "parametersB": 1.18,
+      "activeParametersB": null,
+      "maxContext": 2048,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 0.68,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/lmstudio-community/AMD-OLMo-1B-SFT-DPO-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 0.9,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/lmstudio-community/AMD-OLMo-1B-SFT-DPO-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 1.17,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/lmstudio-community/AMD-OLMo-1B-SFT-DPO-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
+    },
+    {
+      "id": "exaone-3.5-2.4b",
+      "name": "Exaone 3.5 2.4B",
+      "family": "exaone",
+      "parametersB": 2.67,
+      "activeParametersB": null,
+      "maxContext": 32768,
+      "capabilities": [
+        "chat"
+      ],
+      "quality": null,
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 1.53,
+          "kvCacheGbPer1kCtx": 0.079,
+          "ollamaTag": "hf.co/lmstudio-community/EXAONE-3.5-2.4B-Instruct-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 2.04,
+          "kvCacheGbPer1kCtx": 0.079,
+          "ollamaTag": "hf.co/lmstudio-community/EXAONE-3.5-2.4B-Instruct-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 2.64,
+          "kvCacheGbPer1kCtx": 0.079,
+          "ollamaTag": "hf.co/lmstudio-community/EXAONE-3.5-2.4B-Instruct-GGUF:Q8_0",
           "sizeSource": "hf",
           "kvSource": "gguf"
         }

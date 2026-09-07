@@ -27,6 +27,8 @@ import re
 import json
 import struct
 import sys
+import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 
@@ -43,15 +45,57 @@ GIB = 1024**3
 QUANT_ORDER = ["Q3_K_M", "Q4_K_M", "Q5_K_M", "Q6_K", "Q8_0"]
 
 
+# Hugging Face rate-limits anonymous traffic, and a discovery pass makes
+# hundreds of requests. A 429 is the server saying "wait", not "no" — but an
+# unhandled one aborts the run and throws away every model already fetched,
+# which is an hour of network for nothing. Handled here, at the one place
+# every request goes through, rather than at each call site.
+RETRY_STATUSES = {429, 500, 502, 503, 504}
+MAX_RETRIES = 6
+# Minimum gap between requests. Cheaper than being throttled: the backoff
+# above costs whole minutes once the server is already annoyed.
+MIN_REQUEST_INTERVAL = 0.12
+_last_request = 0.0
+
+
+def _urlopen(req, timeout: int):
+    """urlopen with polite pacing and backoff on the statuses that mean "later"."""
+    global _last_request
+    delay = 2.0
+    for attempt in range(MAX_RETRIES):
+        gap = time.monotonic() - _last_request
+        if gap < MIN_REQUEST_INTERVAL:
+            time.sleep(MIN_REQUEST_INTERVAL - gap)
+        _last_request = time.monotonic()
+        try:
+            return urllib.request.urlopen(req, timeout=timeout)
+        except urllib.error.HTTPError as e:
+            if e.code not in RETRY_STATUSES or attempt == MAX_RETRIES - 1:
+                raise
+            # The server's own Retry-After beats our guess whenever it sends one.
+            try:
+                wait = float(e.headers.get("Retry-After") or 0)
+            except (TypeError, ValueError):
+                wait = 0.0
+            time.sleep(min(max(wait, delay), 90.0))
+            delay *= 2
+        except (urllib.error.URLError, TimeoutError):
+            if attempt == MAX_RETRIES - 1:
+                raise
+            time.sleep(delay)
+            delay *= 2
+    raise RuntimeError("unreachable")
+
+
 def http_json(url: str):
     req = urllib.request.Request(url, headers=UA)
-    with urllib.request.urlopen(req, timeout=30) as r:
+    with _urlopen(req, timeout=30) as r:
         return json.load(r)
 
 
 def http_range(url: str, n: int) -> bytes:
     req = urllib.request.Request(url, headers={**UA, "Range": f"bytes=0-{n - 1}"})
-    with urllib.request.urlopen(req, timeout=60) as r:
+    with _urlopen(req, timeout=60) as r:
         return r.read()
 
 
@@ -228,7 +272,7 @@ def manifest_exists(url: str) -> bool:
     """HEAD a registry manifest: 200 means the tag is real and pullable."""
     req = urllib.request.Request(url, method="HEAD", headers=UA)
     try:
-        with urllib.request.urlopen(req, timeout=25) as r:
+        with _urlopen(req, timeout=25) as r:
             return r.status == 200
     except Exception:  # noqa: BLE001
         return False

@@ -45,6 +45,11 @@ from build import (
 
 HERE = Path(__file__).parent
 
+# What `discover` has collected so far. Held outside the function so a run that
+# dies partway — a rate limit, a Ctrl-C — can still write its results instead
+# of losing every model it already paid for.
+PARTIAL: dict = {"models": [], "skipped": []}
+
 # Publishers whose GGUF conversions are consistent enough to read
 # automatically: stable file naming, real imatrix quants, and a track record of
 # not shipping broken conversions. Discovery never leaves this list — the point
@@ -63,6 +68,14 @@ TRUSTED_AUTHORS = [
 # The quants worth listing, smallest useful to largest sane. Mirrors build.py's
 # ladder: a rung outside it fails validation there anyway.
 WANTED_QUANTS = list(QUANT_ORDER)
+
+# The tasks a model has to declare to belong in a catalogue of "what can I run
+# and chat with". Hugging Face's own pipeline tag is the reliable signal here:
+# name matching missed an embedding model (bge-m3) and an OCR model
+# (HunyuanOCR), both of which sailed through labelled "chat" because nothing in
+# their names says otherwise. A repo that declares no task at all is excluded
+# too — we cannot vouch for what we cannot identify.
+GENERATIVE_PIPELINES = {"text-generation", "image-text-to-text"}
 
 # Guard rails on what is worth listing at all.
 MIN_PARAMS_B = 0.4
@@ -242,6 +255,10 @@ def probe(repo: str, info: dict, offline: bool) -> tuple[dict | None, str | None
     # A GGUF conversion that does not say what it was converted from is not
     # something we can name, dedupe, or vouch for — placeholder and redirect
     # repos look exactly like models until you ask this question.
+    pipeline = info.get("pipeline_tag")
+    if pipeline not in GENERATIVE_PIPELINES:
+        return None, f"{repo}: task is {pipeline!r}, not a model you chat with"
+
     base = base_model_of(info)
     if not base:
         return None, f"{repo}: does not declare a base model"
@@ -295,7 +312,9 @@ def probe(repo: str, info: dict, offline: bool) -> tuple[dict | None, str | None
     return entry, None
 
 
-def discover(limit: int, per_author: int, min_downloads: int, offline: bool):
+def discover(
+    limit: int, per_author: int, min_downloads: int, per_family: int, offline: bool
+):
     curated = yaml.safe_load((HERE / "models.yaml").read_text())
     taken_ids = {m["id"] for m in curated}
     taken_repos = {m.get("hf_repo", "").lower() for m in curated}
@@ -316,9 +335,19 @@ def discover(limit: int, per_author: int, min_downloads: int, offline: bool):
             candidates.append(row)
     candidates.sort(key=lambda r: -(r.get("downloads") or 0))
 
-    out: list[dict] = []
-    skipped: list[str] = []
+    out: list[dict] = PARTIAL["models"]
+    skipped: list[str] = PARTIAL["skipped"]
     seen_bases: set[str] = set()
+    # Candidates are ranked by downloads, and one prolific family can take
+    # every slot: a publisher that ships eight sizes of the same release
+    # outranks the first model of a family nobody has listed yet. The cap is
+    # generous enough to hold a family's whole size ladder — which is what
+    # users actually browse for — and only bites when a family would crowd out
+    # everything else. Curated entries count toward it, so a family we already
+    # cover by hand does not get a second full allocation.
+    from collections import Counter
+
+    family_count: Counter = Counter(m["family"] for m in curated)
     for row in candidates:
         if len(out) >= limit:
             break
@@ -334,6 +363,13 @@ def discover(limit: int, per_author: int, min_downloads: int, offline: bool):
             stem = base.split("/")[-1].lower()
             if base in seen_bases or stem in taken_bases:
                 continue
+        # Check the cap before probing: probe() reads a GGUF header over the
+        # network, which is by far the most expensive step here, and there is
+        # no reason to spend it on a family that is already full.
+        provisional = family_of((info.get("gguf") or {}).get("architecture") or "", base or repo)
+        if family_count[provisional] >= per_family:
+            skipped.append(f"{repo}: {provisional} family already has {per_family}")
+            continue
         entry, why = probe(repo, info, offline)
         if not entry:
             skipped.append(why or f"{repo}: skipped")
@@ -343,6 +379,7 @@ def discover(limit: int, per_author: int, min_downloads: int, offline: bool):
             continue
         seen_bases.add(base or repo.lower())
         taken_ids.add(entry["id"])
+        family_count[entry["family"]] += 1
         out.append(entry)
         print(f"  + {entry['id']:<34} {entry['parameters_b']:>6}B  {repo}", file=sys.stderr)
     return out, skipped
@@ -353,11 +390,31 @@ def main():
     ap.add_argument("--limit", type=int, default=90, help="max models to emit")
     ap.add_argument("--per-author", type=int, default=60, help="repos to consider per publisher")
     ap.add_argument("--min-downloads", type=int, default=5000)
+    ap.add_argument(
+        "--per-family",
+        type=int,
+        default=12,
+        help="max models per family, curated included; keeps one prolific "
+        "publisher from taking every slot (default 12)",
+    )
     ap.add_argument("--offline", action="store_true", help="skip Ollama tag verification")
     ap.add_argument("--out", default=str(HERE / "discovered.yaml"))
     args = ap.parse_args()
 
-    models, skipped = discover(args.limit, args.per_author, args.min_downloads, args.offline)
+    # A run costs an hour of network, so a failure partway through must not
+    # discard what it already has. Whatever was collected is written and the
+    # error is reported; a short catalogue is a far better outcome than none,
+    # and re-running only has to make up the difference.
+    try:
+        models, skipped = discover(
+            args.limit, args.per_author, args.min_downloads, args.per_family, args.offline
+        )
+        failed = None
+    except (KeyboardInterrupt, Exception) as e:  # noqa: BLE001
+        models, skipped = PARTIAL["models"], PARTIAL["skipped"]
+        failed = e
+        print(f"\ndiscovery stopped early: {e}", file=sys.stderr)
+
     for s in skipped:
         print(f"skip: {s}", file=sys.stderr)
 
@@ -369,8 +426,13 @@ def main():
         "# quality score a person stood behind. To promote one, copy it into\n"
         "# models.yaml and add a `quality:` block.\n"
     )
+    if not models:
+        print("nothing discovered; leaving the existing file alone", file=sys.stderr)
+        sys.exit(1)
     Path(args.out).write_text(header + yaml.safe_dump(models, sort_keys=False, width=100))
     print(f"wrote {args.out} · {len(models)} discovered · {len(skipped)} skipped", file=sys.stderr)
+    if failed is not None:
+        sys.exit(1)
 
 
 if __name__ == "__main__":

@@ -84,8 +84,6 @@
   quants:
     Q5_K_M:
       fallback_size_gb: 17.88
-    Q6_K:
-      fallback_size_gb: 24.46
     Q8_0:
       fallback_size_gb: 27.58
   fallback_kv_gb_per_1k: 0.055
@@ -181,210 +179,6 @@
     Q8_0:
       fallback_size_gb: 11.8
   fallback_kv_gb_per_1k: 0.352
-- id: qwen2.5-3b
-  name: Qwen2.5 3B
-  family: qwen
-  parameters_b: 3.4
-  max_context: 32768
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: Qwen/Qwen2.5-3B-Instruct-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 1.61
-    Q4_K_M:
-      fallback_size_gb: 1.96
-    Q5_K_M:
-      fallback_size_gb: 2.27
-    Q6_K:
-      fallback_size_gb: 2.6
-    Q8_0:
-      fallback_size_gb: 3.37
-  fallback_kv_gb_per_1k: 0.038
-- id: ornith-1.0-9b
-  name: Ornith 1.0 9B
-  family: qwen
-  parameters_b: 8.95
-  max_context: 262144
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: unsloth/Ornith-1.0-9B-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 4.38
-    Q4_K_M:
-      fallback_size_gb: 5.31
-    Q5_K_M:
-      fallback_size_gb: 6.09
-    Q6_K:
-      fallback_size_gb: 6.96
-    Q8_0:
-      fallback_size_gb: 8.87
-  fallback_kv_gb_per_1k: 0.134
-- id: qwen3.5-2b
-  name: Qwen3.5 2B
-  family: qwen
-  parameters_b: 1.94
-  max_context: 262144
-  capabilities:
-  - chat
-  - vision
-  quality: null
-  ollama_tag: null
-  hf_repo: bartowski/Qwen_Qwen3.5-2B-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 1.14
-    Q4_K_M:
-      fallback_size_gb: 1.3
-    Q5_K_M:
-      fallback_size_gb: 1.46
-    Q6_K:
-      fallback_size_gb: 1.58
-    Q8_0:
-      fallback_size_gb: 1.94
-  fallback_kv_gb_per_1k: 0.052
-- id: qwen3.5-0.8b
-  name: Qwen3.5 0.8B
-  family: qwen
-  parameters_b: 0.77
-  max_context: 262144
-  capabilities:
-  - chat
-  - vision
-  quality: null
-  ollama_tag: null
-  hf_repo: bartowski/Qwen_Qwen3.5-0.8B-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 0.48
-    Q4_K_M:
-      fallback_size_gb: 0.54
-    Q5_K_M:
-      fallback_size_gb: 0.6
-    Q6_K:
-      fallback_size_gb: 0.64
-    Q8_0:
-      fallback_size_gb: 0.78
-  fallback_kv_gb_per_1k: 0.052
-- id: qwen2.5-7b
-  name: Qwen2.5 7B
-  family: qwen
-  parameters_b: 7.62
-  max_context: 32768
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: bartowski/Qwen2.5-7B-Instruct-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 3.55
-    Q4_K_M:
-      fallback_size_gb: 4.36
-    Q5_K_M:
-      fallback_size_gb: 5.07
-    Q6_K:
-      fallback_size_gb: 5.82
-    Q8_0:
-      fallback_size_gb: 7.54
-  fallback_kv_gb_per_1k: 0.059
-- id: fara1.5-27b
-  name: Fara1.5 27B
-  family: qwen
-  parameters_b: 26.9
-  max_context: 262144
-  capabilities:
-  - chat
-  - vision
-  quality: null
-  ollama_tag: null
-  hf_repo: bartowski/Fara1.5-27B-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 13.38
-    Q4_K_M:
-      fallback_size_gb: 16.33
-    Q5_K_M:
-      fallback_size_gb: 19.1
-    Q6_K:
-      fallback_size_gb: 21.63
-    Q8_0:
-      fallback_size_gb: 26.7
-  fallback_kv_gb_per_1k: 0.268
-- id: fara1.5-9b
-  name: Fara1.5 9B
-  family: qwen
-  parameters_b: 8.95
-  max_context: 262144
-  capabilities:
-  - chat
-  - vision
-  quality: null
-  ollama_tag: null
-  hf_repo: bartowski/Fara1.5-9B-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 4.58
-    Q4_K_M:
-      fallback_size_gb: 5.5
-    Q5_K_M:
-      fallback_size_gb: 6.38
-    Q6_K:
-      fallback_size_gb: 7.17
-    Q8_0:
-      fallback_size_gb: 8.89
-  fallback_kv_gb_per_1k: 0.134
-- id: qwen2.5-coder-7b
-  name: Qwen2.5 Coder 7B
-  family: qwen
-  parameters_b: 7.62
-  max_context: 131072
-  capabilities:
-  - chat
-  - coding
-  quality: null
-  ollama_tag: null
-  hf_repo: Qwen/Qwen2.5-Coder-7B-Instruct-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 3.55
-    Q4_K_M:
-      fallback_size_gb: 4.36
-    Q5_K_M:
-      fallback_size_gb: 5.07
-    Q6_K:
-      fallback_size_gb: 5.82
-    Q8_0:
-      fallback_size_gb: 7.54
-  fallback_kv_gb_per_1k: 0.059
-- id: fara1.5-4b
-  name: Fara1.5 4B
-  family: qwen
-  parameters_b: 4.21
-  max_context: 262144
-  capabilities:
-  - chat
-  - vision
-  quality: null
-  ollama_tag: null
-  hf_repo: bartowski/Fara1.5-4B-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 2.28
-    Q4_K_M:
-      fallback_size_gb: 2.69
-    Q5_K_M:
-      fallback_size_gb: 3.09
-    Q6_K:
-      fallback_size_gb: 3.42
-    Q8_0:
-      fallback_size_gb: 4.19
-  fallback_kv_gb_per_1k: 0.134
 - id: grug-12b
   name: Grug 12B
   family: gemma
@@ -469,97 +263,6 @@
     Q8_0:
       fallback_size_gb: 69.83
   fallback_kv_gb_per_1k: 0.336
-- id: qwen2.5-0.5b
-  name: Qwen2.5 0.5B
-  family: qwen
-  parameters_b: 0.63
-  max_context: 8192
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: Qwen/Qwen2.5-0.5B-Instruct-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 0.4
-    Q4_K_M:
-      fallback_size_gb: 0.46
-    Q5_K_M:
-      fallback_size_gb: 0.49
-    Q6_K:
-      fallback_size_gb: 0.61
-    Q8_0:
-      fallback_size_gb: 0.63
-  fallback_kv_gb_per_1k: 0.013
-- id: arex-turbo-4b
-  name: Arex Turbo 4B
-  family: qwen
-  parameters_b: 4.21
-  max_context: 262144
-  capabilities:
-  - chat
-  - reasoning
-  - vision
-  quality: null
-  ollama_tag: null
-  hf_repo: bartowski/BAAI_AREX-Turbo-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 2.28
-    Q4_K_M:
-      fallback_size_gb: 2.69
-    Q5_K_M:
-      fallback_size_gb: 3.09
-    Q6_K:
-      fallback_size_gb: 3.42
-    Q8_0:
-      fallback_size_gb: 4.19
-  fallback_kv_gb_per_1k: 0.134
-- id: qwen2.5-1.5b
-  name: Qwen2.5 1.5B
-  family: qwen
-  parameters_b: 1.78
-  max_context: 8192
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: Qwen/Qwen2.5-1.5B-Instruct-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 0.86
-    Q4_K_M:
-      fallback_size_gb: 1.04
-    Q5_K_M:
-      fallback_size_gb: 1.2
-    Q6_K:
-      fallback_size_gb: 1.36
-    Q8_0:
-      fallback_size_gb: 1.76
-  fallback_kv_gb_per_1k: 0.029
-- id: ui-mate-9b
-  name: Ui Mate 9B
-  family: qwen
-  parameters_b: 8.95
-  max_context: 262144
-  capabilities:
-  - chat
-  - vision
-  quality: null
-  ollama_tag: null
-  hf_repo: bartowski/tencent_UI-Mate-9B-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 4.58
-    Q4_K_M:
-      fallback_size_gb: 5.5
-    Q5_K_M:
-      fallback_size_gb: 6.38
-    Q6_K:
-      fallback_size_gb: 7.17
-    Q8_0:
-      fallback_size_gb: 8.89
-  fallback_kv_gb_per_1k: 0.134
 - id: hermes-3-llama-3.1-70b
   name: Hermes 3 Llama 3.1 70B
   family: llama
@@ -582,29 +285,6 @@
     Q8_0:
       fallback_size_gb: 69.83
   fallback_kv_gb_per_1k: 0.336
-- id: ui-mate-27b
-  name: Ui Mate 27B
-  family: qwen
-  parameters_b: 26.9
-  max_context: 262144
-  capabilities:
-  - chat
-  - vision
-  quality: null
-  ollama_tag: null
-  hf_repo: bartowski/tencent_UI-Mate-27B-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 13.38
-    Q4_K_M:
-      fallback_size_gb: 16.33
-    Q5_K_M:
-      fallback_size_gb: 19.1
-    Q6_K:
-      fallback_size_gb: 21.63
-    Q8_0:
-      fallback_size_gb: 26.7
-  fallback_kv_gb_per_1k: 0.268
 - id: llama-3.2-1b
   name: Llama 3.2 1B
   family: llama
@@ -625,84 +305,29 @@
     Q8_0:
       fallback_size_gb: 1.23
   fallback_kv_gb_per_1k: 0.034
-- id: deepseek-r1-0528-qwen3-8b
-  name: Deepseek R1 0528 Qwen3 8B
-  family: qwen
-  parameters_b: 8.19
+- id: phi-4-mini-4b
+  name: Phi 4 Mini
+  family: phi
+  parameters_b: 3.84
   max_context: 131072
-  capabilities:
-  - chat
-  - reasoning
-  quality: null
-  ollama_tag: null
-  hf_repo: lmstudio-community/DeepSeek-R1-0528-Qwen3-8B-GGUF
-  quants:
-    Q4_K_M:
-      fallback_size_gb: 4.68
-    Q6_K:
-      fallback_size_gb: 6.26
-    Q8_0:
-      fallback_size_gb: 8.11
-  fallback_kv_gb_per_1k: 0.151
-- id: qwen2.5-coder-1.5b
-  name: Qwen2.5 Coder 1.5B
-  family: qwen
-  parameters_b: 1.78
-  max_context: 32768
   capabilities:
   - chat
   - coding
   quality: null
   ollama_tag: null
-  hf_repo: Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF
+  hf_repo: unsloth/Phi-4-mini-instruct-GGUF
   quants:
     Q3_K_M:
-      fallback_size_gb: 0.86
+      fallback_size_gb: 1.97
     Q4_K_M:
-      fallback_size_gb: 1.04
+      fallback_size_gb: 2.32
     Q5_K_M:
-      fallback_size_gb: 1.2
+      fallback_size_gb: 2.65
     Q6_K:
-      fallback_size_gb: 1.36
+      fallback_size_gb: 2.94
     Q8_0:
-      fallback_size_gb: 1.76
-  fallback_kv_gb_per_1k: 0.029
-- id: qwen3-0.6b
-  name: Qwen3 0.6B
-  family: qwen
-  parameters_b: 0.6
-  max_context: 40960
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: Qwen/Qwen3-0.6B-GGUF
-  quants:
-    Q8_0:
-      fallback_size_gb: 0.6
-  fallback_kv_gb_per_1k: 0.117
-- id: qwen2.5-72b
-  name: Qwen2.5 72B
-  family: qwen
-  parameters_b: 72.71
-  max_context: 32768
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: bartowski/Qwen2.5-72B-Instruct-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 35.11
-    Q4_K_M:
-      fallback_size_gb: 44.16
-    Q5_K_M:
-      fallback_size_gb: 50.71
-    Q6_K:
-      fallback_size_gb: 59.93
-    Q8_0:
-      fallback_size_gb: 71.96
-  fallback_kv_gb_per_1k: 0.336
+      fallback_size_gb: 3.8
+  fallback_kv_gb_per_1k: 0.134
 - id: meta-llama-3.1-70b
   name: Meta Llama 3.1 70B
   family: llama
@@ -745,26 +370,51 @@
     Q8_0:
       fallback_size_gb: 7.95
   fallback_kv_gb_per_1k: 0.134
-- id: gemma-2-2b
-  name: Gemma 2 2B
+- id: gemma-3-4b
+  name: Gemma 3 4B
   family: gemma
-  parameters_b: 2.61
-  max_context: 8192
+  parameters_b: 3.88
+  max_context: 131072
+  capabilities:
+  - chat
+  - vision
+  quality: null
+  ollama_tag: null
+  hf_repo: unsloth/gemma-3-4b-it-GGUF
+  quants:
+    Q3_K_M:
+      fallback_size_gb: 1.95
+    Q4_K_M:
+      fallback_size_gb: 2.32
+    Q5_K_M:
+      fallback_size_gb: 2.64
+    Q6_K:
+      fallback_size_gb: 2.97
+    Q8_0:
+      fallback_size_gb: 3.85
+  fallback_kv_gb_per_1k: 0.04
+- id: lfm2.5-1.2b
+  name: Lfm2.5 1.2B
+  family: lfm2
+  parameters_b: 1.17
+  max_context: 128000
   capabilities:
   - chat
   quality: null
   ollama_tag: null
-  hf_repo: bartowski/gemma-2-2b-it-GGUF
+  hf_repo: unsloth/LFM2.5-1.2B-Instruct-GGUF
   quants:
+    Q3_K_M:
+      fallback_size_gb: 0.56
     Q4_K_M:
-      fallback_size_gb: 1.59
+      fallback_size_gb: 0.68
     Q5_K_M:
-      fallback_size_gb: 1.79
+      fallback_size_gb: 0.79
     Q6_K:
-      fallback_size_gb: 2.0
+      fallback_size_gb: 0.9
     Q8_0:
-      fallback_size_gb: 2.59
-  fallback_kv_gb_per_1k: 0.109
+      fallback_size_gb: 1.16
+  fallback_kv_gb_per_1k: 0.134
 - id: ministral-3-8b-2512
   name: Ministral 3 8B 2512
   family: mistral
@@ -783,93 +433,6 @@
     Q8_0:
       fallback_size_gb: 8.41
   fallback_kv_gb_per_1k: 0.143
-- id: deepseek-r1-distill-qwen-7b
-  name: Deepseek R1 Distill Qwen 7B
-  family: qwen
-  parameters_b: 7.62
-  max_context: 131072
-  capabilities:
-  - chat
-  - reasoning
-  quality: null
-  ollama_tag: null
-  hf_repo: bartowski/DeepSeek-R1-Distill-Qwen-7B-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 3.55
-    Q4_K_M:
-      fallback_size_gb: 4.36
-    Q5_K_M:
-      fallback_size_gb: 5.07
-    Q6_K:
-      fallback_size_gb: 5.82
-    Q8_0:
-      fallback_size_gb: 7.54
-  fallback_kv_gb_per_1k: 0.059
-- id: qwen2.5-14b
-  name: Qwen2.5 14B
-  family: qwen
-  parameters_b: 14.77
-  max_context: 32768
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: bartowski/Qwen2.5-14B-Instruct-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 6.84
-    Q4_K_M:
-      fallback_size_gb: 8.37
-    Q5_K_M:
-      fallback_size_gb: 9.79
-    Q6_K:
-      fallback_size_gb: 11.29
-    Q8_0:
-      fallback_size_gb: 14.62
-  fallback_kv_gb_per_1k: 0.201
-- id: gemma-3-4b
-  name: Gemma 3 4B
-  family: gemma
-  parameters_b: 3.88
-  max_context: 131072
-  capabilities:
-  - chat
-  - vision
-  quality: null
-  ollama_tag: null
-  hf_repo: lmstudio-community/gemma-3-4b-it-GGUF
-  quants:
-    Q4_K_M:
-      fallback_size_gb: 2.32
-    Q6_K:
-      fallback_size_gb: 2.97
-    Q8_0:
-      fallback_size_gb: 3.85
-  fallback_kv_gb_per_1k: 0.04
-- id: qwen2.5-coder-3b
-  name: Qwen2.5 Coder 3B
-  family: qwen
-  parameters_b: 3.4
-  max_context: 32768
-  capabilities:
-  - chat
-  - coding
-  quality: null
-  ollama_tag: null
-  hf_repo: Qwen/Qwen2.5-Coder-3B-Instruct-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 1.61
-    Q4_K_M:
-      fallback_size_gb: 1.96
-    Q5_K_M:
-      fallback_size_gb: 2.27
-    Q6_K:
-      fallback_size_gb: 2.6
-    Q8_0:
-      fallback_size_gb: 3.37
-  fallback_kv_gb_per_1k: 0.038
 - id: olmo-3.1-32b-think
   name: Olmo 3.1 32B Think
   family: olmo
@@ -911,25 +474,6 @@
     Q8_0:
       fallback_size_gb: 13.37
   fallback_kv_gb_per_1k: 0.168
-- id: deepseek-r1-distill-qwen-14b
-  name: Deepseek R1 Distill Qwen 14B
-  family: qwen
-  parameters_b: 14.77
-  max_context: 131072
-  capabilities:
-  - chat
-  - reasoning
-  quality: null
-  ollama_tag: null
-  hf_repo: lmstudio-community/DeepSeek-R1-Distill-Qwen-14B-GGUF
-  quants:
-    Q4_K_M:
-      fallback_size_gb: 8.37
-    Q6_K:
-      fallback_size_gb: 11.29
-    Q8_0:
-      fallback_size_gb: 14.62
-  fallback_kv_gb_per_1k: 0.201
 - id: llama-3.3-70b
   name: Llama 3.3 70B
   family: llama
@@ -953,7 +497,7 @@
       fallback_size_gb: 69.83
   fallback_kv_gb_per_1k: 0.336
 - id: phi-3.5-mini-4b
-  name: Phi 3.5 Mini 4B
+  name: Phi 3.5 Mini
   family: phi
   parameters_b: 3.82
   max_context: 131072
@@ -976,7 +520,7 @@
       fallback_size_gb: 3.78
   fallback_kv_gb_per_1k: 0.403
 - id: glm-4.6v-flash-9b
-  name: Glm 4.6v Flash 9B
+  name: Glm 4.6v Flash
   family: glm4
   parameters_b: 9.4
   max_context: 131072
@@ -1029,31 +573,31 @@
     Q8_0:
       fallback_size_gb: 3.4
   fallback_kv_gb_per_1k: 0.109
-- id: deepseek-r1-distill-qwen-32b
-  name: Deepseek R1 Distill Qwen 32B
-  family: qwen
-  parameters_b: 32.76
+- id: deepseek-r1-distill-llama-8b
+  name: Deepseek R1 Distill Llama 8B
+  family: llama
+  parameters_b: 8.03
   max_context: 131072
   capabilities:
   - chat
   - reasoning
   quality: null
   ollama_tag: null
-  hf_repo: bartowski/DeepSeek-R1-Distill-Qwen-32B-GGUF
+  hf_repo: unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF
   quants:
     Q3_K_M:
-      fallback_size_gb: 14.84
+      fallback_size_gb: 3.74
     Q4_K_M:
-      fallback_size_gb: 18.49
+      fallback_size_gb: 4.58
     Q5_K_M:
-      fallback_size_gb: 21.66
+      fallback_size_gb: 5.34
     Q6_K:
-      fallback_size_gb: 25.04
+      fallback_size_gb: 6.14
     Q8_0:
-      fallback_size_gb: 32.43
-  fallback_kv_gb_per_1k: 0.268
+      fallback_size_gb: 7.95
+  fallback_kv_gb_per_1k: 0.134
 - id: glm-ocr-0.9b
-  name: Glm Ocr 0.9B
+  name: Glm Ocr
   family: glm4
   parameters_b: 0.89
   max_context: 131072
@@ -1066,42 +610,6 @@
     Q8_0:
       fallback_size_gb: 0.89
   fallback_kv_gb_per_1k: 0.071
-- id: qwen3-1.7b
-  name: Qwen3 1.7B
-  family: qwen
-  parameters_b: 1.72
-  max_context: 40960
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: Qwen/Qwen3-1.7B-GGUF
-  quants:
-    Q8_0:
-      fallback_size_gb: 1.71
-  fallback_kv_gb_per_1k: 0.117
-- id: phi-4-mini-4b
-  name: Phi 4 Mini 4B
-  family: phi
-  parameters_b: 3.84
-  max_context: 131072
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: bartowski/microsoft_Phi-4-mini-instruct-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 1.97
-    Q4_K_M:
-      fallback_size_gb: 2.32
-    Q5_K_M:
-      fallback_size_gb: 2.65
-    Q6_K:
-      fallback_size_gb: 2.94
-    Q8_0:
-      fallback_size_gb: 3.8
-  fallback_kv_gb_per_1k: 0.134
 - id: devstral-small-2-24b-2512
   name: Devstral Small 2 24B 2512
   family: mistral
@@ -1111,33 +619,87 @@
   - chat
   quality: null
   ollama_tag: null
-  hf_repo: lmstudio-community/Devstral-Small-2-24B-Instruct-2512-GGUF
+  hf_repo: unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF
   quants:
+    Q3_K_M:
+      fallback_size_gb: 10.69
     Q4_K_M:
       fallback_size_gb: 13.35
+    Q5_K_M:
+      fallback_size_gb: 15.61
     Q6_K:
       fallback_size_gb: 18.02
     Q8_0:
       fallback_size_gb: 23.33
   fallback_kv_gb_per_1k: 0.168
-- id: qwen3-4b-2507
-  name: Qwen3 4B 2507
-  family: qwen
-  parameters_b: 4.02
-  max_context: 262144
+- id: mistral-small-3.2-24b-2506
+  name: Mistral Small 3.2 24B 2506
+  family: llama
+  parameters_b: 23.57
+  max_context: 131072
+  capabilities:
+  - chat
+  - vision
+  quality: null
+  ollama_tag: null
+  hf_repo: unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF
+  quants:
+    Q3_K_M:
+      fallback_size_gb: 10.69
+    Q4_K_M:
+      fallback_size_gb: 13.35
+    Q5_K_M:
+      fallback_size_gb: 15.61
+    Q6_K:
+      fallback_size_gb: 18.02
+    Q8_0:
+      fallback_size_gb: 23.33
+  fallback_kv_gb_per_1k: 0.168
+- id: smollm3-3b
+  name: Smollm3 3B
+  family: smollm3
+  parameters_b: 3.08
+  max_context: 65536
   capabilities:
   - chat
   quality: null
   ollama_tag: null
-  hf_repo: lmstudio-community/Qwen3-4B-Instruct-2507-GGUF
+  hf_repo: bartowski/HuggingFaceTB_SmolLM3-3B-GGUF
   quants:
+    Q3_K_M:
+      fallback_size_gb: 1.46
     Q4_K_M:
-      fallback_size_gb: 2.33
+      fallback_size_gb: 1.78
+    Q5_K_M:
+      fallback_size_gb: 2.06
     Q6_K:
-      fallback_size_gb: 3.08
+      fallback_size_gb: 2.36
     Q8_0:
-      fallback_size_gb: 3.99
-  fallback_kv_gb_per_1k: 0.151
+      fallback_size_gb: 3.05
+  fallback_kv_gb_per_1k: 0.075
+- id: muse-glimmer-30b-heretic
+  name: Muse Glimmer 30B Heretic
+  family: muse-glimmer
+  parameters_b: 27.85
+  max_context: 131072
+  capabilities:
+  - chat
+  - vision
+  quality: null
+  ollama_tag: null
+  hf_repo: bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF
+  quants:
+    Q3_K_M:
+      fallback_size_gb: 13.0
+    Q4_K_M:
+      fallback_size_gb: 16.12
+    Q5_K_M:
+      fallback_size_gb: 18.72
+    Q6_K:
+      fallback_size_gb: 21.81
+    Q8_0:
+      fallback_size_gb: 27.58
+  fallback_kv_gb_per_1k: 0.055
 - id: smolvlm-500m
   name: Smolvlm 500M
   family: llama
@@ -1152,25 +714,6 @@
     Q8_0:
       fallback_size_gb: 0.41
   fallback_kv_gb_per_1k: 0.042
-- id: gemma-3-12b
-  name: Gemma 3 12B
-  family: gemma
-  parameters_b: 11.77
-  max_context: 131072
-  capabilities:
-  - chat
-  - vision
-  quality: null
-  ollama_tag: null
-  hf_repo: lmstudio-community/gemma-3-12b-it-GGUF
-  quants:
-    Q4_K_M:
-      fallback_size_gb: 6.8
-    Q6_K:
-      fallback_size_gb: 9.0
-    Q8_0:
-      fallback_size_gb: 11.65
-  fallback_kv_gb_per_1k: 0.109
 - id: ministral-3-3b-2512
   name: Ministral 3 3B 2512
   family: mistral
@@ -1180,90 +723,38 @@
   - chat
   quality: null
   ollama_tag: null
-  hf_repo: mistralai/Ministral-3-3B-Instruct-2512-GGUF
+  hf_repo: unsloth/Ministral-3-3B-Instruct-2512-GGUF
   quants:
+    Q3_K_M:
+      fallback_size_gb: 1.67
     Q4_K_M:
       fallback_size_gb: 2.0
     Q5_K_M:
       fallback_size_gb: 2.3
+    Q6_K:
+      fallback_size_gb: 2.63
     Q8_0:
       fallback_size_gb: 3.4
   fallback_kv_gb_per_1k: 0.109
-- id: olmocr-2-7b-1025
-  name: Olmocr 2 7B 1025
-  family: qwen
-  parameters_b: 7.62
-  max_context: 128000
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: lmstudio-community/olmOCR-2-7B-1025-GGUF
-  quants:
-    Q4_K_M:
-      fallback_size_gb: 4.36
-    Q6_K:
-      fallback_size_gb: 5.82
-    Q8_0:
-      fallback_size_gb: 7.54
-  fallback_kv_gb_per_1k: 0.059
-- id: qwen3-4b-thinking-2507
-  name: Qwen3 4B Thinking 2507
-  family: qwen
-  parameters_b: 4.02
-  max_context: 262144
-  capabilities:
-  - chat
-  - reasoning
-  quality: null
-  ollama_tag: null
-  hf_repo: lmstudio-community/Qwen3-4B-Thinking-2507-GGUF
-  quants:
-    Q4_K_M:
-      fallback_size_gb: 2.33
-    Q6_K:
-      fallback_size_gb: 3.08
-    Q8_0:
-      fallback_size_gb: 3.99
-  fallback_kv_gb_per_1k: 0.151
-- id: qwq-32b
-  name: Qwq 32B
-  family: qwen
-  parameters_b: 32.76
+- id: phi-4-mini-reasoning-4b
+  name: Phi 4 Mini Reasoning
+  family: phi
+  parameters_b: 3.84
   max_context: 131072
   capabilities:
   - chat
+  - coding
   quality: null
   ollama_tag: null
-  hf_repo: Qwen/QwQ-32B-GGUF
+  hf_repo: lmstudio-community/Phi-4-mini-reasoning-GGUF
   quants:
     Q4_K_M:
-      fallback_size_gb: 18.49
-    Q5_K_M:
-      fallback_size_gb: 21.66
+      fallback_size_gb: 2.32
     Q6_K:
-      fallback_size_gb: 25.04
+      fallback_size_gb: 2.94
     Q8_0:
-      fallback_size_gb: 32.43
-  fallback_kv_gb_per_1k: 0.268
-- id: qwen2.5-math-7b
-  name: Qwen2.5 Math 7B
-  family: qwen
-  parameters_b: 7.62
-  max_context: 4096
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: lmstudio-community/Qwen2.5-Math-7B-Instruct-GGUF
-  quants:
-    Q4_K_M:
-      fallback_size_gb: 4.36
-    Q6_K:
-      fallback_size_gb: 5.82
-    Q8_0:
-      fallback_size_gb: 7.54
-  fallback_kv_gb_per_1k: 0.059
+      fallback_size_gb: 3.8
+  fallback_kv_gb_per_1k: 0.134
 - id: ministral-3-14b-2512
   name: Ministral 3 14B 2512
   family: mistral
@@ -1282,169 +773,220 @@
     Q8_0:
       fallback_size_gb: 13.37
   fallback_kv_gb_per_1k: 0.168
-- id: qwen2.5-coder-0.5b
-  name: Qwen2.5 Coder 0.5B
-  family: qwen
-  parameters_b: 0.63
-  max_context: 32768
+- id: nanbeige4.2-3b
+  name: Nanbeige4.2 3B
+  family: nanbeige
+  parameters_b: 4.17
+  max_context: 262144
+  capabilities:
+  - chat
+  quality: null
+  ollama_tag: null
+  hf_repo: bartowski/Nanbeige_Nanbeige4.2-3B-GGUF
+  quants:
+    Q3_K_M:
+      fallback_size_gb: 2.09
+    Q4_K_M:
+      fallback_size_gb: 2.5
+    Q5_K_M:
+      fallback_size_gb: 2.87
+    Q6_K:
+      fallback_size_gb: 3.35
+    Q8_0:
+      fallback_size_gb: 4.13
+  fallback_kv_gb_per_1k: 0.092
+- id: granite-4.0-h-micro-3b
+  name: Granite 4.0 H Micro
+  family: granite
+  parameters_b: 3.19
+  max_context: 1048576
+  capabilities:
+  - chat
+  quality: null
+  ollama_tag: null
+  hf_repo: bartowski/ibm-granite_granite-4.0-h-micro-GGUF
+  quants:
+    Q3_K_M:
+      fallback_size_gb: 1.45
+    Q4_K_M:
+      fallback_size_gb: 1.81
+    Q5_K_M:
+      fallback_size_gb: 2.12
+    Q6_K:
+      fallback_size_gb: 2.44
+    Q8_0:
+      fallback_size_gb: 3.16
+  fallback_kv_gb_per_1k: 0.336
+- id: granite-4.2-30b
+  name: Granite 4.2 30B
+  family: granite
+  parameters_b: 29.28
+  max_context: 131072
+  capabilities:
+  - chat
+  - reasoning
+  quality: null
+  ollama_tag: null
+  hf_repo: bartowski/granite-4.2-30b-GGUF
+  quants:
+    Q3_K_M:
+      fallback_size_gb: 13.37
+    Q4_K_M:
+      fallback_size_gb: 16.79
+    Q5_K_M:
+      fallback_size_gb: 19.58
+    Q6_K:
+      fallback_size_gb: 22.83
+    Q8_0:
+      fallback_size_gb: 28.98
+  fallback_kv_gb_per_1k: 0.268
+- id: granite-4.1-8b
+  name: Granite 4.1 8B
+  family: granite
+  parameters_b: 8.79
+  max_context: 131072
+  capabilities:
+  - chat
+  quality: null
+  ollama_tag: null
+  hf_repo: unsloth/granite-4.1-8b-GGUF
+  quants:
+    Q3_K_M:
+      fallback_size_gb: 4.05
+    Q4_K_M:
+      fallback_size_gb: 4.98
+    Q5_K_M:
+      fallback_size_gb: 5.82
+    Q6_K:
+      fallback_size_gb: 6.72
+    Q8_0:
+      fallback_size_gb: 8.7
+  fallback_kv_gb_per_1k: 0.168
+- id: phi-4-15b
+  name: Phi 4
+  family: phi
+  parameters_b: 14.66
+  max_context: 16384
   capabilities:
   - chat
   - coding
   quality: null
   ollama_tag: null
-  hf_repo: Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF
+  hf_repo: lmstudio-community/phi-4-GGUF
   quants:
-    Q3_K_M:
-      fallback_size_gb: 0.4
     Q4_K_M:
-      fallback_size_gb: 0.46
-    Q5_K_M:
-      fallback_size_gb: 0.49
+      fallback_size_gb: 8.43
     Q6_K:
-      fallback_size_gb: 0.61
+      fallback_size_gb: 11.2
     Q8_0:
-      fallback_size_gb: 0.63
-  fallback_kv_gb_per_1k: 0.013
-- id: smolvlm2-2.2b
-  name: Smolvlm2 2.2B
-  family: llama
-  parameters_b: 1.81
-  max_context: 8192
+      fallback_size_gb: 14.51
+  fallback_kv_gb_per_1k: 0.21
+- id: ai21-jamba-reasoning-3b
+  name: Ai21 Jamba Reasoning 3B
+  family: jamba
+  parameters_b: 3.2
+  max_context: 262144
   capabilities:
   - chat
   quality: null
   ollama_tag: null
-  hf_repo: ggml-org/SmolVLM2-2.2B-Instruct-GGUF
+  hf_repo: bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF
   quants:
+    Q3_K_M:
+      fallback_size_gb: 1.43
     Q4_K_M:
-      fallback_size_gb: 1.04
-    Q8_0:
       fallback_size_gb: 1.8
-  fallback_kv_gb_per_1k: 0.201
-- id: qwen3-asr-1.7b
-  name: Qwen3 Asr 1.7B
-  family: qwen
-  parameters_b: 2.03
-  max_context: 65536
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: ggml-org/Qwen3-ASR-1.7B-GGUF
-  quants:
+    Q5_K_M:
+      fallback_size_gb: 2.12
+    Q6_K:
+      fallback_size_gb: 2.46
     Q8_0:
-      fallback_size_gb: 2.02
-  fallback_kv_gb_per_1k: 0.117
-- id: smolvlm2-500m-video
-  name: Smolvlm2 500M Video
-  family: llama
-  parameters_b: 0.41
-  max_context: 8192
+      fallback_size_gb: 3.17
+  fallback_kv_gb_per_1k: 0.294
+- id: phi-3-mini-128k-4b
+  name: Phi 3 Mini 128k
+  family: phi
+  parameters_b: 3.82
+  max_context: 131072
   capabilities:
   - chat
+  - coding
   quality: null
   ollama_tag: null
-  hf_repo: ggml-org/SmolVLM2-500M-Video-Instruct-GGUF
-  quants:
-    Q8_0:
-      fallback_size_gb: 0.41
-  fallback_kv_gb_per_1k: 0.042
-- id: bge-m3-0.6b
-  name: Bge M3 0.6B
-  family: bert
-  parameters_b: 0.57
-  max_context: 8192
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: ggml-org/bge-m3-Q8_0-GGUF
-  quants:
-    Q8_0:
-      fallback_size_gb: 0.59
-  fallback_kv_gb_per_1k: 0.101
-- id: qwen2-0.5b
-  name: Qwen2 0.5B
-  family: qwen
-  parameters_b: 0.49
-  max_context: 32768
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: Qwen/Qwen2-0.5B-Instruct-GGUF
+  hf_repo: bartowski/Phi-3.1-mini-128k-instruct-GGUF
   quants:
     Q3_K_M:
-      fallback_size_gb: 0.33
+      fallback_size_gb: 1.82
     Q4_K_M:
-      fallback_size_gb: 0.37
+      fallback_size_gb: 2.23
     Q5_K_M:
-      fallback_size_gb: 0.39
+      fallback_size_gb: 2.62
     Q6_K:
-      fallback_size_gb: 0.47
+      fallback_size_gb: 2.92
     Q8_0:
-      fallback_size_gb: 0.49
-  fallback_kv_gb_per_1k: 0.013
-- id: smollm3-3b
-  name: Smollm3 3B
-  family: smollm3
-  parameters_b: 3.08
-  max_context: 65536
+      fallback_size_gb: 3.78
+  fallback_kv_gb_per_1k: 0.403
+- id: granite-20b-code
+  name: Granite 20B Code
+  family: granite
+  parameters_b: 20.07
+  max_context: 8192
   capabilities:
   - chat
+  - coding
   quality: null
   ollama_tag: null
-  hf_repo: ggml-org/SmolLM3-3B-GGUF
+  hf_repo: bartowski/granite-20b-code-instruct-GGUF
   quants:
+    Q3_K_M:
+      fallback_size_gb: 9.84
     Q4_K_M:
-      fallback_size_gb: 1.78
+      fallback_size_gb: 11.94
+    Q5_K_M:
+      fallback_size_gb: 13.79
+    Q6_K:
+      fallback_size_gb: 15.49
     Q8_0:
-      fallback_size_gb: 3.05
-  fallback_kv_gb_per_1k: 0.075
-- id: qwen3-asr-0.6b
-  name: Qwen3 Asr 0.6B
-  family: qwen
-  parameters_b: 0.75
-  max_context: 65536
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: ggml-org/Qwen3-ASR-0.6B-GGUF
-  quants:
-    Q8_0:
-      fallback_size_gb: 0.75
-  fallback_kv_gb_per_1k: 0.117
-- id: qwen2.5-omni-7b
-  name: Qwen2.5 Omni 7B
-  family: qwen
-  parameters_b: 7.62
+      fallback_size_gb: 20.01
+  fallback_kv_gb_per_1k: 0.027
+- id: phi-4-reasoning-plus-15b
+  name: Phi 4 Reasoning Plus
+  family: phi
+  parameters_b: 14.66
   max_context: 32768
   capabilities:
   - chat
+  - coding
+  - reasoning
   quality: null
   ollama_tag: null
-  hf_repo: ggml-org/Qwen2.5-Omni-7B-GGUF
+  hf_repo: lmstudio-community/Phi-4-reasoning-plus-GGUF
   quants:
     Q4_K_M:
-      fallback_size_gb: 4.36
+      fallback_size_gb: 8.43
+    Q6_K:
+      fallback_size_gb: 11.2
     Q8_0:
-      fallback_size_gb: 7.54
-  fallback_kv_gb_per_1k: 0.059
-- id: hunyuanocr-0.5b
-  name: Hunyuanocr 0.5B
-  family: hunyuan_vl
-  parameters_b: 0.54
-  max_context: 32768
+      fallback_size_gb: 14.51
+  fallback_kv_gb_per_1k: 0.21
+- id: nuextract-v1.5-4b
+  name: Nuextract V1.5
+  family: phi
+  parameters_b: 3.82
+  max_context: 131072
   capabilities:
   - chat
   quality: null
   ollama_tag: null
-  hf_repo: ggml-org/HunyuanOCR-GGUF
+  hf_repo: lmstudio-community/NuExtract-v1.5-GGUF
   quants:
+    Q4_K_M:
+      fallback_size_gb: 2.23
+    Q6_K:
+      fallback_size_gb: 2.92
     Q8_0:
-      fallback_size_gb: 0.54
-  fallback_kv_gb_per_1k: 0.101
+      fallback_size_gb: 3.78
+  fallback_kv_gb_per_1k: 0.403
 - id: ministral-3-3b-reasoning-2512
   name: Ministral 3 3B Reasoning 2512
   family: mistral
@@ -1481,43 +1023,184 @@
     Q8_0:
       fallback_size_gb: 8.41
   fallback_kv_gb_per_1k: 0.143
-- id: qwen2-7b
-  name: Qwen2 7B
-  family: qwen
-  parameters_b: 7.62
-  max_context: 32768
-  capabilities:
-  - chat
-  quality: null
-  ollama_tag: null
-  hf_repo: Qwen/Qwen2-7B-Instruct-GGUF
-  quants:
-    Q3_K_M:
-      fallback_size_gb: 3.55
-    Q4_K_M:
-      fallback_size_gb: 4.36
-    Q5_K_M:
-      fallback_size_gb: 5.07
-    Q6_K:
-      fallback_size_gb: 5.82
-    Q8_0:
-      fallback_size_gb: 7.54
-  fallback_kv_gb_per_1k: 0.059
-- id: devstral-small-2507-24b
-  name: Devstral Small 2507 24B
-  family: llama
-  parameters_b: 23.57
+- id: granite-3.2-8b
+  name: Granite 3.2 8B
+  family: granite
+  parameters_b: 8.17
   max_context: 131072
   capabilities:
   - chat
   quality: null
   ollama_tag: null
-  hf_repo: mistralai/Devstral-Small-2507_gguf
+  hf_repo: lmstudio-community/granite-3.2-8b-instruct-GGUF
   quants:
     Q4_K_M:
-      fallback_size_gb: 13.35
-    Q5_K_M:
-      fallback_size_gb: 15.61
+      fallback_size_gb: 4.6
+    Q6_K:
+      fallback_size_gb: 6.24
     Q8_0:
-      fallback_size_gb: 23.33
+      fallback_size_gb: 8.09
   fallback_kv_gb_per_1k: 0.168
+- id: seed-oss-36b
+  name: Seed Oss 36B
+  family: seed_oss
+  parameters_b: 36.15
+  max_context: 524288
+  capabilities:
+  - chat
+  quality: null
+  ollama_tag: null
+  hf_repo: lmstudio-community/Seed-OSS-36B-Instruct-GGUF
+  quants:
+    Q4_K_M:
+      fallback_size_gb: 20.27
+    Q6_K:
+      fallback_size_gb: 27.63
+    Q8_0:
+      fallback_size_gb: 35.78
+  fallback_kv_gb_per_1k: 0.268
+- id: ministral-3-8b-2512-bf16
+  name: Ministral 3 8B 2512 Bf16
+  family: mistral
+  parameters_b: 8.49
+  max_context: 262144
+  capabilities:
+  - chat
+  quality: null
+  ollama_tag: null
+  hf_repo: lmstudio-community/Ministral-3-8B-Instruct-2512-GGUF
+  quants:
+    Q4_K_M:
+      fallback_size_gb: 4.84
+    Q6_K:
+      fallback_size_gb: 6.49
+    Q8_0:
+      fallback_size_gb: 8.41
+  fallback_kv_gb_per_1k: 0.143
+- id: lfm2.5-2.6b
+  name: Lfm2.5 2.6B
+  family: lfm2
+  parameters_b: 2.7
+  max_context: 128000
+  capabilities:
+  - chat
+  quality: null
+  ollama_tag: null
+  hf_repo: lmstudio-community/LFM2.5-2.6B-GGUF
+  quants:
+    Q4_K_M:
+      fallback_size_gb: 1.56
+    Q6_K:
+      fallback_size_gb: 2.07
+    Q8_0:
+      fallback_size_gb: 2.68
+  fallback_kv_gb_per_1k: 0.252
+- id: ministral-3-14b-2512-bf16
+  name: Ministral 3 14B 2512 Bf16
+  family: mistral
+  parameters_b: 13.51
+  max_context: 262144
+  capabilities:
+  - chat
+  quality: null
+  ollama_tag: null
+  hf_repo: lmstudio-community/Ministral-3-14B-Instruct-2512-GGUF
+  quants:
+    Q4_K_M:
+      fallback_size_gb: 7.67
+    Q6_K:
+      fallback_size_gb: 10.33
+    Q8_0:
+      fallback_size_gb: 13.37
+  fallback_kv_gb_per_1k: 0.168
+- id: granite-3.1-8b
+  name: Granite 3.1 8B
+  family: granite
+  parameters_b: 8.17
+  max_context: 131072
+  capabilities:
+  - chat
+  quality: null
+  ollama_tag: null
+  hf_repo: lmstudio-community/granite-3.1-8b-instruct-GGUF
+  quants:
+    Q4_K_M:
+      fallback_size_gb: 4.6
+    Q6_K:
+      fallback_size_gb: 6.24
+    Q8_0:
+      fallback_size_gb: 8.09
+  fallback_kv_gb_per_1k: 0.168
+- id: exaone-3.5-7.8b
+  name: Exaone 3.5 7.8B
+  family: exaone
+  parameters_b: 7.82
+  max_context: 32768
+  capabilities:
+  - chat
+  quality: null
+  ollama_tag: null
+  hf_repo: lmstudio-community/EXAONE-3.5-7.8B-Instruct-GGUF
+  quants:
+    Q4_K_M:
+      fallback_size_gb: 4.44
+    Q6_K:
+      fallback_size_gb: 5.98
+    Q8_0:
+      fallback_size_gb: 7.74
+  fallback_kv_gb_per_1k: 0.134
+- id: olmo-3-32b-think
+  name: Olmo 3 32B Think
+  family: olmo
+  parameters_b: 32.23
+  max_context: 65536
+  capabilities:
+  - chat
+  - reasoning
+  quality: null
+  ollama_tag: null
+  hf_repo: lmstudio-community/Olmo-3-32B-Think-GGUF
+  quants:
+    Q4_K_M:
+      fallback_size_gb: 18.14
+    Q6_K:
+      fallback_size_gb: 24.63
+    Q8_0:
+      fallback_size_gb: 31.9
+  fallback_kv_gb_per_1k: 0.268
+- id: amd-olmo-1b-sft-dpo
+  name: Amd Olmo 1B Sft Dpo
+  family: olmo
+  parameters_b: 1.18
+  max_context: 2048
+  capabilities:
+  - chat
+  quality: null
+  ollama_tag: null
+  hf_repo: lmstudio-community/AMD-OLMo-1B-SFT-DPO-GGUF
+  quants:
+    Q4_K_M:
+      fallback_size_gb: 0.68
+    Q6_K:
+      fallback_size_gb: 0.9
+    Q8_0:
+      fallback_size_gb: 1.17
+  fallback_kv_gb_per_1k: 0.134
+- id: exaone-3.5-2.4b
+  name: Exaone 3.5 2.4B
+  family: exaone
+  parameters_b: 2.67
+  max_context: 32768
+  capabilities:
+  - chat
+  quality: null
+  ollama_tag: null
+  hf_repo: lmstudio-community/EXAONE-3.5-2.4B-Instruct-GGUF
+  quants:
+    Q4_K_M:
+      fallback_size_gb: 1.53
+    Q6_K:
+      fallback_size_gb: 2.04
+    Q8_0:
+      fallback_size_gb: 2.64
+  fallback_kv_gb_per_1k: 0.079
