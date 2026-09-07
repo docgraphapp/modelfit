@@ -34,11 +34,20 @@ excluded model explaining *why* ("needs ~26 GB, your usable memory is 21 GB").
   your requested context length, not a flat guess.
 - **Measured, not just estimated** — one click benchmarks a small model you
   already have (or a 2 GB fallback), derives your machine's real effective
-  memory bandwidth, and re-extrapolates every speed estimate from it.
+  memory bandwidth, and re-extrapolates every speed estimate from it. Time to
+  first token is reported only once that benchmark has run.
+- **Every number says how well it's known** — measured here / calibrated /
+  estimated / unverified, each hoverable for the inputs behind it
+  ("7.1 GB weights + 2.8 GB KV cache at 8k context + 1.5 GB runtime overhead").
+  A guess and a measurement never look alike.
 - **One-click install** — pulls the recommended model into
   [Ollama](https://ollama.com) with live progress.
 - **Data-driven model registry** — models live in a remotely-updated
-  `registry.json`, not in code. New models arrive without an app update.
+  `registry.json`, not in code. New models arrive without an app update. It has
+  two tiers: *curated* entries carry a hand-written quality score and are the
+  only ones ever offered as a pick; *discovered* entries are found
+  automatically and listed with real memory and speed, but never recommended —
+  because "best for you" is a claim only a curated score can carry.
 
 ## Status
 
@@ -49,7 +58,9 @@ Early development. Working today on macOS (Apple Silicon):
 - [x] Dashboard: objective presets, context selector, all-models table,
       hardware edit
 - [x] Ollama integration: status, one-click install, calibration benchmark
-- [ ] Remote registry + update pipeline
+- [x] Remote registry + update pipeline
+- [x] Confidence tiers and estimate basis on every number
+- [x] Automated discovery of the listed-but-not-recommended tier
 - [ ] Windows / Linux detection parity, installers
 
 ## Architecture
@@ -61,7 +72,10 @@ crates/
   registry/            model-facts schema + bundled snapshot
   recommendation/      pure-math engine: constraints → weighted score
   runtime-adapters/    RuntimeAdapter trait + Ollama impl (llama.cpp: v2)
+  share/               benchmark-share payload + Copy diagnostics report
 registry/              bundled registry.json snapshot
+registry-pipeline/     CI-only Python: models.yaml (curated) +
+                       discover.py → discovered.yaml → registry.json
 ```
 
 The engine is an embeddable Rust library — the desktop app, a future CLI, and
