@@ -22,3 +22,9 @@ modelfit-recommendation = { path = "../../../crates/recommendation" }
 modelfit-runtime-adapters = { path = "../../../crates/runtime-adapters" }
 modelfit-share = { path = "../../../crates/share" }
 reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+# In-app updates (ADR-0001). Desktop-only feature; this app has no mobile
+# target, so the dependency is unconditional.
+tauri-plugin-updater = "2"
+# Timers for the updater's background schedule (already in the tree via
+# tauri/reqwest; named here so the "time" feature is guaranteed present).
+tokio = { version = "1", features = ["time"] }

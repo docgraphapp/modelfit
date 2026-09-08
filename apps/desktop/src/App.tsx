@@ -15,6 +15,8 @@ import type {
   Recommendations,
   RegistryInfo,
   RuntimeStatus,
+  UpdateInfo,
+  UpdateProgress,
 } from "./types";
 
 const CALIBRATION_KEY = "modelfit:calibration";
@@ -23,6 +25,10 @@ const CALIBRATION_KEY = "modelfit:calibration";
 // changes, while these are facts about models the user has really run, and the
 // engine reports them verbatim instead of extrapolating.
 const MEASUREMENTS_KEY = "modelfit:measurements";
+// The one app version the user has said "Later" to. A dismissal silences the
+// startup banner for that version only, so the next release still gets one
+// chance to be noticed; the manual check ignores it entirely (ADR-0001).
+const UPDATE_DISMISSED_KEY = "modelfit:update-dismissed";
 
 // Sharing a benchmark works end to end — Rust builder, prefilled GitHub issue
 // form, preview dialog — but the framing still needs work ("Create new issue"
@@ -962,6 +968,116 @@ function Skeleton() {
   );
 }
 
+/// Phases of the install the banner has to render. Kept as one union rather
+/// than several booleans so no render can show a progress bar and a "Later"
+/// button at the same time.
+type UpdateStage = "available" | "downloading" | "ready" | "failed";
+
+/// Tauri hands back a plain string from a failed command, but anything thrown
+/// on the way there arrives as an Error. The banner reads the message inside a
+/// sentence, so the "Error: " prefix has to go.
+function reason(e: unknown): string {
+  const text = e instanceof Error ? e.message : String(e);
+  return text.replace(/^Error:\s*/, "");
+}
+
+function bytes(n: number): string {
+  return n >= 1e9 ? `${(n / 1e9).toFixed(1)} GB` : `${Math.round(n / 1e6)} MB`;
+}
+
+/// Non-modal update notice: the app stays fully usable behind it, and only
+/// the final restart is disruptive — which the user asks for explicitly
+/// (ADR-0001). It sits under the title bar rather than over the content so it
+/// never covers a recommendation the user is reading.
+function UpdateBanner({
+  info,
+  stage,
+  progress,
+  error,
+  onInstall,
+  onRestart,
+  onDismiss,
+}: {
+  info: UpdateInfo;
+  stage: UpdateStage;
+  progress: UpdateProgress | null;
+  error: string | null;
+  onInstall: () => void;
+  onRestart: () => void;
+  onDismiss: () => void;
+}) {
+  // A percentage is only honest when the server sent a content-length;
+  // otherwise the bytes so far are all we can truthfully show.
+  const pct =
+    progress && progress.total
+      ? Math.min(100, Math.round((progress.downloaded / progress.total) * 100))
+      : null;
+
+  return (
+    <div
+      role="status"
+      className="mx-auto mt-2 flex w-full max-w-6xl flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-blue-200 bg-blue-50 px-3 py-2 text-sm text-blue-900 dark:border-blue-900/70 dark:bg-blue-950/50 dark:text-blue-100"
+    >
+      <span className="flex-1">
+        {stage === "ready" ? (
+          <>
+            Version {info.version} is installed. Restart to start using it.
+          </>
+        ) : stage === "failed" ? (
+          <>Couldn't install the update{error ? `: ${error}` : "."}</>
+        ) : (
+          <>
+            ModelFit {info.version} is available
+            <span className="text-blue-700/70 dark:text-blue-200/60">
+              {" "}
+              · you have {info.currentVersion}
+            </span>
+          </>
+        )}
+      </span>
+
+      {stage === "downloading" ? (
+        <span className="flex items-center gap-2 text-blue-700 dark:text-blue-200">
+          {/* Indeterminate width is still a moving bar: a stalled-looking
+              full-width track reads as broken. */}
+          <span className="h-1.5 w-28 overflow-hidden rounded-full bg-blue-200 dark:bg-blue-900">
+            <span
+              className="block h-full rounded-full bg-blue-500 transition-[width] duration-150"
+              style={{ width: pct != null ? `${pct}%` : "40%" }}
+            />
+          </span>
+          <span className="tabular-nums">
+            {pct != null
+              ? `${pct}%`
+              : progress
+                ? bytes(progress.downloaded)
+                : "starting…"}
+          </span>
+        </span>
+      ) : (
+        <>
+          <button
+            onClick={stage === "ready" ? onRestart : onInstall}
+            className="rounded-lg bg-blue-600 px-3 py-1 font-medium text-white hover:bg-blue-500"
+          >
+            {stage === "ready"
+              ? "Restart now"
+              : stage === "failed"
+                ? "Try again"
+                : "Install and restart"}
+          </button>
+          <button
+            onClick={onDismiss}
+            className="font-medium text-blue-700/80 underline decoration-blue-300 hover:text-blue-900 dark:text-blue-200/80 dark:hover:text-blue-100"
+          >
+            Later
+          </button>
+        </>
+      )}
+    </div>
+  );
+}
+
 export default function App() {
   const [hw, setHw] = useState<HardwareInfo | null>(null);
   const [recs, setRecs] = useState<Recommendations | null>(null);
@@ -979,6 +1095,14 @@ export default function App() {
   const [registryMsg, setRegistryMsg] = useState<string | null>(null);
   const [share, setShare] = useState<BenchmarkShare | null>(null);
   const [updating, setUpdating] = useState(false);
+  const [pendingUpdate, setPendingUpdate] = useState<UpdateInfo | null>(null);
+  const [updateStage, setUpdateStage] = useState<UpdateStage>("available");
+  const [updateProgress, setUpdateProgress] = useState<UpdateProgress | null>(null);
+  const [updateError, setUpdateError] = useState<string | null>(null);
+  // Only the manual check reports "up to date" / "couldn't reach"; the
+  // background one stays silent, so its outcome never lands here.
+  const [updateCheckMsg, setUpdateCheckMsg] = useState<string | null>(null);
+  const [checkingUpdate, setCheckingUpdate] = useState(false);
   const calibrationRef = useRef(calibration);
   calibrationRef.current = calibration;
   const measurementsRef = useRef(measurements);
@@ -1038,8 +1162,26 @@ export default function App() {
     const unlisten = listen<PullProgress>("modelfit://pull-progress", (e) => {
       setPulling((prev) => ({ ...prev, [e.payload.tag]: e.payload }));
     });
+    // The shell runs its own check a few seconds after launch and announces
+    // the result here; the frontend never polls for it (ADR-0001).
+    const unlistenUpdate = listen<UpdateInfo>("updater://available", (e) => {
+      let dismissed: string | null = null;
+      try {
+        dismissed = localStorage.getItem(UPDATE_DISMISSED_KEY);
+      } catch {
+        // A blocked store just means the banner shows again; harmless.
+      }
+      if (e.payload.version === dismissed) return;
+      setPendingUpdate(e.payload);
+      setUpdateStage("available");
+    });
+    const unlistenProgress = listen<UpdateProgress>("updater://progress", (e) => {
+      setUpdateProgress(e.payload);
+    });
     return () => {
       unlisten.then((f) => f());
+      unlistenUpdate.then((f) => f());
+      unlistenProgress.then((f) => f());
     };
   }, [recompute, refreshRuntime]);
 
@@ -1072,6 +1214,24 @@ export default function App() {
       clearTimeout(stop);
     };
   }, [hw, recs]);
+
+  // The banner arrives seconds after launch, long after the fit-to-content
+  // pass above has stopped watching, so it would otherwise push the bottom of
+  // the page under the window edge. Only ever grows: dismissing it leaves a
+  // little empty space, which is far less jarring than a window that resizes
+  // itself while the user is reading.
+  useEffect(() => {
+    if (!pendingUpdate) return;
+    const id = requestAnimationFrame(() => {
+      invoke("fit_window_height", {
+        height: Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight,
+        ),
+      }).catch(() => {});
+    });
+    return () => cancelAnimationFrame(id);
+  }, [pendingUpdate]);
 
   const update = (obj: Objective, ctx: number, hardware?: HardwareInfo) => {
     const machine = hardware ?? hw;
@@ -1117,6 +1277,59 @@ export default function App() {
       })
       .catch(() => setRegistryMsg("couldn't reach server — using current registry"))
       .finally(() => setUpdating(false));
+  };
+
+  // Manual "Check for updates". Same backend path as the background check,
+  // but this one answers either way — someone clicked and is waiting. A
+  // dismissed version is deliberately offered again here.
+  const checkForUpdate = () => {
+    setCheckingUpdate(true);
+    setUpdateCheckMsg(null);
+    invoke<UpdateInfo>("check_for_update")
+      .then((info) => {
+        if (info.available) {
+          setPendingUpdate(info);
+          setUpdateStage("available");
+          setUpdateProgress(null);
+          setUpdateError(null);
+        } else {
+          setUpdateCheckMsg(`up to date (${info.currentVersion})`);
+        }
+      })
+      .catch(() => setUpdateCheckMsg("couldn't reach the update server"))
+      .finally(() => setCheckingUpdate(false));
+  };
+
+  const installUpdate = () => {
+    setUpdateStage("downloading");
+    setUpdateProgress(null);
+    setUpdateError(null);
+    invoke("install_update")
+      .then(() => setUpdateStage("ready"))
+      .catch((e) => {
+        setUpdateError(reason(e));
+        setUpdateStage("failed");
+      });
+  };
+
+  // Restarting throws away whatever is on screen, so it is its own click
+  // after the download rather than something that happens under the user.
+  const restartApp = () => {
+    invoke("restart_app").catch((e) => {
+      setUpdateError(reason(e));
+      setUpdateStage("failed");
+    });
+  };
+
+  const dismissUpdate = () => {
+    if (pendingUpdate) {
+      try {
+        localStorage.setItem(UPDATE_DISMISSED_KEY, pendingUpdate.version);
+      } catch {
+        // Worst case the banner returns next launch.
+      }
+    }
+    setPendingUpdate(null);
   };
 
   const openShare = () => {
@@ -1200,6 +1413,17 @@ export default function App() {
           subtracted by hand (which left a stray pixel of scroll). */}
       <div className="flex min-h-screen flex-col">
       <TitleBar />
+      {pendingUpdate && (
+        <UpdateBanner
+          info={pendingUpdate}
+          stage={updateStage}
+          progress={updateProgress}
+          error={updateError}
+          onInstall={installUpdate}
+          onRestart={restartApp}
+          onDismiss={dismissUpdate}
+        />
+      )}
       <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col px-3 pb-3 pt-1">
         <HeaderCard hw={hw} onEdited={(next) => update(objective, contextLength, next)} />
 
@@ -1499,6 +1723,16 @@ export default function App() {
                   >
                     {copiedDiagnostics ? "Copied" : "Copy diagnostics"}
                   </button>
+                  <span aria-hidden>·</span>
+                  <button
+                    onClick={checkForUpdate}
+                    disabled={checkingUpdate}
+                    title="Check whether a newer version of ModelFit is available"
+                    className="font-medium text-neutral-500 underline decoration-neutral-300 hover:text-neutral-700 disabled:opacity-50 dark:text-neutral-400 dark:hover:text-neutral-200"
+                  >
+                    {checkingUpdate ? "checking…" : "Check for updates"}
+                  </button>
+                  {updateCheckMsg && <span>{updateCheckMsg}</span>}
                 </div>
               )}
             </footer>

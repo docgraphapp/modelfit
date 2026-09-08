@@ -10,6 +10,7 @@ import type {
   Recommendations,
   RegistryInfo,
   RuntimeStatus,
+  UpdateInfo,
 } from "../types";
 
 const hw: HardwareInfo = {
@@ -27,7 +28,8 @@ const hw: HardwareInfo = {
   accelerations: ["metal", "cpu"],
 };
 
-// url params control which scenario renders: ?scenario=nofit|noruntime
+// url params control which scenario renders:
+//   ?scenario=nofit|noruntime|update|update-fail
 // With no scenario, real data from `cargo run -p modelfit-recommendation
 // --example probe > public/machine.json` (if present) plus the live local
 // Ollama replace the synthetic fixtures.
@@ -416,6 +418,39 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
       runtime.installedTags.push(args.tag);
       return null;
     }
+    // In the real shell the check is a signed-manifest fetch the browser
+    // harness cannot do. ?scenario=update makes one available so the banner,
+    // the progress bar and the restart prompt can be designed; without it the
+    // harness reports "up to date", which is what the button shows most days.
+    case "check_for_update":
+      await sleep(700);
+      return {
+        available: scenario === "update" || scenario === "update-fail",
+        currentVersion: "0.1.0",
+        version: scenario?.startsWith("update") ? "0.2.0" : "",
+        notes: scenario?.startsWith("update")
+          ? "Discrete-GPU detection, faster startup."
+          : null,
+        date: scenario?.startsWith("update") ? new Date().toISOString() : null,
+      } satisfies UpdateInfo;
+    case "install_update": {
+      const total = 12_400_000;
+      for (let done = 0; done <= total; done += total / 25) {
+        // ?scenario=update-fail breaks partway through, which is where a real
+        // download fails: the banner has to recover from a half-drawn bar.
+        if (scenario === "update-fail" && done > total / 2) {
+          throw new Error("connection closed while downloading");
+        }
+        emit("updater://progress", { downloaded: Math.min(done, total), total });
+        await sleep(120);
+      }
+      return null;
+    }
+    case "restart_app":
+      // No process to replace in a browser tab; a reload is the closest thing.
+      console.info("[mockTauri] restart_app");
+      location.reload();
+      return null;
     case "open_external":
       // Logged as well as opened: pane-embedded browsers block the popup.
       console.info(`[mockTauri] open_external ${args.url}`);
@@ -469,5 +504,20 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
     callbacks.delete(id);
   },
 };
+
+// The shell announces an available update a few seconds after launch rather
+// than in response to a call; ?scenario=update reproduces that timing so the
+// banner is designed against the way it really arrives.
+if (scenario?.startsWith("update")) {
+  setTimeout(() => {
+    emit("updater://available", {
+      available: true,
+      currentVersion: "0.1.0",
+      version: "0.2.0",
+      notes: "Discrete-GPU detection, faster startup.",
+      date: new Date().toISOString(),
+    } satisfies UpdateInfo);
+  }, 2000);
+}
 
 console.info("[mockTauri] browser design harness active", { scenario, decorated });

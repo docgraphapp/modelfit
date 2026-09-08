@@ -121,3 +121,18 @@ export interface BenchmarkShare {
   fields: ShareField[];
   url: string;
 }
+
+/// Result of an update check (ADR-0001). `available: false` carries no
+/// version — "You're up to date" is inferable from this alone.
+export interface UpdateInfo {
+  available: boolean;
+  currentVersion: string;
+  version: string;
+  notes: string | null;
+  date: string | null;
+}
+
+export interface UpdateProgress {
+  downloaded: number;
+  total: number | null;
+}

@@ -1,3 +1,5 @@
+mod updater;
+
 use modelfit_hardware::HardwareInfo;
 use modelfit_recommendation::{recommend, Recommendations, Request};
 use modelfit_registry::Registry;
@@ -315,6 +317,7 @@ fn open_external(url: String) -> Result<(), String> {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(
             tauri_plugin_log::Builder::new()
                 .level(log::LevelFilter::Info)
@@ -351,6 +354,10 @@ pub fn run() {
                     let _ = fallback.show();
                 }
             });
+            // Deliberately last in setup, and it sleeps before its first
+            // request: an update check must never be on the path to the
+            // first frame (ADR-0001).
+            updater::spawn_background_checks(app.handle().clone());
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![
@@ -365,7 +372,10 @@ pub fn run() {
             registry_info,
             update_registry,
             benchmark_share,
-            diagnostics
+            diagnostics,
+            updater::check_for_update,
+            updater::install_update,
+            updater::restart_app
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
