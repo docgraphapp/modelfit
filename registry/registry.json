@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "2026-09-07",
+  "version": "2026-09-27",
   "models": [
     {
       "id": "llama3.2-3b",
@@ -23,6 +23,16 @@
           "kvCacheGbPer1kCtx": 0.117,
           "ollamaTag": "llama3.2:3b-instruct-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Llama-3.2-3B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.2-3B-Instruct-Q4_K_M.gguf",
+                "sizeBytes": 2019377696,
+                "sha256": "6c1a2b41161032677be168d354123594c0e6e67d2b9227c84f296ad037c728ff"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -30,6 +40,16 @@
           "kvCacheGbPer1kCtx": 0.117,
           "ollamaTag": "llama3.2:3b-instruct-q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Llama-3.2-3B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.2-3B-Instruct-Q5_K_M.gguf",
+                "sizeBytes": 2322154016,
+                "sha256": "0b94ccd04d908304cec5246a3d942b64417a423bc5c6d47c73bc557e590b5194"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -37,6 +57,16 @@
           "kvCacheGbPer1kCtx": 0.117,
           "ollamaTag": "llama3.2:3b-instruct-q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Llama-3.2-3B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.2-3B-Instruct-Q6_K.gguf",
+                "sizeBytes": 2643853856,
+                "sha256": "1771887c15fc3d327cfee6fd593553b2126e88834bf48eae50e709d3f70dd998"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -44,6 +74,16 @@
           "kvCacheGbPer1kCtx": 0.117,
           "ollamaTag": "llama3.2:3b-instruct-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Llama-3.2-3B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.2-3B-Instruct-Q8_0.gguf",
+                "sizeBytes": 3421899296,
+                "sha256": "b5607b5090a8280063fff2d706bb3408ca6542341b06aab39c3eca0a28575921"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -72,6 +112,16 @@
           "kvCacheGbPer1kCtx": 0.151,
           "ollamaTag": "qwen3:4b-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-4B-Q4_K_M.gguf",
+                "sizeBytes": 2497280256,
+                "sha256": "7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -79,6 +129,16 @@
           "kvCacheGbPer1kCtx": 0.151,
           "ollamaTag": "hf.co/Qwen/Qwen3-4B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-4B-Q5_K_M.gguf",
+                "sizeBytes": 2889513184,
+                "sha256": "aca596860e8cb40af6539e3f2ea40df305f42515deac56d49c08d39a02e6533f"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -86,6 +146,16 @@
           "kvCacheGbPer1kCtx": 0.151,
           "ollamaTag": "hf.co/Qwen/Qwen3-4B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-4B-Q6_K.gguf",
+                "sizeBytes": 3306260704,
+                "sha256": "8a08533841623c2a689763b9318d8e27b3e052ad5b38015d4be4c04fa96f68a3"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -93,6 +163,16 @@
           "kvCacheGbPer1kCtx": 0.151,
           "ollamaTag": "qwen3:4b-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-4B-Q8_0.gguf",
+                "sizeBytes": 4280404704,
+                "sha256": "8c2f07f26af9747e41988551106f149b03eb9b5cb6df636027b6bf6278473300"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -120,6 +200,16 @@
           "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-4b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-4b-it-Q3_K_M.gguf",
+                "sizeBytes": 2098323872,
+                "sha256": "459112810fe05bafcf697d21a8050eb9ce5860688f28e9cb406c19e158637c5f"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -127,6 +217,16 @@
           "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "gemma3:4b-it-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-4b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-4b-it-Q4_K_M.gguf",
+                "sizeBytes": 2489758112,
+                "sha256": "4996030242583a40aa151ff93f49ed787ac8c25e4120c3ae4588b2e2a7d1ae94"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -134,6 +234,16 @@
           "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-4b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-4b-it-Q5_K_M.gguf",
+                "sizeBytes": 2829562272,
+                "sha256": "7b2da98f1f31f3467ca8812122809ff6da3fa3f33bd181b350b9a21996db6cef"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -141,6 +251,16 @@
           "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-4b-it-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-4b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-4b-it-Q6_K.gguf",
+                "sizeBytes": 3190604192,
+                "sha256": "ee175bbd0c5ab8b3fdc9b707c98df2d0086d5b22e4d79e4dbeec927385b8c659"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -148,6 +268,16 @@
           "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "gemma3:4b-it-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-4b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-4b-it-Q8_0.gguf",
+                "sizeBytes": 4130226592,
+                "sha256": "0bce184b82f70ef6f1fb12c8d4984844baaa0bad0f4aae7150e443f803c4f509"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -177,6 +307,16 @@
           "kvCacheGbPer1kCtx": 0.034,
           "ollamaTag": "hf.co/bartowski/google_gemma-4-E4B-it-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-E4B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-E4B-it-Q3_K_M.gguf",
+                "sizeBytes": 4898730464,
+                "sha256": "f60327936976524fbb9119a20e72819ea2369e0811de2b572eb0a2a21ecad71e"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -184,6 +324,16 @@
           "kvCacheGbPer1kCtx": 0.034,
           "ollamaTag": "gemma4:e4b-it-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-E4B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-E4B-it-Q4_K_M.gguf",
+                "sizeBytes": 5405170144,
+                "sha256": "d35a3aa7a6d47de237fd488bb6f7f3efd62908d828f85a63da0ee93acdbefe9f"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -191,6 +341,16 @@
           "kvCacheGbPer1kCtx": 0.034,
           "ollamaTag": "hf.co/bartowski/google_gemma-4-E4B-it-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-E4B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-E4B-it-Q5_K_M.gguf",
+                "sizeBytes": 5820883424,
+                "sha256": "1c57b87a06a7c0fd1b9fa8f5d5e505b720c15099648e0dcdc78acd857f72a7cc"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -198,6 +358,16 @@
           "kvCacheGbPer1kCtx": 0.034,
           "ollamaTag": "hf.co/bartowski/google_gemma-4-E4B-it-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-E4B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-E4B-it-Q6_K.gguf",
+                "sizeBytes": 6329954784,
+                "sha256": "bea1c94443c91fff61a722d9da5cd3f1cf0196d1e914798ee89d3c00ea365df9"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -205,6 +375,16 @@
           "kvCacheGbPer1kCtx": 0.034,
           "ollamaTag": "gemma4:e4b-it-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-E4B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-E4B-it-Q8_0.gguf",
+                "sizeBytes": 8031242720,
+                "sha256": "6a6eba0d36a051b5d924211a889c1436717006e7c5d413830c47caa1d46cb598"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -233,6 +413,16 @@
           "kvCacheGbPer1kCtx": 0.151,
           "ollamaTag": "qwen3:8b-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-8B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-8B-Q4_K_M.gguf",
+                "sizeBytes": 5027783488,
+                "sha256": "d98cdcbd03e17ce47681435b5150e34c1417f50b5c0019dd560e4882c5745785"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -240,6 +430,16 @@
           "kvCacheGbPer1kCtx": 0.151,
           "ollamaTag": "hf.co/Qwen/Qwen3-8B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-8B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-8B-Q5_K_M.gguf",
+                "sizeBytes": 5851112224,
+                "sha256": "068bae163faa96ad48032daf4e071a6a28fe67d8dcc95367609c2ff165e52738"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -247,6 +447,16 @@
           "kvCacheGbPer1kCtx": 0.151,
           "ollamaTag": "hf.co/Qwen/Qwen3-8B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-8B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-8B-Q6_K.gguf",
+                "sizeBytes": 6725899040,
+                "sha256": "cb042ccd76795a8830d6be6bd4165245847cc68e41797b13bd61aed4c2cfbce6"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -254,6 +464,16 @@
           "kvCacheGbPer1kCtx": 0.151,
           "ollamaTag": "qwen3:8b-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-8B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-8B-Q8_0.gguf",
+                "sizeBytes": 8709518112,
+                "sha256": "408b955510e196121c1c375201744783b5c9a43c7956d73fc78df54c66e883d6"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -280,6 +500,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "llama3.1:8b-instruct-q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Meta-Llama-3.1-8B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-8B-Instruct-Q3_K_M.gguf",
+                "sizeBytes": 4018922912,
+                "sha256": "6be122b5c8f2a33974953e58e0ffd2be505661acc6f4caf733e4bca130e89fea"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -287,6 +517,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "llama3.1:8b-instruct-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Meta-Llama-3.1-8B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
+                "sizeBytes": 4920739232,
+                "sha256": "7b064f5842bf9532c91456deda288a1b672397a54fa729aa665952863033557c"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -294,6 +534,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "llama3.1:8b-instruct-q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Meta-Llama-3.1-8B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-8B-Instruct-Q5_K_M.gguf",
+                "sizeBytes": 5732992416,
+                "sha256": "14e10feba0c82a55da198dcd69d137206ad22d116a809926d27fa5f2398c69c7"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -301,6 +551,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "llama3.1:8b-instruct-q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Meta-Llama-3.1-8B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-8B-Instruct-Q6_K.gguf",
+                "sizeBytes": 6596011424,
+                "sha256": "33981adf6bae52c503fb5c24f72539010632f7ed290a56c1315a8cd50adca587"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -308,6 +568,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "llama3.1:8b-instruct-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Meta-Llama-3.1-8B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-8B-Instruct-Q8_0.gguf",
+                "sizeBytes": 8540775840,
+                "sha256": "9da71c45c90a821809821244d4971e5e5dfad7eb091f0b8ff0546392393b6283"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -335,6 +605,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-12b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-12b-it-Q3_K_M.gguf",
+                "sizeBytes": 6008614944,
+                "sha256": "b566ae4850815706bbaa9105efa0e722421544aa41999424924d61f915ea868e"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -342,6 +622,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "gemma3:12b-it-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-12b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-12b-it-Q4_K_M.gguf",
+                "sizeBytes": 7300575264,
+                "sha256": "fc57f67efa46d711c346e587cbef7d049e95f3df8db2eb2271153343ef0acc7b"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -349,6 +639,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-12b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-12b-it-Q5_K_M.gguf",
+                "sizeBytes": 8444833824,
+                "sha256": "13d44e37860489806f575deb0b219c6058c9421fe1982a9311a0e367c4e8f444"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -356,6 +656,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-12b-it-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-12b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-12b-it-Q6_K.gguf",
+                "sizeBytes": 9660608544,
+                "sha256": "a1385c0fd73b8fcb560bf55f9e1870346292a096476a2b9372aa04bd0aeae1d0"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -363,6 +673,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "gemma3:12b-it-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-12b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-12b-it-Q8_0.gguf",
+                "sizeBytes": 12509949984,
+                "sha256": "da78c6801f4fae0061780cdd0c12cf7b1deb4459587dca1c2d3c1c11528b60e1"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -392,6 +712,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "hf.co/bartowski/gemma-4-12B-it-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/gemma-4-12B-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-12B-it-Q3_K_M.gguf",
+                "sizeBytes": 6301391328,
+                "sha256": "b3a5c0834941b18251317f7dd1096e5d6e01b12e1b06b49670fd26467de8f6b4"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -399,6 +729,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "gemma4:12b-it-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/gemma-4-12B-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-12B-it-Q4_K_M.gguf",
+                "sizeBytes": 7662533088,
+                "sha256": "3962624dcd25b947d889dc9ae1bf275b61db6cd4dbe694057f34fffef1671509"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -406,6 +746,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "hf.co/bartowski/gemma-4-12B-it-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/gemma-4-12B-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-12B-it-Q5_K_M.gguf",
+                "sizeBytes": 8774965728,
+                "sha256": "24fe88d9e6bba6a1805629a09e40d4d837a894d559c7708055f7a03211e2a25e"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -413,6 +763,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "hf.co/bartowski/gemma-4-12B-it-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/gemma-4-12B-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-12B-it-Q6_K.gguf",
+                "sizeBytes": 10239326688,
+                "sha256": "53336de05c4af36dcb61daf0d984be076ddf0245e3ce7f61aa10b72cb4044e97"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -420,6 +780,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "gemma4:12b-it-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/gemma-4-12B-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-12B-it-Q8_0.gguf",
+                "sizeBytes": 12669647328,
+                "sha256": "929bd294cbdc59e41450488bea524a174f1c6ddc43f140fdb5905a5fd1e41969"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -448,6 +818,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "qwen3:14b-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-14B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-14B-Q4_K_M.gguf",
+                "sizeBytes": 9001752960,
+                "sha256": "500a8806e85ee9c83f3ae08420295592451379b4f8cf2d0f41c15dffeb6b81f0"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -455,6 +835,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/Qwen/Qwen3-14B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-14B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-14B-Q5_K_M.gguf",
+                "sizeBytes": 10514569568,
+                "sha256": "e7c9aba1129ca2936be9eca01419d9f86af40e08caa01230d5574b34d08e3e31"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -462,6 +852,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/Qwen/Qwen3-14B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-14B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-14B-Q6_K.gguf",
+                "sizeBytes": 12121937248,
+                "sha256": "ec1f1d1421d7636a23e17645cac6fda39ee4b5f1f11e42eb09238089705ef699"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -469,6 +869,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "qwen3:14b-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-14B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-14B-Q8_0.gguf",
+                "sizeBytes": 15698533728,
+                "sha256": "a0dfe649137410b7d82f06a209240508e218f32f5b6fd81b69d6932160cfcd9d"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -496,6 +906,16 @@
           "kvCacheGbPer1kCtx": 0.21,
           "ollamaTag": "hf.co/bartowski/phi-4-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/phi-4-GGUF",
+            "files": [
+              {
+                "path": "phi-4-Q3_K_M.gguf",
+                "sizeBytes": 7363269056,
+                "sha256": "8bf3e36c72aec8107ed9942bc9f1c89f4b7786f17c795e305b5993426293d14f"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -503,6 +923,16 @@
           "kvCacheGbPer1kCtx": 0.21,
           "ollamaTag": "phi4:14b-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/phi-4-GGUF",
+            "files": [
+              {
+                "path": "phi-4-Q4_K_M.gguf",
+                "sizeBytes": 9053114816,
+                "sha256": "009aba717c09d4a35890c7d35eb59d54e1dba884c7c526e7197d9c13ab5911d9"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -510,6 +940,16 @@
           "kvCacheGbPer1kCtx": 0.21,
           "ollamaTag": "hf.co/bartowski/phi-4-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/phi-4-GGUF",
+            "files": [
+              {
+                "path": "phi-4-Q5_K_M.gguf",
+                "sizeBytes": 10604188096,
+                "sha256": "b4b1ecedddfdd25a9c44c10a77bb118bcbb6a9004234286c7d4a4510c907f073"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -517,6 +957,16 @@
           "kvCacheGbPer1kCtx": 0.21,
           "ollamaTag": "hf.co/bartowski/phi-4-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/phi-4-GGUF",
+            "files": [
+              {
+                "path": "phi-4-Q6_K.gguf",
+                "sizeBytes": 12030251456,
+                "sha256": "537248da5492a9a34b1d811307c6b9226d9539a81653aa9bb0d7ec6104169320"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -524,6 +974,16 @@
           "kvCacheGbPer1kCtx": 0.21,
           "ollamaTag": "phi4:14b-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/phi-4-GGUF",
+            "files": [
+              {
+                "path": "phi-4-Q8_0.gguf",
+                "sizeBytes": 15580500416,
+                "sha256": "68efc525888cc34fc2cb539c2f4409653d57994e35b3a5735d2a59b871871bf3"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -551,6 +1011,16 @@
           "kvCacheGbPer1kCtx": 0.201,
           "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Qwen-14B-Q3_K_M.gguf",
+                "sizeBytes": 7339204000,
+                "sha256": "faf2e6f4d4462619a9352419b751f140be67ca9a4cb343b6796e37adafd8a050"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -558,6 +1028,16 @@
           "kvCacheGbPer1kCtx": 0.201,
           "ollamaTag": "deepseek-r1:14b-qwen-distill-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Qwen-14B-Q4_K_M.gguf",
+                "sizeBytes": 8988110240,
+                "sha256": "0b319bd0572f2730bfe11cc751defe82045fad5085b4e60591ac2cd2d9633181"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -565,6 +1045,16 @@
           "kvCacheGbPer1kCtx": 0.201,
           "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Qwen-14B-Q5_K_M.gguf",
+                "sizeBytes": 10508873120,
+                "sha256": "3eea644370914aebfff274dd8f5a790aaee42ba69a1ce09051eeaad0f05afd32"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -572,6 +1062,16 @@
           "kvCacheGbPer1kCtx": 0.201,
           "ollamaTag": "hf.co/bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Qwen-14B-Q6_K.gguf",
+                "sizeBytes": 12124683680,
+                "sha256": "96dca418f74255c3a27cd74ef594e8d6a13971b00e70d0351150b69e9d635dcf"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -579,6 +1079,16 @@
           "kvCacheGbPer1kCtx": 0.201,
           "ollamaTag": "deepseek-r1:14b-qwen-distill-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/DeepSeek-R1-Distill-Qwen-14B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Qwen-14B-Q8_0.gguf",
+                "sizeBytes": 15701597600,
+                "sha256": "234bf54d16c772dc566325ffeadcb78b5a1d29b60e340da95d303da37ce33c13"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -606,6 +1116,16 @@
           "kvCacheGbPer1kCtx": 0.201,
           "ollamaTag": "qwen2.5-coder:14b-instruct-q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Qwen2.5-Coder-14B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Qwen2.5-Coder-14B-Instruct-Q3_K_M.gguf",
+                "sizeBytes": 7339204832,
+                "sha256": "2eda43d86ba2670e73b2d3b1d819054124d4f266270a8242a7cd12c409903004"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -613,6 +1133,16 @@
           "kvCacheGbPer1kCtx": 0.201,
           "ollamaTag": "qwen2.5-coder:14b-instruct-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Qwen2.5-Coder-14B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Qwen2.5-Coder-14B-Instruct-Q4_K_M.gguf",
+                "sizeBytes": 8988111072,
+                "sha256": "2946d28c9e1bb2bcae6d42e8678863a31775df6f740315c7d7e6d6b6411f5937"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -620,6 +1150,16 @@
           "kvCacheGbPer1kCtx": 0.201,
           "ollamaTag": "qwen2.5-coder:14b-instruct-q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Qwen2.5-Coder-14B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Qwen2.5-Coder-14B-Instruct-Q5_K_M.gguf",
+                "sizeBytes": 10508873952,
+                "sha256": "68701e9ffaab69e42827524f604bf71b375b7ed8f0c59f6a8c3d646c963b3e2c"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -627,6 +1167,16 @@
           "kvCacheGbPer1kCtx": 0.201,
           "ollamaTag": "qwen2.5-coder:14b-instruct-q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Qwen2.5-Coder-14B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Qwen2.5-Coder-14B-Instruct-Q6_K.gguf",
+                "sizeBytes": 12124684512,
+                "sha256": "b576e13fe5c36652c9277c2e649a4950bfb8bac04eb63417a512cc902dc032d5"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -634,6 +1184,16 @@
           "kvCacheGbPer1kCtx": 0.201,
           "ollamaTag": "qwen2.5-coder:14b-instruct-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Qwen2.5-Coder-14B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Qwen2.5-Coder-14B-Instruct-Q8_0.gguf",
+                "sizeBytes": 15701598432,
+                "sha256": "ceed8d9126648af71bb5b3d1e69c43b25689752ea2c42204a48fea202605adc5"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -662,6 +1222,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF",
+            "files": [
+              {
+                "path": "mistralai_Mistral-Small-3.1-24B-Instruct-2503-Q3_K_M.gguf",
+                "sizeBytes": 11474083296,
+                "sha256": "259f6b3773f760a374335aacba2d6fe6fa893a7635a6f8a9d00a7f40c20488e0"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -669,6 +1239,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "mistral-small3.1:24b-instruct-2503-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF",
+            "files": [
+              {
+                "path": "mistralai_Mistral-Small-3.1-24B-Instruct-2503-Q4_K_M.gguf",
+                "sizeBytes": 14333910496,
+                "sha256": "c5743c1bf39db0ae8a5ade5df0374b8e9e492754a199cfdad7ef393c1590f7c0"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -676,6 +1256,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF",
+            "files": [
+              {
+                "path": "mistralai_Mistral-Small-3.1-24B-Instruct-2503-Q5_K_M.gguf",
+                "sizeBytes": 16763985376,
+                "sha256": "64553a25b66927d0105c048d10cc96db31174cf05c3846885b2ad50cd4f32bb3"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -683,6 +1273,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF",
+            "files": [
+              {
+                "path": "mistralai_Mistral-Small-3.1-24B-Instruct-2503-Q6_K.gguf",
+                "sizeBytes": 19345939936,
+                "sha256": "159c8cf1a356ff29897cd76415d5d3a9ea941edeaf649535ab5a423df0c918a4"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -690,6 +1290,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "mistral-small3.1:24b-instruct-2503-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/mistralai_Mistral-Small-3.1-24B-Instruct-2503-GGUF",
+            "files": [
+              {
+                "path": "mistralai_Mistral-Small-3.1-24B-Instruct-2503-Q8_0.gguf",
+                "sizeBytes": 25054780896,
+                "sha256": "d6a6ab1afaae1f79209ec60d92d158b8cd746948fabc956bb1c914760a8554d8"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -717,6 +1327,16 @@
           "kvCacheGbPer1kCtx": 0.138,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-27b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-27b-it-Q3_K_M.gguf",
+                "sizeBytes": 13437356672,
+                "sha256": "9eabf6ef615b50ffb59f52751fe4789a036e0815b0dac42ab9774fd157b54831"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -724,6 +1344,16 @@
           "kvCacheGbPer1kCtx": 0.138,
           "ollamaTag": "gemma3:27b-it-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-27b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-27b-it-Q4_K_M.gguf",
+                "sizeBytes": 16546404992,
+                "sha256": "4e83142e3ad3719ac61334f70a956dcc60bbba8adb29de5114161310bb9f7170"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -731,6 +1361,16 @@
           "kvCacheGbPer1kCtx": 0.138,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-27b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-27b-it-Q5_K_M.gguf",
+                "sizeBytes": 19271391872,
+                "sha256": "7babc9bc281f07edae1cbfe519f61b12daa760b36be8ba53e72ddfdc9eceb846"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -738,6 +1378,16 @@
           "kvCacheGbPer1kCtx": 0.138,
           "ollamaTag": "hf.co/bartowski/google_gemma-3-27b-it-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-27b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-27b-it-Q6_K.gguf",
+                "sizeBytes": 22166690432,
+                "sha256": "bb33daa83fab45a9323358fddc059df9fae3b5934461a7294ad20741ec5c3682"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -745,6 +1395,16 @@
           "kvCacheGbPer1kCtx": 0.138,
           "ollamaTag": "gemma3:27b-it-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-3-27b-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-3-27b-it-Q8_0.gguf",
+                "sizeBytes": 28707605120,
+                "sha256": "f997aef7f4ed368819f8bcd3e66262612eab4b9ecd562efbad2a7fdebc872693"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -774,6 +1434,16 @@
           "kvCacheGbPer1kCtx": 0.22,
           "ollamaTag": "hf.co/bartowski/google_gemma-4-26B-A4B-it-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-26B-A4B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-26B-A4B-it-Q3_K_M.gguf",
+                "sizeBytes": 13019981440,
+                "sha256": "4826221b7a285284b65222537f58ebfc6880290ff5441e13bfb1a7ca4d65df21"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -781,6 +1451,16 @@
           "kvCacheGbPer1kCtx": 0.22,
           "ollamaTag": "gemma4:26b-a4b-it-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-26B-A4B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-26B-A4B-it-Q4_K_M.gguf",
+                "sizeBytes": 17035039872,
+                "sha256": "a07f72221e8e3f77455ab0d7f7652d01a9f63c262b954aa6932a53275a0e895a"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -788,6 +1468,16 @@
           "kvCacheGbPer1kCtx": 0.22,
           "ollamaTag": "hf.co/bartowski/google_gemma-4-26B-A4B-it-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-26B-A4B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-26B-A4B-it-Q5_K_M.gguf",
+                "sizeBytes": 19319198848,
+                "sha256": "6b4f8074239f72543997a950ff6ae4509553c599f5b432748309ff3438416493"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -795,6 +1485,16 @@
           "kvCacheGbPer1kCtx": 0.22,
           "ollamaTag": "hf.co/bartowski/google_gemma-4-26B-A4B-it-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-26B-A4B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-26B-A4B-it-Q6_K.gguf",
+                "sizeBytes": 22862577280,
+                "sha256": "dd9f8a9f4646258bd97e1241899ecd875ad51572bcf6de44d09dab30662983f1"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -802,6 +1502,16 @@
           "kvCacheGbPer1kCtx": 0.22,
           "ollamaTag": "gemma4:26b-a4b-it-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-26B-A4B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-26B-A4B-it-Q8_0.gguf",
+                "sizeBytes": 26859861120,
+                "sha256": "1bb7fdb37fbd542ba972b3eb83ae87752bb9063aff560402e0e2f64235c85226"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -830,6 +1540,16 @@
           "kvCacheGbPer1kCtx": 0.101,
           "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-30B-A3B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-30B-A3B-Q4_K_M.gguf",
+                "sizeBytes": 18556685824,
+                "sha256": "0d003f6662faee786ed5da3e31b29c978de5ae5d275c8794c606a7f3c01aa8f5"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -837,6 +1557,16 @@
           "kvCacheGbPer1kCtx": 0.101,
           "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-30B-A3B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-30B-A3B-Q5_K_M.gguf",
+                "sizeBytes": 21725580800,
+                "sha256": "e6db7da56bdb19ba30541c73628f15e8f1f45be1b1f96df4383e03fec375e43a"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -844,6 +1574,16 @@
           "kvCacheGbPer1kCtx": 0.101,
           "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-30B-A3B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-30B-A3B-Q6_K.gguf",
+                "sizeBytes": 25092531712,
+                "sha256": "0c1754eaf4514d9cb6aaf1a6a2c15cd496d56b8413843b2ea9328f215a5eb8ff"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -851,6 +1591,16 @@
           "kvCacheGbPer1kCtx": 0.101,
           "ollamaTag": "hf.co/Qwen/Qwen3-30B-A3B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-30B-A3B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-30B-A3B-Q8_0.gguf",
+                "sizeBytes": 32483931648,
+                "sha256": "4ad960d180b16f56024f5b704697e5dd5b0837167c2e515ef0569abfc599743c"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -880,6 +1630,16 @@
           "kvCacheGbPer1kCtx": 0.881,
           "ollamaTag": "hf.co/bartowski/google_gemma-4-31B-it-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-31B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-31B-it-Q3_K_M.gguf",
+                "sizeBytes": 15918123360,
+                "sha256": "eafa3499f35610f0c71af7b688328692f710d01283e140b5089991cf6478f486"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -887,6 +1647,16 @@
           "kvCacheGbPer1kCtx": 0.881,
           "ollamaTag": "gemma4:31b-it-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-31B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-31B-it-Q4_K_M.gguf",
+                "sizeBytes": 19598489952,
+                "sha256": "2959c1b0a4f792493bb0092846ea06aec54547e47be979c282634d938d501b75"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -894,6 +1664,16 @@
           "kvCacheGbPer1kCtx": 0.881,
           "ollamaTag": "hf.co/bartowski/google_gemma-4-31B-it-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-31B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-31B-it-Q5_K_M.gguf",
+                "sizeBytes": 22608877920,
+                "sha256": "9f6882d4780880c96f2292c7daf5d5f18fa7e3678cecc47fc22649e93ce6f693"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -901,6 +1681,16 @@
           "kvCacheGbPer1kCtx": 0.881,
           "ollamaTag": "hf.co/bartowski/google_gemma-4-31B-it-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-31B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-31B-it-Q6_K.gguf",
+                "sizeBytes": 26726721888,
+                "sha256": "3ddedb5dbd39acced499c489181983f27bd6e6bd3cd5d4a367696eeda3d1e397"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -908,6 +1698,16 @@
           "kvCacheGbPer1kCtx": 0.881,
           "ollamaTag": "gemma4:31b-it-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/google_gemma-4-31B-it-GGUF",
+            "files": [
+              {
+                "path": "google_gemma-4-31B-it-Q8_0.gguf",
+                "sizeBytes": 32635677024,
+                "sha256": "b2021742dad920260eea1a2fe3f7ebacc6f4963b4242ea3211f6bdb46e494a8e"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -936,6 +1736,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "qwen3:32b-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-32B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-32B-Q4_K_M.gguf",
+                "sizeBytes": 19762149024,
+                "sha256": "efd971561896866f0e910cce52761ca77b1b138090c7f15fe284676d57d1f689"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -943,6 +1753,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/Qwen/Qwen3-32B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-32B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-32B-Q5_K_M.gguf",
+                "sizeBytes": 23214831232,
+                "sha256": "82ec20068a0cc9388ffc93eb968015b0941931d0ff65a216baba5b4824d2a966"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -950,6 +1770,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/Qwen/Qwen3-32B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-32B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-32B-Q6_K.gguf",
+                "sizeBytes": 26883306112,
+                "sha256": "c4c7c3cb6da260df1fe1d3cfd090a32dc7cc348f1278158be18e301f390d6f6e"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -957,6 +1787,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "qwen3:32b-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "Qwen/Qwen3-32B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3-32B-Q8_0.gguf",
+                "sizeBytes": 34817718912,
+                "sha256": "2c50eb8aad05047dbf24fa014eb621adf552e14176cabe0c5db4ef38c91e2169"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -984,6 +1824,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "qwen2.5-coder:32b-instruct-q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Qwen2.5-Coder-32B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Qwen2.5-Coder-32B-Instruct-Q3_K_M.gguf",
+                "sizeBytes": 15935048672,
+                "sha256": "98a9c52ad7727f72759055ec204cd8111fdf46210cdeac0c07fa78cbc71c1177"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -991,6 +1841,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "qwen2.5-coder:32b-instruct-q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Qwen2.5-Coder-32B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Qwen2.5-Coder-32B-Instruct-Q4_K_M.gguf",
+                "sizeBytes": 19851336672,
+                "sha256": "8e2fd78ff55e7cdf577fda257bac2776feb7d73d922613caf35468073807e815"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -998,6 +1858,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "qwen2.5-coder:32b-instruct-q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Qwen2.5-Coder-32B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Qwen2.5-Coder-32B-Instruct-Q5_K_M.gguf",
+                "sizeBytes": 23262157792,
+                "sha256": "a4e15b1099adf59cade80da369400199e4d7922d7e16b717bbfcda4d08a0702f"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1005,6 +1875,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "qwen2.5-coder:32b-instruct-q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Qwen2.5-Coder-32B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Qwen2.5-Coder-32B-Instruct-Q6_K.gguf",
+                "sizeBytes": 26886155232,
+                "sha256": "99c4f668b96cd9e2f0d1c5af811124f59559d8d13da65892993eaa8bca14dc13"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1012,6 +1892,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "qwen2.5-coder:32b-instruct-q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Qwen2.5-Coder-32B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Qwen2.5-Coder-32B-Instruct-Q8_0.gguf",
+                "sizeBytes": 34820885184,
+                "sha256": "5e9f8a595c3be1678e3c9a2df19f17e1f5fdd9f2e7b47fcda7b21799c047f575"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1034,6 +1924,16 @@
           "kvCacheGbPer1kCtx": 0.273,
           "ollamaTag": "hf.co/unsloth/Qwen3.8-27B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.8-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.8-27B-UD-Q4_K_M.gguf",
+                "sizeBytes": 16464440224,
+                "sha256": "322e194ff79741c7baa497c240f677f54b201b0efab44ca8e50f122b39123482"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1041,6 +1941,16 @@
           "kvCacheGbPer1kCtx": 0.273,
           "ollamaTag": "hf.co/unsloth/Qwen3.8-27B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.8-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.8-27B-UD-Q5_K_M.gguf",
+                "sizeBytes": 19771509664,
+                "sha256": "2de73110cb254cbf09b54b717578dadff12ef1194e7271527e68202f39ba4bfd"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1048,6 +1958,16 @@
           "kvCacheGbPer1kCtx": 0.273,
           "ollamaTag": "hf.co/unsloth/Qwen3.8-27B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.8-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.8-27B-UD-Q6_K.gguf",
+                "sizeBytes": 21983677344,
+                "sha256": "c9c206812fbe4ac7b76a729e25928b63f2ae89d37f69da7a71c20aec763cd436"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1055,6 +1975,16 @@
           "kvCacheGbPer1kCtx": 0.273,
           "ollamaTag": "hf.co/unsloth/Qwen3.8-27B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.8-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.8-27B-Q8_0.gguf",
+                "sizeBytes": 29047086048,
+                "sha256": "a680f44a06920e5d689774823782006aa3acc8db95750323373b24139b67e348"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1078,6 +2008,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-9B-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-9B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-9B-Q3_K_M.gguf",
+                "sizeBytes": 4673643744,
+                "sha256": "8fed90306e4f019e2bf35f3766470b7bc59ea1a9dae00f5ceb20b43cb5514393"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1085,6 +2025,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-9B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-9B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-9B-Q4_K_M.gguf",
+                "sizeBytes": 5680522464,
+                "sha256": "03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1092,6 +2042,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-9B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-9B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-9B-Q5_K_M.gguf",
+                "sizeBytes": 6577841376,
+                "sha256": "dc2a39aef291f91a9116ad214058da0d86eb648743a124bd8c333787c4b9c91c"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1099,6 +2059,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-9B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-9B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-9B-Q6_K.gguf",
+                "sizeBytes": 7458301152,
+                "sha256": "91898433cf5ce0a8f45516a4cc3e9343b6e01d052d01f684309098c66a326c59"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1106,6 +2076,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-9B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-9B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-9B-Q8_0.gguf",
+                "sizeBytes": 9527502048,
+                "sha256": "809626574d0cb43d4becfa56169980da2bb448f2299270f7be443cb89d0a6ae4"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1129,6 +2109,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/unsloth/Qwen3.6-27B-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.6-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.6-27B-Q3_K_M.gguf",
+                "sizeBytes": 13586217184,
+                "sha256": "bdfa99d488b501f5ca711f35c930f005319a064eabcaae23290571a25c499eeb"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1136,6 +2126,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/unsloth/Qwen3.6-27B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.6-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.6-27B-Q4_K_M.gguf",
+                "sizeBytes": 16817244384,
+                "sha256": "5ed60d0af4650a854b1755bd392f9aef4872643dc25a254bc68043fa638392a0"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1143,6 +2143,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/unsloth/Qwen3.6-27B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.6-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.6-27B-Q5_K_M.gguf",
+                "sizeBytes": 19509790944,
+                "sha256": "cfecab168156269f25d5ffe9e13cf2a401ca2f43a9693fa00bcd1625316ccbde"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1150,6 +2160,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/unsloth/Qwen3.6-27B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.6-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.6-27B-Q6_K.gguf",
+                "sizeBytes": 22523238624,
+                "sha256": "ec1805fe87e6519c461c1ed2d179865464a875ed241032ead65a354f979cfe14"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1157,6 +2177,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/unsloth/Qwen3.6-27B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.6-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.6-27B-Q8_0.gguf",
+                "sizeBytes": 28595763424,
+                "sha256": "f93f517f38e696d35a1a7df2c0e3155a64f4c4dcd662107a146ae263f7fb14ce"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1180,6 +2210,16 @@
           "kvCacheGbPer1kCtx": 0.055,
           "ollamaTag": "hf.co/unsloth/Muse-Glimmer-30B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Muse-Glimmer-30B-GGUF",
+            "files": [
+              {
+                "path": "Muse-Glimmer-30B-UD-Q5_K_M.gguf",
+                "sizeBytes": 19194274848,
+                "sha256": "27c27bc0cc2591344a9ef977d57aa79a9d36ddebee59660bd2abbf738f940f5b"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1187,6 +2227,16 @@
           "kvCacheGbPer1kCtx": 0.055,
           "ollamaTag": "hf.co/unsloth/Muse-Glimmer-30B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Muse-Glimmer-30B-GGUF",
+            "files": [
+              {
+                "path": "Muse-Glimmer-30B-Q8_0.gguf",
+                "sizeBytes": 29612957984,
+                "sha256": "f2c087d694ca8242a4a436076df7c041703ab051ac4b72bb1bfe2698299b0e86"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1210,6 +2260,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-4B-Q3_K_M.gguf",
+                "sizeBytes": 2293388448,
+                "sha256": "d6981ab4d77ba712b48ef69d69042d75b5e39b9dce5fb5a5b054fd08e06afb95"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1217,6 +2277,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-4B-Q4_K_M.gguf",
+                "sizeBytes": 2740937888,
+                "sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1224,6 +2294,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-4B-Q5_K_M.gguf",
+                "sizeBytes": 3143656608,
+                "sha256": "8814232b85594dcd46c50e5b8b29324a7efe9e746edbe8a3d1df3d3fce7aad39"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1231,6 +2311,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-4B-Q6_K.gguf",
+                "sizeBytes": 3525956768,
+                "sha256": "fdedd781c9ce676ab66b018ca247ff78e8a33c98098a822c1e2d5075e7718f66"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1238,6 +2328,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-4B-Q8_0.gguf",
+                "sizeBytes": 4482403488,
+                "sha256": "10cc391b403021dd11c614679d2fd92f611c3681d29e29651b717316965d61e1"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1261,6 +2361,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-27B-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-27B-Q3_K_M.gguf",
+                "sizeBytes": 13505116064,
+                "sha256": "f08ce37ebe8a7130db0c198262336773976b1e374f2444f898c41117710f0bb3"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1268,6 +2378,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-27B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-27B-Q4_K_M.gguf",
+                "sizeBytes": 16740812704,
+                "sha256": "84b5f7f112156d63836a01a69dc3f11a6ba63b10a23b8ca7a7efaf52d5a2d806"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1275,6 +2395,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-27B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-27B-Q5_K_M.gguf",
+                "sizeBytes": 19608995744,
+                "sha256": "e41a488a3f013dbfb323563d7250105b1e708daf084942f9011344ad1525996f"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1282,6 +2412,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-27B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-27B-Q6_K.gguf",
+                "sizeBytes": 22453933984,
+                "sha256": "69e0f8527e0d937097cbcd486b51e2effaed963f49ef7962c9ef3eab45164ff8"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1289,6 +2429,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/unsloth/Qwen3.5-27B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-27B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-27B-Q8_0.gguf",
+                "sizeBytes": 28595763104,
+                "sha256": "6b0a101b0a86697fe11eabcc1a7db72699a9f3d4b18b6a1ac75ea3fb2c26c450"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1312,6 +2462,16 @@
           "kvCacheGbPer1kCtx": 0.881,
           "ollamaTag": "hf.co/unsloth/gemma-4-31B-it-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-4-31B-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-31B-it-Q3_K_M.gguf",
+                "sizeBytes": 14736608192,
+                "sha256": "d2d7a0f9117eb1a9a4b8b68bbb53c1ce5d1f602c45b9028dc12add0d0056f4fd"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1319,6 +2479,16 @@
           "kvCacheGbPer1kCtx": 0.881,
           "ollamaTag": "hf.co/unsloth/gemma-4-31B-it-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-4-31B-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-31B-it-Q4_K_M.gguf",
+                "sizeBytes": 18323733440,
+                "sha256": "38bd64c852c4b460434cc7162fa9bdcf242faf86502581a754cb72956bb17f84"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1326,6 +2496,16 @@
           "kvCacheGbPer1kCtx": 0.881,
           "ollamaTag": "hf.co/unsloth/gemma-4-31B-it-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-4-31B-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-31B-it-Q5_K_M.gguf",
+                "sizeBytes": 21658401728,
+                "sha256": "95192e41190ef5eb72db92b669cea0ed733049c2265a03a64ac5a080d8605958"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1333,6 +2513,16 @@
           "kvCacheGbPer1kCtx": 0.881,
           "ollamaTag": "hf.co/unsloth/gemma-4-31B-it-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-4-31B-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-31B-it-Q6_K.gguf",
+                "sizeBytes": 25201486784,
+                "sha256": "4660692bca96f1d9d19c550641088789c8c0c25bb07965a1e2798e3cb16885fb"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1340,6 +2530,16 @@
           "kvCacheGbPer1kCtx": 0.881,
           "ollamaTag": "hf.co/unsloth/gemma-4-31B-it-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-4-31B-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-31B-it-Q8_0.gguf",
+                "sizeBytes": 32635677632,
+                "sha256": "d5808e5874e660a85ab45b2da00c9e3b4a003621249a333772232d1a703e4d67"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1363,6 +2563,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "hf.co/unsloth/gemma-4-12b-it-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-4-12b-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-12b-it-Q3_K_M.gguf",
+                "sizeBytes": 5693872960,
+                "sha256": "dbf58f4c413b82b27106867eb42f7087e4172a172f6f201e2e11598a6582e504"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1370,6 +2580,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "hf.co/unsloth/gemma-4-12b-it-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-4-12b-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-12b-it-Q4_K_M.gguf",
+                "sizeBytes": 7121861440,
+                "sha256": "0a270ec9fe6b34f4a0d33992b6135117b484ebc4766ab76b51d4ae8c457e4c42"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1377,6 +2597,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "hf.co/unsloth/gemma-4-12b-it-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-4-12b-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-12b-it-Q5_K_M.gguf",
+                "sizeBytes": 8413576000,
+                "sha256": "32c554c7d1338a23837ae39b3db482213a4a642f96df3b2619f516a2375d16cd"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1384,6 +2614,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "hf.co/unsloth/gemma-4-12b-it-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-4-12b-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-12b-it-Q6_K.gguf",
+                "sizeBytes": 9786022720,
+                "sha256": "6f394336500bb5409bd68c31aa9d75097b5e6104f6cf30c82a09a7b64df41faf"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1391,6 +2631,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "hf.co/unsloth/gemma-4-12b-it-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-4-12b-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-4-12b-it-Q8_0.gguf",
+                "sizeBytes": 12669647680,
+                "sha256": "f20e7ff1be28c283eeeb18fc895733791c56a5851d5cd3fe9691b7f7d12afa72"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1414,6 +2664,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "hf.co/bartowski/kai-os_Grug-12B-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/kai-os_Grug-12B-GGUF",
+            "files": [
+              {
+                "path": "kai-os_Grug-12B-Q3_K_M.gguf",
+                "sizeBytes": 6301392000,
+                "sha256": "83898fd43216b66d13b90cb89756138060de2004ccb88340912be4de0ed96341"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1421,6 +2681,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "hf.co/bartowski/kai-os_Grug-12B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/kai-os_Grug-12B-GGUF",
+            "files": [
+              {
+                "path": "kai-os_Grug-12B-Q4_K_M.gguf",
+                "sizeBytes": 7662533760,
+                "sha256": "5110bdafeb92e68ccef3dc07858341b4ba9a831df753d667708080d415e5364d"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1428,6 +2698,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "hf.co/bartowski/kai-os_Grug-12B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/kai-os_Grug-12B-GGUF",
+            "files": [
+              {
+                "path": "kai-os_Grug-12B-Q5_K_M.gguf",
+                "sizeBytes": 8774966400,
+                "sha256": "a79c4e1d9c0512c4138a6097d49c088c3ce8d45311785edc39ad864841064ad0"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1435,6 +2715,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "hf.co/bartowski/kai-os_Grug-12B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/kai-os_Grug-12B-GGUF",
+            "files": [
+              {
+                "path": "kai-os_Grug-12B-Q6_K.gguf",
+                "sizeBytes": 10239327360,
+                "sha256": "8bda1bec23bf56398dbbfcb169e7c2b98e908d6c2add7fce1b31ce43eb7a384d"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1442,6 +2732,16 @@
           "kvCacheGbPer1kCtx": 0.352,
           "ollamaTag": "hf.co/bartowski/kai-os_Grug-12B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/kai-os_Grug-12B-GGUF",
+            "files": [
+              {
+                "path": "kai-os_Grug-12B-Q8_0.gguf",
+                "sizeBytes": 12669648000,
+                "sha256": "654e42ce66ff74b617fe1f3b7d5e939ffc22de333dd4f47e65441c1d8c385659"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1464,6 +2764,16 @@
           "kvCacheGbPer1kCtx": 0.117,
           "ollamaTag": "hf.co/unsloth/Llama-3.2-3B-Instruct-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Llama-3.2-3B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.2-3B-Instruct-Q3_K_M.gguf",
+                "sizeBytes": 1687159232,
+                "sha256": "aa48f1dfafebc0bd0631ffff625804e3641f5e61e8c91c465a556195fbd80376"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1471,6 +2781,16 @@
           "kvCacheGbPer1kCtx": 0.117,
           "ollamaTag": "hf.co/unsloth/Llama-3.2-3B-Instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Llama-3.2-3B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.2-3B-Instruct-Q4_K_M.gguf",
+                "sizeBytes": 2019377600,
+                "sha256": "6c99cc00ae910f6a532a80022cb4bc1939094527a089c29294b841c0bd87f74d"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1478,6 +2798,16 @@
           "kvCacheGbPer1kCtx": 0.117,
           "ollamaTag": "hf.co/unsloth/Llama-3.2-3B-Instruct-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Llama-3.2-3B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.2-3B-Instruct-Q5_K_M.gguf",
+                "sizeBytes": 2322153920,
+                "sha256": "8d422c0d21ed241ed701e2a5d4a1d2b580b0d406ba8b3e09605ffe980f2836ed"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1485,6 +2815,16 @@
           "kvCacheGbPer1kCtx": 0.117,
           "ollamaTag": "hf.co/unsloth/Llama-3.2-3B-Instruct-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Llama-3.2-3B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.2-3B-Instruct-Q6_K.gguf",
+                "sizeBytes": 2643853760,
+                "sha256": "a48f9d72a278835e0b0c00c6c115a3edd1703f5f15713b5f3194bc8b392ea631"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1492,6 +2832,16 @@
           "kvCacheGbPer1kCtx": 0.117,
           "ollamaTag": "hf.co/unsloth/Llama-3.2-3B-Instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Llama-3.2-3B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.2-3B-Instruct-Q8_0.gguf",
+                "sizeBytes": 3421898816,
+                "sha256": "f34112a11b7dad74ab517dedf6dcf00d624c9adac2dc0c72c719ca0478554ef2"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1514,6 +2864,16 @@
           "kvCacheGbPer1kCtx": 0.006,
           "ollamaTag": "hf.co/ggml-org/gemma-3-1b-it-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "ggml-org/gemma-3-1b-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-3-1b-it-Q4_K_M.gguf",
+                "sizeBytes": 806058240,
+                "sha256": "8ccc5cd1f1b3602548715ae25a66ed73fd5dc68a210412eea643eb20eb75a135"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1521,6 +2881,16 @@
           "kvCacheGbPer1kCtx": 0.006,
           "ollamaTag": "hf.co/ggml-org/gemma-3-1b-it-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "ggml-org/gemma-3-1b-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-3-1b-it-Q8_0.gguf",
+                "sizeBytes": 1069306368,
+                "sha256": "b205840c5dcef55078e37d344677869a714ffd42a4ae448c48dcfb52e4bb10d5"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1544,6 +2914,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-70B-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/DeepSeek-R1-Distill-Llama-70B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Llama-70B-Q3_K_M.gguf",
+                "sizeBytes": 34267497120,
+                "sha256": "2f679319027d6c6cf934e01e12a0e384e022fc8d04dc2ad5fda748d71b4b1f3a"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1551,6 +2931,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-70B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/DeepSeek-R1-Distill-Llama-70B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Llama-70B-Q4_K_M.gguf",
+                "sizeBytes": 42520396448,
+                "sha256": "952ff479c48ac3ece81fb6d9a5a03bfeac215e6caac780fbe91ff8cb0e05bcf3"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1558,6 +2948,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-70B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/DeepSeek-R1-Distill-Llama-70B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Llama-70B-Q5_K_M.gguf",
+                "sizeBytes": 49949819552,
+                "sha256": "291ed415b22272a873557f377d598f87fea54835adf5a5395be39461aeea4224"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1565,6 +2965,21 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": null,
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/DeepSeek-R1-Distill-Llama-70B-GGUF",
+            "files": [
+              {
+                "path": "Q6_K/DeepSeek-R1-Distill-Llama-70B-Q6_K-00001-of-00002.gguf",
+                "sizeBytes": 49973947296,
+                "sha256": "c2cfd0dbfaf32a9a3d864d83e29f0281ab62750f34512bcbbaf6dccce33dd6e6"
+              },
+              {
+                "path": "Q6_K/DeepSeek-R1-Distill-Llama-70B-Q6_K-00002-of-00002.gguf",
+                "sizeBytes": 7914199008,
+                "sha256": "9721422ec6ea86d1734d7cc28681f46b4df6fda3f6c325e6351919e8a8333d89"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1572,6 +2987,21 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": null,
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/DeepSeek-R1-Distill-Llama-70B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Llama-70B-Q8_0/DeepSeek-R1-Distill-Llama-70B-Q8_0-00001-of-00002.gguf",
+                "sizeBytes": 39808938624,
+                "sha256": "ab699b11ad02cf02739dea5fe5f66b64eb5140cbdfc11052ebc227fdb2a59ac9"
+              },
+              {
+                "path": "DeepSeek-R1-Distill-Llama-70B-Q8_0/DeepSeek-R1-Distill-Llama-70B-Q8_0-00002-of-00002.gguf",
+                "sizeBytes": 35166113792,
+                "sha256": "2621b83707f4be07f4292466c4f73b881ecd658b78e95995a665e4cde92ab5eb"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1594,6 +3024,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/bartowski/Hermes-3-Llama-3.1-70B-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Hermes-3-Llama-3.1-70B-GGUF",
+            "files": [
+              {
+                "path": "Hermes-3-Llama-3.1-70B-Q3_K_M.gguf",
+                "sizeBytes": 34267494464,
+                "sha256": "7abdad896ba20fe5803d1fd38843d72e7794e183ddd7bcf4fef2a51af4d48a06"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1601,6 +3041,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/bartowski/Hermes-3-Llama-3.1-70B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Hermes-3-Llama-3.1-70B-GGUF",
+            "files": [
+              {
+                "path": "Hermes-3-Llama-3.1-70B-Q4_K_M.gguf",
+                "sizeBytes": 42520393792,
+                "sha256": "26dca31137555f080be0e695683ec568c00e73fa1f6547f21b9a311cd62d3cc5"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1608,6 +3058,21 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": null,
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Hermes-3-Llama-3.1-70B-GGUF",
+            "files": [
+              {
+                "path": "Hermes-3-Llama-3.1-70B-Q5_K_M/Hermes-3-Llama-3.1-70B-Q5_K_M-00001-of-00002.gguf",
+                "sizeBytes": 39875467488,
+                "sha256": "46431f1662284bd9830b064e5612e73f2b9f963eafd5b6e7546afed619266787"
+              },
+              {
+                "path": "Hermes-3-Llama-3.1-70B-Q5_K_M/Hermes-3-Llama-3.1-70B-Q5_K_M-00002-of-00002.gguf",
+                "sizeBytes": 10074349600,
+                "sha256": "cb6c86046894684638b93dd4d2a74b3826f8795c9459016b1620656f7b6c6634"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1615,6 +3080,21 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": null,
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Hermes-3-Llama-3.1-70B-GGUF",
+            "files": [
+              {
+                "path": "Hermes-3-Llama-3.1-70B-Q6_K/Hermes-3-Llama-3.1-70B-Q6_K-00001-of-00002.gguf",
+                "sizeBytes": 39862699104,
+                "sha256": "b16a893da5696534a2696dd7b40d801fe3015276aa01fee7746f1df493ca968c"
+              },
+              {
+                "path": "Hermes-3-Llama-3.1-70B-Q6_K/Hermes-3-Llama-3.1-70B-Q6_K-00002-of-00002.gguf",
+                "sizeBytes": 18025444544,
+                "sha256": "03d5a3a59e76e595391ecc865b6e34d4488de27ca5f92c8e81a00c180c2414dc"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1622,6 +3102,21 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": null,
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Hermes-3-Llama-3.1-70B-GGUF",
+            "files": [
+              {
+                "path": "Hermes-3-Llama-3.1-70B-Q8_0/Hermes-3-Llama-3.1-70B-Q8_0-00001-of-00002.gguf",
+                "sizeBytes": 39808936192,
+                "sha256": "b37d01a998ea019accc575d86548d1265f399aaec35050ad30caddcad1d217f8"
+              },
+              {
+                "path": "Hermes-3-Llama-3.1-70B-Q8_0/Hermes-3-Llama-3.1-70B-Q8_0-00002-of-00002.gguf",
+                "sizeBytes": 35166113792,
+                "sha256": "469106d0df9af3325f8f5d99be66829eb245bd0bcaacae271d4cce3932c5c747"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1644,6 +3139,16 @@
           "kvCacheGbPer1kCtx": 0.034,
           "ollamaTag": "hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Llama-3.2-1B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.2-1B-Instruct-Q4_K_M.gguf",
+                "sizeBytes": 807694464,
+                "sha256": "6f85a640a97cf2bf5b8e764087b1e83da0fdb51d7c9fab7d0fece9385611df83"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1651,6 +3156,16 @@
           "kvCacheGbPer1kCtx": 0.034,
           "ollamaTag": "hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Llama-3.2-1B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.2-1B-Instruct-Q5_K_M.gguf",
+                "sizeBytes": 911503488,
+                "sha256": "4f22f95fb1679ef8e2fd6f1659d23f06cd1dbedb79ff291db7413a7ae509e2a9"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1658,6 +3173,16 @@
           "kvCacheGbPer1kCtx": 0.034,
           "ollamaTag": "hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Llama-3.2-1B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.2-1B-Instruct-Q6_K.gguf",
+                "sizeBytes": 1021800576,
+                "sha256": "0f4c510daf16e0d1b3bc94931fd9296c28936bebdda2593687d4eb70c5b70628"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1665,6 +3190,16 @@
           "kvCacheGbPer1kCtx": 0.034,
           "ollamaTag": "hf.co/bartowski/Llama-3.2-1B-Instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Llama-3.2-1B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.2-1B-Instruct-Q8_0.gguf",
+                "sizeBytes": 1321083008,
+                "sha256": "432f310a77f4650a88d0fd59ecdd7cebed8d684bafea53cbff0473542964f0c3"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1688,6 +3223,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Phi-4-mini-instruct-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Phi-4-mini-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-4-mini-instruct-Q3_K_M.gguf",
+                "sizeBytes": 2117532640,
+                "sha256": "8eb40b196ca664365bb0012eac556e9700345fcf68b41cfc35e8bf4a47687653"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1695,6 +3240,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Phi-4-mini-instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Phi-4-mini-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-4-mini-instruct-Q4_K_M.gguf",
+                "sizeBytes": 2491874272,
+                "sha256": "88c00229914083cd112853aab84ed51b87bdf6b9ce42f532d8c85c7c63b1730a"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1702,6 +3257,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Phi-4-mini-instruct-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Phi-4-mini-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-4-mini-instruct-Q5_K_M.gguf",
+                "sizeBytes": 2848127968,
+                "sha256": "b5a981febb25f218762d52411f5a4af6aad8b3a203bb1004a576545350ad08e3"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1709,6 +3274,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Phi-4-mini-instruct-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Phi-4-mini-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-4-mini-instruct-Q6_K.gguf",
+                "sizeBytes": 3155622880,
+                "sha256": "72b8446a3db55617950bef48d296659050867cca41bd7a7be4622010c9589400"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1716,6 +3291,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/Phi-4-mini-instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Phi-4-mini-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-4-mini-instruct.Q8_0.gguf",
+                "sizeBytes": 4084611040,
+                "sha256": "26188c6050d525376a88b04514c236c5e28a36730f1e936f2a00314212b7ba42"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1738,6 +3323,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/bartowski/Meta-Llama-3.1-70B-Instruct-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-70B-Instruct-Q3_K_M.gguf",
+                "sizeBytes": 34267499072,
+                "sha256": "78a5ebe1f0434aec97d2b367c4919a854c6385263965238948261e2b9dc6a4a8"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1745,6 +3340,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/bartowski/Meta-Llama-3.1-70B-Instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-70B-Instruct-Q4_K_M.gguf",
+                "sizeBytes": 42520398400,
+                "sha256": "f775c87029be95fb41df9e2882e6e938b73121c30ffc235ac6b6b880add49aa5"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1752,6 +3357,21 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": null,
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-70B-Instruct-Q5_K_M/Meta-Llama-3.1-70B-Instruct-Q5_K_M-00001-of-00002.gguf",
+                "sizeBytes": 39875472096,
+                "sha256": "881bef63fc41ab7561dd5fef4fb323d306644b1de3836caec83557a98eb02057"
+              },
+              {
+                "path": "Meta-Llama-3.1-70B-Instruct-Q5_K_M/Meta-Llama-3.1-70B-Instruct-Q5_K_M-00002-of-00002.gguf",
+                "sizeBytes": 10074349600,
+                "sha256": "5c3c92c3628ca3c3ef4286cb25086f920228f3e0c354ab6275d48ae49265a588"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1759,6 +3379,21 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": null,
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-70B-Instruct-Q6_K/Meta-Llama-3.1-70B-Instruct-Q6_K-00001-of-00002.gguf",
+                "sizeBytes": 39862703680,
+                "sha256": "1f0bde077076952282925ce9133c6ba26759067e5d8a46e5d9eed071ed03e2ac"
+              },
+              {
+                "path": "Meta-Llama-3.1-70B-Instruct-Q6_K/Meta-Llama-3.1-70B-Instruct-Q6_K-00002-of-00002.gguf",
+                "sizeBytes": 18025444544,
+                "sha256": "c1e59f75caaa7fdfdc69b9a04c48ba0417d18468c8a5a731afa8cf5301bfa2bd"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1766,6 +3401,21 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": null,
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Meta-Llama-3.1-70B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-70B-Instruct-Q8_0/Meta-Llama-3.1-70B-Instruct-Q8_0-00001-of-00002.gguf",
+                "sizeBytes": 39808940800,
+                "sha256": "e2550873a3b7189ff35569411f36eb04a5c69d6ecb459874e6943e12b0f54ec9"
+              },
+              {
+                "path": "Meta-Llama-3.1-70B-Instruct-Q8_0/Meta-Llama-3.1-70B-Instruct-Q8_0-00002-of-00002.gguf",
+                "sizeBytes": 35166113792,
+                "sha256": "4fce1532438024d8e1537879156258c3a935783c8dbe75a109c87cfd4dfc38a6"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1788,6 +3438,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf",
+                "sizeBytes": 4920739168,
+                "sha256": "f2be3e1a239c12c9f3f01a962b11fb2807f8032fdb63b0a5502ea42ddef55e44"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1795,6 +3455,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-8B-Instruct-Q5_K_M.gguf",
+                "sizeBytes": 5732992352,
+                "sha256": "c34f1510463982577d9a8aa53c30c8b4937e54d819049843e915896010d62ef5"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1802,6 +3472,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-8B-Instruct-Q6_K.gguf",
+                "sizeBytes": 6596011360,
+                "sha256": "02dfefa084c43597df73c9c44828817a4837a7b47d6c930fc4bad1830e2e3608"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1809,6 +3489,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Meta-Llama-3.1-8B-Instruct-Q8_0.gguf",
+                "sizeBytes": 8540775776,
+                "sha256": "332bcabfdcdb2c2e957b1c3dda6fe7832a814450df1f1393e0f50fd2fe5e3d90"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1832,6 +3522,16 @@
           "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "hf.co/unsloth/gemma-3-4b-it-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-3-4b-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-3-4b-it-Q3_K_M.gguf",
+                "sizeBytes": 2098459776,
+                "sha256": "cd0dc2ce517f0c2764a7a7d1274c935335fa56092bb62b39e06546fb599c382d"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1839,6 +3539,16 @@
           "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "hf.co/unsloth/gemma-3-4b-it-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-3-4b-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-3-4b-it-Q4_K_M.gguf",
+                "sizeBytes": 2489894016,
+                "sha256": "04a43a22e8d2003deda5acc262f68ec1005fa76c735a9962a8c77042a74a7d19"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1846,6 +3556,16 @@
           "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "hf.co/unsloth/gemma-3-4b-it-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-3-4b-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-3-4b-it-Q5_K_M.gguf",
+                "sizeBytes": 2829698176,
+                "sha256": "974e5c2f13c321fc3258b6fbf2ce326a09d8ace511aa6846df1db62baf7df7d4"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1853,6 +3573,16 @@
           "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "hf.co/unsloth/gemma-3-4b-it-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-3-4b-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-3-4b-it-Q6_K.gguf",
+                "sizeBytes": 3190740096,
+                "sha256": "df3fb9a1449296d26258c0771d5280ceb71559ad98e2db658799a05218ed9fa1"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1860,6 +3590,16 @@
           "kvCacheGbPer1kCtx": 0.04,
           "ollamaTag": "hf.co/unsloth/gemma-3-4b-it-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/gemma-3-4b-it-GGUF",
+            "files": [
+              {
+                "path": "gemma-3-4b-it-Q8_0.gguf",
+                "sizeBytes": 4130402176,
+                "sha256": "81bf0583ab5bad155a5a3b15d155a880a1a1e4f7de2de5c06f10f64ac49f8336"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1882,6 +3622,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/LFM2.5-1.2B-Instruct-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "LFM2.5-1.2B-Instruct-Q3_K_M.gguf",
+                "sizeBytes": 600347872,
+                "sha256": "b269b23aa907e73bc4f84a694b1d815b3d99ead2f8679e22c584e0bdfa8e4cb2"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1889,6 +3639,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/LFM2.5-1.2B-Instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "LFM2.5-1.2B-Instruct-Q4_K_M.gguf",
+                "sizeBytes": 730895584,
+                "sha256": "856aeee6d85ac684b1db8dee48795b44fc06731ecda03aee36ece682413a9b9a"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1896,6 +3656,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/LFM2.5-1.2B-Instruct-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "LFM2.5-1.2B-Instruct-Q5_K_M.gguf",
+                "sizeBytes": 843355360,
+                "sha256": "7ad5eef540097e1afc0118799e5d22005c0c1721cba0a2b01bed287e4888baaf"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1903,6 +3673,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/LFM2.5-1.2B-Instruct-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "LFM2.5-1.2B-Instruct-Q6_K.gguf",
+                "sizeBytes": 962843872,
+                "sha256": "3d3bd155a8b063a2a40b3c63be218e868023d582391a4650e6467b9947459952"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1910,6 +3690,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/LFM2.5-1.2B-Instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/LFM2.5-1.2B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "LFM2.5-1.2B-Instruct-Q8_0.gguf",
+                "sizeBytes": 1246254304,
+                "sha256": "b808eead8d6061f71990ab7b144c5ca6650fad219aa7acc407fe5fb26abf3dc2"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1932,6 +3722,16 @@
           "kvCacheGbPer1kCtx": 0.143,
           "ollamaTag": "hf.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-8B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-8B-Instruct-2512-Q4_K_M.gguf",
+                "sizeBytes": 5198911904,
+                "sha256": "33e7a72cf5e6e2cfc2f2847075acc013d68bba023e35310cef86b5cf8fdca761"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1939,6 +3739,16 @@
           "kvCacheGbPer1kCtx": 0.143,
           "ollamaTag": "hf.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-8B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-8B-Instruct-2512-Q5_K_M.gguf",
+                "sizeBytes": 6059268512,
+                "sha256": "7a5454127ec772e2389f0e71a77fedb88b83d4366d8a69facd0cfd0898f04d35"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1946,6 +3756,16 @@
           "kvCacheGbPer1kCtx": 0.143,
           "ollamaTag": "hf.co/mistralai/Ministral-3-8B-Instruct-2512-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-8B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-8B-Instruct-2512-Q8_0.gguf",
+                "sizeBytes": 9029392800,
+                "sha256": "bd0ca58473b64618df4d08c1410cc25c910ca84e647833ebaf099e0fc0523b45"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -1969,6 +3789,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/bartowski/allenai_Olmo-3.1-32B-Think-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/allenai_Olmo-3.1-32B-Think-GGUF",
+            "files": [
+              {
+                "path": "allenai_Olmo-3.1-32B-Think-Q3_K_M.gguf",
+                "sizeBytes": 15600961152,
+                "sha256": "56a50a682b6cc43bf5bddec69aeb533785a5552cf7945480edef53b45c4edd97"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -1976,6 +3806,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/bartowski/allenai_Olmo-3.1-32B-Think-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/allenai_Olmo-3.1-32B-Think-GGUF",
+            "files": [
+              {
+                "path": "allenai_Olmo-3.1-32B-Think-Q4_K_M.gguf",
+                "sizeBytes": 19482034656,
+                "sha256": "09ca87494efb75f6658a0c047414cccc5fb29d26a49c650a90af7c8f0412fdac"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -1983,6 +3823,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/bartowski/allenai_Olmo-3.1-32B-Think-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/allenai_Olmo-3.1-32B-Think-GGUF",
+            "files": [
+              {
+                "path": "allenai_Olmo-3.1-32B-Think-Q5_K_M.gguf",
+                "sizeBytes": 22859712736,
+                "sha256": "b4e14253be80420ed231eaaa84f10daae62017c4bcd4896b8e20eb729a6afd1b"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -1990,6 +3840,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/bartowski/allenai_Olmo-3.1-32B-Think-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/allenai_Olmo-3.1-32B-Think-GGUF",
+            "files": [
+              {
+                "path": "allenai_Olmo-3.1-32B-Think-Q6_K.gguf",
+                "sizeBytes": 26448495712,
+                "sha256": "1472174347b03f45c08b615514f97bbbede54e1c759445e3f77534d15ce32601"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -1997,6 +3857,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/bartowski/allenai_Olmo-3.1-32B-Think-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/allenai_Olmo-3.1-32B-Think-GGUF",
+            "files": [
+              {
+                "path": "allenai_Olmo-3.1-32B-Think-Q8_0.gguf",
+                "sizeBytes": 34254796640,
+                "sha256": "1c89541dc4dcc73fd03e1b013cde04a60f29196f7b6b56d2711e85ecbe21624c"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2019,6 +3889,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/lmstudio-community/Ministral-3-14B-Reasoning-2512-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Ministral-3-14B-Reasoning-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-14B-Reasoning-2512-Q4_K_M.gguf",
+                "sizeBytes": 8239066144,
+                "sha256": "4477e334330e7a6dcc827025eb6a18b6b97ea84e70dc6998cf1fbda04c483dff"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2026,6 +3906,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/lmstudio-community/Ministral-3-14B-Reasoning-2512-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Ministral-3-14B-Reasoning-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-14B-Reasoning-2512-Q6_K.gguf",
+                "sizeBytes": 11088407584,
+                "sha256": "6716e7a78e78ed3949cb004458d2a2f0d8a8b1a1b35fffe9932f90644f8ba5e2"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2033,6 +3923,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/lmstudio-community/Ministral-3-14B-Reasoning-2512-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Ministral-3-14B-Reasoning-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-14B-Reasoning-2512-Q8_0.gguf",
+                "sizeBytes": 14359309344,
+                "sha256": "cf2855605e3c911915d97eb163ae077b7ce73b9e2dd8272d14e059510de7e961"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2055,6 +3955,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/bartowski/Llama-3.3-70B-Instruct-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Llama-3.3-70B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.3-70B-Instruct-Q3_K_M.gguf",
+                "sizeBytes": 34267499488,
+                "sha256": "50221eecf9fd26481a55804e74581123f3a175cc589d044bee3306bc53f137c1"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2062,6 +3972,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/bartowski/Llama-3.3-70B-Instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Llama-3.3-70B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.3-70B-Instruct-Q4_K_M.gguf",
+                "sizeBytes": 42520398816,
+                "sha256": "32df3baccb556f9840059b2528b2dee4d3d516b24afdfb9d0c56ff5f63e3a664"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2069,6 +3989,21 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": null,
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Llama-3.3-70B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.3-70B-Instruct-Q5_K_M/Llama-3.3-70B-Instruct-Q5_K_M-00001-of-00002.gguf",
+                "sizeBytes": 39987554880,
+                "sha256": "1e0a25b0c10a7590947fce663985c0d5e7401c41ad4cf994dd36d9337c532d3d"
+              },
+              {
+                "path": "Llama-3.3-70B-Instruct-Q5_K_M/Llama-3.3-70B-Instruct-Q5_K_M-00002-of-00002.gguf",
+                "sizeBytes": 9962267232,
+                "sha256": "7d1098ce9c1cea0cee718467d0914ad1cdcef501651b0917300284181838cd39"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2076,6 +4011,21 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": null,
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Llama-3.3-70B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.3-70B-Instruct-Q6_K/Llama-3.3-70B-Instruct-Q6_K-00001-of-00002.gguf",
+                "sizeBytes": 39953848064,
+                "sha256": "a3fdb310817544d0f3368fea19df2e611228b3c4d9c2390f4b55261ec0f5e9d4"
+              },
+              {
+                "path": "Llama-3.3-70B-Instruct-Q6_K/Llama-3.3-70B-Instruct-Q6_K-00002-of-00002.gguf",
+                "sizeBytes": 17934300608,
+                "sha256": "828c8425b56575ed0631806ff61ebdc516754895a112865bf2a18daf1c257b0b"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2083,6 +4033,21 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": null,
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Llama-3.3-70B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Llama-3.3-70B-Instruct-Q8_0/Llama-3.3-70B-Instruct-Q8_0-00001-of-00002.gguf",
+                "sizeBytes": 39927004064,
+                "sha256": "0c4ec5083aec2efa104269e8b63e2d9f3322e2fa50511184314093a7b4697878"
+              },
+              {
+                "path": "Llama-3.3-70B-Instruct-Q8_0/Llama-3.3-70B-Instruct-Q8_0-00002-of-00002.gguf",
+                "sizeBytes": 35048050944,
+                "sha256": "e5c8858f5feafdc56200bbcbb3c4fadb07cb323c8ed13548dfb798dd1fb24255"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2106,6 +4071,16 @@
           "kvCacheGbPer1kCtx": 0.403,
           "ollamaTag": "hf.co/bartowski/Phi-3.5-mini-instruct-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Phi-3.5-mini-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-3.5-mini-instruct-Q3_K_M.gguf",
+                "sizeBytes": 1955477280,
+                "sha256": "5e005a663fc15ee51c9aea089fbd63a557458b020ee799e369d17da273a8b855"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2113,6 +4088,16 @@
           "kvCacheGbPer1kCtx": 0.403,
           "ollamaTag": "hf.co/bartowski/Phi-3.5-mini-instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Phi-3.5-mini-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-3.5-mini-instruct-Q4_K_M.gguf",
+                "sizeBytes": 2393232672,
+                "sha256": "e4165e3a71af97f1b4820da61079826d8752a2088e313af0c7d346796c38eff5"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2120,6 +4105,16 @@
           "kvCacheGbPer1kCtx": 0.403,
           "ollamaTag": "hf.co/bartowski/Phi-3.5-mini-instruct-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Phi-3.5-mini-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-3.5-mini-instruct-Q5_K_M.gguf",
+                "sizeBytes": 2815276320,
+                "sha256": "3fb19cc624c455ed4b513ce5d698585e4ccdbaeb151138bdac25eec82b2c20dc"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2127,6 +4122,16 @@
           "kvCacheGbPer1kCtx": 0.403,
           "ollamaTag": "hf.co/bartowski/Phi-3.5-mini-instruct-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Phi-3.5-mini-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-3.5-mini-instruct-Q6_K.gguf",
+                "sizeBytes": 3135853344,
+                "sha256": "cc4f0d756eb82447035314dbd247809a564189c20583e1d6fb926f9b6e1eb890"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2134,6 +4139,16 @@
           "kvCacheGbPer1kCtx": 0.403,
           "ollamaTag": "hf.co/bartowski/Phi-3.5-mini-instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Phi-3.5-mini-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-3.5-mini-instruct-Q8_0.gguf",
+                "sizeBytes": 4061222688,
+                "sha256": "76fbf02f6fe92af57dbd818409bc8a0240026f1f3609bb405c3be94c973fb823"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2156,6 +4171,16 @@
           "kvCacheGbPer1kCtx": 0.042,
           "ollamaTag": "hf.co/lmstudio-community/GLM-4.6V-Flash-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/GLM-4.6V-Flash-GGUF",
+            "files": [
+              {
+                "path": "GLM-4.6V-Flash-Q4_K_M.gguf",
+                "sizeBytes": 6166577888,
+                "sha256": "71a9a5a518482637caa3422920a36f1676a9e1242c69e6a0bfbf02c8c4e8211c"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2163,6 +4188,16 @@
           "kvCacheGbPer1kCtx": 0.042,
           "ollamaTag": "hf.co/lmstudio-community/GLM-4.6V-Flash-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/GLM-4.6V-Flash-GGUF",
+            "files": [
+              {
+                "path": "GLM-4.6V-Flash-Q6_K.gguf",
+                "sizeBytes": 8266646240,
+                "sha256": "3b5f1fdb9fe9879072ad65bdcdaca1c9c3cfebbf1e735f4cdc6f8d4516dcdfad"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2170,6 +4205,16 @@
           "kvCacheGbPer1kCtx": 0.042,
           "ollamaTag": "hf.co/lmstudio-community/GLM-4.6V-Flash-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/GLM-4.6V-Flash-GGUF",
+            "files": [
+              {
+                "path": "GLM-4.6V-Flash-Q8_0.gguf",
+                "sizeBytes": 9999614688,
+                "sha256": "f48c6b8ba444dab2ce4060d3282349e3f0c0f0d056094650262f19153ea0c73f"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2192,6 +4237,16 @@
           "kvCacheGbPer1kCtx": 0.881,
           "ollamaTag": "hf.co/lmstudio-community/NVIDIA-Nemotron-3-Nano-4B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/NVIDIA-Nemotron-3-Nano-4B-GGUF",
+            "files": [
+              {
+                "path": "NVIDIA-Nemotron-3-Nano-4B-Q4_K_M.gguf",
+                "sizeBytes": 2837072896,
+                "sha256": "083af225449463dd7c38bebc888f9dcad187b834d8b15e08c297dda37c968b50"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2199,6 +4254,16 @@
           "kvCacheGbPer1kCtx": 0.881,
           "ollamaTag": "hf.co/lmstudio-community/NVIDIA-Nemotron-3-Nano-4B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/NVIDIA-Nemotron-3-Nano-4B-GGUF",
+            "files": [
+              {
+                "path": "NVIDIA-Nemotron-3-Nano-4B-Q6_K.gguf",
+                "sizeBytes": 3933669376,
+                "sha256": "2826b87daec3cb41da539613f3d725c7969a6b8699fd0370e8cc1197d6d1abd2"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2206,6 +4271,16 @@
           "kvCacheGbPer1kCtx": 0.881,
           "ollamaTag": "hf.co/lmstudio-community/NVIDIA-Nemotron-3-Nano-4B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/NVIDIA-Nemotron-3-Nano-4B-GGUF",
+            "files": [
+              {
+                "path": "NVIDIA-Nemotron-3-Nano-4B-Q8_0.gguf",
+                "sizeBytes": 4233677952,
+                "sha256": "f872b1bec0aed30659d0b4c7ba312905a3f23f3cd9ca22696185dcf5db8000e1"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2228,6 +4303,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/lmstudio-community/Ministral-3-3B-Instruct-2512-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Ministral-3-3B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Instruct-2512-Q4_K_M.gguf",
+                "sizeBytes": 2146498240,
+                "sha256": "ee46f8f2cc4acf15e89699563e23b4a3919dce2e9ce7c44b53778d6590318e96"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2235,6 +4320,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/lmstudio-community/Ministral-3-3B-Instruct-2512-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Ministral-3-3B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Instruct-2512-Q6_K.gguf",
+                "sizeBytes": 2821256896,
+                "sha256": "db6b5c3b7bcb33d152dfa3b8373f7c42d0dbdeaac31ddd5496cf5d6ade9279fa"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2242,6 +4337,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/lmstudio-community/Ministral-3-3B-Instruct-2512-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Ministral-3-3B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Instruct-2512-Q8_0.gguf",
+                "sizeBytes": 3651679936,
+                "sha256": "29a9ca7269b37dd83ce6244d11f2f90a17a432a29ce096b51c4049fe0ca9adf4"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2265,6 +4370,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Llama-8B-Q3_K_M.gguf",
+                "sizeBytes": 4018920896,
+                "sha256": "b472323613ea8fd028c72ff2c85bde9ca6f162379d5651d3fe77393bb7dd1747"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2272,6 +4387,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Llama-8B-Q4_K_M.gguf",
+                "sizeBytes": 4920737216,
+                "sha256": "0addb1339a82385bcd973186cd80d18dcc71885d45eabd899781a118d03827d9"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2279,6 +4404,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Llama-8B-Q5_K_M.gguf",
+                "sizeBytes": 5732990400,
+                "sha256": "dcf118abe847f21160cb87a3d44ee500f370be7f9f6d347da7e8405a9294a214"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2286,6 +4421,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Llama-8B-Q6_K.gguf",
+                "sizeBytes": 6596009408,
+                "sha256": "403a545b2dce6dfbc3022c9613c06ce1dd80a9288ba4259bfe495e42ec015ec7"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2293,6 +4438,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF",
+            "files": [
+              {
+                "path": "DeepSeek-R1-Distill-Llama-8B-Q8_0.gguf",
+                "sizeBytes": 8540773088,
+                "sha256": "8c6e3924d662d3f24a96b228a5c317510c27e91c587e71e78877ed18a875ec82"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2315,6 +4470,16 @@
           "kvCacheGbPer1kCtx": 0.071,
           "ollamaTag": "hf.co/ggml-org/GLM-OCR-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "ggml-org/GLM-OCR-GGUF",
+            "files": [
+              {
+                "path": "GLM-OCR-Q8_0.gguf",
+                "sizeBytes": 950433408,
+                "sha256": "45bc244a6446aff850521dc41f18bc8d7105ad5f0c2c8c28af04e7cc4f4d50b1"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2337,6 +4502,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Devstral-Small-2-24B-Instruct-2512-Q3_K_M.gguf",
+                "sizeBytes": 11474619552,
+                "sha256": "53466aa3e486e6f0068c2593d12aeb15fb079c1dfe443ab922c468c39761bd16"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2344,6 +4519,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Devstral-Small-2-24B-Instruct-2512-Q4_K_M.gguf",
+                "sizeBytes": 14334446752,
+                "sha256": "d14ba9edee1bb4c4996a726deb81e49ae81800a3216f0774634238c380aee496"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2351,6 +4536,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Devstral-Small-2-24B-Instruct-2512-Q5_K_M.gguf",
+                "sizeBytes": 16764521632,
+                "sha256": "2da6ca6c4ae387aa7f3f2f4a67bb3e1ca570ce0c69c21e26b8695e75172443b0"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2358,6 +4553,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Devstral-Small-2-24B-Instruct-2512-Q6_K.gguf",
+                "sizeBytes": 19346476192,
+                "sha256": "b04b3e19730d7a1e19530f40b947b69c028b090cb7c58c1515cf1fc2ece5f821"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2365,6 +4570,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Devstral-Small-2-24B-Instruct-2512-Q8_0.gguf",
+                "sizeBytes": 25055317152,
+                "sha256": "0760502e9228234f6cfa843f8870b8fc91c46a13664cf766c639229cccc80866"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2388,6 +4603,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF",
+            "files": [
+              {
+                "path": "Mistral-Small-3.2-24B-Instruct-2506-Q3_K_M.gguf",
+                "sizeBytes": 11474095648,
+                "sha256": "830d8937494e80e64b0ab03ed69a7f29b80dbe5c4d0656517be6620f231a3fdd"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2395,6 +4620,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF",
+            "files": [
+              {
+                "path": "Mistral-Small-3.2-24B-Instruct-2506-Q4_K_M.gguf",
+                "sizeBytes": 14333922848,
+                "sha256": "a3cc56310807ed0d145eaf9f018ccda9ae7ad8edb41ec870aa2454b0d4700b3c"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2402,6 +4637,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF",
+            "files": [
+              {
+                "path": "Mistral-Small-3.2-24B-Instruct-2506-Q5_K_M.gguf",
+                "sizeBytes": 16763997728,
+                "sha256": "423446013d1d9a63eb09d84f9d4fe0a1a81b57b6530260afd07a070b4e74845a"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2409,6 +4654,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF",
+            "files": [
+              {
+                "path": "Mistral-Small-3.2-24B-Instruct-2506-Q6_K.gguf",
+                "sizeBytes": 19345952288,
+                "sha256": "e92f341791f7da41021d9ae7fac00a1c02aa007a09cb2ecabea748f73a206217"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2416,6 +4671,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF",
+            "files": [
+              {
+                "path": "Mistral-Small-3.2-24B-Instruct-2506-Q8_0.gguf",
+                "sizeBytes": 25054793248,
+                "sha256": "b2a40e5ef4eab8837d0462c303e8147ec754e2963e41916b551107d2b0ca6527"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2438,6 +4703,16 @@
           "kvCacheGbPer1kCtx": 0.075,
           "ollamaTag": "hf.co/bartowski/HuggingFaceTB_SmolLM3-3B-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/HuggingFaceTB_SmolLM3-3B-GGUF",
+            "files": [
+              {
+                "path": "HuggingFaceTB_SmolLM3-3B-Q3_K_M.gguf",
+                "sizeBytes": 1571069760,
+                "sha256": "5e5c70fdc3429023ed88ead8af2a70684047e2628258b650bdb729c8437639d0"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2445,6 +4720,16 @@
           "kvCacheGbPer1kCtx": 0.075,
           "ollamaTag": "hf.co/bartowski/HuggingFaceTB_SmolLM3-3B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/HuggingFaceTB_SmolLM3-3B-GGUF",
+            "files": [
+              {
+                "path": "HuggingFaceTB_SmolLM3-3B-Q4_K_M.gguf",
+                "sizeBytes": 1915305792,
+                "sha256": "519732558d5fa7420ab058e1b776dcfe73da78013c2fe59c7ca43c325ef89132"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2452,6 +4737,16 @@
           "kvCacheGbPer1kCtx": 0.075,
           "ollamaTag": "hf.co/bartowski/HuggingFaceTB_SmolLM3-3B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/HuggingFaceTB_SmolLM3-3B-GGUF",
+            "files": [
+              {
+                "path": "HuggingFaceTB_SmolLM3-3B-Q5_K_M.gguf",
+                "sizeBytes": 2213756736,
+                "sha256": "65a6490c29a728d1bde5b6a6858418715e773e061433386dbbc39b3f0a088f3d"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2459,6 +4754,16 @@
           "kvCacheGbPer1kCtx": 0.075,
           "ollamaTag": "hf.co/bartowski/HuggingFaceTB_SmolLM3-3B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/HuggingFaceTB_SmolLM3-3B-GGUF",
+            "files": [
+              {
+                "path": "HuggingFaceTB_SmolLM3-3B-Q6_K.gguf",
+                "sizeBytes": 2530860864,
+                "sha256": "4c7ad22be780006817f727c8a8c0fdc75d35f995c6a91e0210a931cbb20ba6fd"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2466,6 +4771,16 @@
           "kvCacheGbPer1kCtx": 0.075,
           "ollamaTag": "hf.co/bartowski/HuggingFaceTB_SmolLM3-3B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/HuggingFaceTB_SmolLM3-3B-GGUF",
+            "files": [
+              {
+                "path": "HuggingFaceTB_SmolLM3-3B-Q8_0.gguf",
+                "sizeBytes": 3275575104,
+                "sha256": "32056df2ec827a1f7c14b6b7f48239fe1d288aba086c811c96a61a8c9df6c733"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2489,6 +4804,16 @@
           "kvCacheGbPer1kCtx": 0.055,
           "ollamaTag": "hf.co/bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF",
+            "files": [
+              {
+                "path": "darkc0de_Muse-Glimmer-30B-heretic-Q3_K_M.gguf",
+                "sizeBytes": 13962519488,
+                "sha256": "259623bc1946bd02393c964e3628280be0809f108421055be9cec900097b5633"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2496,6 +4821,16 @@
           "kvCacheGbPer1kCtx": 0.055,
           "ollamaTag": "hf.co/bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF",
+            "files": [
+              {
+                "path": "darkc0de_Muse-Glimmer-30B-heretic-Q4_K_M.gguf",
+                "sizeBytes": 17306324160,
+                "sha256": "728cdea6a1c4add69ac878574db05505b2475ca5366480ef7f720b2c2b263ed9"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2503,6 +4838,16 @@
           "kvCacheGbPer1kCtx": 0.055,
           "ollamaTag": "hf.co/bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF",
+            "files": [
+              {
+                "path": "darkc0de_Muse-Glimmer-30B-heretic-Q5_K_M.gguf",
+                "sizeBytes": 20105571520,
+                "sha256": "725022bb8d7351993318cad45a6ede40a8247f6723457f8c0f364aef39482ef1"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2510,6 +4855,16 @@
           "kvCacheGbPer1kCtx": 0.055,
           "ollamaTag": "hf.co/bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF",
+            "files": [
+              {
+                "path": "darkc0de_Muse-Glimmer-30B-heretic-Q6_K.gguf",
+                "sizeBytes": 23414418880,
+                "sha256": "8ef0557c91c7b21bf572231524c789f8b049c838d2ce3b00c6c0f487a19ddfd6"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2517,6 +4872,16 @@
           "kvCacheGbPer1kCtx": 0.055,
           "ollamaTag": "hf.co/bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF",
+            "files": [
+              {
+                "path": "darkc0de_Muse-Glimmer-30B-heretic-Q8_0.gguf",
+                "sizeBytes": 29612958368,
+                "sha256": "a501532b4a1f02341ff96a19321a2682f4b1ada1ee29b688edc217ca035448f5"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2539,6 +4904,16 @@
           "kvCacheGbPer1kCtx": 0.042,
           "ollamaTag": "hf.co/ggml-org/SmolVLM-500M-Instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "ggml-org/SmolVLM-500M-Instruct-GGUF",
+            "files": [
+              {
+                "path": "SmolVLM-500M-Instruct-Q8_0.gguf",
+                "sizeBytes": 436806912,
+                "sha256": "9d4612de6a42214499e301494a3ecc2be0abdd9de44e663bda63f1152fad1bf4"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2561,6 +4936,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/unsloth/Ministral-3-3B-Instruct-2512-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Ministral-3-3B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Instruct-2512-Q3_K_M.gguf",
+                "sizeBytes": 1795552544,
+                "sha256": "91489d8d75b0a9e682e2f17ab9f25260ab935cddf6edc8f3510b8c691993c5d5"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2568,6 +4953,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/unsloth/Ministral-3-3B-Instruct-2512-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Ministral-3-3B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Instruct-2512-Q4_K_M.gguf",
+                "sizeBytes": 2146497824,
+                "sha256": "fd46fc371ff0509bfa8657ac956b7de8534d7d9baaa4947975c0648c3aa397f4"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2575,6 +4970,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/unsloth/Ministral-3-3B-Instruct-2512-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Ministral-3-3B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Instruct-2512-Q5_K_M.gguf",
+                "sizeBytes": 2473653536,
+                "sha256": "8f208f4a8785aa1bdd8b506e36b036ac60c7f7a7fb144e3353781c74c58a33db"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2582,6 +4987,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/unsloth/Ministral-3-3B-Instruct-2512-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Ministral-3-3B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Instruct-2512-Q6_K.gguf",
+                "sizeBytes": 2821256480,
+                "sha256": "ca22c676b97aad1d50952416f44ddd6d8130e24c11c474aed5e8865dd7e35297"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2589,6 +5004,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/unsloth/Ministral-3-3B-Instruct-2512-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Ministral-3-3B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Instruct-2512-Q8_0.gguf",
+                "sizeBytes": 3651679520,
+                "sha256": "920163471715241a9d99367d507e2ad94d1ebc34d0d169d25e5d97a49ec72556"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2612,6 +5037,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/lmstudio-community/Phi-4-mini-reasoning-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Phi-4-mini-reasoning-GGUF",
+            "files": [
+              {
+                "path": "Phi-4-mini-reasoning-Q4_K_M.gguf",
+                "sizeBytes": 2491874560,
+                "sha256": "8e923405207ebf1ae1d8bb8ce9452ba8a446321cee42028bf0ceab52b372ed41"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2619,6 +5054,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/lmstudio-community/Phi-4-mini-reasoning-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Phi-4-mini-reasoning-GGUF",
+            "files": [
+              {
+                "path": "Phi-4-mini-reasoning-Q6_K.gguf",
+                "sizeBytes": 3155623168,
+                "sha256": "9ff4fba6515dd1a77a8d45f4f33e598a664c8fa7f57725ea9f194a23f440442d"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2626,6 +5071,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/lmstudio-community/Phi-4-mini-reasoning-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Phi-4-mini-reasoning-GGUF",
+            "files": [
+              {
+                "path": "Phi-4-mini-reasoning-Q8_0.gguf",
+                "sizeBytes": 4084611328,
+                "sha256": "d709abf9ba3ab5cab68aefc52688e2cd373866afacea22bcde8883a5b760acb7"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2648,6 +5103,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/mistralai/Ministral-3-14B-Instruct-2512-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-14B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-14B-Instruct-2512-Q4_K_M.gguf",
+                "sizeBytes": 8239593024,
+                "sha256": "824e0f3373e69b84f2cae46fdcb9bd1ebc6ab3bfc7acc125d818b7b8178cc613"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2655,6 +5120,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/mistralai/Ministral-3-14B-Instruct-2512-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-14B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-14B-Instruct-2512-Q5_K_M.gguf",
+                "sizeBytes": 9621091904,
+                "sha256": "f16fef77021df0d4c22e69140a2038478370492f51867b6237699918ae711000"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2662,6 +5137,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/mistralai/Ministral-3-14B-Instruct-2512-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-14B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-14B-Instruct-2512-Q8_0.gguf",
+                "sizeBytes": 14359836224,
+                "sha256": "8122acc8df446039d41dd9650dabb024d3c6b8dae6eff336d28ac2bddd3bbc13"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2684,6 +5169,16 @@
           "kvCacheGbPer1kCtx": 0.092,
           "ollamaTag": "hf.co/bartowski/Nanbeige_Nanbeige4.2-3B-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Nanbeige_Nanbeige4.2-3B-GGUF",
+            "files": [
+              {
+                "path": "Nanbeige_Nanbeige4.2-3B-Q3_K_M.gguf",
+                "sizeBytes": 2242313376,
+                "sha256": "95fa236b93141dcab23ee5a00aed2fd62c9abcb61a10e0ed614d5b35ce1378ed"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2691,6 +5186,16 @@
           "kvCacheGbPer1kCtx": 0.092,
           "ollamaTag": "hf.co/bartowski/Nanbeige_Nanbeige4.2-3B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Nanbeige_Nanbeige4.2-3B-GGUF",
+            "files": [
+              {
+                "path": "Nanbeige_Nanbeige4.2-3B-Q4_K_M.gguf",
+                "sizeBytes": 2684023968,
+                "sha256": "b92d2e35c9876b0c4bc671996360204f4149d0546c23d5954d5eb3b106c81f24"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2698,6 +5203,16 @@
           "kvCacheGbPer1kCtx": 0.092,
           "ollamaTag": "hf.co/bartowski/Nanbeige_Nanbeige4.2-3B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Nanbeige_Nanbeige4.2-3B-GGUF",
+            "files": [
+              {
+                "path": "Nanbeige_Nanbeige4.2-3B-Q5_K_M.gguf",
+                "sizeBytes": 3076404384,
+                "sha256": "16a7956812e64878d058d2eb043bfaee8042066abbd8f515e0fe8de3ae1541e6"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2705,6 +5220,16 @@
           "kvCacheGbPer1kCtx": 0.092,
           "ollamaTag": "hf.co/bartowski/Nanbeige_Nanbeige4.2-3B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Nanbeige_Nanbeige4.2-3B-GGUF",
+            "files": [
+              {
+                "path": "Nanbeige_Nanbeige4.2-3B-Q6_K.gguf",
+                "sizeBytes": 3595603104,
+                "sha256": "93f884a2d8d6cafc5406df84be64f197a407889904b18db7c6e82fd35f2b0170"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2712,6 +5237,16 @@
           "kvCacheGbPer1kCtx": 0.092,
           "ollamaTag": "hf.co/bartowski/Nanbeige_Nanbeige4.2-3B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Nanbeige_Nanbeige4.2-3B-GGUF",
+            "files": [
+              {
+                "path": "Nanbeige_Nanbeige4.2-3B-Q8_0.gguf",
+                "sizeBytes": 4434787488,
+                "sha256": "837ba713ef3a3b5c9aee82e5dcba07600ea7db36ae392419f982b3bfaec04ef2"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2734,6 +5269,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/bartowski/ibm-granite_granite-4.0-h-micro-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+            "files": [
+              {
+                "path": "ibm-granite_granite-4.0-h-micro-Q3_K_M.gguf",
+                "sizeBytes": 1555472000,
+                "sha256": "dff05bfa13334b1569d266d5c393d9b1e7ff11f0031ba07bc21e9425a94f3d58"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2741,6 +5286,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/bartowski/ibm-granite_granite-4.0-h-micro-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+            "files": [
+              {
+                "path": "ibm-granite_granite-4.0-h-micro-Q4_K_M.gguf",
+                "sizeBytes": 1942564480,
+                "sha256": "48376d61449687a56b3811a418d92cc0e8e77b4d96ec13eb6c9d9503968c9f20"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2748,6 +5303,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/bartowski/ibm-granite_granite-4.0-h-micro-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+            "files": [
+              {
+                "path": "ibm-granite_granite-4.0-h-micro-Q5_K_M.gguf",
+                "sizeBytes": 2273455744,
+                "sha256": "c2471149d8a366d155c5eb6eee36aca550a20ea033898ba40dfafbd2dc201f3d"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2755,6 +5320,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/bartowski/ibm-granite_granite-4.0-h-micro-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+            "files": [
+              {
+                "path": "ibm-granite_granite-4.0-h-micro-Q6_K.gguf",
+                "sizeBytes": 2625027712,
+                "sha256": "135211c9a03f648bd71d8a692cd28703b601ea58cddd45ec96d2fd608dcf2d76"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2762,6 +5337,16 @@
           "kvCacheGbPer1kCtx": 0.336,
           "ollamaTag": "hf.co/bartowski/ibm-granite_granite-4.0-h-micro-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/ibm-granite_granite-4.0-h-micro-GGUF",
+            "files": [
+              {
+                "path": "ibm-granite_granite-4.0-h-micro-Q8_0.gguf",
+                "sizeBytes": 3397676672,
+                "sha256": "a73790a9640c9ed6e59e0d8f60b1db12fec5c14a24e8cea9aa181de44f25da9a"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2785,6 +5370,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/bartowski/granite-4.2-30b-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/granite-4.2-30b-GGUF",
+            "files": [
+              {
+                "path": "granite-4.2-30b-Q3_K_M.gguf",
+                "sizeBytes": 14358606880,
+                "sha256": "b8246394db2c2fcfa38a287cf261eca6ad018ff1416d3d5c53be6e406a4f3d71"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2792,6 +5387,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/bartowski/granite-4.2-30b-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/granite-4.2-30b-GGUF",
+            "files": [
+              {
+                "path": "granite-4.2-30b-Q4_K_M.gguf",
+                "sizeBytes": 18027639840,
+                "sha256": "9d25a62b49bf7640ec07b69104c8e13133357064c227d8cca8193e6cf59797cc"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2799,6 +5404,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/bartowski/granite-4.2-30b-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/granite-4.2-30b-GGUF",
+            "files": [
+              {
+                "path": "granite-4.2-30b-Q5_K_M.gguf",
+                "sizeBytes": 21025518624,
+                "sha256": "7f0b14d4358411d9c291a85e70b0d32792d672297e11931ee0b584eb14db75d7"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2806,6 +5421,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/bartowski/granite-4.2-30b-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/granite-4.2-30b-GGUF",
+            "files": [
+              {
+                "path": "granite-4.2-30b-Q6_K.gguf",
+                "sizeBytes": 24508953632,
+                "sha256": "1a0b774431fb5ec67ea9fdfdf1c6352472080515644d358d86719f001dfbf476"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2813,6 +5438,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/bartowski/granite-4.2-30b-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/granite-4.2-30b-GGUF",
+            "files": [
+              {
+                "path": "granite-4.2-30b-Q8_0.gguf",
+                "sizeBytes": 31111705632,
+                "sha256": "f65a60ab84f4d4f9826399d9d8923e8a798fffe48fa940de73d7572eaa237f06"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2835,6 +5470,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/granite-4.1-8b-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/granite-4.1-8b-GGUF",
+            "files": [
+              {
+                "path": "granite-4.1-8b-Q3_K_M.gguf",
+                "sizeBytes": 4347049344,
+                "sha256": "170d197f021db40ac208a1327fa305f7b299fff00138d7dc0a6e98a630bee88b"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2842,6 +5487,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/granite-4.1-8b-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/granite-4.1-8b-GGUF",
+            "files": [
+              {
+                "path": "granite-4.1-8b-Q4_K_M.gguf",
+                "sizeBytes": 5347915136,
+                "sha256": "0f45c1af986e9900bb3b6ba46a25937e1bb80426935bc242d88c9ca90e9f5c88"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2849,6 +5504,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/granite-4.1-8b-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/granite-4.1-8b-GGUF",
+            "files": [
+              {
+                "path": "granite-4.1-8b-Q5_K_M.gguf",
+                "sizeBytes": 6253884800,
+                "sha256": "4449463ec311c289a0d084aa9f95b8b7289bce7aa2959726e755c71614834cd4"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2856,6 +5521,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/granite-4.1-8b-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/granite-4.1-8b-GGUF",
+            "files": [
+              {
+                "path": "granite-4.1-8b-Q6_K.gguf",
+                "sizeBytes": 7216477568,
+                "sha256": "17faed942e1363e0deda704068b698c6ab411899b4756cd96471168db272ec63"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2863,6 +5538,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/unsloth/granite-4.1-8b-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/granite-4.1-8b-GGUF",
+            "files": [
+              {
+                "path": "granite-4.1-8b-Q8_0.gguf",
+                "sizeBytes": 9345611136,
+                "sha256": "ac2ad3e017fa98aecac34ac8b5d6996faca82919030cea4fcd6bb1444e82edda"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2886,6 +5571,16 @@
           "kvCacheGbPer1kCtx": 0.21,
           "ollamaTag": "hf.co/lmstudio-community/phi-4-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/phi-4-GGUF",
+            "files": [
+              {
+                "path": "phi-4-Q4_K_M.gguf",
+                "sizeBytes": 9053114560,
+                "sha256": "5a0c4017599b3f2e78e607ea0716bed557bb238eb4ea1a19b583eae9bb81aa10"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2893,6 +5588,16 @@
           "kvCacheGbPer1kCtx": 0.21,
           "ollamaTag": "hf.co/lmstudio-community/phi-4-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/phi-4-GGUF",
+            "files": [
+              {
+                "path": "phi-4-Q6_K.gguf",
+                "sizeBytes": 12030251200,
+                "sha256": "f84341f51a16a0ca124ce210b43f631ff42109ff4add2615785ae7f3dc09d963"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2900,6 +5605,16 @@
           "kvCacheGbPer1kCtx": 0.21,
           "ollamaTag": "hf.co/lmstudio-community/phi-4-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/phi-4-GGUF",
+            "files": [
+              {
+                "path": "phi-4-Q8_0.gguf",
+                "sizeBytes": 15580500160,
+                "sha256": "22dd005a97437f66e93f36cdb09397f577ca98fe1091218a465be9d743e0d3f6"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2922,6 +5637,16 @@
           "kvCacheGbPer1kCtx": 0.294,
           "ollamaTag": "hf.co/bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF",
+            "files": [
+              {
+                "path": "ai21labs_AI21-Jamba-Reasoning-3B-Q3_K_M.gguf",
+                "sizeBytes": 1537698272,
+                "sha256": "d7707a34c1ebfc4c88529be6b0bbcb819a8496585eee57ea369e29e8878c327a"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2929,6 +5654,16 @@
           "kvCacheGbPer1kCtx": 0.294,
           "ollamaTag": "hf.co/bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF",
+            "files": [
+              {
+                "path": "ai21labs_AI21-Jamba-Reasoning-3B-Q4_K_M.gguf",
+                "sizeBytes": 1932698592,
+                "sha256": "ac7ec0648dea62d1efb5ef6e7268c748ffc71f1c26eebe97eccff0a8d41608e6"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2936,6 +5671,16 @@
           "kvCacheGbPer1kCtx": 0.294,
           "ollamaTag": "hf.co/bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF",
+            "files": [
+              {
+                "path": "ai21labs_AI21-Jamba-Reasoning-3B-Q5_K_M.gguf",
+                "sizeBytes": 2272891872,
+                "sha256": "f4d8d24912327c41993827afbe3c700c6bcece5d48093dce4eb20824f27ea962"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2943,6 +5688,16 @@
           "kvCacheGbPer1kCtx": 0.294,
           "ollamaTag": "hf.co/bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF",
+            "files": [
+              {
+                "path": "ai21labs_AI21-Jamba-Reasoning-3B-Q6_K.gguf",
+                "sizeBytes": 2639588832,
+                "sha256": "5ddf4fe37906e173017c11ca08792875e751bca88cc62bd858e13cebd070d2f4"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -2950,6 +5705,16 @@
           "kvCacheGbPer1kCtx": 0.294,
           "ollamaTag": "hf.co/bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF",
+            "files": [
+              {
+                "path": "ai21labs_AI21-Jamba-Reasoning-3B-Q8_0.gguf",
+                "sizeBytes": 3407952352,
+                "sha256": "a6ce2452d5b1ddd4279607a44ff1b580bfae57695bdcb09b394a7b5e089bb8ff"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -2973,6 +5738,16 @@
           "kvCacheGbPer1kCtx": 0.403,
           "ollamaTag": "hf.co/bartowski/Phi-3.1-mini-128k-instruct-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Phi-3.1-mini-128k-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-3.1-mini-128k-instruct-Q3_K_M.gguf",
+                "sizeBytes": 1955477248,
+                "sha256": "bab2297454aa8fcba377a7276265a90d5b8dbf5b8829cb92bf63532d59f9e868"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -2980,6 +5755,16 @@
           "kvCacheGbPer1kCtx": 0.403,
           "ollamaTag": "hf.co/bartowski/Phi-3.1-mini-128k-instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Phi-3.1-mini-128k-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-3.1-mini-128k-instruct-Q4_K_M.gguf",
+                "sizeBytes": 2393232640,
+                "sha256": "dde15f8155119acc4cab4ed4cdcfe2d511f713e4b3fc5c96047634dd626f6cc3"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -2987,6 +5772,16 @@
           "kvCacheGbPer1kCtx": 0.403,
           "ollamaTag": "hf.co/bartowski/Phi-3.1-mini-128k-instruct-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Phi-3.1-mini-128k-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-3.1-mini-128k-instruct-Q5_K_M.gguf",
+                "sizeBytes": 2815276288,
+                "sha256": "0d76d7a58a4c9ac0f6d721ce53ff39a606814e2ee9f6d1c1529d0d7fc0ca8226"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -2994,6 +5789,16 @@
           "kvCacheGbPer1kCtx": 0.403,
           "ollamaTag": "hf.co/bartowski/Phi-3.1-mini-128k-instruct-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Phi-3.1-mini-128k-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-3.1-mini-128k-instruct-Q6_K.gguf",
+                "sizeBytes": 3135853312,
+                "sha256": "a6613da53d5385540ce09ac184be5380fcde53c733373dfb62b584ba2263773f"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3001,6 +5806,16 @@
           "kvCacheGbPer1kCtx": 0.403,
           "ollamaTag": "hf.co/bartowski/Phi-3.1-mini-128k-instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/Phi-3.1-mini-128k-instruct-GGUF",
+            "files": [
+              {
+                "path": "Phi-3.1-mini-128k-instruct-Q8_0.gguf",
+                "sizeBytes": 4061222656,
+                "sha256": "dbee37becf96f3cb70f902c74dd7eda67fc9a6ee2f6defa370f8e9e038cd3a23"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3024,6 +5839,16 @@
           "kvCacheGbPer1kCtx": 0.027,
           "ollamaTag": "hf.co/bartowski/granite-20b-code-instruct-GGUF:Q3_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/granite-20b-code-instruct-GGUF",
+            "files": [
+              {
+                "path": "granite-20b-code-instruct-Q3_K_M.gguf",
+                "sizeBytes": 10566294432,
+                "sha256": "9e14197d5d452823afd04a83b66a435f20374c71393c67dff47be26c50a9fbb8"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q4_K_M": {
@@ -3031,6 +5856,16 @@
           "kvCacheGbPer1kCtx": 0.027,
           "ollamaTag": "hf.co/bartowski/granite-20b-code-instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/granite-20b-code-instruct-GGUF",
+            "files": [
+              {
+                "path": "granite-20b-code-instruct-Q4_K_M.gguf",
+                "sizeBytes": 12820208544,
+                "sha256": "38ff21b314e815d5bba728ad453f1ecf35544194f942227fb20bc422a9860292"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -3038,6 +5873,16 @@
           "kvCacheGbPer1kCtx": 0.027,
           "ollamaTag": "hf.co/bartowski/granite-20b-code-instruct-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/granite-20b-code-instruct-GGUF",
+            "files": [
+              {
+                "path": "granite-20b-code-instruct-Q5_K_M.gguf",
+                "sizeBytes": 14809340832,
+                "sha256": "95566d8236db28cfdcbb7ca525ceab9f2f2c786f39c1f4dd294d4d7872ab2915"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -3045,6 +5890,16 @@
           "kvCacheGbPer1kCtx": 0.027,
           "ollamaTag": "hf.co/bartowski/granite-20b-code-instruct-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/granite-20b-code-instruct-GGUF",
+            "files": [
+              {
+                "path": "granite-20b-code-instruct-Q6_K.gguf",
+                "sizeBytes": 16634256288,
+                "sha256": "1734062e73d514e8bab5fd13154d2e0f7edcd8027308ca8416755af89bcc5a15"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3052,6 +5907,16 @@
           "kvCacheGbPer1kCtx": 0.027,
           "ollamaTag": "hf.co/bartowski/granite-20b-code-instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "bartowski/granite-20b-code-instruct-GGUF",
+            "files": [
+              {
+                "path": "granite-20b-code-instruct-Q8_0.gguf",
+                "sizeBytes": 21481184160,
+                "sha256": "98384985484d041f5a8a7c084e0c11320769873231177ef2044e656fd24a0f2e"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3076,6 +5941,16 @@
           "kvCacheGbPer1kCtx": 0.21,
           "ollamaTag": "hf.co/lmstudio-community/Phi-4-reasoning-plus-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Phi-4-reasoning-plus-GGUF",
+            "files": [
+              {
+                "path": "Phi-4-reasoning-plus-Q4_K_M.gguf",
+                "sizeBytes": 9053116128,
+                "sha256": "6f10ded0197863aa0641e2451688ac8025c95ff7c948e23f1089d173e6834768"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -3083,6 +5958,16 @@
           "kvCacheGbPer1kCtx": 0.21,
           "ollamaTag": "hf.co/lmstudio-community/Phi-4-reasoning-plus-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Phi-4-reasoning-plus-GGUF",
+            "files": [
+              {
+                "path": "Phi-4-reasoning-plus-Q6_K.gguf",
+                "sizeBytes": 12030252768,
+                "sha256": "725622f0fe065ec10c5a65255781df9c7dac3b12abaae9ec66d147bd99e46bf0"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3090,6 +5975,16 @@
           "kvCacheGbPer1kCtx": 0.21,
           "ollamaTag": "hf.co/lmstudio-community/Phi-4-reasoning-plus-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Phi-4-reasoning-plus-GGUF",
+            "files": [
+              {
+                "path": "Phi-4-reasoning-plus-Q8_0.gguf",
+                "sizeBytes": 15580501728,
+                "sha256": "0956c5c89fa3363a8d6163bc06dbf9eee8d29457c07f469bae16b86bb0c768c8"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3112,6 +6007,16 @@
           "kvCacheGbPer1kCtx": 0.403,
           "ollamaTag": "hf.co/lmstudio-community/NuExtract-v1.5-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/NuExtract-v1.5-GGUF",
+            "files": [
+              {
+                "path": "NuExtract-v1.5-Q4_K_M.gguf",
+                "sizeBytes": 2393232544,
+                "sha256": "ae7fc25d5f82ca0d87a797f373a0b59a9bbe09ecbe697ee1618069b76fed00ba"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -3119,6 +6024,16 @@
           "kvCacheGbPer1kCtx": 0.403,
           "ollamaTag": "hf.co/lmstudio-community/NuExtract-v1.5-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/NuExtract-v1.5-GGUF",
+            "files": [
+              {
+                "path": "NuExtract-v1.5-Q6_K.gguf",
+                "sizeBytes": 3135853216,
+                "sha256": "065a36c00e72563c03b876dac4e367ac8da2c8c01e2d213d735a4bade2cd462a"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3126,6 +6041,16 @@
           "kvCacheGbPer1kCtx": 0.403,
           "ollamaTag": "hf.co/lmstudio-community/NuExtract-v1.5-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/NuExtract-v1.5-GGUF",
+            "files": [
+              {
+                "path": "NuExtract-v1.5-Q8_0.gguf",
+                "sizeBytes": 4061222560,
+                "sha256": "8cdf088a9d4b694619d8f42567802d6fe52a1bff1dae46e4c4d95304e45e5852"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3148,6 +6073,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Reasoning-2512-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-3B-Reasoning-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Reasoning-2512-Q4_K_M.gguf",
+                "sizeBytes": 2147021472,
+                "sha256": "7e9516cc01a039bb3e2d41227cdf388849bc1c942c4624c84567b1684cd9c0fc"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -3155,6 +6090,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Reasoning-2512-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-3B-Reasoning-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Reasoning-2512-Q5_K_M.gguf",
+                "sizeBytes": 2474177184,
+                "sha256": "631464379def1f0e31c4bfdd43fe34be46e842c90d71b9e38b5b1e27ffef7db5"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3162,6 +6107,16 @@
           "kvCacheGbPer1kCtx": 0.109,
           "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Reasoning-2512-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-3B-Reasoning-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Reasoning-2512-Q8_0.gguf",
+                "sizeBytes": 3652203168,
+                "sha256": "3220ac17e246f741f7371e8b0964c399f363a31f9acd2f9a3aacc3bb19fd6466"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3184,6 +6139,16 @@
           "kvCacheGbPer1kCtx": 0.143,
           "ollamaTag": "hf.co/mistralai/Ministral-3-8B-Reasoning-2512-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-8B-Reasoning-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-8B-Reasoning-2512-Q4_K_M.gguf",
+                "sizeBytes": 5198910368,
+                "sha256": "894aa3645ef8708a81dbe201c26105ce37c4c741252c89c5a78f81b49ac438c6"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
@@ -3191,6 +6156,16 @@
           "kvCacheGbPer1kCtx": 0.143,
           "ollamaTag": "hf.co/mistralai/Ministral-3-8B-Reasoning-2512-GGUF:Q5_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-8B-Reasoning-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-8B-Reasoning-2512-Q5_K_M.gguf",
+                "sizeBytes": 6059266976,
+                "sha256": "f757e064451e98bca57b98eb0a5c863a9a935a9efe12d7621fb24b7054fc6341"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3198,6 +6173,16 @@
           "kvCacheGbPer1kCtx": 0.143,
           "ollamaTag": "hf.co/mistralai/Ministral-3-8B-Reasoning-2512-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-8B-Reasoning-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-8B-Reasoning-2512-Q8_0.gguf",
+                "sizeBytes": 9029391264,
+                "sha256": "74f522753b525457b74777811f0d23ca0a29ebc88c5ba54596f2f823be07e561"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3220,6 +6205,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/lmstudio-community/granite-3.2-8b-instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/granite-3.2-8b-instruct-GGUF",
+            "files": [
+              {
+                "path": "granite-3.2-8b-instruct-Q4_K_M.gguf",
+                "sizeBytes": 4942858848,
+                "sha256": "0751a36ec6a77c14f7cdb0f88d8747d45ca56adad5db13c3e67c5d20dc04536b"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -3227,6 +6222,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/lmstudio-community/granite-3.2-8b-instruct-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/granite-3.2-8b-instruct-GGUF",
+            "files": [
+              {
+                "path": "granite-3.2-8b-instruct-Q6_K.gguf",
+                "sizeBytes": 6705449568,
+                "sha256": "3dd28b36f8c026c1fc31c0b185e3d0e3bd6cbdac0cb605ed0339f817673a82ac"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3234,6 +6239,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/lmstudio-community/granite-3.2-8b-instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/granite-3.2-8b-instruct-GGUF",
+            "files": [
+              {
+                "path": "granite-3.2-8b-instruct-Q8_0.gguf",
+                "sizeBytes": 8684246528,
+                "sha256": "8dd139a6aef0247471ffec170ab4748ae619ae2dae9d7accd4f61d3728117d81"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3256,6 +6271,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/lmstudio-community/Seed-OSS-36B-Instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Seed-OSS-36B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Seed-OSS-36B-Instruct-Q4_K_M.gguf",
+                "sizeBytes": 21762148864,
+                "sha256": "5ddc4bc8914f1fd0d1b72b33507c0689fdfc89c6c5cbce5aa89312a5135505c9"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -3263,6 +6288,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/lmstudio-community/Seed-OSS-36B-Instruct-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Seed-OSS-36B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Seed-OSS-36B-Instruct-Q6_K.gguf",
+                "sizeBytes": 29666097664,
+                "sha256": "be0e3216a13be7ff2a0d1c5384d96783d809d0d17d0459d52ae085559876cee3"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3270,6 +6305,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/lmstudio-community/Seed-OSS-36B-Instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Seed-OSS-36B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "Seed-OSS-36B-Instruct-Q8_0.gguf",
+                "sizeBytes": 38421092864,
+                "sha256": "e78556e8b65f99d3432af649d75b41e8b9a8ac393fb6c7131973c7d995ddbe24"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3292,6 +6337,16 @@
           "kvCacheGbPer1kCtx": 0.143,
           "ollamaTag": "hf.co/lmstudio-community/Ministral-3-8B-Instruct-2512-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Ministral-3-8B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-8B-Instruct-2512-Q4_K_M.gguf",
+                "sizeBytes": 5198387168,
+                "sha256": "2d6f4d9ca82c8f0741b229eac079ea50245e7cbd14c19629220f854dc49de4b5"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -3299,6 +6354,16 @@
           "kvCacheGbPer1kCtx": 0.143,
           "ollamaTag": "hf.co/lmstudio-community/Ministral-3-8B-Instruct-2512-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Ministral-3-8B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-8B-Instruct-2512-Q6_K.gguf",
+                "sizeBytes": 6972872672,
+                "sha256": "233add1bc275c394e92d451f19296e33e2864236cd42aa47d110b520a8401505"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3306,6 +6371,16 @@
           "kvCacheGbPer1kCtx": 0.143,
           "ollamaTag": "hf.co/lmstudio-community/Ministral-3-8B-Instruct-2512-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Ministral-3-8B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-8B-Instruct-2512-Q8_0.gguf",
+                "sizeBytes": 9028868064,
+                "sha256": "df6050b608af02f7c2ea3e21d0519ee61f7b5a38a4e4f23e687ce5e201ae2681"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3328,6 +6403,16 @@
           "kvCacheGbPer1kCtx": 0.252,
           "ollamaTag": "hf.co/lmstudio-community/LFM2.5-2.6B-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/LFM2.5-2.6B-GGUF",
+            "files": [
+              {
+                "path": "LFM2.5-2.6B-Q4_K_M.gguf",
+                "sizeBytes": 1674454368,
+                "sha256": "f37a196f6f01e9ade4743d022864816cf1eb2a44304936734f971aeb42cbabd1"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -3335,6 +6420,16 @@
           "kvCacheGbPer1kCtx": 0.252,
           "ollamaTag": "hf.co/lmstudio-community/LFM2.5-2.6B-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/LFM2.5-2.6B-GGUF",
+            "files": [
+              {
+                "path": "LFM2.5-2.6B-Q6_K.gguf",
+                "sizeBytes": 2221614432,
+                "sha256": "92162b6edfc426e5067e2c69c266902169b95c98f63f07df1fed2013baa089b0"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3342,6 +6437,16 @@
           "kvCacheGbPer1kCtx": 0.252,
           "ollamaTag": "hf.co/lmstudio-community/LFM2.5-2.6B-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/LFM2.5-2.6B-GGUF",
+            "files": [
+              {
+                "path": "LFM2.5-2.6B-Q8_0.gguf",
+                "sizeBytes": 2874778976,
+                "sha256": "1d218584fce6d80d40d5321d5527603f71204c23fb22d0117d68d5acc4097759"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3364,6 +6469,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/lmstudio-community/Ministral-3-14B-Instruct-2512-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Ministral-3-14B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-14B-Instruct-2512-Q4_K_M.gguf",
+                "sizeBytes": 8239067680,
+                "sha256": "7343741bf8bf9a4d2d5723d4b098205aaa1240d187231ed90136cf1bb7de5696"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -3371,6 +6486,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/lmstudio-community/Ministral-3-14B-Instruct-2512-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Ministral-3-14B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-14B-Instruct-2512-Q6_K.gguf",
+                "sizeBytes": 11088409120,
+                "sha256": "de5ed751e4c2d3b3616349eb8028a87e97d1acd6f6f8f685e0ecc37b2f37abbf"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3378,6 +6503,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/lmstudio-community/Ministral-3-14B-Instruct-2512-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Ministral-3-14B-Instruct-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-14B-Instruct-2512-Q8_0.gguf",
+                "sizeBytes": 14359310880,
+                "sha256": "d95729eeb1a6d5f0cdbc7e2d50ae5e0f6444786bec11588e8b0ae809f6d4b561"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3400,6 +6535,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/lmstudio-community/granite-3.1-8b-instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/granite-3.1-8b-instruct-GGUF",
+            "files": [
+              {
+                "path": "granite-3.1-8b-instruct-Q4_K_M.gguf",
+                "sizeBytes": 4942858432,
+                "sha256": "71d205af3019b8e722273b79f518e86099a4771ca01f60ca12f1aa7d42ae773e"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -3407,6 +6552,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/lmstudio-community/granite-3.1-8b-instruct-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/granite-3.1-8b-instruct-GGUF",
+            "files": [
+              {
+                "path": "granite-3.1-8b-instruct-Q6_K.gguf",
+                "sizeBytes": 6705449152,
+                "sha256": "20c3f9465a29913e49f5be29e9d5e47d3983175cf0b0383aad5a1b0f55517e5d"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3414,6 +6569,16 @@
           "kvCacheGbPer1kCtx": 0.168,
           "ollamaTag": "hf.co/lmstudio-community/granite-3.1-8b-instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/granite-3.1-8b-instruct-GGUF",
+            "files": [
+              {
+                "path": "granite-3.1-8b-instruct-Q8_0.gguf",
+                "sizeBytes": 8684246112,
+                "sha256": "0f92bd17f8455486ba0d5e36c0a7af90decfbbf7768a3c45efe86dc5480c6e1d"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3436,6 +6601,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/lmstudio-community/EXAONE-3.5-7.8B-Instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/EXAONE-3.5-7.8B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "EXAONE-3.5-7.8B-Instruct-Q4_K_M.gguf",
+                "sizeBytes": 4770650016,
+                "sha256": "a7c3f650fd76a2c7cc2f062780c2d7c4a247a89e2d60e7c031c0c9cb26b8954e"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -3443,6 +6618,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/lmstudio-community/EXAONE-3.5-7.8B-Instruct-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/EXAONE-3.5-7.8B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "EXAONE-3.5-7.8B-Instruct-Q6_K.gguf",
+                "sizeBytes": 6418618272,
+                "sha256": "ac962f4d9c9ad6768a3ea60c42b585ac85a1e9c0c179b21e88f704a09498e538"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3450,6 +6635,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/lmstudio-community/EXAONE-3.5-7.8B-Instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/EXAONE-3.5-7.8B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "EXAONE-3.5-7.8B-Instruct-Q8_0.gguf",
+                "sizeBytes": 8312084384,
+                "sha256": "c582c5e837131b1c4633918a0df782f5599b629fba55c56f2e99b146219157da"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3473,6 +6668,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/lmstudio-community/Olmo-3-32B-Think-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Olmo-3-32B-Think-GGUF",
+            "files": [
+              {
+                "path": "Olmo-3-32B-Think-Q4_K_M.gguf",
+                "sizeBytes": 19482033568,
+                "sha256": "d11b0348a5d42183523f2c774054848fe64f0bba090e87fff6bc7d85718a68aa"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -3480,6 +6685,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/lmstudio-community/Olmo-3-32B-Think-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Olmo-3-32B-Think-GGUF",
+            "files": [
+              {
+                "path": "Olmo-3-32B-Think-Q6_K.gguf",
+                "sizeBytes": 26448494624,
+                "sha256": "648fc3ffa3ac5aa43ccee4af0be2246e3d412243d8b3ef61b724ee1442fb61ee"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3487,6 +6702,16 @@
           "kvCacheGbPer1kCtx": 0.268,
           "ollamaTag": "hf.co/lmstudio-community/Olmo-3-32B-Think-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/Olmo-3-32B-Think-GGUF",
+            "files": [
+              {
+                "path": "Olmo-3-32B-Think-Q8_0.gguf",
+                "sizeBytes": 34254795552,
+                "sha256": "6fa3a81df6adc56fa23a4978726fc519b672b0e015ba2c7237413e097a5028cf"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3509,6 +6734,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/lmstudio-community/AMD-OLMo-1B-SFT-DPO-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/AMD-OLMo-1B-SFT-DPO-GGUF",
+            "files": [
+              {
+                "path": "AMD-OLMo-1B-SFT-DPO-Q4_K_M.gguf",
+                "sizeBytes": 733520640,
+                "sha256": "e585d0e647c57e2182dbf8016f857192659ead7ca08e05ec5efd6cb33f2a9e93"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -3516,6 +6751,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/lmstudio-community/AMD-OLMo-1B-SFT-DPO-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/AMD-OLMo-1B-SFT-DPO-GGUF",
+            "files": [
+              {
+                "path": "AMD-OLMo-1B-SFT-DPO-Q6_K.gguf",
+                "sizeBytes": 967090944,
+                "sha256": "762a5f896220d89cdad2dbc795be4b760488bca615acb65f41fc5e3e2ddfbb5a"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3523,6 +6768,16 @@
           "kvCacheGbPer1kCtx": 0.134,
           "ollamaTag": "hf.co/lmstudio-community/AMD-OLMo-1B-SFT-DPO-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/AMD-OLMo-1B-SFT-DPO-GGUF",
+            "files": [
+              {
+                "path": "AMD-OLMo-1B-SFT-DPO-Q8_0.gguf",
+                "sizeBytes": 1252088576,
+                "sha256": "163171561e9d1acf8923ee5822beb4ad6490ebb78f13182d5b18b101255569b6"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },
@@ -3545,6 +6800,16 @@
           "kvCacheGbPer1kCtx": 0.079,
           "ollamaTag": "hf.co/lmstudio-community/EXAONE-3.5-2.4B-Instruct-GGUF:Q4_K_M",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/EXAONE-3.5-2.4B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "EXAONE-3.5-2.4B-Instruct-Q4_K_M.gguf",
+                "sizeBytes": 1644918560,
+                "sha256": "e737325eba90f4c1cccab3085ef8eab5fb8429cf304ec1e6c9c9b2bf891cb058"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q6_K": {
@@ -3552,6 +6817,16 @@
           "kvCacheGbPer1kCtx": 0.079,
           "ollamaTag": "hf.co/lmstudio-community/EXAONE-3.5-2.4B-Instruct-GGUF:Q6_K",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/EXAONE-3.5-2.4B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "EXAONE-3.5-2.4B-Instruct-Q6_K.gguf",
+                "sizeBytes": 2192855840,
+                "sha256": "30424d5d84bcbcab1bd70fa2ac090e8cc400db7a682ce355eb85260e28b5eba3"
+              }
+            ]
+          },
           "kvSource": "gguf"
         },
         "Q8_0": {
@@ -3559,6 +6834,16 @@
           "kvCacheGbPer1kCtx": 0.079,
           "ollamaTag": "hf.co/lmstudio-community/EXAONE-3.5-2.4B-Instruct-GGUF:Q8_0",
           "sizeSource": "hf",
+          "gguf": {
+            "repo": "lmstudio-community/EXAONE-3.5-2.4B-Instruct-GGUF",
+            "files": [
+              {
+                "path": "EXAONE-3.5-2.4B-Instruct-Q8_0.gguf",
+                "sizeBytes": 2838846240,
+                "sha256": "667533b43a7ae93a9e16b2c3412839c99bed206f550bae90c8646b288483fa22"
+              }
+            ]
+          },
           "kvSource": "gguf"
         }
       },

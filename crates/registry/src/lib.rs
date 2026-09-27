@@ -85,6 +85,47 @@ pub struct Quant {
     /// file's own header) or `"fallback"`. Same absent-means-good rule.
     #[serde(default)]
     pub kv_source: Option<String>,
+    /// Direct-download record for a runtime that loads the GGUF itself
+    /// (DocGraph's bundled llama-server, its ADR 0145) rather than pulling an
+    /// Ollama tag. `None` for a rung the pipeline could only size from a
+    /// fallback, or whose files carried no LFS hash — such a rung is
+    /// Ollama-only and a consumer must say so, never guess a URL.
+    #[serde(default)]
+    pub gguf: Option<Gguf>,
+}
+
+/// Where one quant's bytes live on Hugging Face and how to verify them.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct Gguf {
+    /// `org/name` of the GGUF repo (not the upstream model repo).
+    pub repo: String,
+    /// One entry for a single-file quant; several, in part order, for a
+    /// sharded one. A downloader needs every shard; llama.cpp opens the first.
+    pub files: Vec<GgufFile>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct GgufFile {
+    /// Path inside the repo, as the HF tree lists it (may be in a subfolder).
+    pub path: String,
+    pub size_bytes: u64,
+    /// Lowercase hex sha256 — the LFS object id, which HF publishes.
+    pub sha256: String,
+}
+
+impl Gguf {
+    pub fn total_bytes(&self) -> u64 {
+        self.files.iter().map(|f| f.size_bytes).sum()
+    }
+    pub fn is_single_file(&self) -> bool {
+        self.files.len() == 1
+    }
+    /// Resolve URL for one file, the form `huggingface.co/<repo>/resolve/main/<path>`.
+    pub fn download_url(&self, file: &GgufFile) -> String {
+        format!("https://huggingface.co/{}/resolve/main/{}", self.repo, file.path)
+    }
 }
 
 /// True when a source marker names a curated fallback rather than a fact read
@@ -213,6 +254,52 @@ mod tests {
         m.quality = None;
         assert!(!m.is_recommendable());
         assert_eq!(m.quality_for(false), None);
+    }
+
+    #[test]
+    fn a_gguf_record_is_optional_and_verifiable_when_present() {
+        // A registry built before the field existed still parses (Ollama-only).
+        let old = r#"{"schemaVersion":1,"version":"2026-01-01","models":[{"id":"x","name":"X",
+            "family":"f","parametersB":4.0,"maxContext":8192,"capabilities":["chat"],
+            "quality":{"general":7.0,"coding":6.0,"source":"hand"},
+            "quantizations":{"Q4_K_M":{"fileSizeGb":2.33,"kvCacheGbPer1kCtx":0.11,"ollamaTag":"x:4b"}},
+            "ollamaTag":"x:4b"}]}"#;
+        let r = Registry::parse(old).unwrap();
+        assert!(r.models[0].quantizations["Q4_K_M"].gguf.is_none());
+
+        let new = r#"{"schemaVersion":1,"version":"2026-09-27","models":[{"id":"x","name":"X",
+            "family":"f","parametersB":4.0,"maxContext":8192,"capabilities":["chat"],
+            "quality":{"general":7.0,"coding":6.0,"source":"hand"},
+            "quantizations":{"Q4_K_M":{"fileSizeGb":2.33,"kvCacheGbPer1kCtx":0.11,"ollamaTag":"x:4b",
+              "sizeSource":"hf","gguf":{"repo":"Qwen/Qwen3-4B-GGUF","files":[
+                {"path":"Qwen3-4B-Q4_K_M.gguf","sizeBytes":2497280256,
+                 "sha256":"7485fe6f11af29433bc51cab58009521f205840f5b4ae3a32fa7f92e8534fdf5"}]}}},
+            "ollamaTag":"x:4b"}]}"#;
+        let r = Registry::parse(new).unwrap();
+        let g = r.models[0].quantizations["Q4_K_M"].gguf.as_ref().unwrap();
+        assert!(g.is_single_file());
+        assert_eq!(g.total_bytes(), 2497280256);
+        assert_eq!(
+            g.download_url(&g.files[0]),
+            "https://huggingface.co/Qwen/Qwen3-4B-GGUF/resolve/main/Qwen3-4B-Q4_K_M.gguf"
+        );
+    }
+
+    #[test]
+    fn every_bundled_gguf_record_carries_a_sha256_per_shard() {
+        let r = Registry::bundled();
+        for m in &r.models {
+            for (qname, q) in &m.quantizations {
+                if let Some(g) = &q.gguf {
+                    assert!(!g.files.is_empty(), "{} {}", m.id, qname);
+                    for f in &g.files {
+                        assert_eq!(f.sha256.len(), 64, "{} {} {}", m.id, qname, f.path);
+                        assert!(f.path.to_lowercase().ends_with(".gguf"), "{} {}", m.id, qname);
+                    }
+                    assert!(q.size_source.as_deref() == Some("hf"), "{} {}: gguf on a fallback rung", m.id, qname);
+                }
+            }
+        }
     }
 
     #[test]

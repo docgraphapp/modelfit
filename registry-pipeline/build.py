@@ -24,6 +24,7 @@ from __future__ import annotations
 import argparse
 import datetime
 import re
+from typing import NamedTuple
 import json
 import struct
 import sys
@@ -99,15 +100,29 @@ def http_range(url: str, n: int) -> bytes:
         return r.read()
 
 
-def list_repo_files(repo: str) -> dict[str, int]:
-    """filename (basename, may be in subfolder) -> size in bytes."""
-    files: dict[str, int] = {}
+class FileFact(NamedTuple):
+    size: int
+    # The LFS object id IS the file's sha256 — what a downloader verifies
+    # against. Absent only for a non-LFS file, which no real GGUF is.
+    sha256: str | None
+
+
+class QuantHit(NamedTuple):
+    path: str          # the first (or only) file of the quant
+    size: int          # total bytes across every shard
+    files: list[tuple[str, int, str | None]]  # (path, size, sha256) per shard
+
+
+def list_repo_files(repo: str) -> dict[str, FileFact]:
+    """filename (basename, may be in subfolder) -> (size in bytes, sha256)."""
+    files: dict[str, FileFact] = {}
     tree = http_json(f"https://huggingface.co/api/models/{repo}/tree/main?recursive=true")
     for entry in tree:
         if entry.get("type") == "file" and entry["path"].lower().endswith(".gguf"):
-            size = entry.get("size") or (entry.get("lfs") or {}).get("size")
+            lfs = entry.get("lfs") or {}
+            size = entry.get("size") or lfs.get("size")
             if size:
-                files[entry["path"]] = int(size)
+                files[entry["path"]] = FileFact(int(size), lfs.get("oid"))
     return files
 
 
@@ -118,25 +133,31 @@ def list_repo_files(repo: str) -> dict[str, int]:
 SHARD_SUFFIX = r"(?:-\d{5}-of-\d{5})?"
 
 
-def find_quant_file(files: dict[str, int], quant: str) -> tuple[str, int] | None:
-    """Total bytes of one quant, summing its shards when it has any."""
+def find_quant_file(files: dict[str, FileFact], quant: str) -> QuantHit | None:
+    """The files of one quant and their total bytes, summing shards when it has any."""
     pattern = re.compile(rf"[-._]{re.escape(quant)}{SHARD_SUFFIX}\.gguf$", re.IGNORECASE)
-    matches = [(p, s) for p, s in files.items() if pattern.search(p)]
+    matches = [(p, f) for p, f in files.items() if pattern.search(p)]
     if not matches:
         return None
-    plain = [(p, s) for p, s in matches if not re.search(r"-\d{5}-of-\d{5}\.gguf$", p)]
+    plain = [(p, f) for p, f in matches if not re.search(r"-\d{5}-of-\d{5}\.gguf$", p)]
     if plain:
         # A single file always wins: prefer the shortest path, so a top-level
         # file beats a subfolder copy of the same quant.
-        return min(plain, key=lambda t: len(t[0]))
-    shards = [(p, s) for p, s in matches if (p, s) not in plain]
+        path, fact = min(plain, key=lambda t: len(t[0]))
+        return QuantHit(path, fact.size, [(path, fact.size, fact.sha256)])
+    shards = [(p, f) for p, f in matches if (p, f) not in plain]
     # Shards of one quant may sit beside another variant's; group by the stem
     # before the part number so only one model's parts are added together.
-    groups: dict[str, list[tuple[str, int]]] = {}
-    for path, size in shards:
-        groups.setdefault(re.sub(r"-\d{5}-of-\d{5}\.gguf$", "", path), []).append((path, size))
+    groups: dict[str, list[tuple[str, FileFact]]] = {}
+    for path, fact in shards:
+        groups.setdefault(re.sub(r"-\d{5}-of-\d{5}\.gguf$", "", path), []).append((path, fact))
     stem, parts = min(groups.items(), key=lambda kv: len(kv[0]))
-    return (parts[0][0], sum(s for _, s in parts))
+    parts.sort(key=lambda t: t[0])
+    return QuantHit(
+        parts[0][0],
+        sum(f.size for _, f in parts),
+        [(p, f.size, f.sha256) for p, f in parts],
+    )
 
 
 # --- minimal GGUF v2/v3 header reader (metadata only) -----------------------
@@ -352,11 +373,27 @@ def build(offline: bool) -> tuple[dict, list[str]]:
         for qname, qcfg in m["quants"].items():
             size_gb = qcfg["fallback_size_gb"]
             size_source = "fallback"
+            gguf = None
             hit = find_quant_file(files, qname) if files else None
             if hit:
-                path, size = hit
+                path, size = hit.path, hit.size
                 size_gb = round(size / GIB, 2)
                 size_source = "hf"
+                # A direct-download record for runtimes that load a GGUF
+                # themselves (DocGraph's bundled llama-server, ADR 0145)
+                # rather than pulling an Ollama tag. Emitted only when every
+                # shard carries a sha256: a download nobody can verify is not
+                # a record worth publishing.
+                if all(sha for _, _, sha in hit.files):
+                    gguf = {
+                        "repo": repo,
+                        "files": [
+                            {"path": p, "sizeBytes": sz, "sha256": sha}
+                            for p, sz, sha in hit.files
+                        ],
+                    }
+                else:
+                    warnings.append(f"{m['id']}: quant {qname} has a shard without an LFS sha256; no gguf record")
                 if kv is None and not offline:
                     try:
                         meta = gguf_metadata(
@@ -380,6 +417,8 @@ def build(offline: bool) -> tuple[dict, list[str]]:
                 # is a guess and must not be presented as a read fact.
                 "sizeSource": size_source,
             }
+            if gguf:
+                quants[qname]["gguf"] = gguf
         kv_source = "gguf"
         if kv is None:
             kv = m["fallback_kv_gb_per_1k"]
@@ -458,6 +497,24 @@ def validate(registry: dict) -> list[str]:
             bpw = q["fileSizeGb"] / m["parametersB"]
             if not (0.3 < bpw < 1.6):
                 errors.append(f"{mid} {qname}: bytes/weight {bpw:.2f} out of range")
+            g = q.get("gguf")
+            if g is not None:
+                # The record exists so a downloader can verify bytes it never
+                # chose; a malformed hash or a size that disagrees with the
+                # listing would fail every install of this rung.
+                if q.get("sizeSource") != "hf":
+                    errors.append(f"{mid} {qname}: gguf record on a fallback-sized rung")
+                if not g.get("repo") or not g.get("files"):
+                    errors.append(f"{mid} {qname}: gguf record is incomplete")
+                total = 0
+                for f in g.get("files", []):
+                    if not re.fullmatch(r"[0-9a-f]{64}", f.get("sha256") or ""):
+                        errors.append(f"{mid} {qname}: {f.get('path')} has no sha256")
+                    if not f.get("path", "").lower().endswith(".gguf"):
+                        errors.append(f"{mid} {qname}: {f.get('path')} is not a .gguf")
+                    total += int(f.get("sizeBytes") or 0)
+                if abs(total / GIB - q["fileSizeGb"]) > 0.01:
+                    errors.append(f"{mid} {qname}: gguf bytes {total} disagree with fileSizeGb")
         # Quant files are matched by substring, so a repo that names things
         # unusually can silently bind the wrong file. More bits must always
         # mean a bigger file — if that ordering breaks, the match was wrong.

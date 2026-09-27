@@ -276,7 +276,7 @@ def probe(repo: str, info: dict, offline: bool) -> tuple[dict | None, str | None
         hit = find_quant_file(files, qname)
         if not hit:
             continue
-        path, size = hit
+        path, size = hit.path, hit.size
         quants[qname] = {"fallback_size_gb": round(size / GIB, 2)}
         if kv is None:
             try:
