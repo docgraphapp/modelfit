@@ -280,15 +280,21 @@ pub struct Calibration {
     pub prefill_capacity: Option<f64>,
 }
 
+/// Smallest file the bandwidth calibration trusts (see below).
+pub const MIN_CALIBRATION_GB: f64 = 1.0;
+
 /// Pick the calibration model: the smallest *dense* registry model already
 /// installed (no download), else the smallest dense model with an Ollama tag
 /// (caller pulls it first). MoE models are excluded — their per-token traffic
-/// is not the full file, so they can't anchor the bandwidth estimate.
+/// is not the full file, so they can't anchor the bandwidth estimate. Neither
+/// can sub-1 GB models: per-token overhead, not memory traffic, dominates
+/// their timing, so the smallest rung must clear [`MIN_CALIBRATION_GB`].
 pub fn calibration_candidates(registry: &Registry, installed: &[String]) -> (Option<String>, String) {
     let mut dense: Vec<(&str, f64)> = registry
         .models
         .iter()
         .filter(|m| !m.is_moe())
+        .filter(|m| m.quantizations.values().all(|q| q.file_size_gb >= MIN_CALIBRATION_GB))
         .filter_map(|m| {
             let tag = m.ollama_tag.as_deref()?;
             let size = m.quantizations.values().map(|q| q.file_size_gb).fold(f64::MAX, f64::min);

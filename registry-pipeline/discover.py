@@ -237,6 +237,10 @@ def capabilities_for(info: dict) -> list[str]:
         caps.append("reasoning")
     if info.get("pipeline_tag") == "image-text-to-text":
         caps.append("vision")
+    # Tool calling is a property of the chat template, not the weights: a
+    # template that renders a `tools` list is one a runtime can pass tools to.
+    if "tools" in ((info.get("gguf") or {}).get("chat_template") or ""):
+        caps.append("tools")
     return caps
 
 

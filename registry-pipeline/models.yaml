@@ -9,12 +9,105 @@
 #
 # Curated by hand (deliberately): quality scores, capabilities, ollama tags.
 
+# --- Smallest tool-calling + thinking tier (sub-1 GB at Q4) -------------------
+# `tools` = the GGUF chat template renders a tools list (checked per repo).
+
+- id: qwen3-0.6b
+  name: Qwen3 0.6B
+  family: qwen
+  parameters_b: 0.6
+  max_context: 40960
+  capabilities: [chat, reasoning, tools]
+  quality: { general: 4.6, coding: 4.0 }
+  ollama_tag: qwen3:0.6b
+  ollama_quant_infix: ""
+  hf_repo: unsloth/Qwen3-0.6B-GGUF
+  quants:
+    Q3_K_M: { fallback_size_gb: 0.32 }
+    Q4_K_M: { fallback_size_gb: 0.37 }
+    Q5_K_M: { fallback_size_gb: 0.41 }
+    Q6_K:   { fallback_size_gb: 0.46 }
+    Q8_0:   { fallback_size_gb: 0.59 }
+  fallback_kv_gb_per_1k: 0.11
+
+- id: qwen3.5-0.8b
+  name: Qwen3.5 0.8B
+  family: qwen
+  parameters_b: 0.75
+  max_context: 262144
+  capabilities: [chat, reasoning, vision, tools]
+  quality: { general: 5.0, coding: 4.3 }
+  ollama_tag: qwen3.5:0.8b
+  ollama_quant_infix: ""
+  hf_repo: unsloth/Qwen3.5-0.8B-GGUF
+  quants:
+    Q3_K_M: { fallback_size_gb: 0.4 }
+    Q4_K_M: { fallback_size_gb: 0.49 }
+    Q5_K_M: { fallback_size_gb: 0.55 }
+    Q6_K:   { fallback_size_gb: 0.6 }
+    Q8_0:   { fallback_size_gb: 0.76 }
+  fallback_kv_gb_per_1k: 0.02
+
+- id: lfm2.5-1.2b-thinking
+  name: LFM2.5 1.2B Thinking
+  family: lfm2
+  parameters_b: 1.17
+  max_context: 128000
+  capabilities: [chat, reasoning, tools]
+  quality: { general: 5.4, coding: 4.3 }
+  # No curated Ollama library tag; ollama_tag_for falls back to the hf.co form.
+  hf_repo: unsloth/LFM2.5-1.2B-Thinking-GGUF
+  quants:
+    Q3_K_M: { fallback_size_gb: 0.56 }
+    Q4_K_M: { fallback_size_gb: 0.68 }
+    Q5_K_M: { fallback_size_gb: 0.79 }
+    Q6_K:   { fallback_size_gb: 0.9 }
+    Q8_0:   { fallback_size_gb: 1.16 }
+  fallback_kv_gb_per_1k: 0.134
+
+- id: gemma4-e2b
+  name: Gemma 4 E2B
+  family: gemma
+  # "Effective 2B": ~4.6B of weights with per-layer embeddings, ~2.3B active.
+  # File sizes track the full count, so that is what the size guards see.
+  parameters_b: 4.65
+  active_parameters_b: 2.3
+  max_context: 131072
+  capabilities: [chat, reasoning, vision, tools]
+  quality: { general: 6.4, coding: 5.8 }
+  ollama_tag: gemma4:e2b
+  ollama_quant_infix: "-it"
+  hf_repo: bartowski/google_gemma-4-E2B-it-GGUF
+  quants:
+    Q3_K_M: { fallback_size_gb: 2.9 }
+    Q4_K_M: { fallback_size_gb: 3.1 }
+    Q5_K_M: { fallback_size_gb: 3.3 }
+    Q6_K:   { fallback_size_gb: 3.6 }
+    Q8_0:   { fallback_size_gb: 4.6 }
+  fallback_kv_gb_per_1k: 0.08
+
+- id: smollm3-3b
+  name: SmolLM3 3B
+  family: smollm3
+  parameters_b: 3.08
+  max_context: 65536
+  capabilities: [chat, reasoning, tools]
+  quality: { general: 6.3, coding: 5.6 }
+  hf_repo: bartowski/HuggingFaceTB_SmolLM3-3B-GGUF
+  quants:
+    Q3_K_M: { fallback_size_gb: 1.46 }
+    Q4_K_M: { fallback_size_gb: 1.78 }
+    Q5_K_M: { fallback_size_gb: 2.06 }
+    Q6_K:   { fallback_size_gb: 2.36 }
+    Q8_0:   { fallback_size_gb: 3.05 }
+  fallback_kv_gb_per_1k: 0.075
+
 - id: llama3.2-3b
   name: Llama 3.2 3B
   family: llama
   parameters_b: 3.2
   max_context: 131072
-  capabilities: [chat]
+  capabilities: [chat, tools]
   quality: { general: 6.6, coding: 6.0 }
   ollama_tag: llama3.2:3b
   ollama_quant_infix: "-instruct"
@@ -31,7 +124,7 @@
   family: qwen
   parameters_b: 4.0
   max_context: 40960
-  capabilities: [chat, reasoning, coding]
+  capabilities: [chat, reasoning, coding, tools]
   quality: { general: 7.2, coding: 6.8 }
   ollama_tag: qwen3:4b
   ollama_quant_infix: ""
@@ -69,7 +162,7 @@
   parameters_b: 8.0
   active_parameters_b: 4.5
   max_context: 131072
-  capabilities: [chat, reasoning, vision, coding]
+  capabilities: [chat, reasoning, vision, coding, tools]
   quality: { general: 7.6, coding: 7.2 }
   ollama_tag: gemma4:e4b
   ollama_quant_infix: "-it"
@@ -87,7 +180,7 @@
   family: qwen
   parameters_b: 8.2
   max_context: 40960
-  capabilities: [chat, reasoning, coding]
+  capabilities: [chat, reasoning, coding, tools]
   quality: { general: 7.8, coding: 7.4 }
   ollama_tag: qwen3:8b
   ollama_quant_infix: ""
@@ -104,7 +197,7 @@
   family: llama
   parameters_b: 8.0
   max_context: 131072
-  capabilities: [chat]
+  capabilities: [chat, tools]
   quality: { general: 7.4, coding: 6.8 }
   ollama_tag: llama3.1:8b
   ollama_quant_infix: "-instruct"
@@ -140,7 +233,7 @@
   family: gemma
   parameters_b: 12.5
   max_context: 262144
-  capabilities: [chat, reasoning, vision, coding]
+  capabilities: [chat, reasoning, vision, coding, tools]
   quality: { general: 8.4, coding: 8.2 }
   ollama_tag: gemma4:12b
   ollama_quant_infix: "-it"
@@ -158,7 +251,7 @@
   family: qwen
   parameters_b: 14.8
   max_context: 40960
-  capabilities: [chat, reasoning, coding]
+  capabilities: [chat, reasoning, coding, tools]
   quality: { general: 8.2, coding: 7.8 }
   ollama_tag: qwen3:14b
   ollama_quant_infix: ""
@@ -211,7 +304,7 @@
   family: qwen
   parameters_b: 14.8
   max_context: 131072
-  capabilities: [coding, chat]
+  capabilities: [coding, chat, tools]
   quality: { general: 7.8, coding: 8.3 }
   ollama_tag: qwen2.5-coder:14b
   ollama_quant_infix: "-instruct"
@@ -266,7 +359,7 @@
   parameters_b: 25.2
   active_parameters_b: 3.8
   max_context: 262144
-  capabilities: [chat, reasoning, vision, coding]
+  capabilities: [chat, reasoning, vision, coding, tools]
   quality: { general: 9.0, coding: 8.8 }
   ollama_tag: gemma4:26b
   ollama_quant_infix: "-a4b-it"
@@ -285,7 +378,7 @@
   parameters_b: 30.5
   active_parameters_b: 3.3
   max_context: 40960
-  capabilities: [chat, reasoning, coding]
+  capabilities: [chat, reasoning, coding, tools]
   quality: { general: 8.5, coding: 8.0 }
   ollama_tag: qwen3:30b
   ollama_quant_infix: ""
@@ -302,7 +395,7 @@
   family: gemma
   parameters_b: 30.7
   max_context: 262144
-  capabilities: [chat, reasoning, vision, coding]
+  capabilities: [chat, reasoning, vision, coding, tools]
   quality: { general: 9.2, coding: 9.0 }
   ollama_tag: gemma4:31b
   ollama_quant_infix: "-it"
@@ -320,7 +413,7 @@
   family: qwen
   parameters_b: 32.8
   max_context: 40960
-  capabilities: [chat, reasoning, coding]
+  capabilities: [chat, reasoning, coding, tools]
   quality: { general: 8.7, coding: 8.3 }
   ollama_tag: qwen3:32b
   ollama_quant_infix: ""
@@ -337,7 +430,7 @@
   family: qwen
   parameters_b: 32.8
   max_context: 131072
-  capabilities: [coding, chat]
+  capabilities: [coding, chat, tools]
   quality: { general: 8.3, coding: 8.8 }
   ollama_tag: qwen2.5-coder:32b
   ollama_quant_infix: "-instruct"

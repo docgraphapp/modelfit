@@ -241,7 +241,12 @@ mod tests {
 
     #[test]
     fn only_hand_curated_quality_makes_a_model_recommendable() {
-        let mut m = Registry::bundled().models.remove(0);
+        // By id, not position: models.yaml order is curation order and moves.
+        let mut m = Registry::bundled()
+            .models
+            .into_iter()
+            .find(|m| m.id == "llama3.2-3b")
+            .unwrap();
         assert!(m.is_recommendable(), "curated by default");
 
         m.quality.as_mut().unwrap().source = Some("leaderboard-v2".into());
