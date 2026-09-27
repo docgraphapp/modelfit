@@ -21,6 +21,7 @@ fn grid(
         ("quality", Objective::Quality),
         ("speed", Objective::Speed),
         ("coding", Objective::Coding),
+        ("agents", Objective::Agents),
     ];
     let contexts: [u32; 6] = [4096, 8192, 16384, 32768, 65536, 131072];
     let mut recs = serde_json::Map::new();

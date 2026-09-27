@@ -190,6 +190,7 @@ mod tests {
             running: false,
             version: None,
             installed_tags: vec![],
+            capabilities: Default::default(),
         }
     }
 
@@ -221,6 +222,7 @@ mod tests {
                 running: true,
                 version: Some("0.5.1".into()),
                 installed_tags: vec!["llama3.2:3b".into()],
+                capabilities: Default::default(),
             },
         );
         assert!(out.contains("Calibrated"));

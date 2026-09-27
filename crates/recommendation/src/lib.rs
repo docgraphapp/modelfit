@@ -26,6 +26,9 @@ pub enum Objective {
     Quality,
     Speed,
     Coding,
+    /// Driving an agent or MCP client: the model must accept a tools list,
+    /// and speed weighs more because one task is many calls in a row.
+    Agents,
 }
 
 /// How well a number is known, most certain first.
@@ -111,6 +114,11 @@ pub struct Request {
     /// axis users are quickest to notice we got wrong.
     #[serde(default)]
     pub measured_prefill_capacity: Option<f64>,
+    /// Capabilities the runtime reports for models it has installed, by tag
+    /// (Ollama's `/api/show`). For an installed model this is the model file
+    /// answering for itself, so it overrides the registry's `tools` tag.
+    #[serde(default)]
+    pub runtime_capabilities: BTreeMap<String, Vec<String>>,
 }
 
 impl Default for Request {
@@ -121,6 +129,7 @@ impl Default for Request {
             measured_effective_bandwidth_gbps: None,
             measured_tok_per_sec: BTreeMap::new(),
             measured_prefill_capacity: None,
+            runtime_capabilities: BTreeMap::new(),
         }
     }
 }
@@ -184,6 +193,15 @@ pub struct Assessment {
     pub score: f64,
     /// Present iff the model is excluded from recommendations.
     pub excluded_reason: Option<String>,
+    /// What the model can do (`chat`, `tools`, `vision`, `reasoning`,
+    /// `coding`). From the registry, with `tools` corrected by the runtime
+    /// when the model is installed.
+    #[serde(default)]
+    pub capabilities: Vec<String>,
+    /// True when the installed model file confirmed `tools` either way,
+    /// rather than the registry asserting it.
+    #[serde(default)]
+    pub tools_verified: bool,
     /// Every quantization of this model, smallest first, assessed on this
     /// machine. Always contains the rung named by `quant`.
     #[serde(default)]
@@ -247,6 +265,8 @@ fn speed_floor(objective: Objective) -> f64 {
     match objective {
         Objective::Overall | Objective::Quality => 5.0,
         Objective::Coding => 8.0,
+        // An agent loop waits on every step; below this a task drags.
+        Objective::Agents => 10.0,
         Objective::Speed => 15.0,
     }
 }
@@ -258,11 +278,35 @@ fn weights(objective: Objective) -> (f64, f64) {
         Objective::Quality => (0.8, 0.2),
         Objective::Speed => (0.3, 0.7),
         Objective::Coding => (0.7, 0.3),
+        Objective::Agents => (0.55, 0.45),
     }
 }
 
 fn quality_for(model: &Model, objective: Objective) -> Option<f64> {
     model.quality_for(objective == Objective::Coding)
+}
+
+/// A model's capabilities, with `tools` settled by the runtime when any of
+/// its tags is installed. Returns whether the runtime settled it.
+///
+/// Tool calling lives in the chat template, and every quant of a model ships
+/// the same one, so any installed rung answers for all of them.
+fn capabilities_for(model: &Model, runtime: &BTreeMap<&str, &Vec<String>>) -> (Vec<String>, bool) {
+    let mut caps = model.capabilities.clone();
+    let reported = model
+        .ollama_tag
+        .iter()
+        .chain(model.quantizations.values().filter_map(|q| q.ollama_tag.as_ref()))
+        .find_map(|t| runtime.get(norm_tag(t)));
+    let Some(reported) = reported else {
+        return (caps, false);
+    };
+    let runtime_tools = reported.iter().any(|c| c == "tools");
+    caps.retain(|c| c != "tools");
+    if runtime_tools {
+        caps.push("tools".into());
+    }
+    (caps, true)
 }
 
 /// Runtime tags are compared without the `:latest` the runtime leaves implicit.
@@ -353,9 +397,17 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
         .map(|(tag, tps)| (norm_tag(tag), *tps))
         .collect();
 
+    let runtime_capabilities: BTreeMap<&str, &Vec<String>> = req
+        .runtime_capabilities
+        .iter()
+        .map(|(tag, caps)| (norm_tag(tag), caps))
+        .collect();
+
     let mut all: Vec<Assessment> = Vec::new();
 
     for model in &registry.models {
+        let (capabilities, tools_verified) = capabilities_for(model, &runtime_capabilities);
+        let has_tools = capabilities.iter().any(|c| c == "tools");
         let ctx = context_length.min(model.max_context) as f64;
 
         // Memory: weights + KV at the requested context + runtime overhead.
@@ -578,6 +630,12 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
             && !model.capabilities.iter().any(|c| c == "coding")
         {
             excluded_reason = Some("not a coding-capable model".into());
+        } else if req.objective == Objective::Agents && !has_tools {
+            excluded_reason = Some(if tools_verified {
+                "installed copy doesn't accept tools".into()
+            } else {
+                "no tool-calling support".into()
+            });
         }
 
         // Weighted score (0–100). Quality is normalized over the range real
@@ -614,6 +672,8 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
                 .map(|q| q.source.clone().unwrap_or_else(|| "hand".into())),
             score: round1(score),
             excluded_reason,
+            capabilities,
+            tools_verified,
             ladder,
         });
     }
@@ -775,6 +835,50 @@ mod tests {
         let coder = find(&r, "qwen2.5-coder-32b");
         assert!(coder.excluded_reason.is_none());
         assert!(best.quality.unwrap() >= 8.0);
+    }
+
+    #[test]
+    fn agents_objective_only_ranks_tool_callers() {
+        let r = rec(
+            &apple("M4 Max", 64.0),
+            &Request {
+                objective: Objective::Agents,
+                context_length: 32768,
+                ..Request::default()
+            },
+        );
+        assert!(r.best.is_some(), "a 64 GB machine has a tool-calling pick");
+        for a in r.all.iter().filter(|a| a.excluded_reason.is_none()) {
+            assert!(a.capabilities.iter().any(|c| c == "tools"), "{} ranked without tools", a.model_id);
+        }
+        let reasons: Vec<_> = r.all.iter().filter_map(|a| a.excluded_reason.as_deref()).collect();
+        assert!(reasons.contains(&"no tool-calling support"));
+    }
+
+    #[test]
+    fn installed_model_settles_tools_either_way() {
+        let hw = apple("M4 Max", 64.0);
+        let reg = Registry::bundled();
+        let tagged = |has: bool| {
+            let m = reg.models.iter().find(|m| m.id == "llama3.2-3b").unwrap();
+            let mut req = Request { objective: Objective::Agents, ..Request::default() };
+            let caps = if has { vec!["completion".into(), "tools".into()] } else { vec!["completion".into()] };
+            // `:latest` as the runtime reports it; matching must not care.
+            req.runtime_capabilities.insert(format!("{}:latest", m.ollama_tag.as_deref().unwrap()), caps);
+            recommend(&hw, &reg, &req)
+        };
+
+        let without = tagged(false);
+        let a = find(&without, "llama3.2-3b");
+        assert!(a.tools_verified);
+        assert!(!a.capabilities.iter().any(|c| c == "tools"), "runtime overrides the registry");
+        assert_eq!(a.excluded_reason.as_deref(), Some("installed copy doesn't accept tools"));
+
+        let with = tagged(true);
+        let a = find(&with, "llama3.2-3b");
+        assert!(a.tools_verified && a.capabilities.iter().any(|c| c == "tools"));
+        // Other models were not installed, so the registry still speaks for them.
+        assert!(!find(&with, "qwen3-32b").tools_verified);
     }
 
     #[test]

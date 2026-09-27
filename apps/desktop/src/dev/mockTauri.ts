@@ -67,11 +67,24 @@ async function realRuntimeStatus(): Promise<RuntimeStatus | null> {
       fetch("http://localhost:11434/api/version").then((r) => r.json()),
       fetch("http://localhost:11434/api/tags").then((r) => r.json()),
     ]);
-    return {
-      running: true,
-      version: version.version,
-      installedTags: (tags.models ?? []).map((m: { name: string }) => m.name),
-    };
+    const installedTags: string[] = (tags.models ?? []).map((m: { name: string }) =>
+      m.name.replace(/:latest$/, ""),
+    );
+    const capabilities: Record<string, string[]> = {};
+    await Promise.all(
+      installedTags.map(async (tag) => {
+        try {
+          const show = await fetch("http://localhost:11434/api/show", {
+            method: "POST",
+            body: JSON.stringify({ model: tag }),
+          }).then((r) => r.json());
+          if (Array.isArray(show.capabilities)) capabilities[tag] = show.capabilities;
+        } catch {
+          /* unknown, not "none" */
+        }
+      }),
+    );
+    return { running: true, version: version.version, installedTags, capabilities };
   } catch {
     return null;
   }
@@ -88,20 +101,21 @@ interface Row {
   quality: number;
   score: number;
   excluded: string | null;
+  caps: string[];
 }
 
 const ROWS: Row[] = [
-  { id: "qwen3-32b", name: "Qwen3 32B", quant: "Q4_K_M", tag: "qwen3:32b", mem: 21.9, tps: 11, fit: "tight", quality: 8.6, score: 78, excluded: null },
-  { id: "gemma3-27b", name: "Gemma 3 27B", quant: "Q4_K_M", tag: "gemma3:27b", mem: 18.6, tps: 14, fit: "comfortable", quality: 8.3, score: 84, excluded: null },
-  { id: "qwen3-30b-a3b", name: "Qwen3 30B A3B", quant: "Q4_K_M", tag: "qwen3:30b-a3b", mem: 19.8, tps: 58, fit: "comfortable", quality: 8.2, score: 88, excluded: null },
-  { id: "qwen2.5-coder-14b", name: "Qwen2.5 Coder 14B", quant: "Q4_K_M", tag: "qwen2.5-coder:14b", mem: 10.4, tps: 24, fit: "comfortable", quality: 7.9, score: 81, excluded: null },
-  { id: "phi4-14b", name: "Phi-4 14B", quant: "Q4_K_M", tag: "phi4:14b", mem: 10.1, tps: 25, fit: "comfortable", quality: 7.8, score: 80, excluded: null },
-  { id: "llama3.1-8b", name: "Llama 3.1 8B", quant: "Q4_K_M", tag: "llama3.1:8b", mem: 6.2, tps: 42, fit: "comfortable", quality: 7.3, score: 76, excluded: null },
-  { id: "qwen3-4b", name: "Qwen3 4B", quant: "Q4_K_M", tag: "qwen3:4b", mem: 3.6, tps: 78, fit: "comfortable", quality: 7.2, score: 74, excluded: null },
-  { id: "llama3.2-3b", name: "Llama 3.2 3B", quant: "Q4_K_M", tag: "llama3.2:3b", mem: 2.9, tps: 96, fit: "comfortable", quality: 6.6, score: 69, excluded: null },
-  { id: "llama3.3-70b", name: "Llama 3.3 70B", quant: "Q4_K_M", tag: "llama3.3:70b", mem: 44.2, tps: 5, fit: "toobig", quality: 8.9, score: 0, excluded: "needs ~44 GB, your usable memory is 26 GB" },
-  { id: "qwen3-235b", name: "Qwen3 235B A22B", quant: "Q4_K_M", tag: null, mem: 142.0, tps: 8, fit: "toobig", quality: 9.3, score: 0, excluded: "needs ~142 GB, your usable memory is 26 GB" },
-  { id: "deepseek-r1-70b", name: "DeepSeek-R1 70B", quant: "Q4_K_M", tag: "deepseek-r1:70b", mem: 44.9, tps: 5, fit: "toobig", quality: 9.0, score: 0, excluded: "needs ~45 GB, your usable memory is 26 GB" },
+  { id: "qwen3-32b", name: "Qwen3 32B", quant: "Q4_K_M", tag: "qwen3:32b", mem: 21.9, tps: 11, fit: "tight", quality: 8.6, score: 78, excluded: null, caps: ["chat", "reasoning", "tools"] },
+  { id: "gemma3-27b", name: "Gemma 3 27B", quant: "Q4_K_M", tag: "gemma3:27b", mem: 18.6, tps: 14, fit: "comfortable", quality: 8.3, score: 84, excluded: null, caps: ["chat", "vision"] },
+  { id: "qwen3-30b-a3b", name: "Qwen3 30B A3B", quant: "Q4_K_M", tag: "qwen3:30b-a3b", mem: 19.8, tps: 58, fit: "comfortable", quality: 8.2, score: 88, excluded: null, caps: ["chat", "reasoning", "tools"] },
+  { id: "qwen2.5-coder-14b", name: "Qwen2.5 Coder 14B", quant: "Q4_K_M", tag: "qwen2.5-coder:14b", mem: 10.4, tps: 24, fit: "comfortable", quality: 7.9, score: 81, excluded: null, caps: ["chat", "coding", "tools"] },
+  { id: "phi4-14b", name: "Phi-4 14B", quant: "Q4_K_M", tag: "phi4:14b", mem: 10.1, tps: 25, fit: "comfortable", quality: 7.8, score: 80, excluded: null, caps: ["chat"] },
+  { id: "llama3.1-8b", name: "Llama 3.1 8B", quant: "Q4_K_M", tag: "llama3.1:8b", mem: 6.2, tps: 42, fit: "comfortable", quality: 7.3, score: 76, excluded: null, caps: ["chat", "tools"] },
+  { id: "qwen3-4b", name: "Qwen3 4B", quant: "Q4_K_M", tag: "qwen3:4b", mem: 3.6, tps: 78, fit: "comfortable", quality: 7.2, score: 74, excluded: null, caps: ["chat", "reasoning", "tools"] },
+  { id: "llama3.2-3b", name: "Llama 3.2 3B", quant: "Q4_K_M", tag: "llama3.2:3b", mem: 2.9, tps: 96, fit: "comfortable", quality: 6.6, score: 69, excluded: null, caps: ["chat", "tools"] },
+  { id: "llama3.3-70b", name: "Llama 3.3 70B", quant: "Q4_K_M", tag: "llama3.3:70b", mem: 44.2, tps: 5, fit: "toobig", quality: 8.9, score: 0, excluded: "needs ~44 GB, your usable memory is 26 GB", caps: ["chat", "tools"] },
+  { id: "qwen3-235b", name: "Qwen3 235B A22B", quant: "Q4_K_M", tag: null, mem: 142.0, tps: 8, fit: "toobig", quality: 9.3, score: 0, excluded: "needs ~142 GB, your usable memory is 26 GB", caps: ["chat", "reasoning", "tools"] },
+  { id: "deepseek-r1-70b", name: "DeepSeek-R1 70B", quant: "Q4_K_M", tag: "deepseek-r1:70b", mem: 44.9, tps: 5, fit: "toobig", quality: 9.0, score: 0, excluded: "needs ~45 GB, your usable memory is 26 GB", caps: ["chat", "reasoning"] },
 ];
 
 // Rung name -> bytes per weight relative to Q4_K_M, from the real registry.
@@ -158,6 +172,8 @@ function toAssessment(r: Row, measured: boolean, ctxKv = 0): Assessment {
     qualitySource: "hand",
     score: r.score,
     excludedReason: r.excluded,
+    capabilities: r.caps,
+    toolsVerified: false,
     // Mirror the engine's ladder. Bytes per weight relative to Q4_K_M drive
     // both memory and speed, so the mock trades the same way the real one does.
     ladder: LADDER.map(([name, bpw]) => {
@@ -187,7 +203,11 @@ function recommendations(req: {
 }): Recommendations {
   const measured = req.measuredEffectiveBandwidthGbps != null;
   const ctxKv = ((req.contextLength - 8192) / 1024) * 0.12;
-  const all = ROWS.map((r) => toAssessment(r, measured, ctxKv));
+  const all = ROWS.map((r) => toAssessment(r, measured, ctxKv)).map((a) =>
+    req.objective === "agents" && !a.excludedReason && !a.capabilities.includes("tools")
+      ? { ...a, excludedReason: "no tool-calling support", score: 0 }
+      : a,
+  );
   const runnable = all.filter((a) => !a.excludedReason);
   if (scenario === "nofit" || runnable.length === 0) {
     return {
@@ -279,8 +299,16 @@ function adjustForHardware(
 
 const runtime: RuntimeStatus =
   scenario === "noruntime"
-    ? { running: false, version: null, installedTags: [] }
-    : { running: true, version: "0.11.4", installedTags: ["llama3.2:3b", "qwen3:4b"] };
+    ? { running: false, version: null, installedTags: [], capabilities: {} }
+    : {
+        running: true,
+        version: "0.11.4",
+        installedTags: ["llama3.2:3b", "qwen3:4b"],
+        capabilities: {
+          "llama3.2:3b": ["completion", "tools"],
+          "qwen3:4b": ["completion", "tools", "thinking"],
+        },
+      };
 
 const registryInfo: RegistryInfo = {
   version: "2026-08-25",

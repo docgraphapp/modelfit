@@ -14,6 +14,11 @@ pub struct RuntimeStatus {
     pub version: Option<String>,
     /// Installed model tags, normalized (":latest" stripped).
     pub installed_tags: Vec<String>,
+    /// What each installed model says it can do (`completion`, `tools`,
+    /// `thinking`, `vision`…), by normalized tag. A runtime too old to report
+    /// capabilities leaves its models out rather than claiming none.
+    #[serde(default)]
+    pub capabilities: std::collections::BTreeMap<String, Vec<String>>,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -150,7 +155,12 @@ impl RuntimeAdapter for Ollama {
                 .ok()
                 .and_then(|v| v["version"].as_str().map(String::from)),
             Err(_) => {
-                return RuntimeStatus { running: false, version: None, installed_tags: vec![] }
+                return RuntimeStatus {
+                    running: false,
+                    version: None,
+                    installed_tags: vec![],
+                    capabilities: Default::default(),
+                }
             }
         };
         let installed_tags = match self.client.get(format!("{}/api/tags", self.base)).send().await
@@ -162,7 +172,16 @@ impl RuntimeAdapter for Ollama {
                 .unwrap_or_default(),
             Err(_) => vec![],
         };
-        RuntimeStatus { running: true, version, installed_tags }
+        // One local request per installed model, all at once: a handful of
+        // tags, each answered from the runtime's own manifest.
+        let capabilities = futures_util::future::join_all(
+            installed_tags.iter().map(|t| async move { (t.clone(), self.capabilities(t).await) }),
+        )
+        .await
+        .into_iter()
+        .filter_map(|(t, caps)| Some((t, caps?)))
+        .collect();
+        RuntimeStatus { running: true, version, installed_tags, capabilities }
     }
 
     async fn pull(
@@ -231,6 +250,22 @@ impl RuntimeAdapter for Ollama {
 }
 
 impl Ollama {
+    /// The capabilities the runtime reports for an installed model, or `None`
+    /// when it did not say (older Ollama, or the request failed).
+    async fn capabilities(&self, tag: &str) -> Option<Vec<String>> {
+        let v: serde_json::Value = self
+            .client
+            .post(format!("{}/api/show", self.base))
+            .json(&serde_json::json!({ "model": tag }))
+            .send()
+            .await
+            .ok()?
+            .json()
+            .await
+            .ok()?;
+        parse_capabilities(&v)
+    }
+
     async fn generate(
         &self,
         tag: &str,
@@ -256,6 +291,14 @@ impl Ollama {
         }
         resp.json().await.map_err(|e| format!("bad generate response: {e}"))
     }
+}
+
+/// `capabilities` from an `/api/show` response. Absent — not empty — when the
+/// runtime predates the field, so "unknown" never reads as "can't".
+fn parse_capabilities(show: &serde_json::Value) -> Option<Vec<String>> {
+    show.get("capabilities")?
+        .as_array()
+        .map(|a| a.iter().filter_map(|c| c.as_str().map(String::from)).collect())
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -405,6 +448,17 @@ mod tests {
                 q.file_size_gb
             );
         }
+    }
+
+    #[test]
+    fn capabilities_are_unknown_when_the_runtime_is_silent() {
+        let show = serde_json::json!({ "capabilities": ["completion", "tools"] });
+        assert_eq!(
+            parse_capabilities(&show),
+            Some(vec!["completion".to_string(), "tools".to_string()])
+        );
+        // An older Ollama has no field: that is "unknown", not "no tools".
+        assert_eq!(parse_capabilities(&serde_json::json!({ "license": "" })), None);
     }
 
     #[test]

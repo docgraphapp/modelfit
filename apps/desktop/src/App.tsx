@@ -66,14 +66,53 @@ function loadMeasurements(): Measurements {
   }
 }
 
-type Objective = "overall" | "quality" | "speed" | "coding";
+type Objective = "overall" | "quality" | "speed" | "coding" | "agents";
 
 const OBJECTIVES: { id: Objective; label: string }[] = [
   { id: "overall", label: "Overall" },
   { id: "quality", label: "Quality" },
   { id: "speed", label: "Speed" },
   { id: "coding", label: "Coding" },
+  { id: "agents", label: "Agents" },
 ];
+
+// Agent prompts carry a system prompt, tool schemas and every tool result, so
+// the Agents objective starts at a context that can hold a real task.
+const AGENTS_MIN_CONTEXT = 32768;
+
+// Shown in this order; `chat` is left out because every model has it.
+const CAPABILITIES: { id: string; label: string; hint: string }[] = [
+  { id: "tools", label: "tools", hint: "Accepts a tools list — can drive an agent or MCP client" },
+  { id: "reasoning", label: "reasoning", hint: "Thinks step by step before answering" },
+  { id: "vision", label: "vision", hint: "Reads images as well as text" },
+  { id: "coding", label: "coding", hint: "Tuned or strong at writing code" },
+];
+
+function CapabilityChips({ a, className = "" }: { a: Assessment; className?: string }) {
+  const caps = CAPABILITIES.filter((c) => a.capabilities?.includes(c.id));
+  if (caps.length === 0) return null;
+  return (
+    <span className={`inline-flex flex-wrap gap-1 ${className}`}>
+      {caps.map((c) => {
+        const verified = c.id === "tools" && a.toolsVerified;
+        return (
+          <span
+            key={c.id}
+            title={verified ? `${c.hint}. Confirmed by your installed copy.` : c.hint}
+            className={`cursor-help rounded px-1.5 py-px text-[10px] font-medium ${
+              c.id === "tools"
+                ? "bg-violet-100 text-violet-700 dark:bg-violet-950 dark:text-violet-300"
+                : "bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400"
+            }`}
+          >
+            {c.label}
+            {verified && <span aria-label="confirmed by your installed copy"> ✓</span>}
+          </span>
+        );
+      })}
+    </span>
+  );
+}
 
 const CONTEXTS = [4096, 8192, 16384, 32768, 65536, 131072];
 
@@ -378,6 +417,7 @@ function HeroPick({
         <span className="text-[13px] text-neutral-400 dark:text-neutral-500">
           <Term id="quantization">{a.quant}</Term>
         </span>
+        <CapabilityChips a={a} />
       </div>
       <div className="mt-4 flex gap-8">
         <div>
@@ -596,8 +636,9 @@ function MiniPick({
         </span>
       </div>
       <div className="mt-2 text-[15px] font-semibold leading-snug">{a.name}</div>
-      <div className="text-xs text-neutral-400">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-neutral-400">
         <Term id="quantization">{a.quant}</Term>
+        <CapabilityChips a={a} />
       </div>
       <div className="mt-3 text-[13px] tabular-nums text-neutral-500 dark:text-neutral-400">
         <Num e={a.speed}>~{Math.round(a.speed.value)} tok/s</Num> ·{" "}
@@ -1107,6 +1148,8 @@ export default function App() {
   calibrationRef.current = calibration;
   const measurementsRef = useRef(measurements);
   measurementsRef.current = measurements;
+  const runtimeRef = useRef(runtime);
+  runtimeRef.current = runtime;
   const recomputeSeq = useRef(0);
 
   const recompute = useCallback(
@@ -1127,6 +1170,7 @@ export default function App() {
           measuredEffectiveBandwidthGbps: c?.effectiveBandwidthGbps ?? null,
           measuredTokPerSec: meas ?? measurementsRef.current,
           measuredPrefillCapacity: c?.prefillCapacity ?? null,
+          runtimeCapabilities: runtimeRef.current?.capabilities ?? {},
         },
       })
         .then((r) => {
@@ -1233,7 +1277,23 @@ export default function App() {
     return () => cancelAnimationFrame(id);
   }, [pendingUpdate]);
 
+  // Runtime status lands after the first ranking, and again after every
+  // install. What installed models say they can do settles their `tools`
+  // tag, so the ranking is redone whenever that answer changes.
+  const runtimeCapsKey = JSON.stringify(runtime?.capabilities ?? {});
+  const lastCapsKey = useRef(runtimeCapsKey);
+  useEffect(() => {
+    if (runtimeCapsKey === lastCapsKey.current) return;
+    lastCapsKey.current = runtimeCapsKey;
+    if (hw) recompute(hw, objective, contextLength);
+    // Only a change in what the runtime reports should trigger this.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [runtimeCapsKey]);
+
   const update = (obj: Objective, ctx: number, hardware?: HardwareInfo) => {
+    if (obj === "agents" && objective !== "agents" && ctx < AGENTS_MIN_CONTEXT) {
+      ctx = AGENTS_MIN_CONTEXT;
+    }
     const machine = hardware ?? hw;
     setObjective(obj);
     setContextLength(ctx);
@@ -1560,7 +1620,8 @@ export default function App() {
                               </span>{" "}
                               <span className="text-neutral-400 dark:text-neutral-600">
                                 {a.quant}
-                              </span>
+                              </span>{" "}
+                              <CapabilityChips a={a} className="align-middle" />
                             </td>
                             <td
                               className={`whitespace-nowrap px-3 py-2.5 text-right tabular-nums ${

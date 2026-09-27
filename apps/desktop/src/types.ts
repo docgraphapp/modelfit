@@ -53,6 +53,10 @@ export interface Assessment {
   qualitySource: string | null;
   score: number;
   excludedReason: string | null;
+  /** chat / tools / vision / reasoning / coding. `tools` is corrected by the runtime when installed. */
+  capabilities: string[];
+  /** True when the installed model file confirmed `tools` rather than the registry. */
+  toolsVerified: boolean;
   /// Every quantization of this model, smallest first, assessed on this machine.
   ladder: QuantRung[];
 }
@@ -71,6 +75,8 @@ export interface RuntimeStatus {
   running: boolean;
   version: string | null;
   installedTags: string[];
+  /** Capabilities each installed model reports (Ollama /api/show), by tag. */
+  capabilities: Record<string, string[]>;
 }
 
 export interface Calibration {
