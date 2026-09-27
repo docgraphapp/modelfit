@@ -54,6 +54,22 @@ check(
     "m-Q4_K_M.gguf",
 )
 
+# --- gguf download records (ADR 0145 in DocGraph) ---------------------------
+# A downloader needs every shard, in order, each with the sha256 the HF tree
+# publishes; a bare byte count still matches but yields no hash.
+from build import FileFact  # noqa: E402
+
+HASHED = {
+    "m-Q6_K-00002-of-00002.gguf": FileFact(27, "b" * 64),
+    "m-Q6_K-00001-of-00002.gguf": FileFact(30, "a" * 64),
+}
+hit = find_quant_file(HASHED, "Q6_K")
+check("shards are listed in part order", [p for p, _, _ in hit.files],
+      ["m-Q6_K-00001-of-00002.gguf", "m-Q6_K-00002-of-00002.gguf"])
+check("each shard keeps its hash", [h for _, _, h in hit.files], ["a" * 64, "b" * 64])
+check("first shard is the load path", hit[0], "m-Q6_K-00001-of-00002.gguf")
+check("a bare size carries no hash", find_quant_file(FLAT, "Q6_K").files, [("m-Q6_K.gguf", 100, None)])
+
 # --- the two tiers ----------------------------------------------------------
 # The one rule the whole discovered tier rests on: an automated entry carries
 # no quality, so the app can never offer it as a pick.

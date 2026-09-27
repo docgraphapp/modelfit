@@ -133,10 +133,16 @@ def list_repo_files(repo: str) -> dict[str, FileFact]:
 SHARD_SUFFIX = r"(?:-\d{5}-of-\d{5})?"
 
 
-def find_quant_file(files: dict[str, FileFact], quant: str) -> QuantHit | None:
+def _fact(v: FileFact | int) -> FileFact:
+    """A bare byte count is accepted (the check script and older callers
+    pass one); it simply carries no hash."""
+    return v if isinstance(v, FileFact) else FileFact(int(v), None)
+
+
+def find_quant_file(files: dict[str, FileFact | int], quant: str) -> QuantHit | None:
     """The files of one quant and their total bytes, summing shards when it has any."""
     pattern = re.compile(rf"[-._]{re.escape(quant)}{SHARD_SUFFIX}\.gguf$", re.IGNORECASE)
-    matches = [(p, f) for p, f in files.items() if pattern.search(p)]
+    matches = [(p, _fact(f)) for p, f in files.items() if pattern.search(p)]
     if not matches:
         return None
     plain = [(p, f) for p, f in matches if not re.search(r"-\d{5}-of-\d{5}\.gguf$", p)]
