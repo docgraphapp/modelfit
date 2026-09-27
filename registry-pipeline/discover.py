@@ -75,7 +75,10 @@ WANTED_QUANTS = list(QUANT_ORDER)
 # (HunyuanOCR), both of which sailed through labelled "chat" because nothing in
 # their names says otherwise. A repo that declares no task at all is excluded
 # too — we cannot vouch for what we cannot identify.
-GENERATIVE_PIPELINES = {"text-generation", "image-text-to-text"}
+# `any-to-any` is Hugging Face's newer label for multimodal chat models
+# (Gemma 4 among them): text and images in, text out, same as the others.
+GENERATIVE_PIPELINES = {"text-generation", "image-text-to-text", "any-to-any"}
+MULTIMODAL_PIPELINES = {"image-text-to-text", "any-to-any"}
 
 # Guard rails on what is worth listing at all.
 MIN_PARAMS_B = 0.4
@@ -224,7 +227,27 @@ def is_moe(meta: dict, architecture: str) -> bool:
     return "moe" in (architecture or "").lower()
 
 
-def capabilities_for(info: dict) -> list[str]:
+def task_of(info: dict, base: str | None, fetch=http_json_maybe) -> str | None:
+    """What the model is for, as Hugging Face labels it.
+
+    GGUF repos increasingly ship without a `pipeline_tag` of their own, so a
+    repo that is silent inherits its base model's — the weights are the same
+    and so is the task. Failing both, a GGUF whose header carries a chat
+    template was built to be chatted with. Only a repo that says nothing on
+    any of the three counts is unknown.
+    """
+    if info.get("pipeline_tag"):
+        return info["pipeline_tag"]
+    if base:
+        upstream = fetch(f"https://huggingface.co/api/models/{base}") or {}
+        if upstream.get("pipeline_tag"):
+            return upstream["pipeline_tag"]
+    if (info.get("gguf") or {}).get("chat_template"):
+        return "text-generation"
+    return None
+
+
+def capabilities_for(info: dict, task: str | None = None) -> list[str]:
     """Only what the repo actually claims. No inference from the model name."""
     caps = ["chat"]
     tags = {t.lower() for t in info.get("tags", [])}
@@ -235,7 +258,7 @@ def capabilities_for(info: dict) -> list[str]:
         caps.append("coding")
     if "reasoning" in tags or "-r1" in name or "think" in name:
         caps.append("reasoning")
-    if info.get("pipeline_tag") == "image-text-to-text":
+    if (task or info.get("pipeline_tag")) in MULTIMODAL_PIPELINES:
         caps.append("vision")
     # Tool calling is a property of the chat template, not the weights: a
     # template that renders a `tools` list is one a runtime can pass tools to.
@@ -259,13 +282,12 @@ def probe(repo: str, info: dict, offline: bool) -> tuple[dict | None, str | None
     # A GGUF conversion that does not say what it was converted from is not
     # something we can name, dedupe, or vouch for — placeholder and redirect
     # repos look exactly like models until you ask this question.
-    pipeline = info.get("pipeline_tag")
-    if pipeline not in GENERATIVE_PIPELINES:
-        return None, f"{repo}: task is {pipeline!r}, not a model you chat with"
-
     base = base_model_of(info)
     if not base:
         return None, f"{repo}: does not declare a base model"
+    pipeline = task_of(info, base)
+    if pipeline not in GENERATIVE_PIPELINES:
+        return None, f"{repo}: task is {pipeline!r}, not a model you chat with"
     if EFFECTIVE_PARAM_NAME.search(base) or EFFECTIVE_PARAM_NAME.search(repo):
         return None, f"{repo}: effective-parameter variant — needs curated numbers"
     arch = g.get("architecture") or ""
@@ -301,7 +323,7 @@ def probe(repo: str, info: dict, offline: bool) -> tuple[dict | None, str | None
         "family": family_of(arch, base),
         "parameters_b": params_b,
         "max_context": context,
-        "capabilities": capabilities_for(info),
+        "capabilities": capabilities_for(info, pipeline),
         # Deliberately absent: nothing here rates a model. See the module docs.
         "quality": None,
         "ollama_tag": None,
@@ -392,7 +414,10 @@ def discover(
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=90, help="max models to emit")
-    ap.add_argument("--per-author", type=int, default=60, help="repos to consider per publisher")
+    # Wide on purpose: a publisher's top repos are dominated by whichever family
+    # is shipping most right now, and the family cap throws those away later.
+    # At 60 the window held little else, and the tier fell from 59 to 30.
+    ap.add_argument("--per-author", type=int, default=250, help="repos to consider per publisher")
     ap.add_argument("--min-downloads", type=int, default=5000)
     ap.add_argument(
         "--per-family",

@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "registry-pipeline"))
 
 from build import find_quant_file, quality_of, validate  # noqa: E402
+from discover import capabilities_for, task_of  # noqa: E402
 
 failures: list[str] = []
 
@@ -99,6 +100,30 @@ bogus = validate(one_model(quality={"general": 7, "coding": 6, "source": "vibes"
 check("an unknown quality source is rejected", len(bogus), 1)
 out_of_range = validate(one_model(quality={"general": 99, "coding": 6, "source": "hand"}))
 check("an impossible score is rejected", len(out_of_range), 1)
+
+# --- task resolution --------------------------------------------------------
+# Hugging Face stopped labelling many GGUF repos, and treating "no label" as
+# "not a chat model" cut the discovered tier from 59 entries to 18.
+upstream = {"https://huggingface.co/api/models/org/Base": {"pipeline_tag": "image-text-to-text"}}
+fetch = upstream.get
+check("a repo's own label wins", task_of({"pipeline_tag": "text-generation"}, "org/Base", fetch), "text-generation")
+check("a silent repo inherits its base model's task", task_of({}, "org/Base", fetch), "image-text-to-text")
+check(
+    "a chat template means a chat model",
+    task_of({"gguf": {"chat_template": "{{ messages }}"}}, "org/Other", fetch),
+    "text-generation",
+)
+check("silent everywhere stays unknown", task_of({}, None, fetch), None)
+check(
+    "any-to-any is a multimodal chat model",
+    "vision" in capabilities_for({"id": "org/x-GGUF"}, "any-to-any"),
+    True,
+)
+check(
+    "an inherited vision task is a vision capability",
+    "vision" in capabilities_for({"id": "org/x-GGUF"}, "image-text-to-text"),
+    True,
+)
 
 if failures:
     for f in failures:
