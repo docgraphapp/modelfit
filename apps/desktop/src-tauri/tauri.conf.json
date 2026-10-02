@@ -42,6 +42,8 @@
   },
   "bundle": {
     "active": true,
+    "copyright": "Copyright © 2026 DocGraph (docgraph.app). MIT License.",
+    "resources": ["resources/THIRD-PARTY-NOTICES.md"],
     "targets": "all",
     "icon": [
       "icons/32x32.png",

@@ -1,0 +1,36 @@
+# cargo-deny — licence gate for everything ModelFit ships (audit 2026-10-02).
+# Run from the repo root: `cargo deny check licenses`. CI runs it on every push.
+# Permissive-only allow-list (MPL-2.0 is file-scoped copyleft: fine unmodified).
+# A crate outside it fails the build; add a licence here only after reading it.
+
+[graph]
+all-features = false
+
+[licenses]
+confidence-threshold = 0.8
+unused-allowed-license = "allow"
+allow = [
+  "MIT",
+  "MIT-0",
+  "Apache-2.0",
+  "Apache-2.0 WITH LLVM-exception",
+  "BSD-2-Clause",
+  "BSD-3-Clause",
+  "0BSD",
+  "ISC",
+  "Zlib",
+  "CC0-1.0",
+  "Unlicense",
+  "BSL-1.0",
+  "MPL-2.0",
+  "Unicode-3.0",
+  "CDLA-Permissive-2.0",
+]
+private = { ignore = true }
+
+[bans]
+multiple-versions = "allow"
+wildcards = "allow"
+
+[advisories]
+ignore = []

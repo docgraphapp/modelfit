@@ -1,0 +1,40 @@
+name: Licences
+
+# Licence gate (audit 2026-10-02): everything the desktop app ships must stay
+# under a permissive licence, and the bundled THIRD-PARTY-NOTICES.md must match
+# the dependency tree. Network only for fetching crate/npm metadata.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  licences:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install frontend deps
+        working-directory: apps/desktop
+        run: npm ci
+
+      - name: Cargo licences (cargo-deny)
+        uses: EmbarkStudios/cargo-deny-action@v2
+        with:
+          command: check licenses
+
+      - name: npm licences (shipped closure)
+        run: node scripts/check-npm-licenses.mjs
+
+      - name: Third-party notices up to date
+        run: node scripts/gen-third-party-notices.mjs --check

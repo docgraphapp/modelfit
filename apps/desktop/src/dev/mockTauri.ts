@@ -31,7 +31,7 @@ const hw: HardwareInfo = {
 // url params control which scenario renders:
 //   ?scenario=nofit|noruntime|update|update-fail
 // With no scenario, real data from `cargo run -p modelfit-recommendation
-// --example probe > public/machine.json` (if present) plus the live local
+// --example probe > dev-data/machine.json` (dev server only; never bundled) plus the live local
 // Ollama replace the synthetic fixtures.
 const params = new URLSearchParams(location.search);
 const scenario = params.get("scenario");
