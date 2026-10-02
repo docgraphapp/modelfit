@@ -375,7 +375,7 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
         ["Memory", `${machine.totalRamGb} GB${machine.unifiedMemory ? " unified" : ""}`],
         ["Benchmark", cal ? `${cal.modelTag} · ${Math.round(cal.genTokPerSec)} tok/s` : "not run"],
       ];
-      return `### ModelFit diagnostics\n\n| | |\n|---|---|\n${rows
+      return `### DocGraph ModelFit diagnostics\n\n| | |\n|---|---|\n${rows
         .map(([k, v]) => `| ${k} | ${v} |`)
         .join("\n")}\n`;
     }

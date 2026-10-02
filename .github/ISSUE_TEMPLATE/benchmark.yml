@@ -1,12 +1,12 @@
 name: Benchmark result
-description: Share a measured tokens/sec result from ModelFit's calibration benchmark.
+description: Share a measured tokens/sec result from DocGraph ModelFit's calibration benchmark.
 title: "[benchmark] "
 labels: ["benchmark"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for sharing. These fields are prefilled by ModelFit's
+        Thanks for sharing. These fields are prefilled by DocGraph ModelFit's
         **Share my benchmark** button — you should not need to edit them.
 
         Everything here is hardware and timing data. Nothing is sent until you

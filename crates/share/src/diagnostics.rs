@@ -138,7 +138,7 @@ pub fn build_diagnostics(d: &Diagnostics) -> String {
         },
     ));
 
-    let mut out = String::from("### ModelFit diagnostics\n\n| | |\n|---|---|\n");
+    let mut out = String::from("### DocGraph ModelFit diagnostics\n\n| | |\n|---|---|\n");
     for (k, v) in rows {
         // A stray pipe from a chip or tag name would split the row.
         out.push_str(&format!("| {} | {} |\n", k, v.replace('|', "\\|")));

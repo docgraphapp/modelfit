@@ -211,7 +211,7 @@ export const GLOSSARY = {
   runtimeManager: {
     title: "Runtime manager",
     brief:
-      "The layer above a runtime: it reads the hardware, works out which models and backends suit it, and configures the rest. It's the category ModelFit is in.",
+      "The layer above a runtime: it reads the hardware, works out which models and backends suit it, and configures the rest. It's the category DocGraph ModelFit is in.",
     anchor: "runtime-manager",
     post: "runtimes",
   },

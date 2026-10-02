@@ -2,14 +2,14 @@
 
 Audit date: 2026-10-02. Re-run before any paid offering or major dependency change.
 
-## ModelFit's own licence
+## DocGraph ModelFit's own licence
 
 MIT (see `LICENSE`, copyright DocGraph). Anyone may use, fork and redistribute
 the code, including commercially, as long as the copyright notice is kept.
 
 ## Third-party components
 
-- **Nothing ModelFit ships is copyleft beyond MPL-2.0.** The only MPL crate in the
+- **Nothing DocGraph ModelFit ships is copyleft beyond MPL-2.0.** The only MPL crate in the
   binary is `option-ext` (via `dirs` → tauri), unmodified, which MPL allows in
   any project; its source is linked from the notices file. No GPL, AGPL, LGPL-only,
   SSPL, BUSL or non-commercial licence anywhere in the shipped tree.
@@ -20,7 +20,7 @@ the code, including commercially, as long as the copyright notice is kept.
   (allow-list in `deny.toml`), `scripts/check-npm-licenses.mjs` (the shipped npm
   closure plus Tailwind, whose CSS is emitted into the bundle), and the notices
   `--check`. Add a licence to an allow-list only after reading it.
-- **Not redistributed by ModelFit:** model weights (pulled by the user's own
+- **Not redistributed by DocGraph ModelFit:** model weights (pulled by the user's own
   Ollama under each model's licence, e.g. Llama Community, Gemma Terms) and
   Ollama itself. The bundled `registry/registry.json` holds factual metadata
   (sizes, hashes, context lengths) plus our own quality scores, no weights or
@@ -30,7 +30,7 @@ the code, including commercially, as long as the copyright notice is kept.
 
 ## Export control
 
-ModelFit uses only standard, published cryptography: TLS (rustls / OS) and
+DocGraph ModelFit uses only standard, published cryptography: TLS (rustls / OS) and
 Ed25519 signature verification of updates (`minisign-verify`, via the Tauri
 updater). No encryption of user data. This is mass-market, authentication-only
 use: EU Regulation 2021/821 Category 5 Part 2 Note 3, and US EAR 5D992.c /

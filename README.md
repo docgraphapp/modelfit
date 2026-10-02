@@ -1,8 +1,8 @@
-# ModelFit
+# DocGraph ModelFit
 
 **Find the best AI model for your machine.**
 
-ModelFit is a small, fast desktop app that inspects your hardware and tells you
+DocGraph ModelFit is a small, fast desktop app that inspects your hardware and tells you
 which local LLMs you can realistically run — at what quantization, context
 length, and expected speed — with one-click install into Ollama.
 
@@ -11,7 +11,7 @@ length, and expected speed — with one-click install into Ollama.
 ## Why
 
 "Can my machine run Qwen3 32B?" is answered today by Reddit threads and VRAM
-calculators. Most tools stop at *does it fit*. ModelFit answers the three
+calculators. Most tools stop at *does it fit*. DocGraph ModelFit answers the three
 questions that actually matter:
 
 1. **Can the model run?** — weights + KV cache + overhead vs. your usable memory

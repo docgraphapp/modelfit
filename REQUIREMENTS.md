@@ -1,6 +1,6 @@
-# ModelFit — Requirements & Tech Stack
+# DocGraph ModelFit — Requirements & Tech Stack
 
-**Positioning:** *ModelFit — Find the best AI model for your machine.*
+**Positioning:** *DocGraph ModelFit — Find the best AI model for your machine.*
 
 A cross-platform desktop app that inspects your machine and tells you the best local LLMs you can realistically run — and at what quantization, context length, and expected speed — with one-click install.
 
@@ -33,7 +33,7 @@ Output is always three picks, not one: **BEST** (top score), **SAFE** (comfortab
 The name and architecture are deliberately model-type-agnostic. The engine is generic "memory + throughput vs hardware" math, and the registry already carries `capabilities` — so expansion is new registry entries plus scoring presets, not a new engine:
 
 ```
-ModelFit
+DocGraph ModelFit
 ├── LLMs                (v1)
 ├── Embedding models    (near-free: same runtimes, same math)
 ├── Vision/multimodal   (same runtimes)
@@ -191,7 +191,7 @@ Sidebar: Dashboard · Hardware · Models · Benchmarks · Downloads · Settings.
 | HTTP | `reqwest` + `tokio` | Ollama API, registry fetch, GGUF header range-requests |
 | Local storage | JSON cache → `rusqlite` when needed | |
 | Inference runtime | **Ollama adapter (v1)** behind a runtime trait; llama.cpp-direct = v2 adapter | Ollama *is* llama.cpp with the GPU build matrix already solved; don't own CUDA/ROCm/Vulkan builds in v1 |
-| Model registry hosting | Static JSON on **Cloudflare Pages/R2** under **docgraph.app** | ModelFit is a DocGraph-family product; registry at a stable versioned URL (e.g. `modelfit.docgraph.app/registry/v1/registry.json`), same account/wrangler flow as the existing sites |
+| Model registry hosting | Static JSON on **Cloudflare Pages/R2** under **docgraph.app** | DocGraph ModelFit is a DocGraph-family product; registry at a stable versioned URL (e.g. `modelfit.docgraph.app/registry/v1/registry.json`), same account/wrangler flow as the existing sites |
 | Registry pipeline | **Python** (server-side/CI only): `huggingface_hub` metadata, GGUF sizes, benchmark-score ingestion → emits `registry.json` | Python where its ecosystem wins; never shipped to users |
 | CI/CD | GitHub Actions | Build matrix + registry pipeline |
 

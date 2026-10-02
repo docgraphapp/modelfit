@@ -1,6 +1,6 @@
 # Third-party notices
 
-ModelFit is MIT-licensed (see its LICENSE) and is built on open-source
+DocGraph ModelFit is MIT-licensed (see its LICENSE) and is built on open-source
 components. This file reproduces the copyright and permission notices
 those components require to be distributed with the software. Each
 component remains governed by its own licence, reproduced below.

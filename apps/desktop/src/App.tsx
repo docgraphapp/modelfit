@@ -792,7 +792,7 @@ function Brand({ ready }: { ready: boolean }) {
         </svg>
       </span>
       <div className="leading-tight">
-        <h1 className="text-[15px] font-semibold tracking-tight">ModelFit</h1>
+        <h1 className="text-[15px] font-semibold tracking-tight">DocGraph ModelFit</h1>
         <p className="text-[11px] text-neutral-400 dark:text-neutral-500">
           The best AI model for your machine
         </p>
@@ -1068,7 +1068,7 @@ function UpdateBanner({
           <>Couldn't install the update{error ? `: ${error}` : "."}</>
         ) : (
           <>
-            ModelFit {info.version} is available
+            DocGraph ModelFit {info.version} is available
             <span className="text-blue-700/70 dark:text-blue-200/60">
               {" "}
               · you have {info.currentVersion}
@@ -1707,7 +1707,7 @@ export default function App() {
                   {SHARE_BENCHMARK_ENABLED && calibration && !benchmarking && (
                     <button
                       onClick={openShare}
-                      title="Publish this result to ModelFit's public benchmark collection on GitHub"
+                      title="Publish this result to DocGraph ModelFit's public benchmark collection on GitHub"
                       className="rounded-lg border border-neutral-200 px-3 py-1 font-medium text-neutral-600 hover:border-neutral-400 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500"
                     >
                       Share my benchmark
@@ -1788,7 +1788,7 @@ export default function App() {
                   <button
                     onClick={checkForUpdate}
                     disabled={checkingUpdate}
-                    title="Check whether a newer version of ModelFit is available"
+                    title="Check whether a newer version of DocGraph ModelFit is available"
                     className="font-medium text-neutral-500 underline decoration-neutral-300 hover:text-neutral-700 disabled:opacity-50 dark:text-neutral-400 dark:hover:text-neutral-200"
                   >
                     {checkingUpdate ? "checking…" : "Check for updates"}
