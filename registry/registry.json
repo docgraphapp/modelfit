@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "2026-10-05",
+  "version": "2026-10-06",
   "models": [
     {
       "id": "qwen3-0.6b",
@@ -711,6 +711,186 @@
         }
       },
       "ollamaTag": "qwen3:4b"
+    },
+    {
+      "id": "qwen3.5-4b",
+      "name": "Qwen3.5 4B",
+      "family": "qwen",
+      "parametersB": 4.21,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "reasoning",
+        "vision",
+        "coding",
+        "tools"
+      ],
+      "quality": {
+        "general": 7.5,
+        "coding": 7.0,
+        "source": "hand"
+      },
+      "quantizations": {
+        "Q3_K_M": {
+          "fileSizeGb": 2.14,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q3_K_M",
+          "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-4B-Q3_K_M.gguf",
+                "sizeBytes": 2293388448,
+                "sha256": "d6981ab4d77ba712b48ef69d69042d75b5e39b9dce5fb5a5b054fd08e06afb95"
+              }
+            ]
+          },
+          "kvSource": "gguf"
+        },
+        "Q4_K_M": {
+          "fileSizeGb": 2.55,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "qwen3.5:4b-q4_K_M",
+          "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-4B-Q4_K_M.gguf",
+                "sizeBytes": 2740937888,
+                "sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4"
+              }
+            ]
+          },
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.93,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-4B-Q5_K_M.gguf",
+                "sizeBytes": 3143656608,
+                "sha256": "8814232b85594dcd46c50e5b8b29324a7efe9e746edbe8a3d1df3d3fce7aad39"
+              }
+            ]
+          },
+          "kvSource": "gguf"
+        },
+        "Q6_K": {
+          "fileSizeGb": 3.28,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q6_K",
+          "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-4B-Q6_K.gguf",
+                "sizeBytes": 3525956768,
+                "sha256": "fdedd781c9ce676ab66b018ca247ff78e8a33c98098a822c1e2d5075e7718f66"
+              }
+            ]
+          },
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 4.17,
+          "kvCacheGbPer1kCtx": 0.134,
+          "ollamaTag": "qwen3.5:4b-q8_0",
+          "sizeSource": "hf",
+          "gguf": {
+            "repo": "unsloth/Qwen3.5-4B-GGUF",
+            "files": [
+              {
+                "path": "Qwen3.5-4B-Q8_0.gguf",
+                "sizeBytes": 4482403488,
+                "sha256": "10cc391b403021dd11c614679d2fd92f611c3681d29e29651b717316965d61e1"
+              }
+            ]
+          },
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": "qwen3.5:4b"
+    },
+    {
+      "id": "ministral-3-3b-reasoning-2512",
+      "name": "Ministral 3 3B Reasoning",
+      "family": "mistral",
+      "parametersB": 3.43,
+      "activeParametersB": null,
+      "maxContext": 262144,
+      "capabilities": [
+        "chat",
+        "reasoning",
+        "tools"
+      ],
+      "quality": {
+        "general": 6.8,
+        "coding": 6.3,
+        "source": "hand"
+      },
+      "quantizations": {
+        "Q4_K_M": {
+          "fileSizeGb": 2.0,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Reasoning-2512-GGUF:Q4_K_M",
+          "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-3B-Reasoning-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Reasoning-2512-Q4_K_M.gguf",
+                "sizeBytes": 2147021472,
+                "sha256": "7e9516cc01a039bb3e2d41227cdf388849bc1c942c4624c84567b1684cd9c0fc"
+              }
+            ]
+          },
+          "kvSource": "gguf"
+        },
+        "Q5_K_M": {
+          "fileSizeGb": 2.3,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Reasoning-2512-GGUF:Q5_K_M",
+          "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-3B-Reasoning-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Reasoning-2512-Q5_K_M.gguf",
+                "sizeBytes": 2474177184,
+                "sha256": "631464379def1f0e31c4bfdd43fe34be46e842c90d71b9e38b5b1e27ffef7db5"
+              }
+            ]
+          },
+          "kvSource": "gguf"
+        },
+        "Q8_0": {
+          "fileSizeGb": 3.4,
+          "kvCacheGbPer1kCtx": 0.109,
+          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Reasoning-2512-GGUF:Q8_0",
+          "sizeSource": "hf",
+          "gguf": {
+            "repo": "mistralai/Ministral-3-3B-Reasoning-2512-GGUF",
+            "files": [
+              {
+                "path": "Ministral-3-3B-Reasoning-2512-Q8_0.gguf",
+                "sizeBytes": 3652203168,
+                "sha256": "3220ac17e246f741f7371e8b0964c399f363a31f9acd2f9a3aacc3bb19fd6466"
+              }
+            ]
+          },
+          "kvSource": "gguf"
+        }
+      },
+      "ollamaTag": null
     },
     {
       "id": "gemma3-4b",
@@ -2783,108 +2963,6 @@
                 "path": "Muse-Glimmer-30B-Q8_0.gguf",
                 "sizeBytes": 29612957984,
                 "sha256": "f2c087d694ca8242a4a436076df7c041703ab051ac4b72bb1bfe2698299b0e86"
-              }
-            ]
-          },
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "qwen3.5-4b",
-      "name": "Qwen3.5 4B",
-      "family": "qwen",
-      "parametersB": 4.21,
-      "activeParametersB": null,
-      "maxContext": 262144,
-      "capabilities": [
-        "chat",
-        "vision",
-        "tools"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q3_K_M": {
-          "fileSizeGb": 2.14,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q3_K_M",
-          "sizeSource": "hf",
-          "gguf": {
-            "repo": "unsloth/Qwen3.5-4B-GGUF",
-            "files": [
-              {
-                "path": "Qwen3.5-4B-Q3_K_M.gguf",
-                "sizeBytes": 2293388448,
-                "sha256": "d6981ab4d77ba712b48ef69d69042d75b5e39b9dce5fb5a5b054fd08e06afb95"
-              }
-            ]
-          },
-          "kvSource": "gguf"
-        },
-        "Q4_K_M": {
-          "fileSizeGb": 2.55,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "gguf": {
-            "repo": "unsloth/Qwen3.5-4B-GGUF",
-            "files": [
-              {
-                "path": "Qwen3.5-4B-Q4_K_M.gguf",
-                "sizeBytes": 2740937888,
-                "sha256": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4"
-              }
-            ]
-          },
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 2.93,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "gguf": {
-            "repo": "unsloth/Qwen3.5-4B-GGUF",
-            "files": [
-              {
-                "path": "Qwen3.5-4B-Q5_K_M.gguf",
-                "sizeBytes": 3143656608,
-                "sha256": "8814232b85594dcd46c50e5b8b29324a7efe9e746edbe8a3d1df3d3fce7aad39"
-              }
-            ]
-          },
-          "kvSource": "gguf"
-        },
-        "Q6_K": {
-          "fileSizeGb": 3.28,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q6_K",
-          "sizeSource": "hf",
-          "gguf": {
-            "repo": "unsloth/Qwen3.5-4B-GGUF",
-            "files": [
-              {
-                "path": "Qwen3.5-4B-Q6_K.gguf",
-                "sizeBytes": 3525956768,
-                "sha256": "fdedd781c9ce676ab66b018ca247ff78e8a33c98098a822c1e2d5075e7718f66"
-              }
-            ]
-          },
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 4.17,
-          "kvCacheGbPer1kCtx": 0.134,
-          "ollamaTag": "hf.co/unsloth/Qwen3.5-4B-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "gguf": {
-            "repo": "unsloth/Qwen3.5-4B-GGUF",
-            "files": [
-              {
-                "path": "Qwen3.5-4B-Q8_0.gguf",
-                "sizeBytes": 4482403488,
-                "sha256": "10cc391b403021dd11c614679d2fd92f611c3681d29e29651b717316965d61e1"
               }
             ]
           },
@@ -6526,73 +6604,6 @@
                 "path": "NuExtract-v1.5-Q8_0.gguf",
                 "sizeBytes": 4061222560,
                 "sha256": "8cdf088a9d4b694619d8f42567802d6fe52a1bff1dae46e4c4d95304e45e5852"
-              }
-            ]
-          },
-          "kvSource": "gguf"
-        }
-      },
-      "ollamaTag": null
-    },
-    {
-      "id": "ministral-3-3b-reasoning-2512",
-      "name": "Ministral 3 3B Reasoning 2512",
-      "family": "mistral",
-      "parametersB": 3.43,
-      "activeParametersB": null,
-      "maxContext": 262144,
-      "capabilities": [
-        "chat",
-        "tools"
-      ],
-      "quality": null,
-      "quantizations": {
-        "Q4_K_M": {
-          "fileSizeGb": 2.0,
-          "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Reasoning-2512-GGUF:Q4_K_M",
-          "sizeSource": "hf",
-          "gguf": {
-            "repo": "mistralai/Ministral-3-3B-Reasoning-2512-GGUF",
-            "files": [
-              {
-                "path": "Ministral-3-3B-Reasoning-2512-Q4_K_M.gguf",
-                "sizeBytes": 2147021472,
-                "sha256": "7e9516cc01a039bb3e2d41227cdf388849bc1c942c4624c84567b1684cd9c0fc"
-              }
-            ]
-          },
-          "kvSource": "gguf"
-        },
-        "Q5_K_M": {
-          "fileSizeGb": 2.3,
-          "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Reasoning-2512-GGUF:Q5_K_M",
-          "sizeSource": "hf",
-          "gguf": {
-            "repo": "mistralai/Ministral-3-3B-Reasoning-2512-GGUF",
-            "files": [
-              {
-                "path": "Ministral-3-3B-Reasoning-2512-Q5_K_M.gguf",
-                "sizeBytes": 2474177184,
-                "sha256": "631464379def1f0e31c4bfdd43fe34be46e842c90d71b9e38b5b1e27ffef7db5"
-              }
-            ]
-          },
-          "kvSource": "gguf"
-        },
-        "Q8_0": {
-          "fileSizeGb": 3.4,
-          "kvCacheGbPer1kCtx": 0.109,
-          "ollamaTag": "hf.co/mistralai/Ministral-3-3B-Reasoning-2512-GGUF:Q8_0",
-          "sizeSource": "hf",
-          "gguf": {
-            "repo": "mistralai/Ministral-3-3B-Reasoning-2512-GGUF",
-            "files": [
-              {
-                "path": "Ministral-3-3B-Reasoning-2512-Q8_0.gguf",
-                "sizeBytes": 3652203168,
-                "sha256": "3220ac17e246f741f7371e8b0964c399f363a31f9acd2f9a3aacc3bb19fd6466"
               }
             ]
           },

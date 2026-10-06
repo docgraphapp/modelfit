@@ -136,6 +136,39 @@
     Q8_0:   { fallback_size_gb: 3.99 }
   fallback_kv_gb_per_1k: 0.11
 
+- id: qwen3.5-4b
+  name: Qwen3.5 4B
+  family: qwen
+  parameters_b: 4.21
+  max_context: 262144
+  capabilities: [chat, reasoning, vision, coding, tools]
+  quality: { general: 7.5, coding: 7.0 }
+  ollama_tag: qwen3.5:4b
+  ollama_quant_infix: ""
+  hf_repo: unsloth/Qwen3.5-4B-GGUF
+  quants:
+    Q3_K_M: { fallback_size_gb: 2.14 }
+    Q4_K_M: { fallback_size_gb: 2.55 }
+    Q5_K_M: { fallback_size_gb: 2.93 }
+    Q6_K:   { fallback_size_gb: 3.28 }
+    Q8_0:   { fallback_size_gb: 4.17 }
+  fallback_kv_gb_per_1k: 0.134
+
+- id: ministral-3-3b-reasoning-2512
+  name: Ministral 3 3B Reasoning
+  family: mistral
+  parameters_b: 3.43
+  max_context: 262144
+  capabilities: [chat, reasoning, tools]
+  quality: { general: 6.8, coding: 6.3 }
+  # No curated Ollama library tag for the reasoning variant; falls back to hf.co.
+  hf_repo: mistralai/Ministral-3-3B-Reasoning-2512-GGUF
+  quants:
+    Q4_K_M: { fallback_size_gb: 2.0 }
+    Q5_K_M: { fallback_size_gb: 2.3 }
+    Q8_0:   { fallback_size_gb: 3.4 }
+  fallback_kv_gb_per_1k: 0.109
+
 - id: gemma3-4b
   name: Gemma 3 4B
   family: gemma
