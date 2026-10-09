@@ -134,6 +134,7 @@ async fn update_registry(app: tauri::AppHandle) -> Result<RegistryInfo, String> 
         reg.models.iter().map(|m| m.id.clone()).collect()
     };
 
+    modelfit_runtime_adapters::ensure_tls_provider();
     let client = reqwest::Client::new();
     let mut last_err = String::from("no registry URL configured");
     for url in REGISTRY_URLS {

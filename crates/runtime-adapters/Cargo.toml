@@ -9,7 +9,11 @@ serde.workspace = true
 serde_json.workspace = true
 async-trait = "0.1"
 futures-util = "0.3"
-reqwest = { version = "0.12", default-features = false, features = ["json", "stream"] }
+# 0.13 with `rustls-no-provider` (not `rustls`, which drags in the aws-lc C
+# build) — same setup as DocGraph. Building a client with no rustls
+# CryptoProvider installed PANICS, so `ensure_tls_provider` installs ring first.
+reqwest = { version = "0.13", default-features = false, features = ["json", "stream", "rustls-no-provider"] }
+rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12", "logging"] }
 modelfit-registry = { path = "../registry" }
 
 [dev-dependencies]

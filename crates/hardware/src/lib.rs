@@ -84,7 +84,7 @@ pub fn detect() -> HardwareInfo {
         os_version: System::long_os_version().unwrap_or_default(),
         arch: std::env::consts::ARCH.to_string(),
         cpu_model,
-        physical_cores: sys.physical_core_count().unwrap_or(0),
+        physical_cores: System::physical_core_count().unwrap_or(0),
         logical_cores: sys.cpus().len(),
         total_ram_gb: round1(sys.total_memory() as f64 / GIB),
         available_ram_gb: round1(available_ram as f64 / GIB),

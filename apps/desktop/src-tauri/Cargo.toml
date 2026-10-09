@@ -22,7 +22,8 @@ modelfit-registry = { path = "../../../crates/registry" }
 modelfit-recommendation = { path = "../../../crates/recommendation" }
 modelfit-runtime-adapters = { path = "../../../crates/runtime-adapters" }
 modelfit-share = { path = "../../../crates/share" }
-reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+# TLS provider installed by `modelfit_runtime_adapters::ensure_tls_provider`.
+reqwest = { version = "0.13", default-features = false, features = ["json", "rustls-no-provider"] }
 # In-app updates (ADR-0001). Desktop-only feature; this app has no mobile
 # target, so the dependency is unconditional.
 tauri-plugin-updater = "2"

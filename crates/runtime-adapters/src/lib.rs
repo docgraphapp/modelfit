@@ -59,9 +59,26 @@ impl Default for Ollama {
     fn default() -> Self {
         Ollama {
             base: "http://127.0.0.1:11434".into(),
-            client: reqwest::Client::new(),
+            client: {
+                ensure_tls_provider();
+                reqwest::Client::new()
+            },
         }
     }
+}
+
+/// Install rustls's `ring` crypto provider as the process default, once.
+/// reqwest is built with `rustls-no-provider` (no aws-lc C dependency), and
+/// building a client with no provider installed PANICS — call this before any
+/// `reqwest::Client` is built. Idempotent; a provider someone else installed
+/// (e.g. the embedding app) is left alone.
+pub fn ensure_tls_provider() {
+    static ONCE: std::sync::Once = std::sync::Once::new();
+    ONCE.call_once(|| {
+        if rustls::crypto::CryptoProvider::get_default().is_none() {
+            let _ = rustls::crypto::ring::default_provider().install_default();
+        }
+    });
 }
 
 pub fn normalize_tag(tag: &str) -> String {
@@ -404,6 +421,21 @@ pub fn active_params_b(registry: &Registry, tag: &str) -> Option<f64> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// A real TLS handshake through the adapter's client: proves a rustls
+    /// provider is installed (reqwest would panic at build time otherwise).
+    /// Needs the network — `cargo test -- --ignored`.
+    #[tokio::test]
+    #[ignore]
+    async fn https_request_with_installed_provider() {
+        let resp = Ollama::default()
+            .client
+            .get("https://modelfit.docgraph.app/registry/v1/registry.json")
+            .send()
+            .await
+            .expect("HTTPS request");
+        assert!(resp.status().is_success(), "status {}", resp.status());
+    }
 
     #[test]
     fn calibration_prefers_installed_dense_model() {
