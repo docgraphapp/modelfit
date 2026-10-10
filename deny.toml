@@ -1,4 +1,4 @@
-# cargo-deny — licence gate for everything ModelFit ships (audit 2026-10-02).
+# cargo-deny — licence gate for everything MMF ships (audit 2026-10-02).
 # Run from the repo root: `cargo deny check licenses`. CI runs it on every push.
 # Permissive-only allow-list (MPL-2.0 is file-scoped copyleft: fine unmodified).
 # A crate outside it fails the build; add a licence here only after reading it.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ModelFit registry discovery: find GGUF models worth listing, automatically.
+"""MMF registry discovery: find GGUF models worth listing, automatically.
 
 Writes `discovered.yaml`, which build.py merges with the hand-curated
 `models.yaml`. Everything here lands in the DISCOVERED tier: listed with its

@@ -19,16 +19,16 @@ import type {
   UpdateProgress,
 } from "./types";
 
-const CALIBRATION_KEY = "modelfit:calibration";
+const CALIBRATION_KEY = "mmf:calibration";
 // tok/s this machine has actually produced, by runtime tag. Kept separate from
 // the calibration: a calibration is one reading that ages out when the machine
 // changes, while these are facts about models the user has really run, and the
 // engine reports them verbatim instead of extrapolating.
-const MEASUREMENTS_KEY = "modelfit:measurements";
+const MEASUREMENTS_KEY = "mmf:measurements";
 // The one app version the user has said "Later" to. A dismissal silences the
 // startup banner for that version only, so the next release still gets one
 // chance to be noticed; the manual check ignores it entirely (ADR-0001).
-const UPDATE_DISMISSED_KEY = "modelfit:update-dismissed";
+const UPDATE_DISMISSED_KEY = "mmf:update-dismissed";
 
 // Sharing a benchmark works end to end — Rust builder, prefilled GitHub issue
 // form, preview dialog — but the framing still needs work ("Create new issue"
@@ -792,7 +792,7 @@ function Brand({ ready }: { ready: boolean }) {
         </svg>
       </span>
       <div className="leading-tight">
-        <h1 className="text-[15px] font-semibold tracking-tight">DocGraph ModelFit</h1>
+        <h1 className="text-[15px] font-semibold tracking-tight">MMF</h1>
         <p className="text-[11px] text-neutral-400 dark:text-neutral-500">
           The best AI model for your machine
         </p>
@@ -1068,7 +1068,7 @@ function UpdateBanner({
           <>Couldn't install the update{error ? `: ${error}` : "."}</>
         ) : (
           <>
-            DocGraph ModelFit {info.version} is available
+            MMF {info.version} is available
             <span className="text-blue-700/70 dark:text-blue-200/60">
               {" "}
               · you have {info.currentVersion}
@@ -1203,7 +1203,7 @@ export default function App() {
     invoke<RegistryInfo>("update_registry")
       .then((info) => setRegistry(info))
       .catch(() => {});
-    const unlisten = listen<PullProgress>("modelfit://pull-progress", (e) => {
+    const unlisten = listen<PullProgress>("mmf://pull-progress", (e) => {
       setPulling((prev) => ({ ...prev, [e.payload.tag]: e.payload }));
     });
     // The shell runs its own check a few seconds after launch and announces
@@ -1707,7 +1707,7 @@ export default function App() {
                   {SHARE_BENCHMARK_ENABLED && calibration && !benchmarking && (
                     <button
                       onClick={openShare}
-                      title="Publish this result to DocGraph ModelFit's public benchmark collection on GitHub"
+                      title="Publish this result to MMF's public benchmark collection on GitHub"
                       className="rounded-lg border border-neutral-200 px-3 py-1 font-medium text-neutral-600 hover:border-neutral-400 dark:border-neutral-700 dark:text-neutral-300 dark:hover:border-neutral-500"
                     >
                       Share my benchmark
@@ -1788,7 +1788,7 @@ export default function App() {
                   <button
                     onClick={checkForUpdate}
                     disabled={checkingUpdate}
-                    title="Check whether a newer version of DocGraph ModelFit is available"
+                    title="Check whether a newer version of MMF is available"
                     className="font-medium text-neutral-500 underline decoration-neutral-300 hover:text-neutral-700 disabled:opacity-50 dark:text-neutral-400 dark:hover:text-neutral-200"
                   >
                     {checkingUpdate ? "checking…" : "Check for updates"}

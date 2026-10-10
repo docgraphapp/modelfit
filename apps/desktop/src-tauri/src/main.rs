@@ -2,5 +2,5 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 fn main() {
-  modelfit_desktop_lib::run();
+    mmf_desktop_lib::run();
 }

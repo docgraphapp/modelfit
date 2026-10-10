@@ -8,7 +8,7 @@ stay the primary freshness path; this ADR is about the *shell*, not the data).
 
 ## Context
 
-ModelFit is a Tauri 2 desktop app (`apps/desktop`) at v0.1.0 with no release
+MMF is a Tauri 2 desktop app (`apps/desktop`) at v0.1.0 with no release
 workflow yet: `.github/workflows` only builds the registry, and CI holds no
 secrets ([production-deploy](production-deploy.md) ships the site from a local
 wrangler). Users who install v1 will otherwise have to notice a new version on
@@ -112,7 +112,7 @@ renders are `available`, `downloading`, `ready`, `failed`.
   is in place, so the app never disappears out from under a user mid-task.
 - A failed download leaves the banner in place offering **Try again**.
 - **Later** records the dismissed version in `localStorage`
-  (`modelfit:update-dismissed`), alongside the calibration and measurements
+  (`mmf:update-dismissed`), alongside the calibration and measurements
   already kept there, so the same version is not offered again on the next
   startup. The manual button ignores the dismissal.
 - Errors from the background check are logged via `tauri-plugin-log` and never

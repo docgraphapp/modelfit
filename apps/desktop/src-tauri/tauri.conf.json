@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "DocGraph ModelFit",
+  "productName": "MMF",
   "version": "0.1.0",
-  "identifier": "app.modelfit.desktop",
+  "identifier": "app.mmf.desktop",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:1420",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "DocGraph ModelFit",
+        "title": "MMF",
         "width": 940,
         "height": 800,
         "minWidth": 560,

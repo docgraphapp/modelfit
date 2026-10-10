@@ -1,13 +1,13 @@
 //! Print the real "Share my benchmark" URL for this machine, using the same
 //! builder the app ships. Lets the prefilled GitHub form be checked end to end
-//! without driving the GUI: `cargo run -p modelfit-share --example share_url`.
+//! without driving the GUI: `cargo run -p mmf-share --example share_url`.
 
-use modelfit_share::build_benchmark_share;
-use modelfit_registry::Registry;
-use modelfit_runtime_adapters::Calibration;
+use mmf_registry::Registry;
+use mmf_runtime_adapters::Calibration;
+use mmf_share::build_benchmark_share;
 
 fn main() {
-    let hw = modelfit_hardware::detect();
+    let hw = mmf_hardware::detect();
     let cal = Calibration {
         model_tag: "llama3.2:3b".into(),
         gen_tok_per_sec: 96.4,

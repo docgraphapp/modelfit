@@ -1,5 +1,5 @@
 [package]
-name = "modelfit-runtime-adapters"
+name = "mmf-runtime-adapters"
 version.workspace = true
 license.workspace = true
 edition.workspace = true
@@ -14,7 +14,7 @@ futures-util = "0.3"
 # CryptoProvider installed PANICS, so `ensure_tls_provider` installs ring first.
 reqwest = { version = "0.13", default-features = false, features = ["json", "stream", "rustls-no-provider"] }
 rustls = { version = "0.23", default-features = false, features = ["ring", "std", "tls12", "logging"] }
-modelfit-registry = { path = "../registry" }
+mmf-registry = { path = "../registry" }
 
 [dev-dependencies]
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }

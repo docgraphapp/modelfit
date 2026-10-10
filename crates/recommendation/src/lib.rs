@@ -1,4 +1,4 @@
-//! ModelFit recommendation engine.
+//! MMF recommendation engine.
 //!
 //! Pure math over (hardware × registry × request) — no I/O, no runtime
 //! dependency. Pipeline per the requirements doc:
@@ -14,8 +14,8 @@
 //! - Every number ships its confidence and the basis behind it: an
 //!   extrapolation and a measurement must never look alike to the user.
 
-use modelfit_hardware::HardwareInfo;
-use modelfit_registry::{Model, Quant, Registry, DEFAULT_QUANT};
+use mmf_hardware::HardwareInfo;
+use mmf_registry::{Model, Quant, Registry, DEFAULT_QUANT};
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
 
@@ -296,7 +296,12 @@ fn capabilities_for(model: &Model, runtime: &BTreeMap<&str, &Vec<String>>) -> (V
     let reported = model
         .ollama_tag
         .iter()
-        .chain(model.quantizations.values().filter_map(|q| q.ollama_tag.as_ref()))
+        .chain(
+            model
+                .quantizations
+                .values()
+                .filter_map(|q| q.ollama_tag.as_ref()),
+        )
         .find_map(|t| runtime.get(norm_tag(t)));
     let Some(reported) = reported else {
         return (caps, false);
@@ -687,7 +692,11 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
         b.score
             .partial_cmp(&a.score)
             .unwrap()
-            .then_with(|| a.excluded_reason.is_some().cmp(&b.excluded_reason.is_some()))
+            .then_with(|| {
+                a.excluded_reason
+                    .is_some()
+                    .cmp(&b.excluded_reason.is_some())
+            })
             .then_with(|| a.memory.value.partial_cmp(&b.memory.value).unwrap())
     });
 
@@ -723,7 +732,7 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
 #[cfg(test)]
 mod tests {
     use super::*;
-    use modelfit_hardware::GpuInfo;
+    use mmf_hardware::GpuInfo;
 
     fn apple(chip: &str, ram_gb: f64) -> HardwareInfo {
         HardwareInfo {
@@ -849,9 +858,17 @@ mod tests {
         );
         assert!(r.best.is_some(), "a 64 GB machine has a tool-calling pick");
         for a in r.all.iter().filter(|a| a.excluded_reason.is_none()) {
-            assert!(a.capabilities.iter().any(|c| c == "tools"), "{} ranked without tools", a.model_id);
+            assert!(
+                a.capabilities.iter().any(|c| c == "tools"),
+                "{} ranked without tools",
+                a.model_id
+            );
         }
-        let reasons: Vec<_> = r.all.iter().filter_map(|a| a.excluded_reason.as_deref()).collect();
+        let reasons: Vec<_> = r
+            .all
+            .iter()
+            .filter_map(|a| a.excluded_reason.as_deref())
+            .collect();
         assert!(reasons.contains(&"no tool-calling support"));
     }
 
@@ -861,18 +878,32 @@ mod tests {
         let reg = Registry::bundled();
         let tagged = |has: bool| {
             let m = reg.models.iter().find(|m| m.id == "llama3.2-3b").unwrap();
-            let mut req = Request { objective: Objective::Agents, ..Request::default() };
-            let caps = if has { vec!["completion".into(), "tools".into()] } else { vec!["completion".into()] };
+            let mut req = Request {
+                objective: Objective::Agents,
+                ..Request::default()
+            };
+            let caps = if has {
+                vec!["completion".into(), "tools".into()]
+            } else {
+                vec!["completion".into()]
+            };
             // `:latest` as the runtime reports it; matching must not care.
-            req.runtime_capabilities.insert(format!("{}:latest", m.ollama_tag.as_deref().unwrap()), caps);
+            req.runtime_capabilities
+                .insert(format!("{}:latest", m.ollama_tag.as_deref().unwrap()), caps);
             recommend(&hw, &reg, &req)
         };
 
         let without = tagged(false);
         let a = find(&without, "llama3.2-3b");
         assert!(a.tools_verified);
-        assert!(!a.capabilities.iter().any(|c| c == "tools"), "runtime overrides the registry");
-        assert_eq!(a.excluded_reason.as_deref(), Some("installed copy doesn't accept tools"));
+        assert!(
+            !a.capabilities.iter().any(|c| c == "tools"),
+            "runtime overrides the registry"
+        );
+        assert_eq!(
+            a.excluded_reason.as_deref(),
+            Some("installed copy doesn't accept tools")
+        );
 
         let with = tagged(true);
         let a = find(&with, "llama3.2-3b");
@@ -1197,7 +1228,7 @@ mod tests {
     fn registry_with_uncurated(id: &str, quality: Option<f64>) -> Registry {
         let mut reg = Registry::bundled();
         let m = reg.models.iter_mut().find(|m| m.id == id).unwrap();
-        m.quality = quality.map(|q| modelfit_registry::Quality {
+        m.quality = quality.map(|q| mmf_registry::Quality {
             general: q,
             coding: q,
             source: Some("leaderboard-v2".into()),
@@ -1384,8 +1415,16 @@ mod tests {
             if a.excluded_reason.is_some() {
                 seen_excluded = true;
             } else {
-                assert!(!seen_excluded, "{} runs but sorted below an excluded model", a.model_id);
-                assert!(a.memory.value >= last_memory, "{}: out of size order", a.model_id);
+                assert!(
+                    !seen_excluded,
+                    "{} runs but sorted below an excluded model",
+                    a.model_id
+                );
+                assert!(
+                    a.memory.value >= last_memory,
+                    "{}: out of size order",
+                    a.model_id
+                );
                 last_memory = a.memory.value;
             }
         }

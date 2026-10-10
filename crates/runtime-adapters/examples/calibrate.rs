@@ -1,12 +1,10 @@
 //! Headless calibration test: replicates the desktop `run_calibration`
 //! command against the live local Ollama so the benchmark path can be
 //! exercised without the Tauri shell:
-//! `cargo run -p modelfit-runtime-adapters --example calibrate`
+//! `cargo run -p mmf-runtime-adapters --example calibrate`
 
-use modelfit_registry::Registry;
-use modelfit_runtime_adapters::{
-    calibration_candidates, gb_per_token, Ollama, RuntimeAdapter,
-};
+use mmf_registry::Registry;
+use mmf_runtime_adapters::{calibration_candidates, gb_per_token, Ollama, RuntimeAdapter};
 
 #[tokio::main]
 async fn main() {
@@ -14,7 +12,10 @@ async fn main() {
     let ollama = Ollama::default();
 
     let status = ollama.status().await;
-    println!("ollama running={} version={:?}", status.running, status.version);
+    println!(
+        "ollama running={} version={:?}",
+        status.running, status.version
+    );
     println!("installed: {:?}", status.installed_tags);
     if !status.running {
         eprintln!("Ollama is not running");
@@ -44,11 +45,10 @@ async fn main() {
                 gb_tok
             );
             match gb_tok {
-                Some(g) => println!(
-                    "effective bandwidth = {:.1} GB/s",
-                    m.gen_tok_per_sec * g
-                ),
-                None => println!("BUG: {tag} not resolvable in registry → run_calibration would error"),
+                Some(g) => println!("effective bandwidth = {:.1} GB/s", m.gen_tok_per_sec * g),
+                None => {
+                    println!("BUG: {tag} not resolvable in registry → run_calibration would error")
+                }
             }
         }
         Err(e) => println!("measure failed: {e}"),

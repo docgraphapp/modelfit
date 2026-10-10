@@ -1,4 +1,4 @@
-# ModelFit registry source of truth.
+# MMF registry source of truth.
 #
 # The pipeline (build.py) enriches each entry from Hugging Face:
 #   - exact quant file sizes from the GGUF repo file listing

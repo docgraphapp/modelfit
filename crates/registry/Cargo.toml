@@ -1,5 +1,5 @@
 [package]
-name = "modelfit-registry"
+name = "mmf-registry"
 version.workspace = true
 license.workspace = true
 edition.workspace = true

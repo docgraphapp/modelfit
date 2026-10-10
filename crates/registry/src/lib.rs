@@ -1,4 +1,4 @@
-//! ModelFit model registry: the "small light database" of model facts.
+//! MMF model registry: the "small light database" of model facts.
 //!
 //! Static facts only (sizes, params, quality scores — true for everyone);
 //! everything machine-specific is computed by the recommendation engine.
@@ -78,8 +78,14 @@ impl CommercialUse {
         match l.as_str() {
             "apache-2.0" | "mit" | "bsd-2-clause" | "bsd-3-clause" | "cc-by-4.0"
             | "cc-by-sa-4.0" | "cc0-1.0" | "mpl-2.0" | "openrail" => CommercialUse::Permitted,
-            "gemma" | "llama2" | "llama3" | "llama3.1" | "llama3.2" | "llama3.3"
-            | "llama4" | "nvidia-open-model-license" => CommercialUse::PermittedWithTerms,
+            "gemma"
+            | "llama2"
+            | "llama3"
+            | "llama3.1"
+            | "llama3.2"
+            | "llama3.3"
+            | "llama4"
+            | "nvidia-open-model-license" => CommercialUse::PermittedWithTerms,
             "lfm1.0" => CommercialUse::Restricted,
             "exaone" | "qwen-research" | "mistral-research" | "mrl" => CommercialUse::NotPermitted,
             l if l.starts_with("cc-by-nc") => CommercialUse::NotPermitted,
@@ -89,7 +95,10 @@ impl CommercialUse {
 
     /// Whether a model under this licence may be offered as a pick.
     pub fn allows_recommendation(self) -> bool {
-        matches!(self, CommercialUse::Permitted | CommercialUse::PermittedWithTerms)
+        matches!(
+            self,
+            CommercialUse::Permitted | CommercialUse::PermittedWithTerms
+        )
     }
 }
 
@@ -177,7 +186,10 @@ impl Gguf {
     }
     /// Resolve URL for one file, the form `huggingface.co/<repo>/resolve/main/<path>`.
     pub fn download_url(&self, file: &GgufFile) -> String {
-        format!("https://huggingface.co/{}/resolve/main/{}", self.repo, file.path)
+        format!(
+            "https://huggingface.co/{}/resolve/main/{}",
+            self.repo, file.path
+        )
     }
 }
 
@@ -300,7 +312,12 @@ mod tests {
             .into_iter()
             .find(|m| m.is_recommendable())
             .expect("a curated model");
-        for (lic, ok) in [(Some("mit"), true), (Some("lfm1.0"), false), (Some("exaone"), false), (None, false)] {
+        for (lic, ok) in [
+            (Some("mit"), true),
+            (Some("lfm1.0"), false),
+            (Some("exaone"), false),
+            (None, false),
+        ] {
             m.license = lic.map(str::to_string);
             assert_eq!(m.is_recommendable(), ok, "{lic:?}");
         }
@@ -310,7 +327,11 @@ mod tests {
     fn every_curated_model_carries_a_licence() {
         // A curated model with no licence would silently drop out of the
         // picks; the pipeline's validate() refuses to build one.
-        for m in Registry::bundled().models.iter().filter(|m| m.quality.as_ref().is_some_and(|q| q.is_curated())) {
+        for m in Registry::bundled()
+            .models
+            .iter()
+            .filter(|m| m.quality.as_ref().is_some_and(|q| q.is_curated()))
+        {
             assert!(m.license.is_some(), "{}: curated but no licence", m.id);
         }
     }
@@ -322,7 +343,10 @@ mod tests {
         // an app that lists a hundred models and recommends none of them.
         let r = Registry::bundled();
         let curated = r.models.iter().filter(|m| m.is_recommendable()).count();
-        assert!(curated >= 10, "only {curated} curated models in the snapshot");
+        assert!(
+            curated >= 10,
+            "only {curated} curated models in the snapshot"
+        );
         // Nothing may reach the curated tier by accident: an entry is either
         // hand-written or it carries a source saying it was not.
         for m in r.models.iter().filter(|m| !m.is_recommendable()) {
@@ -394,9 +418,19 @@ mod tests {
                     assert!(!g.files.is_empty(), "{} {}", m.id, qname);
                     for f in &g.files {
                         assert_eq!(f.sha256.len(), 64, "{} {} {}", m.id, qname, f.path);
-                        assert!(f.path.to_lowercase().ends_with(".gguf"), "{} {}", m.id, qname);
+                        assert!(
+                            f.path.to_lowercase().ends_with(".gguf"),
+                            "{} {}",
+                            m.id,
+                            qname
+                        );
                     }
-                    assert!(q.size_source.as_deref() == Some("hf"), "{} {}: gguf on a fallback rung", m.id, qname);
+                    assert!(
+                        q.size_source.as_deref() == Some("hf"),
+                        "{} {}: gguf on a fallback rung",
+                        m.id,
+                        qname
+                    );
                 }
             }
         }

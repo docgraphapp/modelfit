@@ -1,13 +1,13 @@
 mod updater;
 
-use modelfit_hardware::HardwareInfo;
-use modelfit_recommendation::{recommend, Recommendations, Request};
-use modelfit_registry::Registry;
-use modelfit_runtime_adapters::{
+use mmf_hardware::HardwareInfo;
+use mmf_recommendation::{recommend, Recommendations, Request};
+use mmf_registry::Registry;
+use mmf_runtime_adapters::{
     active_params_b, calibration_candidates, gb_per_token, Calibration, Ollama, RuntimeAdapter,
     RuntimeStatus,
 };
-use modelfit_share::{build_benchmark_share, build_diagnostics, BenchmarkShare, Diagnostics};
+use mmf_share::{build_benchmark_share, build_diagnostics, BenchmarkShare, Diagnostics};
 use serde::Serialize;
 use tauri::{Emitter, Manager};
 
@@ -94,9 +94,9 @@ async fn frontend_ready(window: tauri::WebviewWindow) {
 async fn detect_hardware() -> HardwareInfo {
     // Subprocess + sysfs probing; spawn_blocking keeps it off both the main
     // thread (which a sync command would block) and the async workers.
-    tauri::async_runtime::spawn_blocking(modelfit_hardware::detect)
+    tauri::async_runtime::spawn_blocking(mmf_hardware::detect)
         .await
-        .unwrap_or_else(|_| modelfit_hardware::detect())
+        .unwrap_or_else(|_| mmf_hardware::detect())
 }
 
 /// `hardware` lets the frontend reuse one detection (and, later, pass
@@ -108,7 +108,7 @@ async fn get_recommendations(
     hardware: Option<HardwareInfo>,
     request: Option<Request>,
 ) -> Recommendations {
-    let hw = hardware.unwrap_or_else(modelfit_hardware::detect);
+    let hw = hardware.unwrap_or_else(mmf_hardware::detect);
     let (registry, _) = effective_registry(&app);
     recommend(&hw, &registry, &request.unwrap_or_default())
 }
@@ -134,7 +134,7 @@ async fn update_registry(app: tauri::AppHandle) -> Result<RegistryInfo, String> 
         reg.models.iter().map(|m| m.id.clone()).collect()
     };
 
-    modelfit_runtime_adapters::ensure_tls_provider();
+    mmf_runtime_adapters::ensure_tls_provider();
     let client = reqwest::Client::new();
     let mut last_err = String::from("no registry URL configured");
     for url in REGISTRY_URLS {
@@ -153,7 +153,11 @@ async fn update_registry(app: tauri::AppHandle) -> Result<RegistryInfo, String> 
                     }
                     std::fs::write(&path, &text).map_err(|e| e.to_string())?;
                 }
-                let added = parsed.models.iter().filter(|m| !before.contains(&m.id)).count();
+                let added = parsed
+                    .models
+                    .iter()
+                    .filter(|m| !before.contains(&m.id))
+                    .count();
                 return Ok(RegistryInfo {
                     version: parsed.version,
                     model_count: parsed.models.len(),
@@ -178,20 +182,23 @@ async fn runtime_status() -> RuntimeStatus {
 /// each forwarded event costs an IPC round-trip plus a React re-render.
 /// Phase changes ("verifying sha256…", "success") always go through; byte
 /// updates within a phase are capped at ~10/s.
-fn throttled_emitter(app: tauri::AppHandle) -> impl Fn(modelfit_runtime_adapters::PullProgress) {
-    let last = std::sync::Mutex::new((String::new(), std::time::Instant::now() - std::time::Duration::from_secs(1)));
+fn throttled_emitter(app: tauri::AppHandle) -> impl Fn(mmf_runtime_adapters::PullProgress) {
+    let last = std::sync::Mutex::new((
+        String::new(),
+        std::time::Instant::now() - std::time::Duration::from_secs(1),
+    ));
     move |p| {
         let mut g = last.lock().unwrap();
         let now = std::time::Instant::now();
         if p.status != g.0 || now.duration_since(g.1) >= std::time::Duration::from_millis(100) {
             *g = (p.status.clone(), now);
-            let _ = app.emit("modelfit://pull-progress", &p);
+            let _ = app.emit("mmf://pull-progress", &p);
         }
     }
 }
 
 /// Pull a model into Ollama, streaming progress to the UI as
-/// `modelfit://pull-progress` events.
+/// `mmf://pull-progress` events.
 #[tauri::command]
 async fn install_model(app: tauri::AppHandle, tag: String) -> Result<(), String> {
     let ollama = Ollama::default();
@@ -215,7 +222,9 @@ async fn run_calibration(app: tauri::AppHandle) -> Result<Calibration, String> {
         Some(t) => t,
         None => {
             // Nothing suitable installed — pull the small fallback first.
-            ollama.pull(&fallback, &throttled_emitter(app.clone())).await?;
+            ollama
+                .pull(&fallback, &throttled_emitter(app.clone()))
+                .await?;
             fallback
         }
     };

@@ -1,6 +1,6 @@
-# DocGraph ModelFit — Requirements & Tech Stack
+# MMF — Requirements & Tech Stack
 
-**Positioning:** *DocGraph ModelFit — Find the best AI model for your machine.*
+**Positioning:** *MMF — Find the best AI model for your machine.*
 
 A cross-platform desktop app that inspects your machine and tells you the best local LLMs you can realistically run — and at what quantization, context length, and expected speed — with one-click install.
 
@@ -33,7 +33,7 @@ Output is always three picks, not one: **BEST** (top score), **SAFE** (comfortab
 The name and architecture are deliberately model-type-agnostic. The engine is generic "memory + throughput vs hardware" math, and the registry already carries `capabilities` — so expansion is new registry entries plus scoring presets, not a new engine:
 
 ```
-DocGraph ModelFit
+MMF
 ├── LLMs                (v1)
 ├── Embedding models    (near-free: same runtimes, same math)
 ├── Vision/multimodal   (same runtimes)
@@ -191,7 +191,7 @@ Sidebar: Dashboard · Hardware · Models · Benchmarks · Downloads · Settings.
 | HTTP | `reqwest` + `tokio` | Ollama API, registry fetch, GGUF header range-requests |
 | Local storage | JSON cache → `rusqlite` when needed | |
 | Inference runtime | **Ollama adapter (v1)** behind a runtime trait; llama.cpp-direct = v2 adapter | Ollama *is* llama.cpp with the GPU build matrix already solved; don't own CUDA/ROCm/Vulkan builds in v1 |
-| Model registry hosting | Static JSON on **Cloudflare Pages/R2** under **docgraph.app** | DocGraph ModelFit is a DocGraph-family product; registry at a stable versioned URL (e.g. `modelfit.docgraph.app/registry/v1/registry.json`), same account/wrangler flow as the existing sites |
+| Model registry hosting | Static JSON on **Cloudflare Pages/R2** under **docgraph.app** | MMF is a DocGraph-family product; registry at a stable versioned URL (e.g. `modelfit.docgraph.app/registry/v1/registry.json`), same account/wrangler flow as the existing sites |
 | Registry pipeline | **Python** (server-side/CI only): `huggingface_hub` metadata, GGUF sizes, benchmark-score ingestion → emits `registry.json` | Python where its ecosystem wins; never shipped to users |
 | CI/CD | GitHub Actions | Build matrix + registry pipeline |
 
@@ -202,7 +202,7 @@ Sidebar: Dashboard · Hardware · Models · Benchmarks · Downloads · Settings.
 - **Bundling llama.cpp in v1** — GPU backend build-matrix ownership; deferred to v2 behind the existing runtime trait
 - **Web app as primary** — browsers can't read hardware; dropdown-entered specs are wrong too often
 - **Blind HF catalogue scraping** (2026-09-07) — hundreds of models with heuristic quality would put unrated models in BEST; see the FR-3 callout. Discovery is automated, *eligibility* is curated.
-- **TUI** (2026-09-07) — the GUI is the product; a script surface, if ever, is a thin `modelfit` CLI over the crates (deferred)
+- **TUI** (2026-09-07) — the GUI is the product; a script surface, if ever, is a thin `mmf` CLI over the crates (deferred)
 - **REST `serve` + Docker image** (2026-09-07) — if an agent surface is built it will be an MCP server over the crates, not something to host (deferred with the CLI)
 - **Compile-time model database** (2026-09-07) — the remote registry updates without a release; strictly better
 
@@ -235,7 +235,7 @@ Sidebar: Dashboard · Hardware · Models · Benchmarks · Downloads · Settings.
 ### Repository layout
 
 ```
-modelfit/
+mmf/
 ├── apps/desktop/          # Tauri 2 + React
 ├── crates/
 │   ├── hardware/          # detection (per-platform modules)

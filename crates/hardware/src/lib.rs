@@ -1,4 +1,4 @@
-//! ModelFit hardware detection.
+//! MMF hardware detection.
 //!
 //! Detects CPU, memory, GPU, disk, and acceleration capabilities. All values
 //! are best-effort: anything we can't determine is `None`, and the UI lets the

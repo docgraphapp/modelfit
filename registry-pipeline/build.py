@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ModelFit registry builder.
+"""MMF registry builder.
 
 Reads models.yaml (curated) and, when present, discovered.yaml (written by
 discover.py), enriches both from Hugging Face (exact GGUF file sizes +
@@ -36,7 +36,7 @@ from pathlib import Path
 import yaml
 
 HERE = Path(__file__).parent
-UA = {"User-Agent": "modelfit-registry-pipeline/1.0"}
+UA = {"User-Agent": "mmf-registry-pipeline/1.0"}
 
 GIB = 1024**3
 

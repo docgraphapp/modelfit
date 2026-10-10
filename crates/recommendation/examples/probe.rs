@@ -1,13 +1,13 @@
 //! Headless probe: real hardware detection + real recommendations as JSON.
 //! Used by the browser design harness to show real machine data without the
-//! Tauri shell: `cargo run -p modelfit-recommendation --example probe`.
+//! Tauri shell: `cargo run -p mmf-recommendation --example probe`.
 
-use modelfit_recommendation::{recommend, Objective, Request};
-use modelfit_registry::Registry;
+use mmf_recommendation::{recommend, Objective, Request};
+use mmf_registry::Registry;
 use std::collections::BTreeMap;
 
 fn grid(
-    hw: &modelfit_hardware::HardwareInfo,
+    hw: &mmf_hardware::HardwareInfo,
     registry: &Registry,
     measured: Option<f64>,
     // The benchmark timed one real model, so that rung reports what it ran at
@@ -48,7 +48,7 @@ fn grid(
 }
 
 fn main() {
-    let hw = modelfit_hardware::detect();
+    let hw = mmf_hardware::detect();
     let registry = Registry::bundled();
 
     let mut out = serde_json::json!({
@@ -63,7 +63,9 @@ fn main() {
     // so the browser harness can play the calibration flow honestly.
     let args: Vec<String> = std::env::args().collect();
     if let Some(i) = args.iter().position(|a| a == "--measured") {
-        let bw: f64 = args[i + 1].parse().expect("--measured <gbps> <tag> <gen> <prompt>");
+        let bw: f64 = args[i + 1]
+            .parse()
+            .expect("--measured <gbps> <tag> <gen> <prompt>");
         let tag = args[i + 2].clone();
         let gen: f64 = args[i + 3].parse().expect("gen tok/s");
         let prompt: f64 = args[i + 4].parse().expect("prompt tok/s");

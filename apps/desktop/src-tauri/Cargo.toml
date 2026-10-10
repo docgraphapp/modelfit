@@ -1,11 +1,11 @@
 [package]
-name = "modelfit-desktop"
+name = "mmf-desktop"
 version.workspace = true
 license.workspace = true
 edition.workspace = true
 
 [lib]
-name = "modelfit_desktop_lib"
+name = "mmf_desktop_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
@@ -17,12 +17,12 @@ serde_json.workspace = true
 tauri = { version = "2", features = [] }
 tauri-plugin-log = "2"
 log = "0.4"
-modelfit-hardware = { path = "../../../crates/hardware" }
-modelfit-registry = { path = "../../../crates/registry" }
-modelfit-recommendation = { path = "../../../crates/recommendation" }
-modelfit-runtime-adapters = { path = "../../../crates/runtime-adapters" }
-modelfit-share = { path = "../../../crates/share" }
-# TLS provider installed by `modelfit_runtime_adapters::ensure_tls_provider`.
+mmf-hardware = { path = "../../../crates/hardware" }
+mmf-registry = { path = "../../../crates/registry" }
+mmf-recommendation = { path = "../../../crates/recommendation" }
+mmf-runtime-adapters = { path = "../../../crates/runtime-adapters" }
+mmf-share = { path = "../../../crates/share" }
+# TLS provider installed by `mmf_runtime_adapters::ensure_tls_provider`.
 reqwest = { version = "0.13", default-features = false, features = ["json", "rustls-no-provider"] }
 # In-app updates (ADR-0001). Desktop-only feature; this app has no mobile
 # target, so the dependency is unconditional.

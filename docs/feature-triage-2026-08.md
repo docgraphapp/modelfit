@@ -53,9 +53,9 @@ share links.
 ### Shareable setup links
 "What can I run?" on Reddit/Discord is literally the README's opening problem.
 A `modelfit.docgraph.app/build/<profile>` link that renders the recommendation
-set makes ModelFit *the link people paste* as the answer — the best
+set makes MMF *the link people paste* as the answer — the best
 distribution channel available to this product. Needs the website repo
-(modelfit-web), but the payload is just a hardware profile; the engine does
+(mmf-web), but the payload is just a hardware profile; the engine does
 the rest.
 
 **Suggested milestone:** ship the four items above as one cohesive
@@ -154,7 +154,7 @@ HTTP 200, version `2026-08-25`.
 
 **What is actually left:**
 
-1. **The cron has never run unattended.** There are no `modelfit-registry-bot`
+1. **The cron has never run unattended.** There are no `mmf-registry-bot`
    commits in history, and the workflow-parse fix (`57a419c`) landed
    2026-08-26. Trigger a manual `workflow_dispatch` to confirm the scheduled
    path works end to end rather than waiting for Monday.

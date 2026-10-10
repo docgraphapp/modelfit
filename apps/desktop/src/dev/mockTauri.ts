@@ -30,7 +30,7 @@ const hw: HardwareInfo = {
 
 // url params control which scenario renders:
 //   ?scenario=nofit|noruntime|update|update-fail
-// With no scenario, real data from `cargo run -p modelfit-recommendation
+// With no scenario, real data from `cargo run -p mmf-recommendation
 // --example probe > dev-data/machine.json` (dev server only; never bundled) plus the live local
 // Ollama replace the synthetic fixtures.
 const params = new URLSearchParams(location.search);
@@ -375,7 +375,7 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
         ["Memory", `${machine.totalRamGb} GB${machine.unifiedMemory ? " unified" : ""}`],
         ["Benchmark", cal ? `${cal.modelTag} · ${Math.round(cal.genTokPerSec)} tok/s` : "not run"],
       ];
-      return `### DocGraph ModelFit diagnostics\n\n| | |\n|---|---|\n${rows
+      return `### MMF diagnostics\n\n| | |\n|---|---|\n${rows
         .map(([k, v]) => `| ${k} | ${v} |`)
         .join("\n")}\n`;
     }
@@ -435,7 +435,7 @@ async function mockInvoke(cmd: string, args: any): Promise<unknown> {
     case "install_model": {
       const total = 5_600_000_000;
       for (let done = 0; done <= total; done += total / 40) {
-        emit("modelfit://pull-progress", {
+        emit("mmf://pull-progress", {
           tag: args.tag,
           status: "pulling",
           total,

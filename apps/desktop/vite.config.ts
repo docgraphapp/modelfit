@@ -11,7 +11,7 @@ import tailwindcss from "@tailwindcss/vite";
  */
 function devMachineProbe(): Plugin {
   return {
-    name: "modelfit-dev-machine-probe",
+    name: "mmf-dev-machine-probe",
     apply: "serve",
     configureServer(server) {
       server.middlewares.use("/machine.json", async (_req, res, next) => {

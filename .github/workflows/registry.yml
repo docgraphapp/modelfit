@@ -53,7 +53,7 @@ jobs:
 
       - name: Commit updated snapshot
         run: |
-          git config user.name "modelfit-registry-bot"
+          git config user.name "mmf-registry-bot"
           git config user.email "noreply@docgraph.app"
           if ! git diff --quiet registry/registry.json registry-pipeline/discovered.yaml; then
             git add registry/registry.json registry-pipeline/discovered.yaml
@@ -106,4 +106,4 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: a407f54bd034ac91d08e953368b3aa12
         run: |
           ./scripts/build-site.sh dist-site
-          npx wrangler@4 pages deploy dist-site --project-name modelfit-registry --branch main --commit-dirty=true
+          npx wrangler@4 pages deploy dist-site --project-name mmf-registry --branch main --commit-dirty=true

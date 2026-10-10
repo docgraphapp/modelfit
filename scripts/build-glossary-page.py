@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Render /glossary/ on the website from the app's glossary.ts.
 
-glossary.ts is the single source of truth for every definition ModelFit
+glossary.ts is the single source of truth for every definition MMF
 publishes: the desktop app renders entries as hover cards, this renders the
 same entries as a web page. Hand-editing the page would recreate exactly the
 drift this is meant to prevent, so the generated block is fenced by markers and

@@ -30,7 +30,7 @@ REPO = "docgraphapp/modelfit"
 def real_url() -> tuple[dict[str, str], str]:
     """Run the shipped builder; return its printed fields and the URL."""
     out = subprocess.run(
-        ["cargo", "run", "-q", "-p", "modelfit-share", "--example", "share_url"],
+        ["cargo", "run", "-q", "-p", "mmf-share", "--example", "share_url"],
         cwd=ROOT,
         capture_output=True,
         text=True,

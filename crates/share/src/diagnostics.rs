@@ -9,9 +9,9 @@
 //! The bandwidth line is the point of the whole thing: almost every "why does
 //! it say N tok/s" report is answered by which tier that number came from.
 
-use modelfit_hardware::HardwareInfo;
-use modelfit_recommendation::{bandwidth_estimate, usable_memory_gb};
-use modelfit_runtime_adapters::{Calibration, RuntimeStatus};
+use mmf_hardware::HardwareInfo;
+use mmf_recommendation::{bandwidth_estimate, usable_memory_gb};
+use mmf_runtime_adapters::{Calibration, RuntimeStatus};
 
 /// Everything the caller must supply; the shape keeps the argument list from
 /// turning into six positional strings.
@@ -138,7 +138,7 @@ pub fn build_diagnostics(d: &Diagnostics) -> String {
         },
     ));
 
-    let mut out = String::from("### DocGraph ModelFit diagnostics\n\n| | |\n|---|---|\n");
+    let mut out = String::from("### MMF diagnostics\n\n| | |\n|---|---|\n");
     for (k, v) in rows {
         // A stray pipe from a chip or tag name would split the row.
         out.push_str(&format!("| {} | {} |\n", k, v.replace('|', "\\|")));
@@ -149,7 +149,7 @@ pub fn build_diagnostics(d: &Diagnostics) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use modelfit_hardware::GpuInfo;
+    use mmf_hardware::GpuInfo;
 
     fn hw() -> HardwareInfo {
         HardwareInfo {

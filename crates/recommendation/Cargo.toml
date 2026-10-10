@@ -1,13 +1,13 @@
 [package]
-name = "modelfit-recommendation"
+name = "mmf-recommendation"
 version.workspace = true
 license.workspace = true
 edition.workspace = true
 
 [dependencies]
 serde.workspace = true
-modelfit-hardware = { path = "../hardware" }
-modelfit-registry = { path = "../registry" }
+mmf-hardware = { path = "../hardware" }
+mmf-registry = { path = "../registry" }
 
 [dev-dependencies]
 serde_json.workspace = true

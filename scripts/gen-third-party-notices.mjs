@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Generate THIRD-PARTY-NOTICES.md for the ModelFit desktop app.
+ * Generate THIRD-PARTY-NOTICES.md for the MMF desktop app.
  *
- * ModelFit is MIT, but its BINARY redistributes ~200 Rust crates plus a small
+ * MMF is MIT, but its BINARY redistributes ~200 Rust crates plus a small
  * JavaScript bundle. MIT, BSD, ISC, Zlib, Unicode-3.0, CDLA-Permissive-2.0,
  * Apache-2.0 and MPL-2.0 all expect their notices to travel WITH the binary, so
  * this file is written into the Tauri resource dir and listed in
@@ -177,7 +177,7 @@ function render(pkgs) {
   lines.push("# Third-party notices");
   lines.push("");
   lines.push(
-    "DocGraph ModelFit is MIT-licensed (see its LICENSE) and is built on open-source",
+    "MMF is MIT-licensed (see its LICENSE) and is built on open-source",
     "components. This file reproduces the copyright and permission notices",
     "those components require to be distributed with the software. Each",
     "component remains governed by its own licence, reproduced below.",

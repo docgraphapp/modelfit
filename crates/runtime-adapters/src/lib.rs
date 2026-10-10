@@ -1,10 +1,10 @@
-//! Runtime adapters: ModelFit never runs models itself — a runtime is only
+//! Runtime adapters: MMF never runs models itself — a runtime is only
 //! the *executor* of a recommendation. v1 ships the Ollama adapter; the trait
 //! is the seam where llama.cpp-direct (and LM Studio) slot in later.
 
 use async_trait::async_trait;
 use futures_util::StreamExt;
-use modelfit_registry::{Model, Quant, Registry, DEFAULT_QUANT};
+use mmf_registry::{Model, Quant, Registry, DEFAULT_QUANT};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize)]
@@ -165,7 +165,12 @@ struct GenerateResponse {
 #[async_trait]
 impl RuntimeAdapter for Ollama {
     async fn status(&self) -> RuntimeStatus {
-        let version = match self.client.get(format!("{}/api/version", self.base)).send().await {
+        let version = match self
+            .client
+            .get(format!("{}/api/version", self.base))
+            .send()
+            .await
+        {
             Ok(r) => r
                 .json::<serde_json::Value>()
                 .await
@@ -180,7 +185,11 @@ impl RuntimeAdapter for Ollama {
                 }
             }
         };
-        let installed_tags = match self.client.get(format!("{}/api/tags", self.base)).send().await
+        let installed_tags = match self
+            .client
+            .get(format!("{}/api/tags", self.base))
+            .send()
+            .await
         {
             Ok(r) => r
                 .json::<TagsResponse>()
@@ -192,13 +201,20 @@ impl RuntimeAdapter for Ollama {
         // One local request per installed model, all at once: a handful of
         // tags, each answered from the runtime's own manifest.
         let capabilities = futures_util::future::join_all(
-            installed_tags.iter().map(|t| async move { (t.clone(), self.capabilities(t).await) }),
+            installed_tags
+                .iter()
+                .map(|t| async move { (t.clone(), self.capabilities(t).await) }),
         )
         .await
         .into_iter()
         .filter_map(|(t, caps)| Some((t, caps?)))
         .collect();
-        RuntimeStatus { running: true, version, installed_tags, capabilities }
+        RuntimeStatus {
+            running: true,
+            version,
+            installed_tags,
+            capabilities,
+        }
     }
 
     async fn pull(
@@ -258,10 +274,7 @@ impl RuntimeAdapter for Ollama {
         Ok(Measurement {
             model_tag: normalize_tag(tag),
             gen_tok_per_sec: ec as f64 / (ed as f64 / 1e9),
-            prompt_tok_per_sec: prompt_tok_per_sec(
-                g.prompt_eval_count,
-                g.prompt_eval_duration,
-            ),
+            prompt_tok_per_sec: prompt_tok_per_sec(g.prompt_eval_count, g.prompt_eval_duration),
         })
     }
 }
@@ -306,16 +319,20 @@ impl Ollama {
             let body = resp.text().await.unwrap_or_default();
             return Err(format!("generate failed: HTTP {code} {body}"));
         }
-        resp.json().await.map_err(|e| format!("bad generate response: {e}"))
+        resp.json()
+            .await
+            .map_err(|e| format!("bad generate response: {e}"))
     }
 }
 
 /// `capabilities` from an `/api/show` response. Absent — not empty — when the
 /// runtime predates the field, so "unknown" never reads as "can't".
 fn parse_capabilities(show: &serde_json::Value) -> Option<Vec<String>> {
-    show.get("capabilities")?
-        .as_array()
-        .map(|a| a.iter().filter_map(|c| c.as_str().map(String::from)).collect())
+    show.get("capabilities")?.as_array().map(|a| {
+        a.iter()
+            .filter_map(|c| c.as_str().map(String::from))
+            .collect()
+    })
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -349,15 +366,26 @@ pub const MIN_CALIBRATION_GB: f64 = 1.0;
 /// is not the full file, so they can't anchor the bandwidth estimate. Neither
 /// can sub-1 GB models: per-token overhead, not memory traffic, dominates
 /// their timing, so the smallest rung must clear [`MIN_CALIBRATION_GB`].
-pub fn calibration_candidates(registry: &Registry, installed: &[String]) -> (Option<String>, String) {
+pub fn calibration_candidates(
+    registry: &Registry,
+    installed: &[String],
+) -> (Option<String>, String) {
     let mut dense: Vec<(&str, f64)> = registry
         .models
         .iter()
         .filter(|m| !m.is_moe())
-        .filter(|m| m.quantizations.values().all(|q| q.file_size_gb >= MIN_CALIBRATION_GB))
+        .filter(|m| {
+            m.quantizations
+                .values()
+                .all(|q| q.file_size_gb >= MIN_CALIBRATION_GB)
+        })
         .filter_map(|m| {
             let tag = m.ollama_tag.as_deref()?;
-            let size = m.quantizations.values().map(|q| q.file_size_gb).fold(f64::MAX, f64::min);
+            let size = m
+                .quantizations
+                .values()
+                .map(|q| q.file_size_gb)
+                .fold(f64::MAX, f64::min);
             Some((tag, size))
         })
         .collect();
@@ -366,7 +394,10 @@ pub fn calibration_candidates(registry: &Registry, installed: &[String]) -> (Opt
         .iter()
         .find(|(tag, _)| installed.iter().any(|i| i == &normalize_tag(tag)))
         .map(|(tag, _)| tag.to_string());
-    let fallback = dense.first().map(|(t, _)| t.to_string()).unwrap_or_default();
+    let fallback = dense
+        .first()
+        .map(|(t, _)| t.to_string())
+        .unwrap_or_default();
     (installed_pick, fallback)
 }
 
@@ -490,7 +521,10 @@ mod tests {
             Some(vec!["completion".to_string(), "tools".to_string()])
         );
         // An older Ollama has no field: that is "unknown", not "no tools".
-        assert_eq!(parse_capabilities(&serde_json::json!({ "license": "" })), None);
+        assert_eq!(
+            parse_capabilities(&serde_json::json!({ "license": "" })),
+            None
+        );
     }
 
     #[test]
@@ -502,12 +536,11 @@ mod tests {
         assert_ne!(a, b, "a re-run would be served from the prompt cache");
         // The nonce must lead: caches match on prefix, so a trailing nonce
         // would still let almost the whole prompt hit.
-        let common = a
-            .chars()
-            .zip(b.chars())
-            .take_while(|(x, y)| x == y)
-            .count();
-        assert!(common < 8, "prompts share a {common}-char prefix; nonce is not leading");
+        let common = a.chars().zip(b.chars()).take_while(|(x, y)| x == y).count();
+        assert!(
+            common < 8,
+            "prompts share a {common}-char prefix; nonce is not leading"
+        );
         // Still a real prompt, not just the nonce.
         assert!(a.len() > 400, "prompt too short to measure prefill");
     }

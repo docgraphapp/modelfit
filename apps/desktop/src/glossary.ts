@@ -1,5 +1,5 @@
 /**
- * ModelFit's vocabulary — the shared source of truth for every definition the
+ * MMF's vocabulary — the shared source of truth for every definition the
  * product publishes.
  *
  * Two consumers: <Term id="..."> renders an entry as a hover card in the app,
@@ -16,7 +16,7 @@
  * Adding a term here is all it takes to make it explainable — <Term id="...">
  * does the rest.
  *
- * `brief` is bundled rather than fetched: ModelFit answers offline, and the
+ * `brief` is bundled rather than fetched: MMF answers offline, and the
  * post is only the optional "more" layer.
  */
 
@@ -211,7 +211,7 @@ export const GLOSSARY = {
   runtimeManager: {
     title: "Runtime manager",
     brief:
-      "The layer above a runtime: it reads the hardware, works out which models and backends suit it, and configures the rest. It's the category DocGraph ModelFit is in.",
+      "The layer above a runtime: it reads the hardware, works out which models and backends suit it, and configures the rest. It's the category MMF is in.",
     anchor: "runtime-manager",
     post: "runtimes",
   },

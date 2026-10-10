@@ -30,7 +30,7 @@ those strengths, not by copying a TUI.
 - The UI spends a glyph only on a number that is better than an estimate (✓ ≈)
   or worse than one (?); `estimated` is the baseline the leading "~" already
   announces. Every figure is hoverable for its basis regardless.
-- Measurements persist per runtime tag (`modelfit:measurements`) and survive
+- Measurements persist per runtime tag (`mmf:measurements`) and survive
   restarts. A bare model tag — which is what the benchmark actually runs —
   resolves to the baseline rung, and to no other.
 - `Copy diagnostics` in the footer, built in Rust from the engine's own state.
@@ -151,25 +151,25 @@ are more honest on discrete-GPU machines — which is exactly Win/Linux parity.
 Blocked on `hardware` crate reporting `available_ram_gb` + VRAM reliably on
 Win/Linux (M6). Add the engine enum earlier with `Unified`/`CpuOnly` only.
 
-## 5. Non-GUI surface — `modelfit` CLI + MCP — **DEFERRED 2026-09-07**
+## 5. Non-GUI surface — `mmf` CLI + MCP — **DEFERRED 2026-09-07**
 
 Not scheduled. Design kept so it can be picked up unchanged.
 
 New workspace member `apps/cli` (`clap`), thin over the crates; no Tauri.
 
 ```
-modelfit                      # three picks + why, human table
-modelfit recommend --json     # Recommendations struct as JSON (agents/scripts)
-modelfit fit                  # all models ranked, exclusions inline
-modelfit info <model-id>      # ladder, estimate basis, confidence per number
-modelfit doctor               # hardware detection dump for bug reports
-modelfit bench [--share]      # calibration via Ollama; --share prints the issue URL
-modelfit --hardware prof.json # run against a saved/"dream machine" profile
+mmf                      # three picks + why, human table
+mmf recommend --json     # Recommendations struct as JSON (agents/scripts)
+mmf fit                  # all models ranked, exclusions inline
+mmf info <model-id>      # ladder, estimate basis, confidence per number
+mmf doctor               # hardware detection dump for bug reports
+mmf bench [--share]      # calibration via Ollama; --share prints the issue URL
+mmf --hardware prof.json # run against a saved/"dream machine" profile
 ```
 
 `--json` output is the engine's `Serialize` types unchanged — one contract
 for GUI, CLI, and share links. Distribution: `cargo install`, then a Homebrew
-tap alongside the desktop cask. An MCP server (`modelfit mcp`) over the same
+tap alongside the desktop cask. An MCP server (`mmf mcp`) over the same
 functions is ~100 lines once the CLI exists and is how agents will find us;
 prefer it over an llmfit-style REST `serve`.
 

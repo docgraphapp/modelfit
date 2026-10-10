@@ -1,14 +1,14 @@
 [package]
-name = "modelfit-share"
+name = "mmf-share"
 version.workspace = true
 license.workspace = true
 edition.workspace = true
 
 [dependencies]
 serde.workspace = true
-modelfit-hardware = { path = "../hardware" }
-modelfit-runtime-adapters = { path = "../runtime-adapters" }
-modelfit-recommendation = { path = "../recommendation" }
+mmf-hardware = { path = "../hardware" }
+mmf-runtime-adapters = { path = "../runtime-adapters" }
+mmf-recommendation = { path = "../recommendation" }
 
 [dev-dependencies]
-modelfit-registry = { path = "../registry" }
+mmf-registry = { path = "../registry" }

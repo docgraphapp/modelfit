@@ -5,8 +5,8 @@
 //! checked anywhere — `scripts/check-benchmark-form.py` runs the example in CI
 //! to prove the field ids still match .github/ISSUE_TEMPLATE/benchmark.yml.
 
-use modelfit_hardware::HardwareInfo;
-use modelfit_runtime_adapters::Calibration;
+use mmf_hardware::HardwareInfo;
+use mmf_runtime_adapters::Calibration;
 use serde::Serialize;
 
 mod diagnostics;
@@ -103,7 +103,11 @@ pub fn build_benchmark_share(
             format!(
                 "{:.0} GB{}",
                 hardware.total_ram_gb,
-                if hardware.unified_memory { " unified" } else { "" }
+                if hardware.unified_memory {
+                    " unified"
+                } else {
+                    ""
+                }
             ),
         ),
         f("gpu", "GPU", gpu),
