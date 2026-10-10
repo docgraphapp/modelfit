@@ -525,11 +525,11 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
         let mut smallest: Option<(&String, f64)> = None;
         for (qname, q) in &model.quantizations {
             let mem = mem_of(q);
-            if smallest.as_ref().map_or(true, |(_, m)| mem < *m) {
+            if smallest.as_ref().is_none_or(|(_, m)| mem < *m) {
                 smallest = Some((qname, mem));
             }
             // Below the baseline, prefer the largest rung that still fits.
-            let better = chosen.as_ref().map_or(true, |(_, m)| mem > *m);
+            let better = chosen.as_ref().is_none_or(|(_, m)| mem > *m);
             if fits_comfy(mem) && better {
                 chosen = Some((qname, mem));
             }
