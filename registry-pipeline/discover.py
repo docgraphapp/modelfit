@@ -41,6 +41,7 @@ from build import (
     kv_gb_per_1k,
     list_repo_files,
     ollama_tag_for,
+    license_from_hf,
 )
 
 HERE = Path(__file__).parent
@@ -328,6 +329,9 @@ def probe(repo: str, info: dict, offline: bool) -> tuple[dict | None, str | None
         "quality": None,
         "ollama_tag": None,
         "hf_repo": repo,
+        # The upstream weights' licence (None when unreadable offline). The
+        # app classifies it; an unknown licence is listed but never picked.
+        "license": None if offline else license_from_hf(repo, http_json_maybe),
         "quants": quants,
         "fallback_kv_gb_per_1k": kv,
     }

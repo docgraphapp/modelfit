@@ -15,6 +15,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/Qwen3.8-27B-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 15.33
@@ -37,6 +38,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/Qwen3.5-9B-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 4.35
@@ -61,6 +63,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/Qwen3.6-27B-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 12.65
@@ -85,6 +88,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/Muse-Glimmer-30B-GGUF
+  license: apache-2.0
   quants:
     Q5_K_M:
       fallback_size_gb: 17.88
@@ -103,6 +107,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/Qwen3.5-4B-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 2.14
@@ -127,6 +132,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/Qwen3.5-27B-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 12.58
@@ -151,6 +157,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/gemma-4-31B-it-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 13.72
@@ -175,6 +182,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/gemma-4-12b-it-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 5.3
@@ -199,6 +207,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/kai-os_Grug-12B-GGUF
+  license: null
   quants:
     Q3_K_M:
       fallback_size_gb: 5.87
@@ -222,6 +231,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/Llama-3.2-3B-Instruct-GGUF
+  license: llama3.2
   quants:
     Q3_K_M:
       fallback_size_gb: 1.57
@@ -244,6 +254,7 @@
   quality: null
   ollama_tag: null
   hf_repo: ggml-org/gemma-3-1b-it-GGUF
+  license: gemma
   quants:
     Q4_K_M:
       fallback_size_gb: 0.75
@@ -261,6 +272,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/DeepSeek-R1-Distill-Llama-70B-GGUF
+  license: llama3.3
   quants:
     Q3_K_M:
       fallback_size_gb: 31.91
@@ -283,6 +295,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/Hermes-3-Llama-3.1-70B-GGUF
+  license: llama3
   quants:
     Q3_K_M:
       fallback_size_gb: 31.91
@@ -306,6 +319,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/Llama-3.2-1B-Instruct-GGUF
+  license: llama3.2
   quants:
     Q4_K_M:
       fallback_size_gb: 0.75
@@ -328,6 +342,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/Phi-4-mini-instruct-GGUF
+  license: mit
   quants:
     Q3_K_M:
       fallback_size_gb: 1.97
@@ -351,6 +366,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/Meta-Llama-3.1-70B-Instruct-GGUF
+  license: llama3.1
   quants:
     Q3_K_M:
       fallback_size_gb: 31.91
@@ -374,6 +390,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF
+  license: llama3.1
   quants:
     Q4_K_M:
       fallback_size_gb: 4.58
@@ -395,6 +412,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/gemma-3-4b-it-GGUF
+  license: gemma
   quants:
     Q3_K_M:
       fallback_size_gb: 1.95
@@ -418,6 +436,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/LFM2.5-1.2B-Instruct-GGUF
+  license: lfm1.0
   quants:
     Q3_K_M:
       fallback_size_gb: 0.56
@@ -441,6 +460,7 @@
   quality: null
   ollama_tag: null
   hf_repo: mistralai/Ministral-3-8B-Instruct-2512-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 4.84
@@ -460,6 +480,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/allenai_Olmo-3.1-32B-Think-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 14.53
@@ -483,6 +504,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/Ministral-3-14B-Reasoning-2512-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 7.67
@@ -502,6 +524,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/Llama-3.3-70B-Instruct-GGUF
+  license: llama3.3
   quants:
     Q3_K_M:
       fallback_size_gb: 31.91
@@ -525,6 +548,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/Phi-3.5-mini-instruct-GGUF
+  license: mit
   quants:
     Q3_K_M:
       fallback_size_gb: 1.82
@@ -548,6 +572,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/GLM-4.6V-Flash-GGUF
+  license: mit
   quants:
     Q4_K_M:
       fallback_size_gb: 5.74
@@ -567,6 +592,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/NVIDIA-Nemotron-3-Nano-4B-GGUF
+  license: nvidia-open-model-license
   quants:
     Q4_K_M:
       fallback_size_gb: 2.64
@@ -586,6 +612,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/Ministral-3-3B-Instruct-2512-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 2.0
@@ -605,6 +632,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/DeepSeek-R1-Distill-Llama-8B-GGUF
+  license: llama3.1
   quants:
     Q3_K_M:
       fallback_size_gb: 3.74
@@ -627,6 +655,7 @@
   quality: null
   ollama_tag: null
   hf_repo: ggml-org/GLM-OCR-GGUF
+  license: mit
   quants:
     Q8_0:
       fallback_size_gb: 0.89
@@ -642,6 +671,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/Devstral-Small-2-24B-Instruct-2512-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 10.69
@@ -666,6 +696,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/Mistral-Small-3.2-24B-Instruct-2506-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 10.69
@@ -689,6 +720,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/HuggingFaceTB_SmolLM3-3B-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 1.46
@@ -713,6 +745,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/darkc0de_Muse-Glimmer-30B-heretic-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 13.0
@@ -735,6 +768,7 @@
   quality: null
   ollama_tag: null
   hf_repo: ggml-org/SmolVLM-500M-Instruct-GGUF
+  license: apache-2.0
   quants:
     Q8_0:
       fallback_size_gb: 0.41
@@ -750,6 +784,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/Ministral-3-3B-Instruct-2512-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 1.67
@@ -774,6 +809,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/Phi-4-mini-reasoning-GGUF
+  license: mit
   quants:
     Q4_K_M:
       fallback_size_gb: 2.32
@@ -793,6 +829,7 @@
   quality: null
   ollama_tag: null
   hf_repo: mistralai/Ministral-3-14B-Instruct-2512-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 7.67
@@ -812,6 +849,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/Nanbeige_Nanbeige4.2-3B-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 2.09
@@ -835,6 +873,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/ibm-granite_granite-4.0-h-micro-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 1.45
@@ -859,6 +898,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/granite-4.2-30b-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 13.37
@@ -882,6 +922,7 @@
   quality: null
   ollama_tag: null
   hf_repo: unsloth/granite-4.1-8b-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 4.05
@@ -905,6 +946,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/phi-4-GGUF
+  license: mit
   quants:
     Q4_K_M:
       fallback_size_gb: 8.43
@@ -924,6 +966,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/ai21labs_AI21-Jamba-Reasoning-3B-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 1.43
@@ -947,6 +990,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/Phi-3.1-mini-128k-instruct-GGUF
+  license: mit
   quants:
     Q3_K_M:
       fallback_size_gb: 1.82
@@ -970,6 +1014,7 @@
   quality: null
   ollama_tag: null
   hf_repo: bartowski/granite-20b-code-instruct-GGUF
+  license: apache-2.0
   quants:
     Q3_K_M:
       fallback_size_gb: 9.84
@@ -995,6 +1040,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/Phi-4-reasoning-plus-GGUF
+  license: mit
   quants:
     Q4_K_M:
       fallback_size_gb: 8.43
@@ -1013,6 +1059,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/NuExtract-v1.5-GGUF
+  license: mit
   quants:
     Q4_K_M:
       fallback_size_gb: 2.23
@@ -1032,6 +1079,7 @@
   quality: null
   ollama_tag: null
   hf_repo: mistralai/Ministral-3-3B-Reasoning-2512-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 2.0
@@ -1051,6 +1099,7 @@
   quality: null
   ollama_tag: null
   hf_repo: mistralai/Ministral-3-8B-Reasoning-2512-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 4.84
@@ -1070,6 +1119,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/granite-3.2-8b-instruct-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 4.6
@@ -1089,6 +1139,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/Seed-OSS-36B-Instruct-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 20.27
@@ -1108,6 +1159,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/Ministral-3-8B-Instruct-2512-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 4.84
@@ -1127,6 +1179,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/LFM2.5-2.6B-GGUF
+  license: lfm1.0
   quants:
     Q4_K_M:
       fallback_size_gb: 1.56
@@ -1146,6 +1199,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/Ministral-3-14B-Instruct-2512-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 7.67
@@ -1165,6 +1219,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/granite-3.1-8b-instruct-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 4.6
@@ -1183,6 +1238,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/EXAONE-3.5-7.8B-Instruct-GGUF
+  license: exaone
   quants:
     Q4_K_M:
       fallback_size_gb: 4.44
@@ -1202,6 +1258,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/Olmo-3-32B-Think-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 18.14
@@ -1220,6 +1277,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/AMD-OLMo-1B-SFT-DPO-GGUF
+  license: apache-2.0
   quants:
     Q4_K_M:
       fallback_size_gb: 0.68
@@ -1238,6 +1296,7 @@
   quality: null
   ollama_tag: null
   hf_repo: lmstudio-community/EXAONE-3.5-2.4B-Instruct-GGUF
+  license: exaone
   quants:
     Q4_K_M:
       fallback_size_gb: 1.53

@@ -38,6 +38,59 @@ pub struct Model {
     /// Quant name (e.g. "Q4_K_M") → facts.
     pub quantizations: BTreeMap<String, Quant>,
     pub ollama_tag: Option<String>,
+    /// The weights' licence as Hugging Face labels the UPSTREAM model
+    /// (`apache-2.0`, `gemma`, `llama3.1`, `lfm1.0`, …; a custom licence by
+    /// its `license_name`). `None` when the pipeline could not read one —
+    /// which [`Model::commercial_use`] treats as unknown, never as permitted.
+    #[serde(default)]
+    pub license: Option<String>,
+}
+
+/// Whether the weights' licence lets a business use the model.
+///
+/// Users download weights themselves, so this is guidance, not our licence to
+/// grant — but a recommendation is an endorsement, and recommending a model
+/// the user may not use at work would be a wrong answer to "what should I run".
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub enum CommercialUse {
+    /// Permissive open licence (Apache-2.0, MIT, BSD, CC-BY).
+    Permitted,
+    /// Commercial use allowed under the vendor's own terms and use policy
+    /// (Gemma Terms of Use, Llama Community Licence, NVIDIA Open Model).
+    PermittedWithTerms,
+    /// Commercial use only below a threshold (LFM Open Licence: < US$10M
+    /// annual revenue).
+    Restricted,
+    /// Non-commercial / research only (EXAONE, Qwen Research, CC-BY-NC).
+    NotPermitted,
+    /// No licence, or one we have not classified.
+    Unknown,
+}
+
+impl CommercialUse {
+    /// Classify a Hugging Face licence id. Unlisted ids are `Unknown`: a new
+    /// custom licence must be read by a person before it can be recommended.
+    pub fn of(license: Option<&str>) -> CommercialUse {
+        let Some(l) = license.map(|l| l.trim().to_ascii_lowercase()) else {
+            return CommercialUse::Unknown;
+        };
+        match l.as_str() {
+            "apache-2.0" | "mit" | "bsd-2-clause" | "bsd-3-clause" | "cc-by-4.0"
+            | "cc-by-sa-4.0" | "cc0-1.0" | "mpl-2.0" | "openrail" => CommercialUse::Permitted,
+            "gemma" | "llama2" | "llama3" | "llama3.1" | "llama3.2" | "llama3.3"
+            | "llama4" | "nvidia-open-model-license" => CommercialUse::PermittedWithTerms,
+            "lfm1.0" => CommercialUse::Restricted,
+            "exaone" | "qwen-research" | "mistral-research" | "mrl" => CommercialUse::NotPermitted,
+            l if l.starts_with("cc-by-nc") => CommercialUse::NotPermitted,
+            _ => CommercialUse::Unknown,
+        }
+    }
+
+    /// Whether a model under this licence may be offered as a pick.
+    pub fn allows_recommendation(self) -> bool {
+        matches!(self, CommercialUse::Permitted | CommercialUse::PermittedWithTerms)
+    }
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -153,8 +206,18 @@ impl Model {
     /// automated leaderboard scored on benchmarks that may not survive
     /// quantization, would spend exactly the trust the recommendation exists
     /// to earn. Discovery is automated; eligibility is curated.
+    ///
+    /// A pick is also an endorsement for work use, so a model whose licence
+    /// forbids or caps commercial use — or that we could not read a licence
+    /// for — stays listed but is never picked.
     pub fn is_recommendable(&self) -> bool {
         self.quality.as_ref().is_some_and(|q| q.is_curated())
+            && self.commercial_use().allows_recommendation()
+    }
+
+    /// What the weights' licence says about business use.
+    pub fn commercial_use(&self) -> CommercialUse {
+        CommercialUse::of(self.license.as_deref())
     }
 
     /// The quality score for an objective, if this model has one at all.
@@ -217,6 +280,38 @@ mod tests {
                 assert!(q.general > 0.0 && q.general <= 10.0, "{}", m.id);
                 assert!(q.coding > 0.0 && q.coding <= 10.0, "{}", m.id);
             }
+        }
+    }
+
+    #[test]
+    fn licences_classify_and_gate_recommendation() {
+        use CommercialUse::*;
+        assert_eq!(CommercialUse::of(Some("Apache-2.0")), Permitted);
+        assert_eq!(CommercialUse::of(Some("gemma")), PermittedWithTerms);
+        assert_eq!(CommercialUse::of(Some("llama3.1")), PermittedWithTerms);
+        assert_eq!(CommercialUse::of(Some("lfm1.0")), Restricted);
+        assert_eq!(CommercialUse::of(Some("exaone")), NotPermitted);
+        assert_eq!(CommercialUse::of(Some("cc-by-nc-4.0")), NotPermitted);
+        assert_eq!(CommercialUse::of(Some("other")), Unknown);
+        assert_eq!(CommercialUse::of(None), Unknown);
+
+        let mut m = Registry::bundled()
+            .models
+            .into_iter()
+            .find(|m| m.is_recommendable())
+            .expect("a curated model");
+        for (lic, ok) in [(Some("mit"), true), (Some("lfm1.0"), false), (Some("exaone"), false), (None, false)] {
+            m.license = lic.map(str::to_string);
+            assert_eq!(m.is_recommendable(), ok, "{lic:?}");
+        }
+    }
+
+    #[test]
+    fn every_curated_model_carries_a_licence() {
+        // A curated model with no licence would silently drop out of the
+        // picks; the pipeline's validate() refuses to build one.
+        for m in Registry::bundled().models.iter().filter(|m| m.quality.as_ref().is_some_and(|q| q.is_curated())) {
+            assert!(m.license.is_some(), "{}: curated but no licence", m.id);
         }
     }
 

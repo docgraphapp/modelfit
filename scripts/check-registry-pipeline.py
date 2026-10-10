@@ -16,7 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "registry-pipeline"))
 
-from build import find_quant_file, quality_of, validate  # noqa: E402
+from build import find_quant_file, license_from_hf, quality_of, validate  # noqa: E402
 from discover import capabilities_for, task_of  # noqa: E402
 
 failures: list[str] = []
@@ -88,6 +88,7 @@ def one_model(**over):
     m = {
         "id": "x",
         "parametersB": 8.0,
+        "license": "apache-2.0",
         "quantizations": {"Q4_K_M": {"fileSizeGb": 4.8, "kvCacheGbPer1kCtx": 0.1, "ollamaTag": "x:8b"}},
     }
     m.update(over)
@@ -100,6 +101,26 @@ bogus = validate(one_model(quality={"general": 7, "coding": 6, "source": "vibes"
 check("an unknown quality source is rejected", len(bogus), 1)
 out_of_range = validate(one_model(quality={"general": 99, "coding": 6, "source": "hand"}))
 check("an impossible score is rejected", len(out_of_range), 1)
+
+# --- licences ---------------------------------------------------------------
+# A curated pick is an endorsement for work use: its licence is hand-checked in
+# models.yaml, never left to a lookup an offline build skips.
+check(
+    "a curated model without a licence is rejected",
+    validate(one_model(license=None, quality={"general": 7, "coding": 6, "source": "hand"})),
+    ["x: curated model has no licence in models.yaml"],
+)
+check("a discovered model may lack a licence", validate(one_model(license=None, quality=None)), [])
+# A GGUF conversion carries the UPSTREAM weights' licence; a custom one is
+# reported by its name, not as "other".
+HF = {
+    "https://huggingface.co/api/models/q/M-GGUF": {"tags": ["base_model:quantized:Org/M"], "cardData": {"license": "apache-2.0"}},
+    "https://huggingface.co/api/models/Org/M": {"cardData": {"license": "other", "license_name": "LFM1.0"}},
+    "https://huggingface.co/api/models/q/Plain-GGUF": {"tags": [], "cardData": {"license": "mit"}},
+}
+check("the upstream licence wins over the GGUF repo's", license_from_hf("q/M-GGUF", HF.get), "lfm1.0")
+check("a repo with no base reports its own", license_from_hf("q/Plain-GGUF", HF.get), "mit")
+check("an unreadable repo has no licence", license_from_hf("q/Gone", HF.get), None)
 
 # --- task resolution --------------------------------------------------------
 # Hugging Face stopped labelling many GGUF repos, and treating "no label" as

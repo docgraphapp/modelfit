@@ -361,6 +361,38 @@ def load_sources() -> tuple[list[dict], list[str]]:
     return models, notes
 
 
+def license_from_hf(repo: str, fetch=None) -> str | None:
+    """The upstream model's licence for a GGUF repo, as Hugging Face labels it.
+
+    A GGUF conversion inherits the weights' licence from the model it was
+    quantized from, so the base repo is asked first (the `base_model:quantized:`
+    tag keeps its case; the API is case-sensitive for gated repos). A custom
+    licence reads `other` with the real name in `license_name`.
+    """
+    fetch = fetch or http_json
+
+    def lic(info: dict) -> str | None:
+        card = info.get("cardData") or {}
+        l = card.get("license")
+        if isinstance(l, list):
+            l = l[0] if l else None
+        if l == "other" and card.get("license_name"):
+            l = card["license_name"]
+        return str(l).lower() if l else None
+
+    info = fetch(f"https://huggingface.co/api/models/{repo}") or {}
+    for tag in info.get("tags", []):
+        if tag.startswith("base_model:quantized:"):
+            base = tag.split(":", 2)[2]
+            try:
+                upstream = lic(fetch(f"https://huggingface.co/api/models/{base}") or {})
+            except Exception:  # noqa: BLE001
+                upstream = None
+            if upstream:
+                return upstream
+    return lic(info)
+
+
 def build(offline: bool) -> tuple[dict, list[str]]:
     models, warnings = load_sources()
     out_models = []
@@ -435,6 +467,18 @@ def build(offline: bool) -> tuple[dict, list[str]]:
             q["kvCacheGbPer1kCtx"] = kv
             q["kvSource"] = kv_source
 
+        # Curated entries carry a hand-checked licence; anything else is read
+        # from Hugging Face. Unknown stays None — the app never recommends a
+        # model whose licence it could not read.
+        license = m.get("license")
+        if not license and repo and not offline:
+            try:
+                license = license_from_hf(repo)
+            except Exception as e:  # noqa: BLE001
+                warnings.append(f"{m['id']}: licence lookup failed ({e})")
+            if not license:
+                warnings.append(f"{m['id']}: no licence on Hugging Face")
+
         out_models.append(
             {
                 "id": m["id"],
@@ -449,6 +493,7 @@ def build(offline: bool) -> tuple[dict, list[str]]:
                 "quality": quality_of(m),
                 "quantizations": quants,
                 "ollamaTag": m.get("ollama_tag"),
+                "license": license,
             }
         )
 
@@ -494,6 +539,11 @@ def validate(registry: dict) -> list[str]:
             # two-tier split exists to prevent.
             if q.get("source") not in ("hand", "leaderboard-v2"):
                 errors.append(f"{mid}: unknown quality source {q.get('source')!r}")
+            # A curated pick is an endorsement for work use, so its licence is
+            # checked by a person and written in models.yaml, never left to a
+            # lookup that an offline build would skip.
+            if q.get("source") == "hand" and not m.get("license"):
+                errors.append(f"{mid}: curated model has no licence in models.yaml")
         for qname, q in m["quantizations"].items():
             if not (0.1 < q["fileSizeGb"] < 2000):
                 errors.append(f"{mid} {qname}: implausible size {q['fileSizeGb']}")

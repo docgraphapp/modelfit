@@ -106,7 +106,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "qwen3:0.6b"
+      "ollamaTag": "qwen3:0.6b",
+      "license": "apache-2.0"
     },
     {
       "id": "qwen3.5-0.8b",
@@ -213,7 +214,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "qwen3.5:0.8b"
+      "ollamaTag": "qwen3.5:0.8b",
+      "license": "apache-2.0"
     },
     {
       "id": "lfm2.5-1.2b-thinking",
@@ -319,7 +321,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "lfm1.0"
     },
     {
       "id": "gemma4-e2b",
@@ -426,7 +429,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "gemma4:e2b"
+      "ollamaTag": "gemma4:e2b",
+      "license": "apache-2.0"
     },
     {
       "id": "smollm3-3b",
@@ -532,7 +536,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "llama3.2-3b",
@@ -620,7 +625,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "llama3.2:3b"
+      "ollamaTag": "llama3.2:3b",
+      "license": "llama3.2"
     },
     {
       "id": "qwen3-4b",
@@ -710,7 +716,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "qwen3:4b"
+      "ollamaTag": "qwen3:4b",
+      "license": "apache-2.0"
     },
     {
       "id": "qwen3.5-4b",
@@ -818,7 +825,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "qwen3.5:4b"
+      "ollamaTag": "qwen3.5:4b",
+      "license": "apache-2.0"
     },
     {
       "id": "ministral-3-3b-reasoning-2512",
@@ -890,7 +898,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "gemma3-4b",
@@ -995,7 +1004,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "gemma3:4b"
+      "ollamaTag": "gemma3:4b",
+      "license": "gemma"
     },
     {
       "id": "gemma4-e4b",
@@ -1103,7 +1113,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "gemma4:e4b"
+      "ollamaTag": "gemma4:e4b",
+      "license": "apache-2.0"
     },
     {
       "id": "qwen3-8b",
@@ -1193,7 +1204,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "qwen3:8b"
+      "ollamaTag": "qwen3:8b",
+      "license": "apache-2.0"
     },
     {
       "id": "llama3.1-8b",
@@ -1298,7 +1310,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "llama3.1:8b"
+      "ollamaTag": "llama3.1:8b",
+      "license": "llama3.1"
     },
     {
       "id": "gemma3-12b",
@@ -1403,7 +1416,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "gemma3:12b"
+      "ollamaTag": "gemma3:12b",
+      "license": "gemma"
     },
     {
       "id": "gemma4-12b",
@@ -1511,7 +1525,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "gemma4:12b"
+      "ollamaTag": "gemma4:12b",
+      "license": "apache-2.0"
     },
     {
       "id": "qwen3-14b",
@@ -1601,7 +1616,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "qwen3:14b"
+      "ollamaTag": "qwen3:14b",
+      "license": "apache-2.0"
     },
     {
       "id": "phi4-14b",
@@ -1706,7 +1722,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "phi4:14b"
+      "ollamaTag": "phi4:14b",
+      "license": "mit"
     },
     {
       "id": "deepseek-r1-14b",
@@ -1811,7 +1828,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "deepseek-r1:14b"
+      "ollamaTag": "deepseek-r1:14b",
+      "license": "mit"
     },
     {
       "id": "qwen2.5-coder-14b",
@@ -1917,7 +1935,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "qwen2.5-coder:14b"
+      "ollamaTag": "qwen2.5-coder:14b",
+      "license": "apache-2.0"
     },
     {
       "id": "mistral-small-3.1-24b",
@@ -2023,7 +2042,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "mistral-small3.1:24b"
+      "ollamaTag": "mistral-small3.1:24b",
+      "license": "apache-2.0"
     },
     {
       "id": "gemma3-27b",
@@ -2128,7 +2148,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "gemma3:27b"
+      "ollamaTag": "gemma3:27b",
+      "license": "gemma"
     },
     {
       "id": "gemma4-26b-a4b",
@@ -2236,7 +2257,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "gemma4:26b"
+      "ollamaTag": "gemma4:26b",
+      "license": "apache-2.0"
     },
     {
       "id": "qwen3-30b-a3b",
@@ -2326,7 +2348,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "qwen3:30b"
+      "ollamaTag": "qwen3:30b",
+      "license": "apache-2.0"
     },
     {
       "id": "gemma4-31b",
@@ -2434,7 +2457,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "gemma4:31b"
+      "ollamaTag": "gemma4:31b",
+      "license": "apache-2.0"
     },
     {
       "id": "qwen3-32b",
@@ -2524,7 +2548,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "qwen3:32b"
+      "ollamaTag": "qwen3:32b",
+      "license": "apache-2.0"
     },
     {
       "id": "qwen2.5-coder-32b",
@@ -2630,7 +2655,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": "qwen2.5-coder:32b"
+      "ollamaTag": "qwen2.5-coder:32b",
+      "license": "apache-2.0"
     },
     {
       "id": "qwen3.8-27b",
@@ -2714,7 +2740,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "qwen3.5-9b",
@@ -2816,7 +2843,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "qwen3.6-27b",
@@ -2918,7 +2946,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "muse-glimmer-30b",
@@ -2969,7 +2998,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "qwen3.5-27b",
@@ -3071,7 +3101,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "gemma-4-31b",
@@ -3173,7 +3204,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "gemma-4-12b",
@@ -3275,7 +3307,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "grug-12b",
@@ -3377,7 +3410,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": null
     },
     {
       "id": "llama-3.2-3b",
@@ -3478,7 +3512,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "llama3.2"
     },
     {
       "id": "gemma-3-1b",
@@ -3527,7 +3562,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "gemma"
     },
     {
       "id": "deepseek-r1-distill-llama-70b",
@@ -3638,7 +3674,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "llama3.3"
     },
     {
       "id": "hermes-3-llama-3.1-70b",
@@ -3753,7 +3790,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "llama3"
     },
     {
       "id": "llama-3.2-1b",
@@ -3837,7 +3875,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "llama3.2"
     },
     {
       "id": "phi-4-mini-4b",
@@ -3939,7 +3978,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "mit"
     },
     {
       "id": "meta-llama-3.1-70b",
@@ -4055,7 +4095,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "llama3.1"
     },
     {
       "id": "meta-llama-3.1-8b",
@@ -4139,7 +4180,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "llama3.1"
     },
     {
       "id": "gemma-3-4b",
@@ -4240,7 +4282,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "gemma"
     },
     {
       "id": "lfm2.5-1.2b",
@@ -4341,7 +4384,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "lfm1.0"
     },
     {
       "id": "ministral-3-8b-2512",
@@ -4408,7 +4452,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "olmo-3.1-32b-think",
@@ -4509,7 +4554,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "ministral-3-14b-reasoning-2512",
@@ -4576,7 +4622,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "llama-3.3-70b",
@@ -4692,7 +4739,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "llama3.3"
     },
     {
       "id": "phi-3.5-mini-4b",
@@ -4793,7 +4841,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "mit"
     },
     {
       "id": "glm-4.6v-flash-9b",
@@ -4860,7 +4909,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "mit"
     },
     {
       "id": "nvidia-nemotron-3-nano-4b-bf16",
@@ -4927,7 +4977,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "nvidia-open-model-license"
     },
     {
       "id": "ministral-3-3b-2512-bf16",
@@ -4994,7 +5045,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "deepseek-r1-distill-llama-8b",
@@ -5095,7 +5147,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "llama3.1"
     },
     {
       "id": "glm-ocr-0.9b",
@@ -5127,7 +5180,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "mit"
     },
     {
       "id": "devstral-small-2-24b-2512",
@@ -5228,7 +5282,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "mistral-small-3.2-24b-2506",
@@ -5330,7 +5385,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "muse-glimmer-30b-heretic",
@@ -5432,7 +5488,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "smolvlm-500m",
@@ -5464,7 +5521,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "ministral-3-3b-2512",
@@ -5565,7 +5623,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "phi-4-mini-reasoning-4b",
@@ -5633,7 +5692,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "mit"
     },
     {
       "id": "ministral-3-14b-2512",
@@ -5700,7 +5760,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "nanbeige4.2-3b",
@@ -5801,7 +5862,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "granite-4.0-h-micro-3b",
@@ -5902,7 +5964,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "granite-4.2-30b",
@@ -6004,7 +6067,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "granite-4.1-8b",
@@ -6105,7 +6169,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "phi-4-15b",
@@ -6172,7 +6237,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "mit"
     },
     {
       "id": "ai21-jamba-reasoning-3b",
@@ -6273,7 +6339,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "phi-3-mini-128k-4b",
@@ -6374,7 +6441,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "mit"
     },
     {
       "id": "granite-20b-code",
@@ -6475,7 +6543,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "phi-4-reasoning-plus-15b",
@@ -6544,7 +6613,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "mit"
     },
     {
       "id": "nuextract-v1.5-4b",
@@ -6610,7 +6680,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "mit"
     },
     {
       "id": "ministral-3-8b-reasoning-2512",
@@ -6677,7 +6748,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "granite-3.2-8b",
@@ -6744,7 +6816,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "seed-oss-36b",
@@ -6811,7 +6884,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "ministral-3-8b-2512-bf16",
@@ -6878,7 +6952,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "lfm2.5-2.6b",
@@ -6945,7 +7020,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "lfm1.0"
     },
     {
       "id": "ministral-3-14b-2512-bf16",
@@ -7012,7 +7088,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "granite-3.1-8b",
@@ -7079,7 +7156,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "exaone-3.5-7.8b",
@@ -7145,7 +7223,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "exaone"
     },
     {
       "id": "olmo-3-32b-think",
@@ -7212,7 +7291,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "amd-olmo-1b-sft-dpo",
@@ -7278,7 +7358,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "apache-2.0"
     },
     {
       "id": "exaone-3.5-2.4b",
@@ -7344,7 +7425,8 @@
           "kvSource": "gguf"
         }
       },
-      "ollamaTag": null
+      "ollamaTag": null,
+      "license": "exaone"
     }
   ]
 }
