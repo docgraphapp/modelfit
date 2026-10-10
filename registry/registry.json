@@ -3411,7 +3411,7 @@
         }
       },
       "ollamaTag": null,
-      "license": null
+      "license": "other"
     },
     {
       "id": "llama-3.2-3b",
