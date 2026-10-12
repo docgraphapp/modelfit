@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "2026-10-10",
+  "version": "2026-10-12",
   "models": [
     {
       "id": "qwen3-0.6b",
