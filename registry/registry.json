@@ -1062,7 +1062,12 @@
                 "sizeBytes": 4590807392,
                 "sha256": "a555b900214b477d8880e7832e0b8925e139b0159640036b09fe472b6f2097f2"
               }
-            ]
+            ],
+            "mmproj": {
+              "path": "mmproj-gemma-4-E4B-it-Q8_0.gguf",
+              "sizeBytes": 559874816,
+              "sha256": "197f49a93027f9843772bd24a6a9e0be2a32a788de5a3def330e9c585d86edd1"
+            }
           },
           "measured": {
             "contextTokens": 24576,

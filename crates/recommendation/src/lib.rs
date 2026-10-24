@@ -225,6 +225,7 @@ pub struct Recommendations {
     pub bandwidth: Estimate,
 }
 
+const GIB: f64 = 1024.0 * 1024.0 * 1024.0;
 /// Fixed inference-runtime overhead (llama.cpp/Ollama buffers, scratch).
 const RUNTIME_OVERHEAD_GB: f64 = 1.5;
 /// Required headroom: a model must fit within 90% of usable memory.
@@ -448,8 +449,11 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
         // The estimate is only as good as the facts under it, so a rung whose
         // size or KV rate is a curated fallback rather than a value read from
         // the model file reports itself as unknown.
+        // A rung's vision projector is loaded with it (DocGraph ADR 0196
+        // D5), so it counts against the fit like the weights do.
+        let mmproj_gb = |q: &Quant| q.gguf.as_ref().map_or(0.0, |g| g.mmproj_bytes() as f64 / GIB);
         let mem_of = |q: &Quant| {
-            q.file_size_gb + q.kv_cache_gb_per_1k_ctx * ctx / 1024.0 + RUNTIME_OVERHEAD_GB
+            q.file_size_gb + mmproj_gb(q) + q.kv_cache_gb_per_1k_ctx * ctx / 1024.0 + RUNTIME_OVERHEAD_GB
         };
         let memory_estimate = |q: &Quant| {
             let kv = q.kv_cache_gb_per_1k_ctx * ctx / 1024.0;
@@ -823,6 +827,36 @@ mod tests {
         assert_eq!((m.quant.as_str(), m.fit), ("Q4_K_M", FitVerdict::Comfortable));
     }
 
+    /// A rung's vision projector is loaded with it, so the fit counts it —
+    /// and a measured rung with one still fits a 24 GB Mac comfortably.
+    #[test]
+    fn a_vision_projector_counts_against_the_fit() {
+        let req = Request { context_length: 24576, ..Request::default() };
+        let hw = apple("M4 Pro", 24.0);
+        let mem = |reg: &Registry| {
+            recommend(&hw, reg, &req)
+                .all
+                .into_iter()
+                .find(|a| a.model_id == "gemma4-e4b")
+                .map(|a| (a.quant, a.memory.value, a.fit))
+                .unwrap()
+        };
+        let with = Registry::bundled();
+        let mut without = with.clone();
+        for m in &mut without.models {
+            for q in m.quantizations.values_mut() {
+                if let Some(g) = q.gguf.as_mut() {
+                    g.mmproj = None;
+                }
+            }
+        }
+        let (qa, a, fit) = mem(&with);
+        let (qb, b, _) = mem(&without);
+        assert_eq!((qa.as_str(), qb.as_str()), ("Q4_0", "Q4_0"));
+        assert!((a - b - 0.5).abs() < 0.1, "projector adds ~0.52 GB: {a} vs {b}");
+        assert_eq!(fit, FitVerdict::Comfortable);
+    }
+
     fn apple(chip: &str, ram_gb: f64) -> HardwareInfo {
         HardwareInfo {
             os: "macos".into(),
@@ -1144,6 +1178,7 @@ mod tests {
 
     #[test]
     fn ladder_is_complete_and_agrees_with_the_pick() {
+        let reg = Registry::bundled();
         let r = rec(&apple("M4 Max", 64.0), &Request::default());
         for a in &r.all {
             let chosen = a
@@ -1159,10 +1194,21 @@ mod tests {
                 a.model_id
             );
             assert_eq!(chosen.fit, a.fit, "{}", a.model_id);
-            // Smallest first, and more bits always costs speed.
+            // Smallest first, and more bits always costs speed — within one
+            // quantizer's ladder. A rung from another repo (a measured file)
+            // or one carrying a vision projector (memory, not per-token
+            // bytes) is not comparable that way.
+            let model = reg.models.iter().find(|m| m.id == a.model_id).unwrap();
+            let comparable = |q: &str| {
+                let g = model.quantizations[q].gguf.as_ref();
+                (g.map(|g| g.repo.as_str()), g.is_some_and(|g| g.mmproj.is_some()))
+            };
             for w in a.ladder.windows(2) {
                 assert!(w[0].memory.value <= w[1].memory.value, "{}", a.model_id);
-                assert!(w[0].speed.value >= w[1].speed.value, "{}", a.model_id);
+                let (c0, c1) = (comparable(&w[0].quant), comparable(&w[1].quant));
+                if c0.0 == c1.0 && !c0.1 && !c1.1 {
+                    assert!(w[0].speed.value >= w[1].speed.value, "{}", a.model_id);
+                }
             }
         }
     }

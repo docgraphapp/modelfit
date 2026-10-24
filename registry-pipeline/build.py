@@ -443,6 +443,15 @@ def build(offline: bool) -> tuple[dict, list[str]]:
                             for p, sz, sha in hit.files
                         ],
                     }
+                    # The vision projector named for this rung (curated:
+                    # which mmproj goes with which model is not inferable).
+                    mm = qcfg.get("mmproj")
+                    if mm:
+                        fact = next((f for p, f in qfiles.items() if p.split("/")[-1] == mm), None)
+                        if fact and fact.sha256:
+                            gguf["mmproj"] = {"path": mm, "sizeBytes": fact.size, "sha256": fact.sha256}
+                        else:
+                            warnings.append(f"{m['id']}: mmproj {mm} not found (or no sha256) in {qrepo}")
                 else:
                     warnings.append(f"{m['id']}: quant {qname} has a shard without an LFS sha256; no gguf record")
                 if kv is None and not offline:

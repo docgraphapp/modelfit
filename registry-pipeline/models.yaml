@@ -225,6 +225,10 @@
     Q4_0:
       fallback_size_gb: 4.28
       hf_repo: ggml-org/gemma-4-E4B-it-GGUF
+      # The 8-bit vision projector (DocGraph ADR 0196 D5): half the BF16
+      # file; an image turn measured under the same app load stayed within
+      # the breathing-room rule.
+      mmproj: mmproj-gemma-4-E4B-it-Q8_0.gguf
       measured: { context_tokens: 24576, min_total_memory_gb: 24, source: "docgraph-ledger 2026-10-24" }
     Q4_K_M: { fallback_size_gb: 5.41 }
     Q5_K_M: { fallback_size_gb: 5.82 }
