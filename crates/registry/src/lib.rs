@@ -154,6 +154,28 @@ pub struct Quant {
     /// Ollama-only and a consumer must say so, never guess a URL.
     #[serde(default)]
     pub gguf: Option<Gguf>,
+    /// A run of this exact rung on a real machine, by an app that ships it
+    /// (DocGraph's model ledger). Absent for every rung nobody measured —
+    /// which is most of them; the estimates above still apply.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub measured: Option<Measured>,
+}
+
+/// What a real run of one rung showed: the context it was run at and the
+/// smallest machine it is recommended for. Facts from a measurement, not a
+/// guess — so the engine prefers a measured rung over the baseline when the
+/// machine is at least that large, and never calls it comfortable below it.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct Measured {
+    /// The context window the run used, in tokens.
+    pub context_tokens: u32,
+    /// The smallest total memory (GB) the rung is recommended for: in use
+    /// under a realistic app load it stayed within half of it, with memory
+    /// pressure normal and no swap growth.
+    pub min_total_memory_gb: f64,
+    /// Who measured it and when (e.g. `docgraph-ledger 2026-10-24`).
+    pub source: String,
 }
 
 /// Where one quant's bytes live on Hugging Face and how to verify them.
