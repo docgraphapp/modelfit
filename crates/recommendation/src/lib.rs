@@ -137,7 +137,9 @@ impl Default for Request {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize)]
 #[serde(rename_all = "lowercase")]
 pub enum FitVerdict {
-    /// ≤ 80% of usable memory: recommended zone.
+    /// ≤ 80% of usable memory — and, on unified memory, ≤ half the Mac's
+    /// memory (the breathing-room rule): recommended zone. A rung measured
+    /// for a larger machine is never comfortable below that machine.
     Comfortable,
     /// Fits with the required 10% headroom but above 80%.
     Tight,
@@ -223,12 +225,21 @@ pub struct Recommendations {
     pub bandwidth: Estimate,
 }
 
+const GIB: f64 = 1024.0 * 1024.0 * 1024.0;
 /// Fixed inference-runtime overhead (llama.cpp/Ollama buffers, scratch).
 const RUNTIME_OVERHEAD_GB: f64 = 1.5;
 /// Required headroom: a model must fit within 90% of usable memory.
 const FIT_FRACTION: f64 = 0.90;
 /// "Comfortable" (SAFE zone) threshold.
 const COMFORT_FRACTION: f64 = 0.80;
+/// Unified memory: a comfortable model leaves at least half the machine to
+/// everything else. Measured by DocGraph's model ledger (2026-10-24): a
+/// model past half of a 24 GB Mac pushed macOS into memory pressure and
+/// swap with a browser and an editor open, though it "fit" the 70% budget.
+const BREATHING_ROOM_FRACTION: f64 = 0.50;
+/// `total_ram_gb` is read in binary units and spec sheets round, so a rung
+/// measured for "24 GB" must still count on a machine reporting 23.9.
+const MIN_MEMORY_TOLERANCE: f64 = 0.97;
 /// Fraction of theoretical bandwidth real inference achieves.
 const BANDWIDTH_EFFICIENCY: f64 = 0.55;
 /// MoE routing/expert-switch penalty on top of the dense estimate.
@@ -387,8 +398,27 @@ pub fn bandwidth_estimate(hw: &HardwareInfo, measured_gbps: Option<f64>) -> Esti
     unknown(UNKNOWN_CPU_GBPS, "this CPU's memory")
 }
 
+/// The most a model may use and still be called comfortable here.
+pub fn comfortable_memory_gb(hw: &HardwareInfo) -> f64 {
+    let limit = usable_memory_gb(hw) * COMFORT_FRACTION;
+    if hw.unified_memory {
+        limit.min(hw.total_ram_gb * BREATHING_ROOM_FRACTION)
+    } else {
+        limit
+    }
+}
+
+/// Whether this machine is at least as large as the one a measured rung is
+/// recommended for. An unmeasured rung has no such floor.
+fn meets_measured_floor(hw: &HardwareInfo, q: &Quant) -> bool {
+    q.measured
+        .as_ref()
+        .is_none_or(|m| hw.total_ram_gb >= m.min_total_memory_gb * MIN_MEMORY_TOLERANCE)
+}
+
 pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recommendations {
     let usable = usable_memory_gb(hw);
+    let comfortable = comfortable_memory_gb(hw);
     let bandwidth = bandwidth_estimate(hw, req.measured_effective_bandwidth_gbps);
     let (wq, ws) = weights(req.objective);
     let floor = speed_floor(req.objective);
@@ -419,8 +449,11 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
         // The estimate is only as good as the facts under it, so a rung whose
         // size or KV rate is a curated fallback rather than a value read from
         // the model file reports itself as unknown.
+        // A rung's vision projector is loaded with it (DocGraph ADR 0196
+        // D5), so it counts against the fit like the weights do.
+        let mmproj_gb = |q: &Quant| q.gguf.as_ref().map_or(0.0, |g| g.mmproj_bytes() as f64 / GIB);
         let mem_of = |q: &Quant| {
-            q.file_size_gb + q.kv_cache_gb_per_1k_ctx * ctx / 1024.0 + RUNTIME_OVERHEAD_GB
+            q.file_size_gb + mmproj_gb(q) + q.kv_cache_gb_per_1k_ctx * ctx / 1024.0 + RUNTIME_OVERHEAD_GB
         };
         let memory_estimate = |q: &Quant| {
             let kv = q.kv_cache_gb_per_1k_ctx * ctx / 1024.0;
@@ -519,7 +552,7 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
         // would penalise precisely the models a capable machine handles best.
         // Offering the richer rung is a separate decision for the user to make
         // with the trade-off in front of them, not one to fold into the score.
-        let fits_comfy = |m: f64| m <= usable * COMFORT_FRACTION;
+        let fits_comfy = |q: &Quant, m: f64| m <= comfortable && meets_measured_floor(hw, q);
 
         let mut chosen: Option<(&String, f64)> = None; // (quant, est_memory)
         let mut smallest: Option<(&String, f64)> = None;
@@ -530,16 +563,31 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
             }
             // Below the baseline, prefer the largest rung that still fits.
             let better = chosen.as_ref().is_none_or(|(_, m)| mem > *m);
-            if fits_comfy(mem) && better {
+            if fits_comfy(q, mem) && better {
                 chosen = Some((qname, mem));
             }
         }
         // The baseline wins whenever it fits, whatever richer rungs exist.
         if let Some((qname, q)) = model.quantizations.get_key_value(DEFAULT_QUANT) {
             let mem = mem_of(q);
-            if fits_comfy(mem) {
+            if fits_comfy(q, mem) {
                 chosen = Some((qname, mem));
             }
+        }
+        // ...unless a rung was MEASURED on a machine like this one: a real run
+        // outranks the baseline's estimate. Largest such rung, if several.
+        let mut measured_pick: Option<(&String, f64)> = None;
+        for (qname, q) in &model.quantizations {
+            let mem = mem_of(q);
+            if q.measured.is_some()
+                && fits_comfy(q, mem)
+                && measured_pick.as_ref().is_none_or(|(_, m)| mem > *m)
+            {
+                measured_pick = Some((qname, mem));
+            }
+        }
+        if measured_pick.is_some() {
+            chosen = measured_pick;
         }
         // If no quant is comfortable, assess the smallest one — it either
         // fits Tight (still recommendable) or proves the model TooBig.
@@ -548,8 +596,8 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
             (qname, mem)
         });
 
-        let verdict = |mem: f64| {
-            if mem <= usable * COMFORT_FRACTION {
+        let verdict = |q: &Quant, mem: f64| {
+            if fits_comfy(q, mem) {
                 FitVerdict::Comfortable
             } else if mem <= usable * FIT_FRACTION {
                 FitVerdict::Tight
@@ -557,7 +605,7 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
                 FitVerdict::TooBig
             }
         };
-        let fit = verdict(est_memory);
+        let fit = verdict(&model.quantizations[quant], est_memory);
 
         let memory = memory_estimate(&model.quantizations[quant]);
         let speed = speed_estimate(quant, &model.quantizations[quant]);
@@ -589,7 +637,7 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
                 quant: qname.clone(),
                 memory: memory_estimate(q),
                 speed: speed_estimate(qname, q),
-                fit: verdict(mem_of(q)),
+                fit: verdict(q, mem_of(q)),
                 ollama_tag: model.install_tag(qname),
             })
             .collect();
@@ -733,6 +781,81 @@ pub fn recommend(hw: &HardwareInfo, registry: &Registry, req: &Request) -> Recom
 mod tests {
     use super::*;
     use mmf_hardware::GpuInfo;
+
+    /// Breathing-room rule: on unified memory a comfortable model leaves half
+    /// the Mac free, even where the 70 % budget would let it in.
+    #[test]
+    fn a_comfortable_model_leaves_half_the_mac_free() {
+        let hw = apple("M4 Pro", 24.0);
+        assert!((comfortable_memory_gb(&hw) - 12.0).abs() < 1e-9);
+        let r = rec(&hw, &Request::default());
+        for a in r.all.iter().filter(|a| a.fit == FitVerdict::Comfortable) {
+            assert!(a.memory.value <= 12.05, "{} {} {}", a.model_id, a.quant, a.memory.value);
+        }
+        // Discrete GPUs keep the old budget: the rule is about shared memory.
+        let mut pc = hw.clone();
+        pc.unified_memory = false;
+        assert!(comfortable_memory_gb(&pc) > 12.0);
+    }
+
+    /// A rung measured on a real machine is the model's pick there, and is
+    /// never comfortable on a smaller machine than it was measured for.
+    #[test]
+    fn a_measured_rung_wins_on_its_machine_and_not_below() {
+        let req = Request { context_length: 24576, ..Request::default() };
+        let pick = |ram: f64| {
+            rec(&apple("M4 Pro", ram), &req)
+                .all
+                .into_iter()
+                .find(|a| a.model_id == "gemma4-e4b")
+                .expect("gemma4-e4b assessed")
+        };
+        let big = pick(24.0);
+        assert_eq!((big.quant.as_str(), big.fit), ("Q4_0", FitVerdict::Comfortable));
+        // 23.9 is how a "24 GB" Mac can report itself.
+        assert_eq!(pick(23.9).quant, "Q4_0");
+        let small = pick(16.0);
+        assert_ne!(small.quant, "Q4_0", "below its measured machine the rung is not the pick");
+        let q4_0 = small.ladder.iter().find(|r| r.quant == "Q4_0").unwrap();
+        assert_ne!(q4_0.fit, FitVerdict::Comfortable);
+        // Ministral's measured rung is the 16 GB pick.
+        let m = rec(&apple("M4", 16.0), &req)
+            .all
+            .into_iter()
+            .find(|a| a.model_id == "ministral-3-3b-reasoning-2512")
+            .unwrap();
+        assert_eq!((m.quant.as_str(), m.fit), ("Q4_K_M", FitVerdict::Comfortable));
+    }
+
+    /// A rung's vision projector is loaded with it, so the fit counts it —
+    /// and a measured rung with one still fits a 24 GB Mac comfortably.
+    #[test]
+    fn a_vision_projector_counts_against_the_fit() {
+        let req = Request { context_length: 24576, ..Request::default() };
+        let hw = apple("M4 Pro", 24.0);
+        let mem = |reg: &Registry| {
+            recommend(&hw, reg, &req)
+                .all
+                .into_iter()
+                .find(|a| a.model_id == "gemma4-e4b")
+                .map(|a| (a.quant, a.memory.value, a.fit))
+                .unwrap()
+        };
+        let with = Registry::bundled();
+        let mut without = with.clone();
+        for m in &mut without.models {
+            for q in m.quantizations.values_mut() {
+                if let Some(g) = q.gguf.as_mut() {
+                    g.mmproj = None;
+                }
+            }
+        }
+        let (qa, a, fit) = mem(&with);
+        let (qb, b, _) = mem(&without);
+        assert_eq!((qa.as_str(), qb.as_str()), ("Q4_0", "Q4_0"));
+        assert!((a - b - 0.5).abs() < 0.1, "projector adds ~0.52 GB: {a} vs {b}");
+        assert_eq!(fit, FitVerdict::Comfortable);
+    }
 
     fn apple(chip: &str, ram_gb: f64) -> HardwareInfo {
         HardwareInfo {
@@ -1055,6 +1178,7 @@ mod tests {
 
     #[test]
     fn ladder_is_complete_and_agrees_with_the_pick() {
+        let reg = Registry::bundled();
         let r = rec(&apple("M4 Max", 64.0), &Request::default());
         for a in &r.all {
             let chosen = a
@@ -1070,10 +1194,21 @@ mod tests {
                 a.model_id
             );
             assert_eq!(chosen.fit, a.fit, "{}", a.model_id);
-            // Smallest first, and more bits always costs speed.
+            // Smallest first, and more bits always costs speed — within one
+            // quantizer's ladder. A rung from another repo (a measured file)
+            // or one carrying a vision projector (memory, not per-token
+            // bytes) is not comparable that way.
+            let model = reg.models.iter().find(|m| m.id == a.model_id).unwrap();
+            let comparable = |q: &str| {
+                let g = model.quantizations[q].gguf.as_ref();
+                (g.map(|g| g.repo.as_str()), g.is_some_and(|g| g.mmproj.is_some()))
+            };
             for w in a.ladder.windows(2) {
                 assert!(w[0].memory.value <= w[1].memory.value, "{}", a.model_id);
-                assert!(w[0].speed.value >= w[1].speed.value, "{}", a.model_id);
+                let (c0, c1) = (comparable(&w[0].quant), comparable(&w[1].quant));
+                if c0.0 == c1.0 && !c0.1 && !c1.1 {
+                    assert!(w[0].speed.value >= w[1].speed.value, "{}", a.model_id);
+                }
             }
         }
     }
@@ -1081,10 +1216,19 @@ mod tests {
     #[test]
     fn ranking_is_unaffected_by_richer_rungs() {
         // Adding rungs a machine can afford must not reorder models: the
-        // score is computed at the same baseline rung for everyone.
+        // score is computed at the same baseline rung for everyone. The one
+        // exception is a rung measured on a machine like this one — that is
+        // the file an app will install, so it is the rung to rank.
+        let reg = Registry::bundled();
         let r = rec(&apple("M4 Max", 64.0), &Request::default());
         for a in &r.all {
-            if a.excluded_reason.is_none() {
+            let measured = reg
+                .models
+                .iter()
+                .find(|m| m.id == a.model_id)
+                .and_then(|m| m.quantizations.get(&a.quant))
+                .is_some_and(|q| q.measured.is_some());
+            if a.excluded_reason.is_none() && !measured {
                 let richer_fits = a
                     .ladder
                     .iter()

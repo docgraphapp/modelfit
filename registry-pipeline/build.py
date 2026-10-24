@@ -43,7 +43,7 @@ GIB = 1024**3
 # Known quantizations, smallest to largest. FP16 is deliberately absent: at
 # ~2 bytes/weight it is rarely the right local choice and would trip the
 # bytes/weight guard below.
-QUANT_ORDER = ["Q3_K_M", "Q4_K_M", "Q5_K_M", "Q6_K", "Q8_0"]
+QUANT_ORDER = ["Q3_K_M", "Q4_0", "Q4_K_M", "Q5_K_M", "Q6_K", "Q8_0"]
 
 
 # Hugging Face rate-limits anonymous traffic, and a discovery pass makes
@@ -408,11 +408,24 @@ def build(offline: bool) -> tuple[dict, list[str]]:
             except Exception as e:  # noqa: BLE001
                 warnings.append(f"{m['id']}: file listing failed ({e}); using fallbacks")
         quants = {}
+        other_repo_files: dict[str, dict] = {}
         for qname, qcfg in m["quants"].items():
             size_gb = qcfg["fallback_size_gb"]
             size_source = "fallback"
             gguf = None
-            hit = find_quant_file(files, qname) if files else None
+            # A rung may live in another repo than the model's default (the
+            # exact file an app measured, e.g. ggml-org's Q4_0).
+            qrepo = qcfg.get("hf_repo", repo)
+            qfiles = files
+            if qrepo != repo:
+                if qrepo not in other_repo_files and not offline:
+                    try:
+                        other_repo_files[qrepo] = list_repo_files(qrepo)
+                    except Exception as e:  # noqa: BLE001
+                        warnings.append(f"{m['id']}: file listing of {qrepo} failed ({e}); using fallbacks")
+                        other_repo_files[qrepo] = {}
+                qfiles = other_repo_files.get(qrepo, {})
+            hit = find_quant_file(qfiles, qname) if qfiles else None
             if hit:
                 path, size = hit.path, hit.size
                 size_gb = round(size / GIB, 2)
@@ -424,26 +437,35 @@ def build(offline: bool) -> tuple[dict, list[str]]:
                 # a record worth publishing.
                 if all(sha for _, _, sha in hit.files):
                     gguf = {
-                        "repo": repo,
+                        "repo": qrepo,
                         "files": [
                             {"path": p, "sizeBytes": sz, "sha256": sha}
                             for p, sz, sha in hit.files
                         ],
                     }
+                    # The vision projector named for this rung (curated:
+                    # which mmproj goes with which model is not inferable).
+                    mm = qcfg.get("mmproj")
+                    if mm:
+                        fact = next((f for p, f in qfiles.items() if p.split("/")[-1] == mm), None)
+                        if fact and fact.sha256:
+                            gguf["mmproj"] = {"path": mm, "sizeBytes": fact.size, "sha256": fact.sha256}
+                        else:
+                            warnings.append(f"{m['id']}: mmproj {mm} not found (or no sha256) in {qrepo}")
                 else:
                     warnings.append(f"{m['id']}: quant {qname} has a shard without an LFS sha256; no gguf record")
                 if kv is None and not offline:
                     try:
                         meta = gguf_metadata(
-                            f"https://huggingface.co/{repo}/resolve/main/{path}"
+                            f"https://huggingface.co/{qrepo}/resolve/main/{path}"
                         )
                         arch = meta.get("general.architecture", "")
                         kv = kv_gb_per_1k(meta, arch)
                     except Exception as e:  # noqa: BLE001
                         warnings.append(f"{m['id']}: GGUF header read failed ({e})")
-            elif files:
-                warnings.append(f"{m['id']}: quant {qname} not found in {repo}; fallback size")
-            tag, tag_warn = ollama_tag_for(m, qname, offline)
+            elif qfiles:
+                warnings.append(f"{m['id']}: quant {qname} not found in {qrepo}; fallback size")
+            tag, tag_warn = ollama_tag_for({**m, "hf_repo": qrepo}, qname, offline)
             if tag_warn:
                 warnings.append(tag_warn)
             quants[qname] = {
@@ -457,6 +479,16 @@ def build(offline: bool) -> tuple[dict, list[str]]:
             }
             if gguf:
                 quants[qname]["gguf"] = gguf
+            # A real run of this exact rung (an app's model ledger): curated,
+            # copied as-is. The engine prefers it over the baseline on a
+            # machine at least `min_total_memory_gb` large.
+            if "measured" in qcfg:
+                ms = qcfg["measured"]
+                quants[qname]["measured"] = {
+                    "contextTokens": int(ms["context_tokens"]),
+                    "minTotalMemoryGb": float(ms["min_total_memory_gb"]),
+                    "source": str(ms["source"]),
+                }
         kv_source = "gguf"
         if kv is None:
             kv = m["fallback_kv_gb_per_1k"]
@@ -574,11 +606,19 @@ def validate(registry: dict) -> list[str]:
         # Quant files are matched by substring, so a repo that names things
         # unusually can silently bind the wrong file. More bits must always
         # mean a bigger file — if that ordering breaks, the match was wrong.
-        ladder = [(q, m["quantizations"][q]["fileSizeGb"])
-                  for q in QUANT_ORDER if q in m["quantizations"]]
-        for (qa, sa), (qb, sb) in zip(ladder, ladder[1:]):
-            if sb <= sa:
-                errors.append(f"{mid}: {qb} ({sb} GB) is not larger than {qa} ({sa} GB)")
+        # Sizes only compare within one repo: quantizers differ in what they
+        # keep at full precision (ggml-org's Q4_0 of Gemma 4 E4B is smaller
+        # than bartowski's Q3_K_M), so a rung from another repo is its own
+        # ladder.
+        by_repo: dict[str, list] = {}
+        for q in QUANT_ORDER:
+            if q in m["quantizations"]:
+                rq = (m["quantizations"][q].get("gguf") or {}).get("repo", "")
+                by_repo.setdefault(rq, []).append((q, m["quantizations"][q]["fileSizeGb"]))
+        for ladder in by_repo.values():
+            for (qa, sa), (qb, sb) in zip(ladder, ladder[1:]):
+                if sb <= sa:
+                    errors.append(f"{mid}: {qb} ({sb} GB) is not larger than {qa} ({sa} GB)")
         unknown = set(m["quantizations"]) - set(QUANT_ORDER)
         if unknown:
             errors.append(f"{mid}: quant not in the known ladder: {sorted(unknown)}")

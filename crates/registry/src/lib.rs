@@ -154,6 +154,28 @@ pub struct Quant {
     /// Ollama-only and a consumer must say so, never guess a URL.
     #[serde(default)]
     pub gguf: Option<Gguf>,
+    /// A run of this exact rung on a real machine, by an app that ships it
+    /// (DocGraph's model ledger). Absent for every rung nobody measured —
+    /// which is most of them; the estimates above still apply.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub measured: Option<Measured>,
+}
+
+/// What a real run of one rung showed: the context it was run at and the
+/// smallest machine it is recommended for. Facts from a measurement, not a
+/// guess — so the engine prefers a measured rung over the baseline when the
+/// machine is at least that large, and never calls it comfortable below it.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct Measured {
+    /// The context window the run used, in tokens.
+    pub context_tokens: u32,
+    /// The smallest total memory (GB) the rung is recommended for: in use
+    /// under a realistic app load it stayed within half of it, with memory
+    /// pressure normal and no swap growth.
+    pub min_total_memory_gb: f64,
+    /// Who measured it and when (e.g. `docgraph-ledger 2026-10-24`).
+    pub source: String,
 }
 
 /// Where one quant's bytes live on Hugging Face and how to verify them.
@@ -165,6 +187,11 @@ pub struct Gguf {
     /// One entry for a single-file quant; several, in part order, for a
     /// sharded one. A downloader needs every shard; llama.cpp opens the first.
     pub files: Vec<GgufFile>,
+    /// The model's vision projector (`mmproj-*.gguf`) in the same repo, when
+    /// it can see images. A runtime downloads it beside the model and loads
+    /// it with `--mmproj`; it costs memory, so the fit counts it.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub mmproj: Option<GgufFile>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -180,6 +207,10 @@ pub struct GgufFile {
 impl Gguf {
     pub fn total_bytes(&self) -> u64 {
         self.files.iter().map(|f| f.size_bytes).sum()
+    }
+    /// The vision projector's size, 0 when the model has none.
+    pub fn mmproj_bytes(&self) -> u64 {
+        self.mmproj.as_ref().map_or(0, |f| f.size_bytes)
     }
     pub fn is_single_file(&self) -> bool {
         self.files.len() == 1
@@ -434,6 +465,20 @@ mod tests {
                 }
             }
         }
+    }
+
+    #[test]
+    fn a_vision_projector_is_optional_and_verifiable_when_present() {
+        let reg = Registry::bundled();
+        let e4b = reg.models.iter().find(|m| m.id == "gemma4-e4b").unwrap();
+        let g = e4b.quantizations["Q4_0"].gguf.as_ref().unwrap();
+        let mm = g.mmproj.as_ref().expect("Q4_0 carries its vision projector");
+        assert!(mm.path.starts_with("mmproj") && mm.path.ends_with(".gguf"));
+        assert_eq!(mm.sha256.len(), 64);
+        assert_eq!(g.mmproj_bytes(), mm.size_bytes);
+        assert!(g.download_url(mm).contains(&g.repo));
+        // Every other rung has none, and old snapshots without the field parse.
+        assert!(e4b.quantizations["Q4_K_M"].gguf.as_ref().unwrap().mmproj.is_none());
     }
 
     #[test]
