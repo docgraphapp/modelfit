@@ -70,6 +70,8 @@ UPDATE_TGZ="$OUT/$PRODUCT.app.tar.gz"
 COPYFILE_DISABLE=1 tar -czf "$UPDATE_TGZ" -C "$(dirname "$APP")" "$(basename "$APP")"
 (cd "$APP_DIR" && env -u TAURI_SIGNING_PRIVATE_KEY npm run tauri -- signer sign -f "$UPDATER_KEY" "$UPDATE_TGZ" >/dev/null)
 cp "$DMG" "$OUT/"
+# Version-free copy: the website links releases/latest/download/<this name>.
+cp "$DMG" "$OUT/${PRODUCT}_aarch64.dmg"
 
 python3 - "$OUT" "$VERSION" "$TAG" "$REPO" "$PRODUCT" <<'EOF'
 import json, sys, datetime
