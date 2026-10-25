@@ -4,6 +4,7 @@ dist/
 apps/desktop/src-tauri/gen/
 .DS_Store
 dist-site/
+dist-release/
 website/
 # Machine-specific probe output for the browser design harness
 apps/desktop/dev-data/
