@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "2026-11-02",
+  "version": "2026-11-09",
   "models": [
     {
       "id": "qwen3-0.6b",
@@ -1065,8 +1065,8 @@
             ],
             "mmproj": {
               "path": "mmproj-gemma-4-E4B-it-Q8_0.gguf",
-              "sizeBytes": 559874816,
-              "sha256": "197f49a93027f9843772bd24a6a9e0be2a32a788de5a3def330e9c585d86edd1"
+              "sizeBytes": 559874848,
+              "sha256": "9257f21a0f5358204b4a612cff83fad2e56412f4f607f0049331ce60c0cf9d34"
             }
           },
           "measured": {
