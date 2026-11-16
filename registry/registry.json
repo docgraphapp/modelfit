@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "2026-11-09",
+  "version": "2026-11-16",
   "models": [
     {
       "id": "qwen3-0.6b",
@@ -2704,7 +2704,7 @@
       "quality": null,
       "quantizations": {
         "Q4_K_M": {
-          "fileSizeGb": 15.33,
+          "fileSizeGb": 15.43,
           "kvCacheGbPer1kCtx": 0.273,
           "ollamaTag": "hf.co/unsloth/Qwen3.8-27B-GGUF:Q4_K_M",
           "sizeSource": "hf",
@@ -2713,15 +2713,15 @@
             "files": [
               {
                 "path": "Qwen3.8-27B-UD-Q4_K_M.gguf",
-                "sizeBytes": 16464440224,
-                "sha256": "322e194ff79741c7baa497c240f677f54b201b0efab44ca8e50f122b39123482"
+                "sizeBytes": 16564259744,
+                "sha256": "1bce504dfecd84153666928a41d8a66706f0158d3a317bc5196b72819d7dc529"
               }
             ]
           },
           "kvSource": "gguf"
         },
         "Q5_K_M": {
-          "fileSizeGb": 18.41,
+          "fileSizeGb": 18.51,
           "kvCacheGbPer1kCtx": 0.273,
           "ollamaTag": "hf.co/unsloth/Qwen3.8-27B-GGUF:Q5_K_M",
           "sizeSource": "hf",
@@ -2730,8 +2730,8 @@
             "files": [
               {
                 "path": "Qwen3.8-27B-UD-Q5_K_M.gguf",
-                "sizeBytes": 19771509664,
-                "sha256": "2de73110cb254cbf09b54b717578dadff12ef1194e7271527e68202f39ba4bfd"
+                "sizeBytes": 19870878624,
+                "sha256": "e2771d4c10c6b77141552ea7a21631067271f17baf918f46a3cba78495f92e1e"
               }
             ]
           },
@@ -2747,8 +2747,8 @@
             "files": [
               {
                 "path": "Qwen3.8-27B-UD-Q6_K.gguf",
-                "sizeBytes": 21983677344,
-                "sha256": "c9c206812fbe4ac7b76a729e25928b63f2ae89d37f69da7a71c20aec763cd436"
+                "sizeBytes": 21980441504,
+                "sha256": "6cac55f876015d6d4b94b1656d23f79f424ac9b583652aedf0633dba116576a8"
               }
             ]
           },
